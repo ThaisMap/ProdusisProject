@@ -1,0 +1,49 @@
+﻿<Window x:Class="Produsis.TelaPrincipal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Produsis"
+        mc:Ignorable="d"
+        xmlns:matDsign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="16"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="ClearType"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="Helvetica"
+        FontWeight="SemiBold"
+        Title="TelaPrincipal" Width="800" Height="600" >
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Button Content="Descarga" Margin="10" FontSize="16" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" 
+                    HorizontalAlignment="Center" Width="140" Height="70"></Button>
+            <Button Content="Separação" Margin="10" FontSize="16" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" 
+                    HorizontalAlignment="Center" Width="140" Height="70"></Button>
+            <Button Content="Conferência" Margin="10" FontSize="16" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" 
+                    HorizontalAlignment="Center" Width="140" Height="70"></Button>
+            <Button Margin="10" FontSize="16" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" 
+                    HorizontalAlignment="Center" Width="140" Height="70">
+                <TextBlock TextWrapping="Wrap" TextAlignment="Center">Separação para Carregar</TextBlock>
+            </Button>
+            <Button Content="Carregamento" Margin="10" FontSize="16" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" 
+                    HorizontalAlignment="Center" Width="140" Height="70"></Button>
+            <Button Content="Administrativo" Margin="10" FontSize="16" Grid.Column="0" Grid.Row="5" VerticalAlignment="Center" 
+                    HorizontalAlignment="Center" Width="140" Height="70"></Button>
+        </Grid>
+    </Grid>
+</Window>

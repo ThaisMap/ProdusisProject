@@ -15,20 +15,13 @@ using System.Windows.Shapes;
 namespace Produsis
 {
     /// <summary>
-    /// Interaction logic for Login.xaml
+    /// Interaction logic for TelaPrincipal.xaml
     /// </summary>
-    public partial class Login : Window
+    public partial class TelaPrincipal : Window
     {
-        public Login()
+        public TelaPrincipal()
         {
             InitializeComponent();
-        }
-
-        private void BtnLogin_Click(object sender, RoutedEventArgs e)
-        {
-            TelaPrincipal view = new TelaPrincipal();
-            this.Close();
-            view.Show();
         }
     }
 }
