@@ -10,23 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Produsis
 {
     /// <summary>
-    /// Interaction logic for TelaPrincipal.xaml
+    /// Interaction logic for Page1.xaml
     /// </summary>
-    public partial class TelaPrincipal : Window
+    public partial class Page1 : Page
     {
-        public TelaPrincipal()
+        public Page1()
         {
             InitializeComponent();
+            ListaPessoal = new List<string>();
+            ListaPessoal.Add("System.Windows.Media.Imaging");
+            ListaPessoal.Add("System.Windows.Shapes");
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Navegador.Content = new Page1();
-        }
+        public List<string> ListaPessoal { get; set; }
     }
 }
