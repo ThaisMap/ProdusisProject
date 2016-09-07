@@ -22,11 +22,64 @@ namespace Produsis
         public TelaPrincipal()
         {
             InitializeComponent();
+            BtnHome.Opacity = 0.5;
+            //Navegador.Navigate(new Home());
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public void ResetarOpacidade()
         {
-            Navegador.Content = new Page1();
+            BtnAdministrativo.Opacity = 1;
+            BtnCarregamento.Opacity = 1;
+            BtnConferencia.Opacity = 1;
+            BtnDescarga.Opacity = 1;
+            BtnSeparacaoCarga.Opacity = 1;
+            BtnSerapacao.Opacity = 1;
+            BtnHome.Opacity = 1;
+        }
+
+        #region Botoes
+        private void BtnDescarga_Click(object sender, RoutedEventArgs e)
+        {
+            ResetarOpacidade();
+            BtnDescarga.Opacity = 0.5;
+        }
+
+        private void BtnAdministrativo_Click(object sender, RoutedEventArgs e)
+        {
+            ResetarOpacidade();
+            BtnAdministrativo.Opacity = 0.5;
+            Navegador.Navigate(new Administrativo());
+        }
+
+        private void BtnCarregamento_Click(object sender, RoutedEventArgs e)
+        {
+            ResetarOpacidade();
+            BtnCarregamento.Opacity = 0.5;
+        }
+
+        private void BtnSeparacaoCarga_Click(object sender, RoutedEventArgs e)
+        {
+            ResetarOpacidade();
+            BtnSeparacaoCarga.Opacity = 0.5;
+        }
+
+        private void BtnConferencia_Click(object sender, RoutedEventArgs e)
+        {
+            ResetarOpacidade();
+            BtnConferencia.Opacity = 0.5;
+        }
+
+        private void BtnSerapacao_Click(object sender, RoutedEventArgs e)
+        {
+            ResetarOpacidade();
+            BtnSerapacao.Opacity = 0.5;
+        }
+        #endregion
+
+        private void BtnHome_Click(object sender, RoutedEventArgs e)
+        {
+            ResetarOpacidade();
+            BtnHome.Opacity = 0.5;
         }
     }
 }

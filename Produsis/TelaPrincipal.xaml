@@ -4,98 +4,52 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Produsis"
-        xmlns:Funcionalidades="clr-namespace:Produsis.Funcionalidades"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="16"
-        TextOptions.TextFormattingMode="Ideal"
-        TextOptions.TextRenderingMode="ClearType"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="Helvetica"
-        FontWeight="SemiBold"
-        Title="TelaPrincipal" Height="800" Width="1100" >
-    <materialDesign:DialogHost Identifier="RootDialog">
-        <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
-            <materialDesign:DrawerHost.LeftDrawerContent>
-                <DockPanel MinWidth="212">
-                    <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
-                                  DockPanel.Dock="Top"
-                                  HorizontalAlignment="Right" Margin="16"
-                                  IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
-                    <ListBox x:Name="DemoItemsListBox" Margin="0 16 0 16" SelectedIndex="0"                         
-                             PreviewMouseLeftButtonUp="UIElement_OnPreviewMouseLeftButtonUp">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate DataType="domain:DemoItem">
-                                <TextBlock Text="{Binding Name}" Margin="32 0 32 0" />
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                        <Funcionalidades:Pagina Name="Page1">
-                        </Funcionalidades:Pagina>
-                        <Funcionalidades:Pagina Name="Palette">
-                        </Funcionalidades:Pagina>
-                        <Funcionalidades:Pagina Name="Buttons &amp; Toggles">
-                        </Funcionalidades:Pagina>
-                        <Funcionalidades:Pagina Name="Fields">
-                        </Funcionalidades:Pagina>
-                        <Funcionalidades:Pagina Name="Pickers">
-                        </Funcionalidades:Pagina>
-                        <Funcionalidades:Pagina Name="Sliders">
-                        </Funcionalidades:Pagina>
-                        <Funcionalidades:Pagina Name="Chips">
-                        </Funcionalidades:Pagina>
-                        <Funcionalidades:Pagina Name="Typography">
-                        </Funcionalidades:Pagina>
-                        <Funcionalidades:Pagina Name="Cards">
-                        </Funcionalidades:Pagina>
-                        <Funcionalidades:Pagina Name="Icon Pack">
-                        </Funcionalidades:Pagina>
-                        <Funcionalidades:Pagina Name="Colour Zones">
-                        </Funcionalidades:Pagina>
-                        <Funcionalidades:Pagina Name="Lists">
-                        </Funcionalidades:Pagina>
-                        <Funcionalidades:Pagina Name="Trees">
-                        </Funcionalidades:Pagina>
-                        <Funcionalidades:Pagina Name="Grids">
-                        </Funcionalidades:Pagina>
-                        <Funcionalidades:Pagina Name="Expander">
-                        </Funcionalidades:Pagina>
-                        <Funcionalidades:Pagina Name="Group Boxes">
-                        </Funcionalidades:Pagina>
-                        <Funcionalidades:Pagina Name="Menus &amp; Tool Bars">
-                        </Funcionalidades:Pagina>
-                        <Funcionalidades:Pagina Name="Progress Indicators">
-                        </Funcionalidades:Pagina>
-                        <Funcionalidades:Pagina Name="Dialogs">
-                        </Funcionalidades:Pagina>
-                        <Funcionalidades:Pagina Name="Transitions">
-                        </Funcionalidades:Pagina>
-                        <Funcionalidades:Pagina Name="Shadows">
-                        </Funcionalidades:Pagina>
-                    </ListBox>
-                </DockPanel>
-            </materialDesign:DrawerHost.LeftDrawerContent>
-            <DockPanel>
-                <materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2"
-                                          Mode="PrimaryMid" DockPanel.Dock="Top">
-                    <DockPanel>
-                        <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"
-                                      x:Name="MenuToggleButton"/>
-                        <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
-                            <StackPanel>
-                                <Button Content="Hello World" Click="MenuPopupButton_OnClick"/>
-                                <Separator/>
-                                <Button Content="Nice Popup" Click="MenuPopupButton_OnClick"/>
-                                <Separator/>
-                                <Button Content="Goodbye" Click="MenuPopupButton_OnClick"/>
-                            </StackPanel>
-                        </materialDesign:PopupBox>
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">Material Design In XAML Toolkit</TextBlock>
-                    </DockPanel>
-                </materialDesign:ColorZone>
-                <ContentControl Margin="16" Content="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.Content}" />
-            </DockPanel>
-        </materialDesign:DrawerHost>
-    </materialDesign:DialogHost>
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        Title="Menu" MinHeight="600" MinWidth="1060" Height="600" Width="1060" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.CheckBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.RadioButton.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Width="auto" Height="auto">
+        <materialDesign:ColorZone Width="auto" Height="60" Mode="PrimaryDark" materialDesign:ShadowAssist.ShadowDepth="Depth2"></materialDesign:ColorZone>
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <materialDesign:PopupBox Grid.Column="0" Grid.Row="0"  PlacementMode="BottomAndAlignCentres">
+                <StackPanel>
+                    <Button Name="BtnHome" Content="Home" Width="200" Height="auto" Margin="2,5" Click="BtnHome_Click"></Button>
+                    <Button Name="BtnDescarga" Content="Descarga" Width="200" Height="auto" Margin="2,5" Click="BtnDescarga_Click"></Button>
+                    <Button Name="BtnSerapacao" Content="Separação" Width="200" Height="auto" Margin="2,5" Click="BtnSerapacao_Click"></Button>
+                    <Button Name="BtnConferencia" Content="Conferência" Width="200" Height="auto" Margin="2,5" Click="BtnConferencia_Click"></Button>
+                    <Button Name="BtnSeparacaoCarga" Width="200" Height="auto" Margin="2,5" Click="BtnSeparacaoCarga_Click">
+                        <TextBlock TextAlignment="Left" TextWrapping="Wrap">Separação Para Carregar</TextBlock>
+                    </Button>
+                    <Button Name="BtnCarregamento" Content="Carregamento" Width="200" Height="auto" Margin="2,5" Click="BtnCarregamento_Click"></Button>
+                    <Button Name="BtnAdministrativo" Content="Administrativo" Width="200" Height="auto" Margin="2,5" Click="BtnAdministrativo_Click"></Button>
+                </StackPanel>
+            </materialDesign:PopupBox>
+            <Frame Name="Navegador" Margin="0,10,0,10" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" NavigationUIVisibility="Hidden" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="500"></Frame>
+        </Grid>
+    </Grid>
 </Window>

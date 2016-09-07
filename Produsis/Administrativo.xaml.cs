@@ -16,17 +16,13 @@ using System.Windows.Shapes;
 namespace Produsis
 {
     /// <summary>
-    /// Interaction logic for Page1.xaml
+    /// Interaction logic for Administrativo.xaml
     /// </summary>
-    public partial class Page1 : Page
+    public partial class Administrativo : UserControl
     {
-        public Page1()
+        public Administrativo()
         {
             InitializeComponent();
-            ListaPessoal = new List<string>();
-            ListaPessoal.Add("System.Windows.Media.Imaging");
-            ListaPessoal.Add("System.Windows.Shapes");
         }
-        public List<string> ListaPessoal { get; set; }
     }
 }
