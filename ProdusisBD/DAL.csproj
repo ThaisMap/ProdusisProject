@@ -38,18 +38,16 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySql.Data.Entity.6.9.9\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+    <Reference Include="Npgsql, Version=3.1.7.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.3.1.7\lib\net451\Npgsql.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -59,12 +57,73 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ctes.cs">
+      <DependentUpon>Model_pBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Cte_Manifesto.cs">
+      <DependentUpon>Model_pBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DocumentosBD.cs" />
+    <Compile Include="Funcionarios.cs">
+      <DependentUpon>Model_pBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FuncionariosBD.cs" />
+    <Compile Include="Func_Tarefa.cs">
+      <DependentUpon>Model_pBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Manifestos.cs">
+      <DependentUpon>Model_pBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_pBD.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_pBD.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_pBD.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_pBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_pBD.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_pBD.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="NotasFiscais.cs">
+      <DependentUpon>Model_pBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tarefas.cs">
+      <DependentUpon>Model_pBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TarefasBD.cs" />
     <Compile Include="Testes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EntityDeploy Include="Model_pBD.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_pBD.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model_pBD.edmx.diagram">
+      <DependentUpon>Model_pBD.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model_pBD.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_pBD.edmx</DependentUpon>
+      <LastGenOutput>Model_pBD.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_pBD.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_pBD.edmx</DependentUpon>
+      <LastGenOutput>Model_pBD.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
