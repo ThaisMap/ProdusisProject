@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:Produsis"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        TextElement.FontWeight="Regular"
         TextElement.FontSize="16"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
@@ -36,7 +35,7 @@
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <materialDesign:PopupBox Grid.Column="0" Grid.Row="0"  PlacementMode="BottomAndAlignCentres">
+            <materialDesign:PopupBox Margin="0,0,0,0" Grid.Column="0" Grid.Row="0"  PlacementMode="BottomAndAlignCentres">
                 <StackPanel>
                     <Button Name="BtnHome" Content="Home" Width="200" Height="auto" Margin="2,5" Click="BtnHome_Click"></Button>
                     <Button Name="BtnDescarga" Content="Descarga" Width="200" Height="auto" Margin="2,5" Click="BtnDescarga_Click"></Button>

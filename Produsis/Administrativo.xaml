@@ -8,8 +8,6 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
             TextElement.FontWeight="Regular"
             TextElement.FontSize="16"
-            TextOptions.TextFormattingMode="Ideal"
-            TextOptions.TextRenderingMode="ClearType"
             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
             Background="{DynamicResource MaterialDesignPaper}"
             FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
@@ -36,13 +34,38 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="7*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="1">
-                <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}">Administrativo</TextBlock>
-                <Separator Height="2"></Separator>
-                <Grid>
-                    
+                <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Administrativo</TextBlock>
+                <Separator></Separator>
+                <StackPanel HorizontalAlignment="Center" Height="30" Orientation="Horizontal">
+                    <Button Name="BtnCadFuncionarios" Height="auto" Width="180" Margin="5,0">
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Center">Cadastrar Funcionarios</TextBlock>
+                    </Button>
+                    <Button Name="BtnDocumentos" Height="auto" Width="140" Margin="5,0">
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Center">Ver Documentos</TextBlock>
+                    </Button>
+                    <Button Name="BtnRelatorios" Height="auto" Width="100" Margin="5,0">
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Center">Relatórios</TextBlock>
+                    </Button>
+                    <Button Name="BtnConfigurações" Height="auto" Width="130" Margin="5,0">
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Center">Configurações</TextBlock>
+                    </Button>
+                </StackPanel>
+                <Grid Margin="60,20,0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
+                    <TextBlock FontSize="20">Tarefas Iniciadas Hoje</TextBlock>
+                        <Separator Height="2"></Separator>
+                    </StackPanel>
+                    <DataGrid Background="Gray" Name="DGTarefas" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="40,10" AutomationProperties.IsColumnHeader="True"></DataGrid>
                 </Grid>
             </StackPanel>
         </Grid>

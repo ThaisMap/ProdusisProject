@@ -38,10 +38,18 @@ namespace Produsis
         }
 
         #region Botoes
+        private void BtnHome_Click(object sender, RoutedEventArgs e)
+        {
+            ResetarOpacidade();
+            BtnHome.Opacity = 0.5;
+
+        }
+
         private void BtnDescarga_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();
             BtnDescarga.Opacity = 0.5;
+            Navegador.Navigate(new Descarga());
         }
 
         private void BtnAdministrativo_Click(object sender, RoutedEventArgs e)
@@ -76,10 +84,6 @@ namespace Produsis
         }
         #endregion
 
-        private void BtnHome_Click(object sender, RoutedEventArgs e)
-        {
-            ResetarOpacidade();
-            BtnHome.Opacity = 0.5;
-        }
+
     }
 }
