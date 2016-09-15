@@ -80,9 +80,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CadastroFuncionarios.xaml.cs">
+      <DependentUpon>CadastroFuncionarios.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Descarga.xaml.cs">
       <DependentUpon>Descarga.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Funcionarios.cs" />
     <Compile Include="TelaPrincipal.xaml.cs">
       <DependentUpon>TelaPrincipal.xaml</DependentUpon>
     </Compile>
@@ -120,6 +124,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Administrativo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CadastroFuncionarios.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -16,18 +16,13 @@ using System.Windows.Shapes;
 namespace Produsis
 {
     /// <summary>
-    /// Interaction logic for Administrativo.xaml
+    /// Interaction logic for CadastroFuncionarios.xaml
     /// </summary>
-    public partial class Administrativo : UserControl
+    public partial class CadastroFuncionarios : UserControl
     {
-        public Administrativo()
+        public CadastroFuncionarios()
         {
             InitializeComponent();
-        }
-
-        private void BtnCadFuncionarios_Click(object sender, RoutedEventArgs e)
-        {
-            NavegadorInterno.Navigate(new CadastroFuncionarios());
         }
     }
 }
