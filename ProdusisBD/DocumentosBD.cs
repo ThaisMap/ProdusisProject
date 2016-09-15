@@ -8,29 +8,111 @@ namespace ProdusisBD
 {
     class DocumentosBD
     {
-        public bool inserirManifesto(Manifestos novoManifesto)
+        /// <summary>
+        /// Insere um registro de manifesto no banco de dados
+        /// </summary>
+        /// <param name="novoManifesto">Dados do novo registro</param>
+        /// <returns>True se o comando foi executado sem erros, False se houve algum erro</returns>
+        public bool cadastrarManifesto(Manifestos novoManifesto)
         {
-            return true;
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    BancoDeDados.Manifestos.Add(novoManifesto);
+                    BancoDeDados.SaveChanges();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        public bool inserirCte(Ctes novoCte)
+        /// <summary>
+        /// Insere um registro de cte no banco de dados
+        /// </summary>
+        /// <param name="novoCte">Dados do novo registro</param>
+        /// <returns>True se o comando foi executado sem erros, False se houve algum erro</returns>
+        public bool cadastrarCte(Ctes novoCte)
         {
-            return true;
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    BancoDeDados.Ctes.Add(novoCte);
+                    BancoDeDados.SaveChanges();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        public bool inserirNF(Ctes novaNf)
+        /// <summary>
+        /// Insere um registro de nota fiscal no banco de dados
+        /// </summary>
+        /// <param name="novaNf">Dados do novo registro</param>
+        /// <returns>True se o comando foi executado sem erros, False se houve algum erro</returns>
+        public bool cadastrarNF(NotasFiscais novaNf)
         {
-            return true;
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    BancoDeDados.NotasFiscais.Add(novaNf);
+                    BancoDeDados.SaveChanges();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        public bool inserirCteManifesto(int idCte, int idManifesto)
+        /// <summary>
+        /// Insere  um registro de cte em manifesto no banco de dados
+        /// </summary>
+        /// <param name="novo">Dados do novo registro</param>
+        /// <returns>True se o comando foi executado sem erros, False se houve algum erro</returns>
+        public bool cadastrarCteManifesto(Cte_Manifesto novo)
         {
-            return true;
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    BancoDeDados.Cte_Manifesto.Add(novo);
+                    BancoDeDados.SaveChanges();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
+        /// <summary>
+        /// Retorna um manifesto a partir do seu número
+        /// </summary>
+        /// <param name="numManifesto">Parametros de busca</param>
         public Manifestos getManifestoPorNumero(int numManifesto)
         {
-            return new Manifestos();
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    return (from Manifestos in BancoDeDados.Manifestos where Manifestos.numeroManifesto == numManifesto select Manifestos).FirstOrDefault();
+                }
+            }
+            catch
+            {
+                return new Manifestos();
+            }
         }
 
         public NotasFiscais getNFPorNumero(int numNF)

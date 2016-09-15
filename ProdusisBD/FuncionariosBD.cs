@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProdusisBD
 {
-    class FuncionariosBD
+    internal class FuncionariosBD
     {
         /// <summary>
         /// Insere um registro de funcionario no banco de dados
@@ -24,11 +21,10 @@ namespace ProdusisBD
                 }
                 return true;
             }
-            catch 
+            catch
             {
                 return false;
             }
-            
         }
 
         /// <summary>
@@ -57,11 +53,10 @@ namespace ProdusisBD
             {
                 return false;
             }
-
         }
 
         /// <summary>
-        /// Retorna a lista de operadores com status livre
+        /// Retorna a lista de operadores ativos com status livre
         /// </summary>
         public List<Funcionarios> funcionariosLivres()
         {
@@ -69,7 +64,7 @@ namespace ProdusisBD
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    return (from Funcionarios in BancoDeDados.Funcionarios where Funcionarios.ocupadoFunc == false where Funcionarios.tipoFunc == "2" select Funcionarios).ToList();
+                    return (from Funcionarios in BancoDeDados.Funcionarios where Funcionarios.ativoFunc == true where Funcionarios.ocupadoFunc == false where Funcionarios.tipoFunc == "O" select Funcionarios).ToList();
                 }
             }
             catch
@@ -78,9 +73,23 @@ namespace ProdusisBD
             }
         }
 
+        /// <summary>
+        /// Retorna a lista de funcionários ativos
+        /// </summary>
+        /// <returns></returns>
         public List<Funcionarios> getFuncionariosAtivos()
         {
-            return new List<Funcionarios>();
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    return (from Funcionarios in BancoDeDados.Funcionarios where Funcionarios.ativoFunc == true select Funcionarios).ToList();
+                }
+            }
+            catch
+            {
+                return new List<Funcionarios>();
+            }
         }
 
         /// <summary>
@@ -98,9 +107,8 @@ namespace ProdusisBD
             }
             catch
             {
-
                 return new Funcionarios();
-            }            
+            }
         }
 
         /// <summary>
@@ -159,38 +167,80 @@ namespace ProdusisBD
             }
         }
 
-        public int getTipoFuncionario(string nomeUsuario)
-        {
-
-            return 1;
-        }
-
-        public bool verificaSenha(string senha)
+        /// <summary>
+        /// Retorna o tipo do Funcionário informado
+        /// </summary>
+        /// <param name="nomeUsuario">Pa~râmetro de busca</param>
+        /// <returns>A - Admin, E - Externo, O - Operador</returns>
+        public string getTipoFuncionario(string nomeUsuario)
         {
             try
             {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    return (from Funcionarios in BancoDeDados.Funcionarios where Funcionarios.nomeFunc == nomeUsuario select Funcionarios.tipoFunc).FirstOrDefault();
+                }
+            }
+            catch
+            {
+                return "N";
+            }
+        }
 
-                return true;
+        /// <summary>
+        /// Verifica se a senha do Funcionário indicado coincide com a registrada no banco de dados
+        /// </summary>
+        /// <param name="matricula">Parâmetro de busca</param>
+        /// <param name="senha">Senha para comparação</param>
+        /// <returns>True se a senha coincidir, False se o funcionário nao estiver cadastrado, ou se a senha nao coincidir ou se</returns>
+        public bool verificaSenha(string matricula, string senha)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var senhaBD = (from Funcionarios in BancoDeDados.Funcionarios
+                                   where Funcionarios.matriculaFunc == matricula
+                                   select Funcionarios.senhaFunc).FirstOrDefault();
+
+                    if (senhaBD != null && senhaBD == senha)
+                    {
+                        return true;
+                    }
+                    else return false;
+                }
             }
             catch
             {
                 return false;
             }
-
         }
 
-        public bool verificaUsuarioCadastrado(string nomeUsuario)
+        /// <summary>
+        /// Verifica se o Funcionário indicado está cadastrado no banco de dados
+        /// </summary>
+        /// <param name="matricula">Martricula do Funcionário</param>
+        /// <returns>True se estiver cadastrado, False se não estiver ou se ocorrer um erro</returns>
+        public bool verificaUsuarioCadastrado(string matricula)
         {
             try
             {
-
-                return true;
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var cadastrado = (from Funcionarios in BancoDeDados.Funcionarios
+                                      where Funcionarios.matriculaFunc == matricula
+                                      select Funcionarios).FirstOrDefault();
+                    if (cadastrado != null)
+                    {
+                        return true;
+                    }
+                    else return false;
+                }
             }
             catch
             {
                 return false;
             }
-
         }
     }
 }
