@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Produsis.Properties {
+namespace GUI.Properties {
     using System;
     
     

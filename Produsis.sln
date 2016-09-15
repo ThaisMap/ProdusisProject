@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Produsis", "Produsis\Produsis.csproj", "{6D26B478-39AE-4F30-AE79-F34B1F26BD07}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "Produsis\GUI.csproj", "{6D26B478-39AE-4F30-AE79-F34B1F26BD07}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "ProdusisBD\DAL.csproj", "{F928F7A8-9172-41AD-857A-4CAF573B0A29}"
 EndProject

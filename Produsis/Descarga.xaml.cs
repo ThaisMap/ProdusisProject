@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Produsis
+namespace GUI
 {
     /// <summary>
     /// Interaction logic for Descarga.xaml
@@ -25,7 +25,7 @@ namespace Produsis
         public Descarga()
         {
             InitializeComponent();
-            Funcionario = new ObservableCollection<Produsis.Funcionarios>();
+            Funcionario = new ObservableCollection<GUI.Funcionarios>();
             Funcionario.Add(new Funcionarios { Nome = "Paola Oliveira", Tag = CriaChipTag("Paola Oliveira") });
             Funcionario.Add(new Funcionarios { Nome = "Jose Silva", Tag = CriaChipTag("Jose Silva") });
             Funcionario.Add(new Funcionarios { Nome = "Astolfo Mexicano", Tag = CriaChipTag("Astolfo Mexicano") });
