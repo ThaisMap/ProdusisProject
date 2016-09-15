@@ -64,6 +64,7 @@
       <DependentUpon>Model_pBD.tt</DependentUpon>
     </Compile>
     <Compile Include="DocumentosBD.cs" />
+    <Compile Include="Filtros.cs" />
     <Compile Include="Funcionarios.cs">
       <DependentUpon>Model_pBD.tt</DependentUpon>
     </Compile>
