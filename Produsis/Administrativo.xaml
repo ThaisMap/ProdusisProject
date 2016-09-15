@@ -39,7 +39,7 @@
                 <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Administrativo</TextBlock>
                 <Separator></Separator>
                 <StackPanel HorizontalAlignment="Center" Height="30" Orientation="Horizontal">
-                    <Button Name="BtnTarefasInitHoje" Height="auto" Width="180" Margin="5,0" Click="BtnCadFuncionarios_Click">
+                    <Button Name="BtnTarefasInitHoje" Height="auto" Width="180" Margin="5,0">
                         <TextBlock TextWrapping="Wrap" TextAlignment="Center">Tarefas Iniciadas Hoje</TextBlock>
                     </Button>
                     <Button Name="BtnCadFuncionarios" Height="auto" Width="180" Margin="5,0" Click="BtnCadFuncionarios_Click">
@@ -55,8 +55,8 @@
                         <TextBlock TextWrapping="Wrap" TextAlignment="Center">Configurações</TextBlock>
                     </Button>
                 </StackPanel>
-                <Grid Margin="60,20,0,5">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <Grid Margin="60,10,0,0">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <DockPanel>
                             <Frame Name="NavegadorInterno"></Frame>
                         </DockPanel>

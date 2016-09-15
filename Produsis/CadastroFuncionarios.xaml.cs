@@ -24,5 +24,10 @@ namespace GUI
         {
             InitializeComponent();
         }
+
+        private void Tipo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
