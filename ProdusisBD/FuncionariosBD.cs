@@ -38,7 +38,6 @@ namespace ProdusisBD
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    //Clientes clienteAtual = BancoDeDados.Clientes.Single(l => l.Id == novoCliente.Id);
                     Funcionarios funcAtual = BancoDeDados.Funcionarios.Single(f => f.idFunc == novoFunc.idFunc);
                     funcAtual.nomeFunc = novoFunc.nomeFunc;
                     funcAtual.matriculaFunc = novoFunc.matriculaFunc;
@@ -48,6 +47,30 @@ namespace ProdusisBD
                     BancoDeDados.SaveChanges();
                 }
                 return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Edita o estado de oucupação de um funcionário
+        /// </summary>
+        /// <param name="idFuncionario">Funcionário alterado</param>
+        /// <param name="ocupado">Valor a ser registrado no banco</param>
+        /// <returns>True se o comando foi executado sem erros, False se houve algum erro</returns>
+        public bool editarOcupacaoFuncionario(int idFuncionario, bool ocupado)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    Funcionarios funcAtual = BancoDeDados.Funcionarios.Single(f => f.idFunc == idFuncionario);
+                    funcAtual.ocupadoFunc = ocupado;
+                    BancoDeDados.SaveChanges();
+                    return true;
+                }
             }
             catch
             {

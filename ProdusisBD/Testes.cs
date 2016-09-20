@@ -18,8 +18,9 @@ namespace DAL
 
             using (produsisBDEntities pbd = new produsisBDEntities())
             {
+                
                 resultado = (from func in pbd.Funcionarios
-                              where func.idFunc == 0
+                              where func.idFunc == 1
                               select func.nomeFunc).FirstOrDefault();
                 
             }
