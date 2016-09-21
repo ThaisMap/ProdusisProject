@@ -8,16 +8,16 @@ namespace ProdusisBD
 {
     class Filtros
     {
-        int TipoTarefa;
-        int numDocumento;
-        DateTime dataInicio;
-        DateTime dataFim;
-        string nomeFuncionario;
-        int volumeInicio;
-        int volumeFim;
-        int skuInicio;
-        int skuFim;
-        double pesoInicio;
-        double pesoFim;
+        public string TipoTarefa;
+        public int numDocumento;
+        public DateTime dataInicio;
+        public DateTime? dataFim;
+        public int idFuncionario;
+        public int volumeInicio;
+        public int volumeFim;
+        public int skuInicio;
+        public int skuFim;
+        public double pesoInicio;
+        public double pesoFim;
     }
 }
