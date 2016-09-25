@@ -1,9 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Collections;
+using System.Data.Common;
+using System.Data;
+using System.IO;
+using System.Data.SqlClient;
+using System.Data.Entity;
 
 namespace ProdusisBD
 {
-    internal class FuncionariosBD
+    public class FuncionariosBD
     {
         /// <summary>
         /// Insere um registro de funcionario no banco de dados
@@ -260,7 +269,7 @@ namespace ProdusisBD
                     else return false;
                 }
             }
-            catch
+            catch(Exception e)
             {
                 return false;
             }

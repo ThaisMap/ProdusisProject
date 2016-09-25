@@ -12,7 +12,7 @@ using System.Data.Entity;
 
 namespace ProdusisBD
 {
-    class TarefasBD
+    public class TarefasBD
     {
         /// <summary>
         /// Insere um novo registro de tarefa no banco de dados

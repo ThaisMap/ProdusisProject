@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ProdusisBD
 {
-    internal class DocumentosBD
+    public class DocumentosBD
     {
         /// <summary>
         /// Insere um registro de manifesto no banco de dados

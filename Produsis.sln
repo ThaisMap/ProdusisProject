@@ -5,9 +5,11 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "Produsis\GUI.csproj", "{6D26B478-39AE-4F30-AE79-F34B1F26BD07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "ProdusisBD\DAL.csproj", "{F928F7A8-9172-41AD-857A-4CAF573B0A29}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProdusisBD", "ProdusisBD\ProdusisBD.csproj", "{F928F7A8-9172-41AD-857A-4CAF573B0A29}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingForms", "TestingForms\TestingForms.csproj", "{4BC373E3-9613-4643-9400-413976158F2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{70B2B01B-3731-4790-BA2B-EB106973A3AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{4BC373E3-9613-4643-9400-413976158F2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BC373E3-9613-4643-9400-413976158F2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BC373E3-9613-4643-9400-413976158F2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70B2B01B-3731-4790-BA2B-EB106973A3AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70B2B01B-3731-4790-BA2B-EB106973A3AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70B2B01B-3731-4790-BA2B-EB106973A3AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70B2B01B-3731-4790-BA2B-EB106973A3AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

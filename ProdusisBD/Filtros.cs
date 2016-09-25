@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProdusisBD
 {
-    class Filtros
+    public class Filtros
     {
         public string TipoTarefa;
         public int numDocumento;
