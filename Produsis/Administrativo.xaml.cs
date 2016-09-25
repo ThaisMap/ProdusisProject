@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Produsis;
 
 namespace GUI
 {
@@ -28,6 +29,11 @@ namespace GUI
         private void BtnCadFuncionarios_Click(object sender, RoutedEventArgs e)
         {
             NavegadorInterno.Navigate(new CadastroFuncionarios());
+        }
+
+        private void BtnDocumentos_Click(object sender, RoutedEventArgs e)
+        {
+            NavegadorInterno.Navigate(new PesquisarDocumento());
         }
     }
 }
