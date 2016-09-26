@@ -19,7 +19,11 @@
     <Grid Margin="0,10,0,0"
           HorizontalAlignment="Stretch"
           VerticalAlignment="Stretch">
+<<<<<<< HEAD
         <ScrollViewer VerticalScrollBarVisibility="Auto" Loaded="ScrollViewer_Loaded">
+=======
+        <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+>>>>>>> origin/master
             <StackPanel>
                 <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Cadastro de Funcionários</TextBlock>
                 <Separator />
