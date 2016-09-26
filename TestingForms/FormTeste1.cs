@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DAL;
 
-namespace TestingForms
+namespace Model
 {
     public partial class FormTeste1 : Form
     {

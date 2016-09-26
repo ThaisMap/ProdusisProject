@@ -9,8 +9,9 @@ using System.Data;
 using System.IO;
 using System.Data.SqlClient;
 using System.Data.Entity;
+using ProdusisBD;
 
-namespace ProdusisBD
+namespace DAL
 {
     public class TarefasBD
     {

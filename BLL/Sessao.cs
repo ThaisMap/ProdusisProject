@@ -11,4 +11,18 @@ namespace BLL
     {
         public static Funcionarios funcionarioLogado = new Funcionarios();
     }
+
+    public enum tiposDocumento
+    {
+        Manifesto,
+        Cte, 
+        NotaFiscal
+    }
+
+    public enum tipoFuncionario
+    {
+        Administrativo, 
+        Externo,
+        Operador
+    }
 }

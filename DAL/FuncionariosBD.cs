@@ -9,8 +9,9 @@ using System.Data;
 using System.IO;
 using System.Data.SqlClient;
 using System.Data.Entity;
+using ProdusisBD;
 
-namespace ProdusisBD
+namespace DAL
 {
     public class FuncionariosBD
     {
@@ -106,21 +107,21 @@ namespace ProdusisBD
         }
 
         /// <summary>
-        /// Retorna a lista de funcionários ativos
+        /// Retorna a lista dos nomes dos funcionários cadastrados
         /// </summary>
         /// <returns></returns>
-        public List<Funcionarios> getFuncionariosAtivos()
+        public List<string> getNomeFuncionarios()
         {
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    return (from Funcionarios in BancoDeDados.Funcionarios where Funcionarios.ativoFunc == true select Funcionarios).ToList();
+                    return BancoDeDados.Funcionarios.OrderBy(f => f.nomeFunc).Select(f => f.nomeFunc).ToList();
                 }
             }
             catch
             {
-                return new List<Funcionarios>();
+                return new List<string>();
             }
         }
 
@@ -134,7 +135,7 @@ namespace ProdusisBD
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    return (from Funcionarios in BancoDeDados.Funcionarios where Funcionarios.idFunc == id select Funcionarios).FirstOrDefault();
+                    return BancoDeDados.Funcionarios.Where(f => f.idFunc == id).FirstOrDefault();
                 }
             }
             catch
@@ -269,7 +270,7 @@ namespace ProdusisBD
                     else return false;
                 }
             }
-            catch(Exception e)
+            catch
             {
                 return false;
             }

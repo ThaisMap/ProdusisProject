@@ -46,13 +46,13 @@
     <Compile Include="Sessao.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{a1bd5847-5fe4-4dc5-a701-963c11c48988}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ProdusisBD\ProdusisBD.csproj">
       <Project>{f928f7a8-9172-41ad-857a-4caf573b0a29}</Project>
       <Name>ProdusisBD</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TestingForms\TestingForms.csproj">
-      <Project>{4bc373e3-9613-4643-9400-413976158f2b}</Project>
-      <Name>TestingForms</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

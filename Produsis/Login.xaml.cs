@@ -43,7 +43,7 @@ namespace GUI
                 }
                 // se o usuário nao for válido, pisca o text box
             }
-            // se os campos nao estiverem preenchidos, pisca tuuuuudo
+            // se os campos nao estiverem preenchidos, avisa que tem q preencher
            
         }
 

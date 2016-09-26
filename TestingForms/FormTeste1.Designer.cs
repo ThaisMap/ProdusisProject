@@ -1,4 +1,4 @@
-﻿namespace TestingForms
+﻿namespace Model
 {
     partial class FormTeste1
     {

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BLL;
 
 namespace GUI
 {
@@ -24,10 +25,11 @@ namespace GUI
         {
             InitializeComponent();
         }
-
-        private void Tipo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        
+        private void ScrollViewer_Loaded(object sender, RoutedEventArgs e)
         {
-
+            FuncionarioBLL f = new FuncionarioBLL();
+            Nome.ItemsSource = f.carregaFuncionarios();            
         }
     }
 }

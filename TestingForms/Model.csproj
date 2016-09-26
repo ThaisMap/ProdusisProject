@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F928F7A8-9172-41AD-857A-4CAF573B0A29}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{4BC373E3-9613-4643-9400-413976158F2B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ProdusisBD</RootNamespace>
-    <AssemblyName>ProdusisBD</AssemblyName>
+    <RootNamespace>TestingForms</RootNamespace>
+    <AssemblyName>TestingForms</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,83 +44,58 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ctes.cs">
-      <DependentUpon>Model_pBD.tt</DependentUpon>
+    <Compile Include="FormTeste1.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cte_Manifesto.cs">
-      <DependentUpon>Model_pBD.tt</DependentUpon>
+    <Compile Include="FormTeste1.Designer.cs">
+      <DependentUpon>FormTeste1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Filtros.cs" />
-    <Compile Include="Funcionarios.cs">
-      <DependentUpon>Model_pBD.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Func_Tarefa.cs">
-      <DependentUpon>Model_pBD.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Manifestos.cs">
-      <DependentUpon>Model_pBD.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model_pBD.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_pBD.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model_pBD.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_pBD.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model_pBD.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_pBD.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="NotasFiscais.cs">
-      <DependentUpon>Model_pBD.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Tarefas.cs">
-      <DependentUpon>Model_pBD.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Testes.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormTeste1.resx">
+      <DependentUpon>FormTeste1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="Model_pBD.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model_pBD.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Model_pBD.edmx.diagram">
-      <DependentUpon>Model_pBD.edmx</DependentUpon>
-    </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Model_pBD.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_pBD.edmx</DependentUpon>
-      <LastGenOutput>Model_pBD.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model_pBD.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_pBD.edmx</DependentUpon>
-      <LastGenOutput>Model_pBD.cs</LastGenOutput>
-    </Content>
+    <ProjectReference Include="..\ProdusisBD\ProdusisBD.csproj">
+      <Project>{f928f7a8-9172-41ad-857a-4caf573b0a29}</Project>
+      <Name>ProdusisBD</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
