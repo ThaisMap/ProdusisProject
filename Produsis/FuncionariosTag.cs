@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GUI
 {
-    public class Funcionarios
+    public class FuncionariosTag
     {
         public string Nome { get; set; }
         public string Tag { get; set; }

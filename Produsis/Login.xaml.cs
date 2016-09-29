@@ -27,6 +27,10 @@ namespace GUI
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
+          /*  TelaPrincipal view = new TelaPrincipal();
+            this.Close();
+            view.Show();*/
+
             if (verificaCampos())
             {
                 BLL.LoginBLL l = new BLL.LoginBLL();

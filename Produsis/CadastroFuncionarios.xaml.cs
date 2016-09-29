@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BLL;
+using ProdusisBD;
 
 namespace GUI
 {
@@ -21,15 +22,36 @@ namespace GUI
     /// </summary>
     public partial class CadastroFuncionarios : UserControl
     {
+        FuncionarioBLL f = new FuncionarioBLL();
+
         public CadastroFuncionarios()
         {
             InitializeComponent();
         }
-        
+
         private void ScrollViewer_Loaded(object sender, RoutedEventArgs e)
         {
-            FuncionarioBLL f = new FuncionarioBLL();
-            Nome.ItemsSource = f.carregaFuncionarios();            
+           // Nome.ItemsSource = f.carregaFuncionarios();
         }
+
+        private void Salvar_Click(object sender, RoutedEventArgs e)
+        {
+            f.salvarNovo(montarObjeto());
+        }
+
+        private Funcionarios montarObjeto()
+        {
+            Funcionarios func = new Funcionarios();
+            func.nomeFunc = Nome.Text;
+            func.matriculaFunc = Matricula.Text.Replace("_", "");
+            func.ocupadoFunc = false;
+            func.ativoFunc = (bool)Ativo.IsChecked;
+            func.senhaFunc = Senha.Password;
+            string tp = Tipo.Text;
+            func.tipoFunc = tp.First().ToString();
+
+            return func;
+        }
+
     }
 }

@@ -21,22 +21,22 @@ namespace GUI
     /// </summary>
     public partial class Descarga : UserControl
     {
-        public Funcionarios FuncionarioSelecionado;
+        public FuncionariosTag FuncionarioSelecionado;
         public Descarga()
         {
             InitializeComponent();
-            Funcionario = new ObservableCollection<GUI.Funcionarios>();
-            Funcionario.Add(new Funcionarios { Nome = "Paola Oliveira", Tag = CriaChipTag("Paola Oliveira") });
-            Funcionario.Add(new Funcionarios { Nome = "Jose Silva", Tag = CriaChipTag("Jose Silva") });
-            Funcionario.Add(new Funcionarios { Nome = "Astolfo Mexicano", Tag = CriaChipTag("Astolfo Mexicano") });
-            Funcionario.Add(new Funcionarios { Nome = "Dutra Mexicano", Tag = CriaChipTag("Dutra Mexicano") });
-            Funcionario.Add(new Funcionarios { Nome = "Loconauta Mexicano Gonzalez", Tag = CriaChipTag("Astolfo Zicado") });
+            Funcionario = new ObservableCollection<GUI.FuncionariosTag>();
+            Funcionario.Add(new FuncionariosTag { Nome = "Paola Oliveira", Tag = CriaChipTag("Paola Oliveira") });
+            Funcionario.Add(new FuncionariosTag { Nome = "Jose Silva", Tag = CriaChipTag("Jose Silva") });
+            Funcionario.Add(new FuncionariosTag { Nome = "Astolfo Mexicano", Tag = CriaChipTag("Astolfo Mexicano") });
+            Funcionario.Add(new FuncionariosTag { Nome = "Dutra Mexicano", Tag = CriaChipTag("Dutra Mexicano") });
+            Funcionario.Add(new FuncionariosTag { Nome = "Loconauta Mexicano Gonzalez", Tag = CriaChipTag("Astolfo Zicado") });
 
             //ListaDeFuncionarios.ItemsSource = Funcionario;
             CBFuncionario.ItemsSource = Funcionario;
         }
 
-        public ObservableCollection<Funcionarios> Funcionario { get; set; }
+        public ObservableCollection<FuncionariosTag> Funcionario { get; set; }
         public static string CriaChipTag(string Nome)
         {
             string[] PrimeirosNomes = new string[7];
@@ -55,8 +55,8 @@ namespace GUI
 
         private void CBFuncionario_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Funcionarios Funcionario = (Funcionarios)CBFuncionario.SelectedItem;
-            FuncionarioSelecionado = new Funcionarios {Nome = Funcionario.Nome , Tag = Funcionario.Tag};
+            FuncionariosTag Funcionario = (FuncionariosTag)CBFuncionario.SelectedItem;
+            FuncionarioSelecionado = new FuncionariosTag { Nome = Funcionario.Nome , Tag = Funcionario.Tag};
         }
     }
 }

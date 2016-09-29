@@ -19,11 +19,9 @@
     <Grid Margin="0,10,0,0"
           HorizontalAlignment="Stretch"
           VerticalAlignment="Stretch">
-<<<<<<< HEAD
+        
         <ScrollViewer VerticalScrollBarVisibility="Auto" Loaded="ScrollViewer_Loaded">
-=======
-        <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True">
->>>>>>> origin/master
+
             <StackPanel>
                 <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Cadastro de Funcionários</TextBlock>
                 <Separator />
@@ -53,7 +51,7 @@
                                              Foreground="{Binding ElementName=Nome,
                                                                   Path=BorderBrush}"
                                              Kind="Account" />
-                    <ComboBox Name="Nome"
+                    <TextBox Name="Nome"
                              Grid.Row="0"
                              Grid.Column="1"
                              Width="300"
@@ -102,8 +100,7 @@
                               Width="300"
                               Margin="5"
                               materialDesign:HintAssist.Hint="Tipo"
-                              materialDesign:HintAssist.IsFloating="True"
-                              SelectionChanged="Tipo_SelectionChanged" >
+                              materialDesign:HintAssist.IsFloating="True" >
                         <ComboBoxItem Content="Administrativo" HorizontalAlignment="Left" Width="298"/>
                         <ComboBoxItem Content="Externo" HorizontalAlignment="Left" Width="298"/>
                         <ComboBoxItem Content="Operador" HorizontalAlignment="Left" Width="298"/>
@@ -143,7 +140,7 @@
                             Margin="10,5"
                             HorizontalAlignment="Right"
                             Content="Salvar"
-                            Style="{StaticResource MaterialDesignFlatButton}" />
+                            Style="{StaticResource MaterialDesignFlatButton}" Click="Salvar_Click" />
                     </StackPanel>
                 </Grid>
 
