@@ -21,7 +21,15 @@ namespace ProdusisBD
             this.NotasFiscais = new HashSet<NotasFiscais>();
             this.Tarefas = new HashSet<Tarefas>();
         }
-    
+        public Ctes(int numero)
+        {
+            this.Cte_Manifesto = new HashSet<Cte_Manifesto>();
+            this.NotasFiscais = new HashSet<NotasFiscais>();
+            this.Tarefas = new HashSet<Tarefas>();
+            numeroCte = numero;
+        }
+
+
         public int idCte { get; set; }
         public int numeroCte { get; set; }
     

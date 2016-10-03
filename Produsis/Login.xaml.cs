@@ -27,13 +27,15 @@ namespace GUI
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
+            xmlBLL x = new xmlBLL();
+            x.lerXML();
           /*  TelaPrincipal view = new TelaPrincipal();
             this.Close();
             view.Show();*/
 
             if (verificaCampos())
             {
-                BLL.LoginBLL l = new BLL.LoginBLL();
+                LoginBLL l = new LoginBLL();
                 if (l.validarUsuario(TxbLogin.Text))
                 {
                     if (l.validarSenha(TxbLogin.Text, TxbSenha.Password))
@@ -48,7 +50,8 @@ namespace GUI
                 // se o usuário nao for válido, pisca o text box
             }
             // se os campos nao estiverem preenchidos, avisa que tem q preencher
-           
+
+            
         }
 
         private bool verificaCampos()

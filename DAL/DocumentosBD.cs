@@ -94,6 +94,24 @@ namespace DAL
             }
         }
 
+        public bool inserirCteNf(string numNF, string fornecedor, int numCte)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    NotasFiscais nfAtual = BancoDeDados.NotasFiscais.FirstOrDefault(nf => nf.numeroNF == numNF && nf.fonecedorNF == fornecedor);
+                    nfAtual.CteNF = numCte;
+                    BancoDeDados.SaveChanges();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// Retorna um manifesto a partir do seu número
         /// </summary>
@@ -116,8 +134,8 @@ namespace DAL
         /// <summary>
         /// Retorna uma nota fiscal a partir do seu numero
         /// </summary>
-        /// <param name="numNF">Parametros de busca</param>
-        public NotasFiscais getNFPorNumero(int numNF)
+        /// <param name="numNF">Parametros de busca (com série)</param>
+        public NotasFiscais getNFPorNumero(string numNF)
         {
             try
             {
@@ -157,7 +175,7 @@ namespace DAL
         /// <param name="tipodoc">Tipo de documento 0 - Manifesto, 1 - Cte, 2 - Nota fiscal</param>
         /// <param name="numDocumento">Parâmetro de busca</param>
         /// <returns>Id do documento se este for encontrado, -1 se nao for ou se ocorrer algum erro</returns>
-        public int? verificarDocumentoCadastrado(int tipodoc, int numDocumento)
+        public int? verificarDocumentoCadastrado(int tipodoc, string numDocumento)
         {
             try
             {
@@ -166,11 +184,11 @@ namespace DAL
                     int? documento = null;
                     if (tipodoc == 0)
                     {
-                        documento = (from Manifestos in BancoDeDados.Manifestos where Manifestos.numeroManifesto == numDocumento select Manifestos.idManifesto).FirstOrDefault();
+                        documento = (from Manifestos in BancoDeDados.Manifestos where Manifestos.numeroManifesto == int.Parse(numDocumento) select Manifestos.idManifesto).FirstOrDefault();
                     }
                     else if (tipodoc == 1)
                     {
-                        documento = (from Ctes in BancoDeDados.Ctes where Ctes.numeroCte == numDocumento select Ctes.idCte).FirstOrDefault();
+                        documento = (from Ctes in BancoDeDados.Ctes where Ctes.numeroCte == int.Parse(numDocumento) select Ctes.idCte).FirstOrDefault();
                     }
                     else
                     {
@@ -260,50 +278,17 @@ namespace DAL
         }
 
         /// <summary>
-        /// Verifica se todas as notas em um manifesto estão cadastradas
-        /// </summary>
-        /// <param name="idManifesto">Parâmetro de pesquisa</param>
-        /// <returns>-1 se todas estiverem cadastradas, -2 se ocorrer algum erro ou o número da primeira nota que não for encontrada</returns>
-        public int verificaNotasManifesto(int idManifesto)
-        {
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    List<NotasFiscais> ListaNFs = new List<NotasFiscais>();
-                    Manifestos man = BancoDeDados.Manifestos.Single(m => m.idManifesto == idManifesto);
-                    foreach (Cte_Manifesto c in man.Cte_Manifesto)
-                    {
-                        ListaNFs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == c.Cte select NotasFiscais).ToList();
-                        foreach (NotasFiscais n in ListaNFs)
-                        {
-                            if (verificarDocumentoCadastrado(2, n.numeroNF) < 0)
-                            {
-                                return n.numeroNF;
-                            }
-                        }
-                    }
-                }
-                return -1;
-            }
-            catch
-            {
-                return -2;
-            }
-        }
-
-        /// <summary>
         /// Retorna a soma dos sku's de todas as notas fiscais em um manifesto
         /// </summary>
-        public int getSkuManifesto(int idManifesto)
+        public int getSkuManifesto(int numManifesto)
         {
             int sku = 0;
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    List<NotasFiscais> ListaNFs = new List<NotasFiscais>();
-                    List<Cte_Manifesto> ListaCte = (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.Manifesto == idManifesto select Cte_Manifesto).ToList();
+                     List<NotasFiscais> ListaNFs = new List<NotasFiscais>();
+                    List<Cte_Manifesto> ListaCte = (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.Manifesto == numManifesto select Cte_Manifesto).ToList();
                     foreach (Cte_Manifesto c in ListaCte)
                     {
                         ListaNFs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == c.Cte select NotasFiscais).ToList();

@@ -19,6 +19,7 @@
         <AssociationConnector Association="produsisBDModel.FK_Func_Tarefa_Funcionarios" ManuallyRouted="false" />
         <AssociationConnector Association="produsisBDModel.FK_Func_Tarefa_Tarefas" ManuallyRouted="false" />
         <AssociationConnector Association="produsisBDModel.FK_Tarefas_Manifestos" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="produsisBDModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

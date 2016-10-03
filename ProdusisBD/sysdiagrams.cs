@@ -12,18 +12,12 @@ namespace ProdusisBD
     using System;
     using System.Collections.Generic;
     
-    public partial class Cte_Manifesto
+    public partial class sysdiagrams
     {
-        public Cte_Manifesto(int idCte, int idManifesto)
-        {
-            Cte = idCte;
-            Manifesto = idManifesto;
-        }
-        public int idCteManifesto { get; set; }
-        public int Cte { get; set; }
-        public int Manifesto { get; set; }
-    
-        public virtual Ctes Ctes { get; set; }
-        public virtual Manifestos Manifestos { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

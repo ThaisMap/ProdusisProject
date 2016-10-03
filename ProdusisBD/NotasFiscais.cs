@@ -15,13 +15,12 @@ namespace ProdusisBD
     public partial class NotasFiscais
     {
         public int idNF { get; set; }
-        public int numeroNF { get; set; }
+        public string numeroNF { get; set; }
         public string fonecedorNF { get; set; }
         public string destinatarioNF { get; set; }
         public int volumesNF { get; set; }
         public int skuNF { get; set; }
         public double pesoNF { get; set; }
-        public Nullable<double> cubagemNF { get; set; }
         public Nullable<int> CteNF { get; set; }
     
         public virtual Ctes Ctes { get; set; }
