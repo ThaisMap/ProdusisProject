@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="idCteManifesto" />
           </Key>
-          <Property Name="idCteManifesto" Type="int" Nullable="false" />
+          <Property Name="idCteManifesto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Cte" Type="int" Nullable="false" />
           <Property Name="Manifesto" Type="int" Nullable="false" />
         </EntityType>
@@ -17,14 +17,14 @@
           <Key>
             <PropertyRef Name="idCte" />
           </Key>
-          <Property Name="idCte" Type="int" Nullable="false" />
+          <Property Name="idCte" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="numeroCte" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Func_Tarefa">
           <Key>
             <PropertyRef Name="idFuncTarefa" />
           </Key>
-          <Property Name="idFuncTarefa" Type="int" Nullable="false" />
+          <Property Name="idFuncTarefa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Funcionario" Type="int" Nullable="false" />
           <Property Name="Tarefa" Type="int" Nullable="false" />
         </EntityType>
@@ -44,7 +44,7 @@
           <Key>
             <PropertyRef Name="idManifesto" />
           </Key>
-          <Property Name="idManifesto" Type="int" Nullable="false" />
+          <Property Name="idManifesto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="numeroManifesto" Type="int" Nullable="false" />
           <Property Name="quantCtesManifesto" Type="int" Nullable="false" />
           <Property Name="pesoManifesto" Type="float" Nullable="false" />
@@ -55,7 +55,7 @@
           <Key>
             <PropertyRef Name="idNF" />
           </Key>
-          <Property Name="idNF" Type="int" Nullable="false" />
+          <Property Name="idNF" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="numeroNF" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="fonecedorNF" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="destinatarioNF" Type="varchar" MaxLength="50" Nullable="false" />
@@ -63,16 +63,6 @@
           <Property Name="skuNF" Type="int" Nullable="false" />
           <Property Name="pesoNF" Type="float" Nullable="false" />
           <Property Name="CteNF" Type="int" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Tarefas">
           <Key>
@@ -175,7 +165,6 @@
           <EntitySet Name="Funcionarios" EntityType="Self.Funcionarios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Manifestos" EntityType="Self.Manifestos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NotasFiscais" EntityType="Self.NotasFiscais" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tarefas" EntityType="Self.Tarefas" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Cte_Manifesto_Cte_Manifesto" Association="Self.FK_Cte_Manifesto_Cte_Manifesto">
             <End Role="Ctes" EntitySet="Ctes" />
@@ -214,7 +203,7 @@
           <Key>
             <PropertyRef Name="idCteManifesto" />
           </Key>
-          <Property Name="idCteManifesto" Type="Int32" Nullable="false" />
+          <Property Name="idCteManifesto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Cte" Type="Int32" Nullable="false" />
           <Property Name="Manifesto" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Ctes" Relationship="Self.FK_Cte_Manifesto_Cte_Manifesto" FromRole="Cte_Manifesto" ToRole="Ctes" />
@@ -224,7 +213,7 @@
           <Key>
             <PropertyRef Name="idCte" />
           </Key>
-          <Property Name="idCte" Type="Int32" Nullable="false" />
+          <Property Name="idCte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="numeroCte" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Cte_Manifesto" Relationship="Self.FK_Cte_Manifesto_Cte_Manifesto" FromRole="Ctes" ToRole="Cte_Manifesto" />
           <NavigationProperty Name="NotasFiscais" Relationship="Self.FK_NotasFiscais_Ctes" FromRole="Ctes" ToRole="NotasFiscais" />
@@ -234,7 +223,7 @@
           <Key>
             <PropertyRef Name="idFuncTarefa" />
           </Key>
-          <Property Name="idFuncTarefa" Type="Int32" Nullable="false" />
+          <Property Name="idFuncTarefa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Funcionario" Type="Int32" Nullable="false" />
           <Property Name="Tarefa" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Funcionarios" Relationship="Self.FK_Func_Tarefa_Funcionarios" FromRole="Func_Tarefa" ToRole="Funcionarios" />
@@ -257,7 +246,7 @@
           <Key>
             <PropertyRef Name="idManifesto" />
           </Key>
-          <Property Name="idManifesto" Type="Int32" Nullable="false" />
+          <Property Name="idManifesto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="numeroManifesto" Type="Int32" Nullable="false" />
           <Property Name="quantCtesManifesto" Type="Int32" Nullable="false" />
           <Property Name="pesoManifesto" Type="Double" Nullable="false" />
@@ -270,7 +259,7 @@
           <Key>
             <PropertyRef Name="idNF" />
           </Key>
-          <Property Name="idNF" Type="Int32" Nullable="false" />
+          <Property Name="idNF" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="numeroNF" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
           <Property Name="fonecedorNF" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="destinatarioNF" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -413,18 +402,7 @@
             <End Role="Manifestos" EntitySet="Manifestos" />
             <End Role="Tarefas" EntitySet="Tarefas" />
           </AssociationSet>
-          <EntitySet Name="sysdiagrams" EntityType="produsisBDModel.sysdiagrams" />
         </EntityContainer>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -504,17 +482,6 @@
                 <ScalarProperty Name="fimTarefa" ColumnName="fimTarefa" />
                 <ScalarProperty Name="documentoTarefa" ColumnName="documentoTarefa" />
                 <ScalarProperty Name="tipoTarefa" ColumnName="tipoTarefa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="produsisBDModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

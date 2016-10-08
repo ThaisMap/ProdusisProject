@@ -29,11 +29,11 @@ namespace GUI
         {
             xmlBLL x = new xmlBLL();
             x.lerXML();
-          /*  TelaPrincipal view = new TelaPrincipal();
+            TelaPrincipal view = new TelaPrincipal();
             this.Close();
-            view.Show();*/
+            view.Show();
 
-            if (verificaCampos())
+          /*  if (verificaCampos())
             {
                 LoginBLL l = new LoginBLL();
                 if (l.validarUsuario(TxbLogin.Text))
@@ -50,7 +50,7 @@ namespace GUI
                 // se o usuário nao for válido, pisca o text box
             }
             // se os campos nao estiverem preenchidos, avisa que tem q preencher
-
+            */
             
         }
 

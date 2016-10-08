@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ProdusisBD;
+using System;
 
 namespace DAL
 {
@@ -22,7 +23,7 @@ namespace DAL
                 }
                 return true;
             }
-            catch
+            catch(Exception e)
             {
                 return false;
             }
@@ -44,7 +45,7 @@ namespace DAL
                 }
                 return true;
             }
-            catch
+            catch (Exception e)
             {
                 return false;
             }
@@ -88,7 +89,7 @@ namespace DAL
                 }
                 return true;
             }
-            catch
+            catch (Exception e)
             {
                 return false;
             }
@@ -101,12 +102,13 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     NotasFiscais nfAtual = BancoDeDados.NotasFiscais.FirstOrDefault(nf => nf.numeroNF == numNF && nf.fonecedorNF == fornecedor);
+                    numCte = getCtePorNumero(numCte).idCte;
                     nfAtual.CteNF = numCte;
                     BancoDeDados.SaveChanges();
                 }
                 return true;
             }
-            catch
+            catch (Exception e)
             {
                 return false;
             }
