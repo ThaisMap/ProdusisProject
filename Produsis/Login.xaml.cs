@@ -27,14 +27,16 @@ namespace GUI
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
-            xmlBLL x = new xmlBLL();
-            x.lerXML();
-            TelaPrincipal view = new TelaPrincipal();
-            this.Close();
-            view.Show();
-
-          /*  if (verificaCampos())
+            /* xmlBLL x = new xmlBLL();
+             x.lerXML();
+             
+             */
+            if (verificaCampos())
             {
+                TelaPrincipal view = new TelaPrincipal();
+                this.Close();
+                view.Show();
+                /*
                 LoginBLL l = new LoginBLL();
                 if (l.validarUsuario(TxbLogin.Text))
                 {
@@ -45,18 +47,27 @@ namespace GUI
                         this.Close();
                         view.Show();
                     }
-                    // se a senha nao for igual, pisca o password box
+                    else
+                        TxbSenha.Focus();
                 }
-                // se o usuário nao for válido, pisca o text box
+                else
+                    TxbLogin.Focus();*/
             }
-            // se os campos nao estiverem preenchidos, avisa que tem q preencher
-            */
-            
         }
 
         private bool verificaCampos()
         {
             //verificar se tem coisas digitadas nos dois campos
+            if(TxbLogin.Text == ""||TxbLogin.Text.Length<4)
+            {
+                TxbLogin.Focus();
+                return false;
+            }
+            if (TxbSenha.Password == "")
+            {
+                TxbSenha.Focus();
+                return false;
+            }
             return true;
         }
     }
