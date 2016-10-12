@@ -28,8 +28,7 @@ namespace GUI
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             /* xmlBLL x = new xmlBLL();
-             x.lerXML();
-             
+             x.lerXML();            
              */
             if (verificaCampos())
             {

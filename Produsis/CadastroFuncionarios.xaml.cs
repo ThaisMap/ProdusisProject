@@ -31,13 +31,14 @@ namespace GUI
 
         private void ScrollViewer_Loaded(object sender, RoutedEventArgs e)
         {
-           // Nome.ItemsSource = f.carregaFuncionarios();
+            Nome.ItemsSource = f.carregaFuncionarios();
         }
 
         private void Salvar_Click(object sender, RoutedEventArgs e)
         {
             f.salvarNovo(montarObjeto());
-        }
+        }       
+
 
         private Funcionarios montarObjeto()
         {
