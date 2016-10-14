@@ -33,7 +33,7 @@ namespace GUI
             Funcionario.Add(new FuncionariosTag { Nome = "Loconauta Mexicano Gonzalez", Tag = CriaChipTag("Astolfo Zicado") });
 
             //ListaDeFuncionarios.ItemsSource = Funcionario;
-            // CBFuncionario.ItemsSource = Funcionario;
+            CBFuncionario.ItemsSource = Funcionario;
         }
 
         public ObservableCollection<FuncionariosTag> Funcionario { get; set; }
@@ -53,5 +53,10 @@ namespace GUI
             ListaDeFuncionarios.Items.Add(FuncionarioSelecionado);
         }
 
+        private void CBFuncionario_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            FuncionariosTag Funcionario = (FuncionariosTag)CBFuncionario.SelectedItem;
+            FuncionarioSelecionado = new FuncionariosTag { Nome = Funcionario.Nome , Tag = Funcionario.Tag};
+        }
     }
 }
