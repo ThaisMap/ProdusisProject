@@ -117,6 +117,7 @@
     <Compile Include="TelaPrincipal.xaml.cs">
       <DependentUpon>TelaPrincipal.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Validacoes\ValidacaoCampoPreenchido.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Login.xaml.cs">
