@@ -30,7 +30,7 @@ namespace GUI
             /* xmlBLL x = new xmlBLL();
              x.lerXML();            
              */
-            if (verificaCampos())
+            if (true)//verificaCampos())
             {
                 TelaPrincipal view = new TelaPrincipal();
                 this.Close();

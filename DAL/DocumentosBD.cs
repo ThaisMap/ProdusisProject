@@ -23,7 +23,7 @@ namespace DAL
                 }
                 return true;
             }
-            catch(Exception e)
+            catch
             {
                 return false;
             }
@@ -45,7 +45,7 @@ namespace DAL
                 }
                 return true;
             }
-            catch (Exception e)
+            catch
             {
                 return false;
             }
@@ -89,7 +89,7 @@ namespace DAL
                 }
                 return true;
             }
-            catch (Exception e)
+            catch
             {
                 return false;
             }
@@ -108,7 +108,7 @@ namespace DAL
                 }
                 return true;
             }
-            catch (Exception e)
+            catch 
             {
                 return false;
             }

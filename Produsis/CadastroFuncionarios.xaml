@@ -20,7 +20,7 @@
           HorizontalAlignment="Stretch"
           VerticalAlignment="Stretch">
         
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Loaded="ScrollViewer_Loaded">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
 
             <StackPanel>
                 <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Cadastro de Funcionários</TextBlock>
@@ -51,13 +51,13 @@
                                              Foreground="{Binding ElementName=Nome,
                                                                   Path=BorderBrush}"
                                              Kind="Account" />
-                    <ComboBox Name="Nome"
+                    <TextBox Name="Nome"
                              Grid.Row="0"
                              Grid.Column="1"
                              Width="300"
                              Margin="0,5,5,5"
                              materialDesign:HintAssist.Hint="Nome"
-                             materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Right" IsEditable="True" />
+                             materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Right" />
                     <materialDesign:PackIcon Grid.Row="1"
                                              Grid.Column="0"
                                              Width="24"
@@ -134,7 +134,7 @@
                             Margin="10,5"
                             HorizontalAlignment="Right"
                             Content="Limpar"
-                            Style="{StaticResource MaterialDesignFlatButton}" />
+                            Style="{StaticResource MaterialDesignFlatButton}" Click="limpar" />
                         <Button Name="Salvar"
                             Width="80"
                             Margin="10,5"

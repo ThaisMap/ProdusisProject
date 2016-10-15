@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BLL;
 
 namespace GUI
 {
@@ -22,10 +23,16 @@ namespace GUI
     public partial class Descarga : UserControl
     {
         public FuncionariosTag FuncionarioSelecionado;
+        public List<String> ListaFunc;
+        public FuncionarioBLL f = new FuncionarioBLL();
+        public ObservableCollection<FuncionariosTag> Funcionario { get; set; }
+
+
         public Descarga()
         {
+
             InitializeComponent();
-            Funcionario = new ObservableCollection<GUI.FuncionariosTag>();
+            /*Funcionario = new ObservableCollection<GUI.FuncionariosTag>();
             Funcionario.Add(new FuncionariosTag { Nome = "Paola Oliveira", Tag = CriaChipTag("Paola Oliveira") });
             Funcionario.Add(new FuncionariosTag { Nome = "Jose Silva", Tag = CriaChipTag("Jose Silva") });
             Funcionario.Add(new FuncionariosTag { Nome = "Astolfo Mexicano", Tag = CriaChipTag("Astolfo Mexicano") });
@@ -33,10 +40,17 @@ namespace GUI
             Funcionario.Add(new FuncionariosTag { Nome = "Loconauta Mexicano Gonzalez", Tag = CriaChipTag("Astolfo Zicado") });
 
             //ListaDeFuncionarios.ItemsSource = Funcionario;
-            CBFuncionario.ItemsSource = Funcionario;
+            CBFuncionario.ItemsSource = Funcionario;*/
+
+            ListaFunc = f.carregaFuncionarios();
+            ListaFunc.Add("Paola Oliveira");
+            ListaFunc.Add("Jose Silva");
+            ListaFunc.Add("Astolfo Mexicano");
+            ListaFunc.Add("Loconauta Mexicano Gonzalez");
+
+            CBFuncionario.ItemsSource = ListaFunc;
         }
 
-        public ObservableCollection<FuncionariosTag> Funcionario { get; set; }
         public static string CriaChipTag(string Nome)
         {
             string[] PrimeirosNomes = new string[7];
@@ -48,15 +62,14 @@ namespace GUI
         {
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Inserir_Click(object sender, RoutedEventArgs e)
         {
             ListaDeFuncionarios.Items.Add(FuncionarioSelecionado);
         }
 
         private void CBFuncionario_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            FuncionariosTag Funcionario = (FuncionariosTag)CBFuncionario.SelectedItem;
-            FuncionarioSelecionado = new FuncionariosTag { Nome = Funcionario.Nome , Tag = Funcionario.Tag};
+            FuncionarioSelecionado = new FuncionariosTag(CBFuncionario.SelectedItem.ToString(), CriaChipTag(CBFuncionario.SelectedItem.ToString()));
         }
     }
 }

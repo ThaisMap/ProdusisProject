@@ -14,7 +14,7 @@ namespace BLL
         
         public List<string> carregaFuncionarios()
         {
-            return f.getNomeFuncionarios();
+            return f.getListaNomes();
         }
 
         public bool salvarNovo(Funcionarios novoFunc)
@@ -27,5 +27,18 @@ namespace BLL
             return f.editar(novosDados);
         }
 
+        public bool nomeCadastrado(string nome)
+        {
+            if (f.getFuncPorNome(nome) == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public Funcionarios dadosFuncionario(string nome)
+        {
+            return f.getFuncPorNome(nome);
+        }
     }
 }

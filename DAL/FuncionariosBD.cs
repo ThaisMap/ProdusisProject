@@ -107,21 +107,21 @@ namespace DAL
         }
 
         /// <summary>
-        /// Retorna a lista dos nomes dos funcionários cadastrados
+        /// Retorna a dos funcionários cadastrados
         /// </summary>
         /// <returns></returns>
-        public List<string> getNomeFuncionarios()
+        public List<Funcionarios> getFuncionarios()
         {
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    return BancoDeDados.Funcionarios.OrderBy(f => f.nomeFunc).Select(f => f.nomeFunc).ToList();
+                    return BancoDeDados.Funcionarios.OrderBy(f => f.nomeFunc).ToList();
                 }
             }
             catch
             {
-                return new List<string>();
+                return new List<Funcionarios>();
             }
         }
 

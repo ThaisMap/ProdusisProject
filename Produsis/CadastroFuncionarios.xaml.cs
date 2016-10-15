@@ -29,17 +29,12 @@ namespace GUI
             InitializeComponent();
         }
 
-        private void ScrollViewer_Loaded(object sender, RoutedEventArgs e)
-        {
-            Nome.ItemsSource = f.carregaFuncionarios();
-        }
-
         private void Salvar_Click(object sender, RoutedEventArgs e)
         {
-            f.salvarNovo(montarObjeto());
-        }       
-
-
+            if (checarCampos())
+                f.salvarNovo(montarObjeto());
+        }
+        
         private Funcionarios montarObjeto()
         {
             Funcionarios func = new Funcionarios();
@@ -48,11 +43,27 @@ namespace GUI
             func.ocupadoFunc = false;
             func.ativoFunc = (bool)Ativo.IsChecked;
             func.senhaFunc = Senha.Password;
-            string tp = Tipo.Text;
-            func.tipoFunc = tp.First().ToString();
+            func.tipoFunc = Tipo.Text;
 
             return func;
         }
 
+        private bool checarCampos()
+        {
+            if (Nome.Text != "" && Matricula.Text != "_____" && Senha.Password != "" && Tipo.Text != "")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void limpar(object sender, RoutedEventArgs e)
+        {
+            Nome.Text = "";
+            Matricula.Text = "_____";
+            Senha.Password = "";
+            Tipo.Text = "";
+            Ativo.IsChecked = true;
+        }
     }
 }

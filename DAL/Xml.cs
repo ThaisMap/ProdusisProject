@@ -79,7 +79,7 @@ namespace DAL
                 }
                 return false;
             }
-            catch (System.Exception e)
+            catch
             {
                 return false;
             }
