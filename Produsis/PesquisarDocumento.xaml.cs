@@ -55,7 +55,6 @@ namespace Produsis
                             NumeroDeSKUS.Text = documento.skusManifesto.ToString();
                             Peso.Text = documento.pesoManifesto.ToString();
                             Fornecedor.Text = "Não se aplica";
-                            Destinatario.Text = "Não se aplica";
                         }
                     }
                     else if (TipoDeDocumento.SelectedIndex == 2)
@@ -68,7 +67,6 @@ namespace Produsis
                             NumeroDeSKUS.Text = documento.skuNF.ToString();
                             Peso.Text = documento.pesoNF.ToString();
                             Fornecedor.Text = "Não se aplica";
-                            Destinatario.Text = "Não se aplica";
                         }
                     }
                 }
