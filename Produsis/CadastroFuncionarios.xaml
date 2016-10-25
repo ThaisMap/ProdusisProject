@@ -10,6 +10,8 @@
              VerticalAlignment="Stretch"
              d:DesignHeight="420"
              d:DesignWidth="600"
+             xmlns:Validacoes ="clr-namespace:Produsis.Validacoes"
+             d:DataContext="{d:DesignInstance Validacoes:TextFieldsViewModel, d:IsDesignTimeCreatable=False}"
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
              TextElement.FontSize="16"
@@ -19,8 +21,8 @@
     <Grid Margin="0,10,0,0"
           HorizontalAlignment="Stretch"
           VerticalAlignment="Stretch">
-        
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True">
 
             <StackPanel>
                 <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Cadastro de Funcionários</TextBlock>
@@ -33,13 +35,20 @@
                         <ColumnDefinition Width="60" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                         <RowDefinition Height="26*" />
-                        <RowDefinition Height="25*" />
-                        <RowDefinition Height="25*" />
-                        <RowDefinition Height="26*" />
-                        <RowDefinition Height="0*" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
+                            <RowDefinition Height="25*" />
+                            <RowDefinition Height="25*" />
+                            <RowDefinition Height="26*" />
+                            <RowDefinition Height="0*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         <RowDefinition Height="21*" />
                     </Grid.RowDefinitions>
                     <materialDesign:PackIcon Grid.Row="0"
@@ -56,9 +65,17 @@
                              Grid.Row="0"
                              Grid.Column="1"
                              Width="300"
-                             Margin="0,5,5,5"
+                             Margin="0,5,5,15"
                              materialDesign:HintAssist.Hint="Nome"
-                             materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Right" />
+                             materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Right">
+                        <TextBox.Text>
+                            <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <Validacoes:ValidacaoCampoPreenchido ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                     <materialDesign:PackIcon Grid.Row="1"
                                              Grid.Column="0"
                                              Width="24"
@@ -73,7 +90,7 @@
                                         Grid.Row="1"
                                         Grid.Column="1"
                                         Width="300"
-                                        Margin="5"
+                                        Margin="0,5,5,15"
                                         materialDesign:HintAssist.Hint="Nº de matrícula"
                                         materialDesign:HintAssist.IsFloating="True"
                                         Mask="99999"
@@ -92,7 +109,7 @@
                                  Grid.Row="2"
                                  Grid.Column="1"
                                  Width="300"
-                                 Margin="5"
+                                 Margin="0,5,5,15"
                                  materialDesign:HintAssist.Hint="Senha"
                                  materialDesign:HintAssist.IsFloating="True" />
                     <materialDesign:PackIcon Grid.Row="3"
@@ -116,7 +133,7 @@
                               Grid.Row="4"
                               Grid.Column="1"
                               Width="300"
-                              Margin="5"
+                              Margin="0,5,5,15"
                               materialDesign:HintAssist.Hint="Tipo"
                               materialDesign:HintAssist.IsFloating="True" >
                         <ComboBoxItem Content="Administrativo" HorizontalAlignment="Left" Width="298"/>
@@ -129,22 +146,24 @@
                                              Margin="13,0,13,10"
                                              HorizontalAlignment="Center"
                                              VerticalAlignment="Bottom"
-                                             Foreground="{Binding ElementName=Funcao,
+                                             Foreground="{Binding ElementName=Tipo,
                                                                   Path=BorderBrush}"
                                              Kind="HandPointingRight" />
 
                     <TextBlock Grid.Row="5"
                                Grid.Column="0"
-                               Margin="5,20,5,0"
-                               HorizontalAlignment="Center">
+                               Margin="5,0,5,0"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center">
                         Ativo:
                     </TextBlock>
                     <ToggleButton Name="Ativo"
                                   Grid.Row="5"
                                   Grid.Column="1"
                                   Width="auto"
-                                  Margin="10,20,0,0"
-                                  HorizontalAlignment="Left" IsChecked="True" />
+                                  Margin="10,0,0,0"
+                                  HorizontalAlignment="Left" IsChecked="True" 
+                                  VerticalAlignment="Center"/>
                     <StackPanel Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3" HorizontalAlignment="Right" Orientation="Horizontal">
                         <Button Name="Limpar"
                             Width="80"
