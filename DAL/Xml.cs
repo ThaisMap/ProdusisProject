@@ -28,7 +28,6 @@ namespace DAL
                     nfLida.skuNF = result.Count;
                     nfLida.numeroNF = nf.GetElementsByTagName("nNF")[0].InnerText + '-' + nf.GetElementsByTagName("serie")[0].InnerText;
                     nfLida.fonecedorNF = nf.GetElementsByTagName("xNome")[0].InnerText;
-                    nfLida.destinatarioNF = nf.GetElementsByTagName("xNome")[1].InnerText;
                     nfLida.volumesNF = int.Parse(nf.GetElementsByTagName("qVol")[0].InnerText);
                     nfLida.pesoNF = double.Parse(nf.GetElementsByTagName("pesoB")[0].InnerText.Replace(".", ","));
 
@@ -96,8 +95,6 @@ namespace DAL
         private void criarCteManifesto(int cte, int manifesto)
         {
             DocumentosBD dbd = new DocumentosBD();
-            cte = dbd.getCtePorNumero(cte).idCte;
-            manifesto = dbd.getManifestoPorNumero(manifesto).idManifesto;
             Cte_Manifesto novo = new Cte_Manifesto();
             novo.Cte = cte;
             novo.Manifesto = manifesto;

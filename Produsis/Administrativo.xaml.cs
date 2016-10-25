@@ -35,5 +35,10 @@ namespace GUI
         {
             NavegadorInterno.Navigate(new PesquisarDocumento());
         }
+
+        private void BtnEditarFuncionarios_Click(object sender, RoutedEventArgs e)
+        {
+            NavegadorInterno.Navigate(new EdicaoFuncionarios());
+        }
     }
 }

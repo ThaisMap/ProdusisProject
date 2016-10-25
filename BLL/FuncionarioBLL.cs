@@ -17,6 +17,11 @@ namespace BLL
             return f.getListaNomes();
         }
 
+        public bool validarSenha(string matricula, string senha)
+        {
+            return f.verificaSenha(matricula, senha);
+        }
+
         public bool salvarNovo(Funcionarios novoFunc)
         {
             return f.cadastrar(novoFunc);

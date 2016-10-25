@@ -17,7 +17,6 @@ namespace ProdusisBD
         public int idNF { get; set; }
         public string numeroNF { get; set; }
         public string fonecedorNF { get; set; }
-        public string destinatarioNF { get; set; }
         public int volumesNF { get; set; }
         public int skuNF { get; set; }
         public double pesoNF { get; set; }

@@ -95,15 +95,14 @@ namespace DAL
             }
         }
 
-        public bool inserirCteNf(string numNF, string fornecedor, int numCte)
+        public bool inserirCteNf(string numNF, string fornecedor, int numeroCte)
         {
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     NotasFiscais nfAtual = BancoDeDados.NotasFiscais.FirstOrDefault(nf => nf.numeroNF == numNF && nf.fonecedorNF == fornecedor);
-                    numCte = getCtePorNumero(numCte).idCte;
-                    nfAtual.CteNF = numCte;
+                    nfAtual.CteNF = numeroCte;
                     BancoDeDados.SaveChanges();
                 }
                 return true;
@@ -152,25 +151,7 @@ namespace DAL
             }
         }
 
-        /// <summary>
-        /// Retorna um cte a partir do seu numero
-        /// </summary>
-        /// <param name="numCte">Parâmetros de busca</param>
-        public Ctes getCtePorNumero(int numCte)
-        {
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    return (from Ctes in BancoDeDados.Ctes where Ctes.numeroCte == numCte select Ctes).FirstOrDefault();
-                }
-            }
-            catch
-            {
-                return new Ctes();
-            }
-        }
-
+       
         /// <summary>
         /// Verifica se o documento indicado esta cadastrado no banco de dados
         /// </summary>
@@ -186,11 +167,11 @@ namespace DAL
                     int? documento = null;
                     if (tipodoc == 0)
                     {
-                        documento = (from Manifestos in BancoDeDados.Manifestos where Manifestos.numeroManifesto == int.Parse(numDocumento) select Manifestos.idManifesto).FirstOrDefault();
+                        documento = (from Manifestos in BancoDeDados.Manifestos where Manifestos.numeroManifesto == int.Parse(numDocumento) select Manifestos.numeroManifesto).FirstOrDefault();
                     }
                     else if (tipodoc == 1)
                     {
-                        documento = (from Ctes in BancoDeDados.Ctes where Ctes.numeroCte == int.Parse(numDocumento) select Ctes.idCte).FirstOrDefault();
+                        documento = (from Ctes in BancoDeDados.Ctes where Ctes.numeroCte == int.Parse(numDocumento) select Ctes.numeroCte).FirstOrDefault();
                     }
                     else
                     {
@@ -238,7 +219,7 @@ namespace DAL
         /// <summary>
         /// Retorna uma string com os dados do manifesto indicado
         /// </summary>
-        private string getDadosManifesto(int idDoc)
+        private string getDadosManifesto(int numDoc)
         {
             string dados;
             try
@@ -247,7 +228,7 @@ namespace DAL
                 {
                     //Funcionarios funcAtual = BancoDeDados.Funcionarios.Single(f => f.idFunc == novoFunc.idFunc);
 
-                    Manifestos m = BancoDeDados.Manifestos.SingleOrDefault(man => man.idManifesto == idDoc);
+                    Manifestos m = BancoDeDados.Manifestos.SingleOrDefault(man => man.numeroManifesto == numDoc);
                     dados = "Manifesto nº " + m.numeroManifesto + " - " + m.quantCtesManifesto + " entregas - " + m.VolumesManifesto + " volumes - " + m.VolumesManifesto + " SKU's - " + m.pesoManifesto + " Kg";
                 }
             }
@@ -261,15 +242,15 @@ namespace DAL
         /// <summary>
         /// Retorna uma string com os dados do cte indicado
         /// </summary>
-        private string getDadosCte(int idDoc)
+        private string getDadosCte(int numDoc)
         {
             string dados;
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    int numCte = (from Ctes in BancoDeDados.Ctes where Ctes.idCte == idDoc select Ctes.numeroCte).FirstOrDefault();
-                    dados = "Cte n º " + numCte + " - " + getVolumesCte(idDoc) + " volumes - " + getSkuCte(idDoc) + " SKU's - " + getPesoCte(idDoc) + " kg";
+                    int numeroCte = (from Ctes in BancoDeDados.Ctes where Ctes.numeroCte == numDoc select Ctes.numeroCte).FirstOrDefault();
+                    dados = "Cte n º " + numeroCte + " - " + getVolumesCte(numDoc) + " volumes - " + getSkuCte(numDoc) + " SKU's - " + getPesoCte(numDoc) + " kg";
                 }
             }
             catch
@@ -313,7 +294,7 @@ namespace DAL
         /// </summary>
         /// <param name="idCte">Parâmetro de pesquisa</param>
         /// <returns>O múmero de skus ou 0, caso nao encontre alguma nota, -1 se ocorrer um erro</returns>
-        private int getSkuCte(int idCte)
+        public int getSkuCte(int idCte)
         {
             int sku = 0;
             try
@@ -323,7 +304,7 @@ namespace DAL
                     List<NotasFiscais> ListaNFs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais).ToList();
                     foreach (NotasFiscais n in ListaNFs)
                     {
-                        if (verificarDocumentoCadastrado(2, n.numeroNF) < 0)
+                        if (verificarDocumentoCadastrado(2, n.numeroNF) > 0)
                             sku += n.skuNF;
                     }
                 }
@@ -335,12 +316,29 @@ namespace DAL
             return sku;
         }
 
+        public string getFornecedorCte(int idCte)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    return (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais.fonecedorNF).FirstOrDefault();
+                }
+            }
+            catch
+            {
+                return "Fornecedor não encontrado";
+            }
+        }
+
+       
+
         /// <summary>
         /// Retorna a soma do peso de cada nota componente do Cte
         /// </summary>
         /// <param name="idCte">Parâmetro de pesquisa</param>
         /// <returns>O múmero de skus ou 0, caso nao encontre alguma nota, -1 se ocorrer um erro</returns>
-        private double getPesoCte(int idCte)
+        public double getPesoCte(int idCte)
         {
             double peso = 0;
             try
@@ -350,7 +348,7 @@ namespace DAL
                     List<NotasFiscais> ListaNFs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais).ToList();
                     foreach (NotasFiscais n in ListaNFs)
                     {
-                        if (verificarDocumentoCadastrado(2, n.numeroNF) < 0)
+                        if (verificarDocumentoCadastrado(2, n.numeroNF) > 0)
                             peso += n.pesoNF;
                     }
                 }
@@ -366,19 +364,19 @@ namespace DAL
         /// <summary>
         /// Retorna a soma dos skus de cada nota componente do Cte
         /// </summary>
-        /// <param name="idCte">Parâmetro de pesquisa</param>
+        /// <param name="numeroCte">Parâmetro de pesquisa</param>
         /// <returns>O múmero de skus ou 0, caso nao encontre alguma nota, -1 se ocorrer um erro</returns>
-        private int getVolumesCte(int idCte)
+        public int getVolumesCte(int numeroCte)
         {
             int volumes = 0;
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    List<NotasFiscais> ListaNFs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais).ToList();
+                    List<NotasFiscais> ListaNFs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == numeroCte select NotasFiscais).ToList();
                     foreach (NotasFiscais n in ListaNFs)
                     {
-                        if (verificarDocumentoCadastrado(2, n.numeroNF) < 0)
+                        if (verificarDocumentoCadastrado(2, n.numeroNF) > 0)
                             volumes += n.volumesNF;
                     }
                 }

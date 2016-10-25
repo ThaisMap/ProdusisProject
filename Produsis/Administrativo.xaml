@@ -35,7 +35,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="1" CanVerticallyScroll="True">
+            <StackPanel CanVerticallyScroll="True" Margin="10,0,-10,0">
                 <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Administrativo</TextBlock>
                 <Separator></Separator>
                 <StackPanel HorizontalAlignment="Center" Height="30" Orientation="Horizontal">
@@ -43,8 +43,9 @@
                         <TextBlock TextWrapping="Wrap" TextAlignment="Center">Tarefas Iniciadas Hoje</TextBlock>
                     </Button>
                     <Button Name="BtnCadFuncionarios" Height="auto" Width="180" Margin="5,0" Click="BtnCadFuncionarios_Click">
-                        <TextBlock TextWrapping="Wrap" TextAlignment="Center">Cadastrar Funcionários</TextBlock>
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Center">Cadastrar Funcionário</TextBlock>
                     </Button>
+                    <Button x:Name="BtnEditarFuncionarios" Content="Editar Funcionário" Height="Auto" Width="150" Click="BtnEditarFuncionarios_Click"/>
                     <Button Name="BtnDocumentos" Height="auto" Width="140" Margin="5,0" Click="BtnDocumentos_Click">
                         <TextBlock TextWrapping="Wrap" TextAlignment="Center">Ver Documentos</TextBlock>
                     </Button>
