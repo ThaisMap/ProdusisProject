@@ -11,7 +11,7 @@
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-        Title="Login" Height="300" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Login" Height="300" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="Icone Produsis.ico">
     <Grid>
         <Grid Width="300" VerticalAlignment="Center" HorizontalAlignment="Center">
             <StackPanel VerticalAlignment="Center" Width="auto">

@@ -18,7 +18,7 @@
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              mc:Ignorable="d">
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,10,0,-10">
             <Grid Margin="0,10,0,10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -41,10 +41,11 @@
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="65*" />
+                                    <RowDefinition Height="47" />
+                                    <RowDefinition Height="75*" />
+                                    <RowDefinition Height="42*" />
+
                                 </Grid.RowDefinitions>
                                 <StackPanel Grid.Row="0"
                                             Grid.Column="0"
@@ -67,11 +68,9 @@
                                         Style="{StaticResource MaterialDesignTextBox}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Row="0"
-                                            Grid.RowSpan="3"
                                             CanVerticallyScroll="True"
                                             Grid.Column="1"
-                                            Height="200"
-                                            Margin="10,-28,-10,58">
+                                            Margin="10,-28,-10,16">
                                     <TextBlock>Funcionários Responsaveis:</TextBlock>
                                     <ListBox Name="ListaDeFuncionarios"
                                              materialDesign:ShadowAssist.ShadowDepth="Depth2"
@@ -86,10 +85,12 @@
                                         </ListBox.ItemTemplate>
                                     </ListBox>
                                 </StackPanel>
-                                <StackPanel Grid.Row="1"
+                                <TextBlock Grid.Row="1" Text="Manifesto: "  />
+
+
+                                <StackPanel Grid.Row="2"
                                             Grid.Column="0"
-                                            Height="40"
-                                            Margin="5"
+                                            Margin="5,17"
                                             Orientation="Horizontal">
                                     <materialDesign:PackIcon Width="22"
                                                              Height="auto"
@@ -116,11 +117,11 @@
                                         Incluir
                                     </Button>
                                 </StackPanel>
-                                <Button Grid.Row="2"
+                                <Button Grid.Row="3"
                                         Grid.Column="1"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Bottom"
-                                        Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,0,10">
+                                        Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,0,10" Width="71">
                                     Iniciar
                                 </Button>
                             </Grid>

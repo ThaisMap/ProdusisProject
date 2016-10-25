@@ -10,7 +10,7 @@
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-        Title="Menu" MinHeight="600" MinWidth="800" Height="600" Width="1060" WindowStartupLocation="CenterScreen">
+        Title="Menu" MinHeight="600" MinWidth="800" Height="600" Width="1060" WindowStartupLocation="CenterScreen" Icon="Icone Produsis.ico">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -49,7 +49,7 @@
                 </StackPanel>
             </materialDesign:PopupBox>
             <Frame Name="Navegador" Margin="0,10,0,10" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" NavigationUIVisibility="Hidden" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="500"></Frame>
-            <Label x:Name="BemVindo" Content="Bem vindo (a) ao Produsis!" Grid.Column="1" HorizontalAlignment="Left" Margin="10,111,0,0" Grid.Row="1" VerticalAlignment="Top" Height="60" Width="255" FontSize="20" FontFamily="Roboto"/>
+            <Label x:Name="BemVindo" Content="Produsis" Grid.Column="1" HorizontalAlignment="Left" Margin="563,417,0,0" Grid.Row="1" VerticalAlignment="Top" Height="60" Width="284" FontSize="36" FontFamily="Engravers MT"/>
         </Grid>
     </Grid>
 </Window>

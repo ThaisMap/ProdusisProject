@@ -119,15 +119,7 @@
                            Grid.Column="1"
                            Margin="5"
                            TextWrapping="Wrap" />
-                <TextBlock Grid.Row="5"
-                           Grid.Column="0"
-                           Margin="5"
-                           Text="Destinatário:" />
-                <TextBlock Name="Destinatario"
-                           Grid.Row="5"
-                           Grid.Column="1"
-                           Margin="5"
-                           TextWrapping="Wrap" />
+               
                 <TextBlock Grid.Row="1"
                            Grid.Column="0"
                            Margin="5"
