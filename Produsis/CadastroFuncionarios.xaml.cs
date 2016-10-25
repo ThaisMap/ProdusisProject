@@ -61,9 +61,10 @@ namespace GUI
         private void limpar(object sender, RoutedEventArgs e)
         {
             Nome.Text = "";
-            Matricula.Text = "_____";
+            Matricula.Text = "";
             Senha.Password = "";
-            Tipo.Text = "";
+            Senha2.Password = "";
+            Tipo.SelectedIndex = -1;
             Ativo.IsChecked = true;
         }
     }

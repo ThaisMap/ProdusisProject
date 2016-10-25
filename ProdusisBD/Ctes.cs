@@ -22,7 +22,6 @@ namespace ProdusisBD
             this.Tarefas = new HashSet<Tarefas>();
         }
     
-        public int idCte { get; set; }
         public int numeroCte { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

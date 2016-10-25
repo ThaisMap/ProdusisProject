@@ -32,16 +32,6 @@ namespace GUI
         {
 
             InitializeComponent();
-            /*Funcionario = new ObservableCollection<GUI.FuncionariosTag>();
-            Funcionario.Add(new FuncionariosTag { Nome = "Paola Oliveira", Tag = CriaChipTag("Paola Oliveira") });
-            Funcionario.Add(new FuncionariosTag { Nome = "Jose Silva", Tag = CriaChipTag("Jose Silva") });
-            Funcionario.Add(new FuncionariosTag { Nome = "Astolfo Mexicano", Tag = CriaChipTag("Astolfo Mexicano") });
-            Funcionario.Add(new FuncionariosTag { Nome = "Dutra Mexicano", Tag = CriaChipTag("Dutra Mexicano") });
-            Funcionario.Add(new FuncionariosTag { Nome = "Loconauta Mexicano Gonzalez", Tag = CriaChipTag("Astolfo Zicado") });
-
-            //ListaDeFuncionarios.ItemsSource = Funcionario;
-            CBFuncionario.ItemsSource = Funcionario;*/
-
             ListaFunc = f.carregaFuncionarios();
             ListaFunc.Add("Paola Oliveira");
             ListaFunc.Add("Jose Silva");

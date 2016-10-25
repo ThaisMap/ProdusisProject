@@ -21,7 +21,6 @@ namespace ProdusisBD
             this.Tarefas = new HashSet<Tarefas>();
         }
     
-        public int idManifesto { get; set; }
         public int numeroManifesto { get; set; }
         public int quantCtesManifesto { get; set; }
         public double pesoManifesto { get; set; }
