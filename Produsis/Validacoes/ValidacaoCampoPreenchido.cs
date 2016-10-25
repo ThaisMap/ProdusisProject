@@ -2,13 +2,18 @@
 using System.Windows.Controls;
 namespace Produsis.Validacoes
 {
-        class ValidacaoCampoPreenchido : ValidationRule
+    class ValidacaoCampoPreenchido : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+            if (value == null || value.ToString() == "")
             {
-                return string.IsNullOrWhiteSpace((value ?? "").ToString())
-                    ? new ValidationResult(false, "Field is required.")
-                    : ValidationResult.ValidResult;
+                return new ValidationResult(false, "Favor preencher o campo.");
+            }
+            else
+            {
+               return new ValidationResult(true, "");
             }
         }
+    }
 }
