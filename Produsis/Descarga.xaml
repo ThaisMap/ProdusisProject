@@ -18,7 +18,7 @@
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              mc:Ignorable="d">
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,10,0,-10">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
             <Grid Margin="0,10,0,10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -68,29 +68,30 @@
                                         Style="{StaticResource MaterialDesignTextBox}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Row="0"
+                                            Grid.RowSpan="3"
                                             CanVerticallyScroll="True"
                                             Grid.Column="1"
-                                            Margin="10,-28,-10,16">
+                                            Margin="10,-28,-10,10">
                                     <TextBlock>Funcionários Responsaveis:</TextBlock>
                                     <ListBox Name="ListaDeFuncionarios"
                                              materialDesign:ShadowAssist.ShadowDepth="Depth2"
-                                             DataContext="Funcionarios">
+                                             DataContext="Funcionarios" Height="185">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <materialDesign:Chip Content="{Binding Nome}"
                                                                      Icon="{Binding Tag}"
                                                                      IsDeletable="True" 
-                                                                     />
+                                                                     DeleteClick="ChipEx_DeleteClick"/>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>
                                 </StackPanel>
-                                <TextBlock Grid.Row="1" Text="Manifesto: "  />
+                                <TextBlock Grid.Row="1" Text="Manifesto: " Margin="-5,0,5,0"  />
 
 
                                 <StackPanel Grid.Row="2"
                                             Grid.Column="0"
-                                            Margin="5,17"
+                                            Margin="5,0,5,34"
                                             Orientation="Horizontal">
                                     <materialDesign:PackIcon Width="22"
                                                              Height="auto"
@@ -98,7 +99,7 @@
                                                              Foreground="{Binding ElementName=CBFuncionario,
                                                                                   Path=BorderBrush}"
                                                              Kind="Account" />
-                                    <ComboBox Name="CBFuncionario"
+                                    <ComboBox x:Name="CBFuncionario"
                                               Width="240"
                                               Margin="10,0"
                                               IsEditable="True"

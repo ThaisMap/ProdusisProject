@@ -43,7 +43,6 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="5*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -54,7 +53,7 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                Orientation="Horizontal">
+                Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button
                     Name="BtnHome"
                     Width="auto"
@@ -112,7 +111,7 @@
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 MinHeight="500"
-                Margin="0,10,0,10"
+                Margin="30,32,30,23"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 NavigationUIVisibility="Hidden" />

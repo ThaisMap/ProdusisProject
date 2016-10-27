@@ -27,7 +27,6 @@ namespace GUI
         public FuncionarioBLL f = new FuncionarioBLL();
         public ObservableCollection<FuncionariosTag> Funcionario { get; set; }
 
-
         public Descarga()
         {
 
@@ -50,11 +49,23 @@ namespace GUI
 
         private void ChipEx_DeleteClick(object sender, RoutedEventArgs e)
         {
+            MaterialDesignThemes.Wpf.Chip novo = (MaterialDesignThemes.Wpf.Chip)sender;
+            foreach (FuncionariosTag tag in ListaDeFuncionarios.Items)
+            {
+                if (tag.Nome == novo.Content.ToString())
+                {
+                    ListaDeFuncionarios.Items.Remove(tag);
+                    break;
+                }
+            }
         }
 
         private void Inserir_Click(object sender, RoutedEventArgs e)
         {
-            ListaDeFuncionarios.Items.Add(FuncionarioSelecionado);
+            if (!ListaDeFuncionarios.Items.Contains(FuncionarioSelecionado))
+            {
+                ListaDeFuncionarios.Items.Add(FuncionarioSelecionado);
+            }
         }
 
         private void CBFuncionario_SelectionChanged(object sender, SelectionChangedEventArgs e)

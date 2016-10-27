@@ -18,7 +18,7 @@ namespace BLL
 
             foreach (string f in Directory.GetFiles(PastasXml.Default.PastaNFs))
             {
-                xml.abrirEmail(f);
+                //xml.abrirEmail(f);
                 xml.lerNotaFiscal(f);
             }
 

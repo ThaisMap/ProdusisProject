@@ -27,9 +27,10 @@ namespace GUI
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
-            /* xmlBLL x = new xmlBLL();
-             x.lerXML();            
-             */
+            /* */
+            xmlBLL x = new xmlBLL();
+            x.lerXML();
+
             if (true)//verificaCampos())
             {
                 TelaPrincipal view = new TelaPrincipal();
