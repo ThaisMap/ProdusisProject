@@ -29,6 +29,24 @@ namespace DAL
             }
         }
 
+        public bool alterarSkuManifesto(int numManifesto)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    Manifestos atual = BancoDeDados.Manifestos.FirstOrDefault(m => m.numeroManifesto == numManifesto);
+                    atual.skusManifesto = getSkuManifesto(numManifesto);
+                    BancoDeDados.SaveChanges();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// Insere um registro de cte no banco de dados
         /// </summary>
@@ -183,7 +201,7 @@ namespace DAL
             }
             catch
             {
-                return -1;
+                return null;
             }
         }
 

@@ -45,6 +45,7 @@
     <Compile Include="LoginBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sessao.cs" />
+    <Compile Include="TarefasBLL.cs" />
     <Compile Include="xmlBLL.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -20,7 +20,7 @@ namespace DAL
         /// </summary>
         /// <param name="novaTarefa">Dados do novo registro</param>
         /// <returns>True se o comando foi executado sem erros, False se houve algum erro</returns>
-        public bool cadastrar(Tarefas novaTarefa)
+        public bool cadastrar(Tarefas novaTarefa, int[] funcionarios)
         {
             try
             {
@@ -28,10 +28,19 @@ namespace DAL
                 {
                     BancoDeDados.Tarefas.Add(novaTarefa);
                     BancoDeDados.SaveChanges();
+                    Func_Tarefa ft;
+                    foreach (int i in funcionarios)
+                    {
+                        ft = new Func_Tarefa();
+                        ft.Tarefa = novaTarefa.idTarefa;
+                        ft.Funcionario = i;
+                        BancoDeDados.Func_Tarefa.Add(ft);
+                        BancoDeDados.SaveChanges();
+                    }
                 }
                 return true;
             }
-            catch
+            catch (Exception e)
             {
                 return false;
             }

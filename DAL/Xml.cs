@@ -74,6 +74,8 @@ namespace DAL
                         alterarNfs(result[i + 1].InnerText, result[i + 7].InnerText, cte);
                         criarCteManifesto(cte, lido.numeroManifesto);
                     }
+
+                    dbd.alterarSkuManifesto(lido.numeroManifesto);
                     return true;
                 }
                 return false;

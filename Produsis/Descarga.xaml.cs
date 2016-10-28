@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BLL;
+using ProdusisBD;
 
 namespace GUI
 {
@@ -22,20 +23,16 @@ namespace GUI
     /// </summary>
     public partial class Descarga : UserControl
     {
-        public FuncionariosTag FuncionarioSelecionado;
-        public List<String> ListaFunc;
-        public FuncionarioBLL f = new FuncionarioBLL();
-        public ObservableCollection<FuncionariosTag> Funcionario { get; set; }
-
+        private FuncionariosTag FuncionarioSelecionado;
+        private List<String> ListaFunc;
+        private FuncionarioBLL f = new FuncionarioBLL();
+        private ObservableCollection<FuncionariosTag> Funcionario { get; set; }
+        private TarefasBLL t = new TarefasBLL();
         public Descarga()
         {
 
             InitializeComponent();
             ListaFunc = f.carregaFuncionarios();
-            ListaFunc.Add("Paola Oliveira");
-            ListaFunc.Add("Jose Silva");
-            ListaFunc.Add("Astolfo Mexicano");
-            ListaFunc.Add("Loconauta Mexicano Gonzalez");
 
             CBFuncionario.ItemsSource = ListaFunc;
         }
@@ -71,6 +68,30 @@ namespace GUI
         private void CBFuncionario_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             FuncionarioSelecionado = new FuncionariosTag(CBFuncionario.SelectedItem.ToString(), CriaChipTag(CBFuncionario.SelectedItem.ToString()));
+        }
+
+        private void Iniciar_Click(object sender, RoutedEventArgs e)
+        {
+            t.inserirTarefa(montarTarefa(), funcionarios());
+        }
+
+        private Tarefas montarTarefa()
+        {
+            Tarefas novaTarefa = new Tarefas();
+            novaTarefa.documentoTarefa = int.Parse(Documento.Text.Replace("_", ""));
+            novaTarefa.inicioTarefa = DateTime.Now;
+            novaTarefa.tipoTarefa = "0";
+            return novaTarefa;
+        }
+
+        private string[] funcionarios()
+        {
+            List<string> nomes = new List<string>();
+            foreach (FuncionariosTag tag in ListaDeFuncionarios.Items)
+            {
+                nomes.Add(tag.Nome);
+            }
+            return nomes.ToArray();
         }
     }
 }

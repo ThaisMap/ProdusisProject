@@ -44,6 +44,8 @@ namespace Produsis
                 bool tentaTipo = int.TryParse(emEdicao.tipoFunc, out aux);
                 Tipo.SelectedIndex = aux;
                 Ativo.IsChecked = emEdicao.ativoFunc;
+                Senha.Password = "";
+                Senha2.Password = "";
             }
         }
 
@@ -63,6 +65,7 @@ namespace Produsis
             {
                 Funcionarios novosDados = montarObjeto();
                 f.editar(novosDados);
+                limpar(sender, e);
             }
             else
             {

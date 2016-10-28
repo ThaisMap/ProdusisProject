@@ -26,16 +26,26 @@ namespace Produsis
             InitializeComponent();
         }
 
+        private void limpar()
+        {
+            Numero.Text = "Não encontrado";
+            NumeroDeVolumes.Text = "";
+            NumeroDeSKUS.Text = "";
+            Peso.Text = "";
+            Fornecedor.Text = "";
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if(TipoDeDocumento.SelectedIndex > -1)
+            if (TipoDeDocumento.SelectedIndex > -1)
             {
                 DocumentosBLL d = new DocumentosBLL();
                 int numDoc;
-                if (int.TryParse(NumeroDocumento.Text.Replace("_",""),out numDoc)) {
+                if (int.TryParse(NumeroDocumento.Text.Replace("_", ""), out numDoc))
+                {
                     if (TipoDeDocumento.SelectedIndex == 0)
                     {
-                       if (d.cteCadastrado(numDoc))
+                        if (d.cteCadastrado(numDoc))
                         {
                             Numero.Text = NumeroDocumento.Text.Replace("_", "");
                             NumeroDeVolumes.Text = d.volumesCte(numDoc).ToString();
@@ -43,6 +53,7 @@ namespace Produsis
                             Peso.Text = d.pesoCte(numDoc).ToString();
                             Fornecedor.Text = d.fornecedorCte(numDoc);
                         }
+                        else limpar();
                     }
                     else if (TipoDeDocumento.SelectedIndex == 1)
                     {
@@ -56,21 +67,24 @@ namespace Produsis
                             Peso.Text = documento.pesoManifesto.ToString();
                             Fornecedor.Text = "Não se aplica";
                         }
-                    }
-                    else if (TipoDeDocumento.SelectedIndex == 2)
-                    {
-                        NotasFiscais documento = d.getDadosNF(NumeroDocumento.Text);
-                        if (documento != null)
-                        {
-                            Numero.Text = documento.numeroNF;
-                            NumeroDeVolumes.Text = documento.volumesNF.ToString();
-                            NumeroDeSKUS.Text = documento.skuNF.ToString();
-                            Peso.Text = documento.pesoNF.ToString();
-                            Fornecedor.Text = "Não se aplica";
-                        }
+                        else limpar();
                     }
                 }
+                else if (TipoDeDocumento.SelectedIndex == 2)
+                {
+                    NotasFiscais documento = d.getDadosNF(NumeroDocumento.Text);
+                    if (documento != null)
+                    {
+                        Numero.Text = documento.numeroNF;
+                        NumeroDeVolumes.Text = documento.volumesNF.ToString();
+                        NumeroDeSKUS.Text = documento.skuNF.ToString();
+                        Peso.Text = documento.pesoNF.ToString();
+                        Fornecedor.Text = documento.fonecedorNF;
+                    }
+                    else limpar();
+                }
             }
+                
         }
 
         private void TipoDeDocumento_SelectionChanged(object sender, SelectionChangedEventArgs e)

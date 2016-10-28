@@ -115,18 +115,6 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 NavigationUIVisibility="Hidden" />
-            <Label
-                x:Name="BemVindo"
-                Grid.Row="1"
-                Grid.Column="1"
-                Width="284"
-                Height="60"
-                Margin="563,417,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Content="Produsis"
-                FontFamily="Engravers MT"
-                FontSize="36" />
         </Grid>
     </Grid>
 </Window>

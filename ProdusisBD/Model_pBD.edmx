@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="produsisBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="produsisBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Cte_Manifesto">
           <Key>
             <PropertyRef Name="idCteManifesto" />
@@ -131,30 +131,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tarefas_Ctes">
-          <End Role="Ctes" Type="Self.Ctes" Multiplicity="0..1" />
-          <End Role="Tarefas" Type="Self.Tarefas" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ctes">
-              <PropertyRef Name="numeroCte" />
-            </Principal>
-            <Dependent Role="Tarefas">
-              <PropertyRef Name="documentoTarefa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tarefas_Manifesto">
-          <End Role="Manifestos" Type="Self.Manifestos" Multiplicity="0..1" />
-          <End Role="Tarefas" Type="Self.Tarefas" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Manifestos">
-              <PropertyRef Name="numeroManifesto" />
-            </Principal>
-            <Dependent Role="Tarefas">
-              <PropertyRef Name="documentoTarefa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="produsisBDModelStoreContainer">
           <EntitySet Name="Cte_Manifesto" EntityType="Self.Cte_Manifesto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ctes" EntityType="Self.Ctes" Schema="dbo" store:Type="Tables" />
@@ -183,17 +159,8 @@
             <End Role="Ctes" EntitySet="Ctes" />
             <End Role="NotasFiscais" EntitySet="NotasFiscais" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tarefas_Ctes" Association="Self.FK_Tarefas_Ctes">
-            <End Role="Ctes" EntitySet="Ctes" />
-            <End Role="Tarefas" EntitySet="Tarefas" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tarefas_Manifesto" Association="Self.FK_Tarefas_Manifesto">
-            <End Role="Manifestos" EntitySet="Manifestos" />
-            <End Role="Tarefas" EntitySet="Tarefas" />
-          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="produsisBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
