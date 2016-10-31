@@ -44,7 +44,7 @@ namespace GUI
             func.ocupadoFunc = false;
             func.ativoFunc = (bool)Ativo.IsChecked;
             func.senhaFunc = Senha.Password;
-            func.tipoFunc = Tipo.Text;
+            func.tipoFunc = Tipo.SelectedIndex.ToString();
 
             return func;
         }

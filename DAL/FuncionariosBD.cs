@@ -91,18 +91,18 @@ namespace DAL
         /// <summary>
         /// Retorna a lista de operadores ativos com status livre
         /// </summary>
-        public List<Funcionarios> funcionariosLivres()
+        public List<String> funcionariosLivres()
         {
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    return (from Funcionarios in BancoDeDados.Funcionarios where Funcionarios.ativoFunc == true where Funcionarios.ocupadoFunc == false where Funcionarios.tipoFunc == "O" select Funcionarios).ToList();
+                    return (from Funcionarios in BancoDeDados.Funcionarios where Funcionarios.ativoFunc == true where Funcionarios.ocupadoFunc == false where Funcionarios.tipoFunc == "1" orderby Funcionarios.nomeFunc select Funcionarios.nomeFunc).ToList();
                 }
             }
             catch
             {
-                return new List<Funcionarios>();
+                return new List<String>();
             }
         }
 
@@ -191,7 +191,7 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    return (from Funcionarios in BancoDeDados.Funcionarios select Funcionarios.nomeFunc).ToList();
+                    return (from Funcionarios in BancoDeDados.Funcionarios orderby Funcionarios.nomeFunc select Funcionarios.nomeFunc).ToList();
                 }
             }
             catch

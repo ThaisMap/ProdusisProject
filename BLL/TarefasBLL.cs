@@ -23,5 +23,15 @@ namespace BLL
             }
             return t.cadastrar(novaTarefa, idsFuncionarios);
         }
+
+        public List<Tarefas> tarefasPendentes (string tipo)
+        {
+            return t.getTarefasPendentes(tipo);
+        }
+
+        public bool finalizarTarefa(int idTarefa)
+        {
+            return t.finalizarTarefa(idTarefa);
+        }
     }
 }

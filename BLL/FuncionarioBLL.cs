@@ -17,6 +17,11 @@ namespace BLL
             return f.getListaNomes();
         }
 
+        public List<String> carregaFuncionariosLivres()
+        {
+            return f.funcionariosLivres();
+        }
+
         public bool validarSenha(string matricula, string senha)
         {
             return f.verificaSenha(matricula, senha);

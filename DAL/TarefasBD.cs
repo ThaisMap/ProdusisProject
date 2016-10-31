@@ -29,6 +29,7 @@ namespace DAL
                     BancoDeDados.Tarefas.Add(novaTarefa);
                     BancoDeDados.SaveChanges();
                     Func_Tarefa ft;
+                    FuncionariosBD fBd = new FuncionariosBD();
                     foreach (int i in funcionarios)
                     {
                         ft = new Func_Tarefa();
@@ -36,6 +37,7 @@ namespace DAL
                         ft.Funcionario = i;
                         BancoDeDados.Func_Tarefa.Add(ft);
                         BancoDeDados.SaveChanges();
+                        fBd.editarOcupacaoFuncionario(i, true);
                     }
                 }
                 return true;
@@ -86,11 +88,20 @@ namespace DAL
                 {
                     pendentes = (from Tarefas in BancoDeDados.Tarefas where Tarefas.fimTarefa == null where Tarefas.tipoTarefa == tipoTarefa select Tarefas).ToList();
                 }
+                calculaTempoGasto(ref pendentes);
                 return pendentes;
             }
             catch 
             {
                 return new List<Tarefas>();
+            }
+        }
+
+        private void calculaTempoGasto(ref List<Tarefas> listaTarefas)
+        {
+            foreach (Tarefas tarefa in listaTarefas)
+            {
+                tarefa.tempoGasto = (DateTime.Now - tarefa.inicioTarefa).ToString("hh\\:mm\\:ss");
             }
         }
 

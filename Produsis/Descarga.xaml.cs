@@ -25,18 +25,21 @@ namespace GUI
     {
         private FuncionariosTag FuncionarioSelecionado;
         private List<String> ListaFunc;
+
         private FuncionarioBLL f = new FuncionarioBLL();
         private ObservableCollection<FuncionariosTag> Funcionario { get; set; }
         private TarefasBLL t = new TarefasBLL();
+
         public Descarga()
         {
-
             InitializeComponent();
-            ListaFunc = f.carregaFuncionarios();
-
+            ListaFunc = f.carregaFuncionariosLivres();
             CBFuncionario.ItemsSource = ListaFunc;
+            dgTarefas.ItemsSource = t.tarefasPendentes("0");
         }
 
+        
+        
         public static string CriaChipTag(string Nome)
         {
             string[] PrimeirosNomes = new string[7];
@@ -72,7 +75,11 @@ namespace GUI
 
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
-            t.inserirTarefa(montarTarefa(), funcionarios());
+            if (checarCampos())
+            {
+                t.inserirTarefa(montarTarefa(), funcionarios());
+                dgTarefas.ItemsSource = t.tarefasPendentes("0");
+            }
         }
 
         private Tarefas montarTarefa()
@@ -84,6 +91,15 @@ namespace GUI
             return novaTarefa;
         }
 
+        private bool checarCampos()
+        {
+            if (Documento.Text.Replace("_", "") == "" || ListaDeFuncionarios.Items.Count == 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
         private string[] funcionarios()
         {
             List<string> nomes = new List<string>();
@@ -93,5 +109,12 @@ namespace GUI
             }
             return nomes.ToArray();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Tarefas item = (Tarefas)dgTarefas.SelectedItem;
+            t.finalizarTarefa(item.idTarefa);
+        }
     }
+   
 }
