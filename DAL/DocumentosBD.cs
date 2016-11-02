@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using ProdusisBD;
+using System.Collections.Generic;
 using System.Linq;
-using ProdusisBD;
-using System;
 
 namespace DAL
 {
@@ -125,7 +124,7 @@ namespace DAL
                 }
                 return true;
             }
-            catch 
+            catch
             {
                 return false;
             }
@@ -169,7 +168,6 @@ namespace DAL
             }
         }
 
-       
         /// <summary>
         /// Verifica se o documento indicado esta cadastrado no banco de dados
         /// </summary>
@@ -288,7 +286,7 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                     List<NotasFiscais> ListaNFs = new List<NotasFiscais>();
+                    List<NotasFiscais> ListaNFs = new List<NotasFiscais>();
                     List<Cte_Manifesto> ListaCte = (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.Manifesto == numManifesto select Cte_Manifesto).ToList();
                     foreach (Cte_Manifesto c in ListaCte)
                     {
@@ -348,8 +346,6 @@ namespace DAL
                 return "Fornecedor não encontrado";
             }
         }
-
-       
 
         /// <summary>
         /// Retorna a soma do peso de cada nota componente do Cte

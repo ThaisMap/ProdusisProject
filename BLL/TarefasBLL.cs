@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DAL;
 using ProdusisBD;
-using DAL;
-
+using System.Collections.Generic;
 
 namespace BLL
 {
@@ -18,15 +13,20 @@ namespace BLL
             FuncionariosBD f = new FuncionariosBD();
             int[] idsFuncionarios = new int[funcionarios.Length];
             for (int i = 0; i < funcionarios.Length; i++)
-            {            
+            {
                 idsFuncionarios[i] = f.getFuncPorNome(funcionarios[i]).idFunc;
             }
             return t.cadastrar(novaTarefa, idsFuncionarios);
         }
 
-        public List<Tarefas> tarefasPendentes (string tipo)
+        public List<TarefaModelo> tarefasPendentes(string tipo)
         {
             return t.getTarefasPendentes(tipo);
+        }
+
+        public bool tarefaRepetida(int documento, string tipo)
+        {
+            return t.verificaDocumentoTarefa(documento, tipo);
         }
 
         public bool finalizarTarefa(int idTarefa)

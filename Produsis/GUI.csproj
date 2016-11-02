@@ -110,15 +110,27 @@
     <Compile Include="CadastroFuncionarios.xaml.cs">
       <DependentUpon>CadastroFuncionarios.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Carregamento.xaml.cs">
+      <DependentUpon>Carregamento.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Descarga.xaml.cs">
       <DependentUpon>Descarga.xaml</DependentUpon>
     </Compile>
     <Compile Include="EdicaoFuncionarios.xaml.cs">
       <DependentUpon>EdicaoFuncionarios.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FiltrarTarefas.xaml.cs">
+      <DependentUpon>FiltrarTarefas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FuncionariosTag.cs" />
     <Compile Include="PesquisarDocumento.xaml.cs">
       <DependentUpon>PesquisarDocumento.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Separacao.xaml.cs">
+      <DependentUpon>Separacao.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Separacao2.xaml.cs">
+      <DependentUpon>Separacao2.xaml</DependentUpon>
     </Compile>
     <Compile Include="TelaPrincipal.xaml.cs">
       <DependentUpon>TelaPrincipal.xaml</DependentUpon>
@@ -168,6 +180,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Carregamento.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Descarga.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -176,11 +192,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FiltrarTarefas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PesquisarDocumento.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Separacao.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Separacao2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

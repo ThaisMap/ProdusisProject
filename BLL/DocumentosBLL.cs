@@ -16,6 +16,11 @@ namespace BLL
             return d.getManifestoPorNumero(numero);
         }
 
+        public string linhaDados(int numero)
+        {
+            return d.getDadosDocumentos(0, numero);
+        }
+
         public int skuCte(int num)
         {
             return d.getSkuCte(num);

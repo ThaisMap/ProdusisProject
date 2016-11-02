@@ -1,15 +1,8 @@
-﻿using System;
+﻿using ProdusisBD;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections;
-using System.Data.Common;
 using System.Data;
-using System.IO;
-using System.Data.SqlClient;
-using System.Data.Entity;
-using ProdusisBD;
+using System.Linq;
 
 namespace DAL
 {
@@ -48,7 +41,6 @@ namespace DAL
             }
         }
 
-      
         /// <summary>
         /// Grava a data/hora atuais como data/hora de fim da tarefa e desocupa os funcionários
         /// </summary>
@@ -79,29 +71,56 @@ namespace DAL
         /// <summary>
         /// Retorna uma lista com as tarefas do tipo indicado sem hora de finalização
         /// </summary>
-        public List<Tarefas> getTarefasPendentes(string tipoTarefa)
+        public List<TarefaModelo> getTarefasPendentes(string tipoTarefa)
         {
             List<Tarefas> pendentes = new List<Tarefas>();
+            List<TarefaModelo> pendentesModelo = new List<TarefaModelo>();
+            FuncionariosBD f = new FuncionariosBD();
+            TarefaModelo Aux;
+
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     pendentes = (from Tarefas in BancoDeDados.Tarefas where Tarefas.fimTarefa == null where Tarefas.tipoTarefa == tipoTarefa select Tarefas).ToList();
+                    foreach (Tarefas tarefa in pendentes)
+                    {
+                        Aux = new TarefaModelo(tarefa);
+
+                        foreach (var func in tarefa.Func_Tarefa)
+                        {
+                            if (Aux.nomesFuncionarios != null)
+                                Aux.nomesFuncionarios += "/" + f.getFuncPorId(func.Funcionario).nomeFunc;
+                            else
+                                Aux.nomesFuncionarios = f.getFuncPorId(func.Funcionario).nomeFunc;
+                        }
+                        pendentesModelo.Add(Aux);
+                    }
                 }
-                calculaTempoGasto(ref pendentes);
-                return pendentes;
+                return pendentesModelo;
             }
-            catch 
+            catch (Exception e)
             {
-                return new List<Tarefas>();
+                return new List<TarefaModelo>();
             }
         }
 
-        private void calculaTempoGasto(ref List<Tarefas> listaTarefas)
+        public bool verificaDocumentoTarefa(int numDocumento, string tipoTarefa)
         {
-            foreach (Tarefas tarefa in listaTarefas)
+            try
             {
-                tarefa.tempoGasto = (DateTime.Now - tarefa.inicioTarefa).ToString("hh\\:mm\\:ss");
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var cadastrado = BancoDeDados.Tarefas.FirstOrDefault(t => t.documentoTarefa == numDocumento && t.tipoTarefa == tipoTarefa);
+                    if (cadastrado == null)
+                        return true;
+                    else
+                        return false;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
             }
         }
 
@@ -122,20 +141,17 @@ namespace DAL
                     if (f.numDocumento > -1)
                         query = query.Where(t => t.documentoTarefa == f.numDocumento);
 
-
                     if (f.dataFim != null)
                         query = query.Where(t => t.fimTarefa <= f.dataFim);
-
 
                     if (f.TipoTarefa != "")
                         query = query.Where(t => t.tipoTarefa == f.TipoTarefa);
 
-
                     if (f.idFuncionario > -1)
                         query = from t in query
-                                 join ft in BancoDeDados.Func_Tarefa on t.idTarefa equals ft.Tarefa
-                                 where ft.Funcionario == f.idFuncionario
-                                 select t;
+                                join ft in BancoDeDados.Func_Tarefa on t.idTarefa equals ft.Tarefa
+                                where ft.Funcionario == f.idFuncionario
+                                select t;
 
                     if (f.dataFim != null)
                         query = query.Where(t => t.fimTarefa <= f.dataFim);
@@ -196,7 +212,6 @@ namespace DAL
 
                     return query.ToList();
                 }
-             
             }
             catch
             {

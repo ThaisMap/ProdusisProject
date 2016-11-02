@@ -43,7 +43,6 @@ namespace GUI
                 {
                     if (l.validarSenha(TxbLogin.Text, TxbSenha.Password))
                     {
-                        l.logarFuncionario(TxbLogin.Text);
                         TelaPrincipal view = new TelaPrincipal();
                         this.Close();
                         view.Show();

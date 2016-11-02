@@ -8,23 +8,23 @@ using System.Windows.Controls;
 namespace GUI
 {
     /// <summary>
-    /// Interaction logic for Descarga.xaml
+    /// Interaction logic for Carregamento.xaml
     /// </summary>
-    public partial class Descarga : UserControl
+    public partial class Carregamento : UserControl
     {
         private DocumentosBLL d = new DocumentosBLL();
         private FuncionarioBLL f = new FuncionarioBLL();
         private FuncionariosTag FuncionarioSelecionado;
         private List<string> ListaFunc;
         private TarefasBLL t = new TarefasBLL();
-        public Descarga()
+
+        public Carregamento()
         {
             InitializeComponent();
             ListaFunc = f.carregaFuncionariosLivres();
             CBFuncionario.ItemsSource = ListaFunc;
-            dgTarefas.ItemsSource = t.tarefasPendentes("0");
+            dgTarefas.ItemsSource = t.tarefasPendentes("4");
         }
-
         public static string CriaChipTag(string Nome)
         {
             string[] PrimeirosNomes = new string[7];
@@ -34,16 +34,16 @@ namespace GUI
 
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
-            dgTarefas.ItemsSource = t.tarefasPendentes("0");
+            dgTarefas.ItemsSource = t.tarefasPendentes("4");
         }
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
         {
             Tarefas item = (Tarefas)dgTarefas.SelectedItem;
-            if(t.finalizarTarefa(item.idTarefa))
-                MessageBox.Show("Descarga finalizada após" + item.tempoGasto, "Descarga finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (t.finalizarTarefa(item.idTarefa))
+                MessageBox.Show("Carregamento finalizado após" + item.tempoGasto, "Carregamento finalizado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
             else
-                MessageBox.Show("Houve um erro e a descarga não pode ser finalizada.", "Descarga não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Houve um erro e o carregamento não pode ser finalizado.", "Carregamento não finalizado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
             ListaFunc = f.carregaFuncionariosLivres();
             CBFuncionario.ItemsSource = ListaFunc;
             AtualizarDg_Click(sender, e);
@@ -88,15 +88,15 @@ namespace GUI
 
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
-            if (checarCampos() && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "0"))
+            if (checarCampos() && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "4"))
             {
                 t.inserirTarefa(montarTarefa(), funcionarios());
-                dgTarefas.ItemsSource = t.tarefasPendentes("0");
-                MessageBox.Show("Descarga iniciada para o " + d.linhaDados(int.Parse(Documento.Text.Replace("_", ""))), "Descarga iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                dgTarefas.ItemsSource = t.tarefasPendentes("4");
+                MessageBox.Show("Carregamento iniciado para o " + d.linhaDados(int.Parse(Documento.Text.Replace("_", ""))), "Carregamento iniciado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                MessageBox.Show("Não foi possível iniciar a descarga.", "Descarga não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Não foi possível iniciar o carregamento.", "Carregamento não iniciado - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -112,7 +112,7 @@ namespace GUI
             Tarefas novaTarefa = new Tarefas();
             novaTarefa.documentoTarefa = int.Parse(Documento.Text.Replace("_", ""));
             novaTarefa.inicioTarefa = DateTime.Now;
-            novaTarefa.tipoTarefa = "0";
+            novaTarefa.tipoTarefa = "4";
             return novaTarefa;
         }
     }

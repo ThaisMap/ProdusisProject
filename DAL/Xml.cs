@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProdusisBD;
-using DAL.Properties;
-using System.Xml;
+﻿using DAL.Properties;
 using Microsoft.Office.Interop.Outlook;
+using ProdusisBD;
+using System;
+using System.Xml;
 
 namespace DAL
 {
@@ -38,7 +34,6 @@ namespace DAL
                 }
                 return false;
             }
-
             catch
             {
                 return false;
@@ -91,7 +86,7 @@ namespace DAL
             DocumentosBD dbd = new DocumentosBD();
             Ctes novoCte = new Ctes();
             novoCte.numeroCte = cte;
-            dbd.cadastrarCte(novoCte);            
+            dbd.cadastrarCte(novoCte);
         }
 
         private void criarCteManifesto(int cte, int manifesto)
@@ -108,7 +103,7 @@ namespace DAL
             bool retorno = true;
             DocumentosBD dbd = new DocumentosBD();
             var listNfs = nfs.Split('\\');
-            foreach(string nf in listNfs)
+            foreach (string nf in listNfs)
             {
                 if (dbd.verificarDocumentoCadastrado(2, nf) >= 0)
                 {
@@ -117,11 +112,10 @@ namespace DAL
                 }
                 else
                     retorno = false; //false se alguma nota não estiver cadastrada
-             
             }
             return retorno;
         }
-   
+
         public void abrirEmail(string nomeArquivo)
         {
             Application app = new Application();
@@ -138,7 +132,7 @@ namespace DAL
 
             app.Quit();
         }
-            
+
         private bool isXml(string caminho)
         {
             string extensao = String.Concat(caminho[caminho.Length - 3], caminho[caminho.Length - 2], caminho[caminho.Length - 1]);

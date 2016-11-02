@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using DAL;
+﻿using DAL;
 using DAL.Properties;
+using System.IO;
 
 namespace BLL
 {
@@ -13,8 +8,7 @@ namespace BLL
     {
         public void lerXML()
         {
-            Xml xml = new Xml();                      
-                     
+            Xml xml = new Xml();
 
             foreach (string f in Directory.GetFiles(PastasXml.Default.PastaNFs))
             {

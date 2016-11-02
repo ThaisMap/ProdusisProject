@@ -87,6 +87,7 @@
     <Compile Include="NotasFiscais.cs">
       <DependentUpon>Model_pBD.tt</DependentUpon>
     </Compile>
+    <Compile Include="TarefaModelo.cs" />
     <Compile Include="Tarefas.cs">
       <DependentUpon>Model_pBD.tt</DependentUpon>
     </Compile>
