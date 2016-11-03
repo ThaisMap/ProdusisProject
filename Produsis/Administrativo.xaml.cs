@@ -45,5 +45,10 @@ namespace GUI
         {
             NavegadorInterno.Navigate(new Relatorios());
         }
+
+        private void BtnConfigurações_Click(object sender, RoutedEventArgs e)
+        {
+            NavegadorInterno.Navigate(new Configuracao());
+        }
     }
 }

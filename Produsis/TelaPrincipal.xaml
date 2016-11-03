@@ -31,7 +31,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid Width="auto" Height="690">
+    <Grid Width="auto" Height="auto" VerticalAlignment="Top">
         <materialDesign:ColorZone
             Width="auto"
             Height="60"

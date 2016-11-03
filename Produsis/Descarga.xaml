@@ -114,37 +114,38 @@
                                 </Button>
                             </Grid>
                             <Separator />
-                            <Grid >
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height=" auto" />
-                                    <RowDefinition Height=" auto" />
-                                </Grid.RowDefinitions>
+                            <StackPanel HorizontalAlignment="Left">
 
-                                <Button Grid.Column="1"
-                                       Grid.Row="0"
-                                        Name="AtualizarDg"
-                                        Height="25"
-                                        Width="100"
-                                        HorizontalAlignment="Right"
-                                        Content="Atualizar" Margin="75,0,74,0" Click="AtualizarDg_Click" />
-                                <TextBlock Grid.Column="0"
-                                       Grid.Row="0"
-                                       x:Name="TextoExecucao"  Text="Tarefas em execução"
-                                       HorizontalAlignment="Left" Margin="50,0,0,0" Width="200" />
-                                <DataGrid Grid.Column="0"
-                                       Grid.Row="1"
-                                          Name="dgTarefas"  Margin="40,5" Background="#FF878787"
-                                      AutoGenerateColumns="False" RowBackground="#FFC7C7C7" IsReadOnly="True" HorizontalAlignment="Left" Grid.ColumnSpan="2">
+                                <Button
+                                    Name="AtualizarDg"
+                                    Grid.Row="0"
+                                    Width="100"
+                                    Height="25"
+                                    Margin="0,0,0,0"
+                                    HorizontalAlignment="Right"
+                                    Click="AtualizarDg_Click"
+                                    Content="Atualizar" />
+                                <TextBlock
+                                    x:Name="TextoExecucao"
+                                    Width="200"
+                                    Margin="0,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    Text="Tarefas em execução" />
+                                <!--  ="#FFC7C7C7"  -->
+                                <!--  ="#FF878787"  -->
+                                <DataGrid
+                                    Name="dgTarefas"
+                                    Margin="40,5"
+                                    HorizontalAlignment="Center"
+                                    AutoGenerateColumns="False"
+                                    ColumnWidth="*"
+                                    IsReadOnly="True">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Manifesto" Binding="{Binding documentoTarefa}" />
-                                        <DataGridTextColumn Header="Funcionarios" Binding="{Binding nomesFuncionarios}" />
-                                        <DataGridTextColumn Header="Data Início" Binding="{Binding dataInicio}" />
-                                        <DataGridTextColumn Header="Hora Início" Binding="{Binding horaInicio}" />
-                                        <DataGridTextColumn Header="Tempo Gasto" Binding="{Binding tempoGasto}" />
+                                        <DataGridTextColumn Binding="{Binding documentoTarefa}" Header="Manifesto" />
+                                        <DataGridTextColumn Binding="{Binding nomesFuncionarios}" Header="Funcionarios" />
+                                        <DataGridTextColumn Binding="{Binding dataInicio}" Header="Data Início" />
+                                        <DataGridTextColumn Binding="{Binding horaInicio}" Header="Hora Início" />
+                                        <DataGridTextColumn Binding="{Binding tempoGasto}" Header="Tempo Gasto" />
                                         <DataGridTemplateColumn Header="Finalizar Tarefa">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
@@ -154,7 +155,7 @@
                                         </DataGridTemplateColumn>
                                     </DataGrid.Columns>
                                 </DataGrid>
-                            </Grid>
+                            </StackPanel>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
