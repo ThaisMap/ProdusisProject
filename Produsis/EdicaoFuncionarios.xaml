@@ -128,7 +128,7 @@
                                              Margin="13,0,13,10"
                                              HorizontalAlignment="Center"
                                              VerticalAlignment="Bottom"
-                                             Foreground="{Binding ElementName=Funcao,
+                                             Foreground="{Binding ElementName=Tipo,
                                                                   Path=BorderBrush}"
                                              Kind="HandPointingRight" />
 
