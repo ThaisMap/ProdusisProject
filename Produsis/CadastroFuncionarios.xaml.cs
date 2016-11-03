@@ -33,7 +33,15 @@ namespace GUI
         private void Salvar_Click(object sender, RoutedEventArgs e)
         {
             if (checarCampos())
+            {
                 f.salvarNovo(montarObjeto());
+                MessageBox.Show("Funcionário cadastrado com sucesso.", "Funcionário cadastrado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                limpar(sender, e);
+            }
+            else
+            {
+                MessageBox.Show("Funcionário não foi cadastrado. Verifique as informações fornecidas.", "Funcionário não cadastrado - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         
         private Funcionarios montarObjeto()

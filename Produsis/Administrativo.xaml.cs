@@ -40,5 +40,10 @@ namespace GUI
         {
             NavegadorInterno.Navigate(new EdicaoFuncionarios());
         }
+
+        private void BtnConfigurações_Click(object sender, RoutedEventArgs e)
+        {
+            NavegadorInterno.Navigate(new Configuracao());
+        }
     }
 }

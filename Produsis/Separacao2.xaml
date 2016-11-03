@@ -60,7 +60,7 @@
                                         Grid.Column="1"
                                         Width="300"
                                         Margin="5,0,5,5"
-                                        materialDesign:HintAssist.Hint="Documento"
+                                        materialDesign:HintAssist.Hint="Manifesto"
                                         materialDesign:HintAssist.IsFloating="True"
                                         Mask="9999999999999"
                                         Style="{StaticResource MaterialDesignTextBox}" />

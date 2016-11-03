@@ -20,6 +20,16 @@ namespace ProdusisBD
         public string dataFim { get; set; }
         public string horaFim { get; set; }
         public string nomesFuncionarios { get; set; }
+        public int skus { get; set; }
+        public int volumes { get; set; }
+        public double peso { get; set; }
+
+        public void valores(int sku, int volume, int kg)
+        {
+            skus = sku;
+            volumes = volume;
+            peso = kg;
+        }
 
         public void atualizaTempoGasto()
         {

@@ -3,27 +3,26 @@ using ProdusisBD;
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls; 
+using System.Windows.Controls;
 
 namespace GUI
 {
     /// <summary>
-    /// Interaction logic for Separacao.xaml
+    /// Interaction logic for Conferencia.xaml
     /// </summary>
-    public partial class Separacao : UserControl
+    public partial class Conferencia : UserControl
     {
         private DocumentosBLL d = new DocumentosBLL();
         private FuncionarioBLL f = new FuncionarioBLL();
         private FuncionariosTag FuncionarioSelecionado;
         private List<string> ListaFunc;
         private TarefasBLL t = new TarefasBLL();
-
-        public Separacao()
+        public Conferencia()
         {
             InitializeComponent();
             ListaFunc = f.carregaFuncionariosLivres();
             CBFuncionario.ItemsSource = ListaFunc;
-            dgTarefas.ItemsSource = t.tarefasPendentes("1");
+            dgTarefas.ItemsSource = t.tarefasPendentes("2");
         }
         public static string CriaChipTag(string Nome)
         {
@@ -33,16 +32,15 @@ namespace GUI
 
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
-            dgTarefas.ItemsSource = t.tarefasPendentes("1");
+            dgTarefas.ItemsSource = t.tarefasPendentes("2");
         }
-
         private void Finalizar_Click(object sender, RoutedEventArgs e)
         {
             Tarefas item = (Tarefas)dgTarefas.SelectedItem;
             if (t.finalizarTarefa(item.idTarefa))
-                MessageBox.Show("Separação finalizada após " + item.tempoGasto, "Separação finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Conferência finalizada após " + item.tempoGasto, "Conferência finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
             else
-                MessageBox.Show("Houve um erro e a separação não pode ser finalizada.", "Separação não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Houve um erro e a conferência não pode ser finalizada.", "Conferência não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
             ListaFunc = f.carregaFuncionariosLivres();
             CBFuncionario.ItemsSource = ListaFunc;
             AtualizarDg_Click(sender, e);
@@ -87,21 +85,20 @@ namespace GUI
 
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
-            if (checarCampos() && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "1"))
+            if (checarCampos() && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "2"))
             {
                 if (t.inserirTarefa(montarTarefa(), funcionarios()))
-                {
-                    dgTarefas.ItemsSource = t.tarefasPendentes("1");
-                    MessageBox.Show("Separação iniciada para o " + d.linhaDados(int.Parse(Documento.Text.Replace("_", ""))), "Separação iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                { dgTarefas.ItemsSource = t.tarefasPendentes("2");
+                    MessageBox.Show("Conferência iniciada para o " + d.linhaDados(int.Parse(Documento.Text.Replace("_", ""))), "Conferência iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Não foi possível iniciar a separação.", "Separação não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Não foi possível iniciar a conferência.", "Conferência não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Não foi possível iniciar a separação.", "Separação não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Não foi possível iniciar a conferência.", "Conferência não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -117,7 +114,7 @@ namespace GUI
             Tarefas novaTarefa = new Tarefas();
             novaTarefa.documentoTarefa = int.Parse(Documento.Text.Replace("_", ""));
             novaTarefa.inicioTarefa = DateTime.Now;
-            novaTarefa.tipoTarefa = "1";
+            novaTarefa.tipoTarefa = "2";
             return novaTarefa;
         }
     }

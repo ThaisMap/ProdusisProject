@@ -63,24 +63,28 @@ namespace GUI
         {
             ResetarOpacidade();
             BtnCarregamento.Opacity = 0.5;
+            Navegador.Navigate(new Carregamento());
         }
 
         private void BtnSeparacaoCarga_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();
             BtnSeparacaoCarga.Opacity = 0.5;
+            Navegador.Navigate(new Separacao2());
         }
 
         private void BtnConferencia_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();
             BtnConferencia.Opacity = 0.5;
+            Navegador.Navigate(new Conferencia());
         }
 
         private void BtnSerapacao_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();
             BtnSerapacao.Opacity = 0.5;
+            Navegador.Navigate(new Separacao());
         }
         #endregion
 
