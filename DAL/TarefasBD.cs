@@ -153,8 +153,7 @@ namespace DAL
                                 where ft.Funcionario == f.idFuncionario
                                 select t;
 
-                    if (f.dataFim != null)
-                        query = query.Where(t => t.fimTarefa <= f.dataFim);
+                    // Have to rethink that, I know it will be hard, but you can do it
 
                     if (f.volumeInicio > 0)
                     {

@@ -27,8 +27,7 @@ namespace GUI
         }
         public static string CriaChipTag(string Nome)
         {
-            string[] PrimeirosNomes = new string[7];
-            PrimeirosNomes = Nome.Split(' ');
+            string[] PrimeirosNomes = Nome.Split(' ');
             return PrimeirosNomes[0].Substring(0, 1).ToUpper() + PrimeirosNomes[1].Substring(0, 1).ToUpper();
         }
 
@@ -41,7 +40,7 @@ namespace GUI
         {
             Tarefas item = (Tarefas)dgTarefas.SelectedItem;
             if (t.finalizarTarefa(item.idTarefa))
-                MessageBox.Show("Carregamento finalizado após" + item.tempoGasto, "Carregamento finalizado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Carregamento finalizado após " + item.tempoGasto, "Carregamento finalizado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
             else
                 MessageBox.Show("Houve um erro e o carregamento não pode ser finalizado.", "Carregamento não finalizado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
             ListaFunc = f.carregaFuncionariosLivres();
@@ -90,9 +89,15 @@ namespace GUI
         {
             if (checarCampos() && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "4"))
             {
-                t.inserirTarefa(montarTarefa(), funcionarios());
-                dgTarefas.ItemsSource = t.tarefasPendentes("4");
-                MessageBox.Show("Carregamento iniciado para o " + d.linhaDados(int.Parse(Documento.Text.Replace("_", ""))), "Carregamento iniciado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (t.inserirTarefa(montarTarefa(), funcionarios()))
+                {
+                    dgTarefas.ItemsSource = t.tarefasPendentes("4");
+                    MessageBox.Show("Carregamento iniciado para o " + d.linhaDados(int.Parse(Documento.Text.Replace("_", ""))), "Carregamento iniciado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Não foi possível iniciar o carregamento.", "Carregamento não iniciado - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             else
             {

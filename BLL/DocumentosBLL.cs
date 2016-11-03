@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ProdusisBD;
 using DAL;
+using DAL.Properties;
 
 namespace BLL
 {
@@ -35,8 +36,7 @@ namespace BLL
         {
             return d.getFornecedorCte(num);
         }
-
-       
+               
         public double pesoCte(int num)
         {
             return d.getPesoCte(num);
@@ -51,9 +51,36 @@ namespace BLL
             else return false;
         }
 
+        public bool manifestoCadastrado(int num)
+        {
+            if (d.verificarDocumentoCadastrado(0, num.ToString()) != null)
+            {
+                return true;
+            }
+            else return false;
+        }
         public NotasFiscais getDadosNF (string numero)
         {
             return d.getNFPorNumero(numero);
+        }
+
+        public string getPastaNFs()
+        {
+            return PastasXml.Default.PastaNFs;
+        }
+
+        public string getPastaManifestos()
+        {
+            return PastasXml.Default.PastaManifestos;
+        }
+
+        public void setPastasNF(string caminho)
+        {
+            PastasXml.Default.PastaNFs = caminho;
+        }
+        public void setPastasManifesto(string caminho)
+        {
+            PastasXml.Default.PastaManifestos = caminho;
         }
     }
 }

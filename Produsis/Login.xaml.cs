@@ -43,12 +43,15 @@ namespace GUI
                 {
                     if (l.validarSenha(TxbLogin.Text, TxbSenha.Password))
                     {
-                        TelaPrincipal view = new TelaPrincipal();
+                        view = new TelaPrincipal();
                         this.Close();
                         view.Show();
                     }
                     else
+                    {
+                        MessageBox.Show("Senha incorreta.", "Login - Produsis", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         TxbSenha.Focus();
+                    }
                 }
                 else
                     TxbLogin.Focus();*/
@@ -60,11 +63,13 @@ namespace GUI
             //verificar se tem coisas digitadas nos dois campos
             if(TxbLogin.Text == ""||TxbLogin.Text.Length<4)
             {
+                MessageBox.Show("Digite login e senha", "Login - Produsis", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 TxbLogin.Focus();
                 return false;
             }
             if (TxbSenha.Password == "")
             {
+                MessageBox.Show("Digite sua senha", "Login - Produsis", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 TxbSenha.Focus();
                 return false;
             }

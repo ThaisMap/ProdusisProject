@@ -7,9 +7,21 @@ namespace BLL
     public class TarefasBLL
     {
         private TarefasBD t = new TarefasBD();
-
+        private DocumentosBLL d = new DocumentosBLL();
         public bool inserirTarefa(Tarefas novaTarefa, string[] funcionarios)
         {
+            if (novaTarefa.tipoTarefa == "2")
+            {
+                if (!d.cteCadastrado((int)novaTarefa.documentoTarefa))
+                    return false;
+            }
+            else
+            {
+                if (!d.manifestoCadastrado((int)novaTarefa.documentoTarefa))
+                {
+                    return false;
+                }
+            }
             FuncionariosBD f = new FuncionariosBD();
             int[] idsFuncionarios = new int[funcionarios.Length];
             for (int i = 0; i < funcionarios.Length; i++)

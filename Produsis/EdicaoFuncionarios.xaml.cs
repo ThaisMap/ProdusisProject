@@ -61,14 +61,17 @@ namespace Produsis
 
         private void Salvar_Click(object sender, RoutedEventArgs e)
         {
-            if (f.validarSenha(emEdicao.matriculaFunc, Senha.Password))
+            if (f.validarSenha(emEdicao.matriculaFunc, Senha.Password)&&checarCampos())
             {
                 Funcionarios novosDados = montarObjeto();
-                f.editar(novosDados);
+                if(f.editar(novosDados))
+                MessageBox.Show("Funcionário editado com sucesso.", "Funcionário editado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+
                 limpar(sender, e);
             }
             else
             {
+                MessageBox.Show("Funcionário não foi editado. Verifique as informações fornecidas.", "Funcionário editado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 Senha.Focus();
             }
         }
