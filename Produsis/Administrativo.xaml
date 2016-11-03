@@ -49,7 +49,7 @@
                     <Button Name="BtnDocumentos" Height="auto" Width="140" Margin="5,0" Click="BtnDocumentos_Click">
                         <TextBlock TextWrapping="Wrap" TextAlignment="Center">Ver Documentos</TextBlock>
                     </Button>
-                    <Button Name="BtnRelatorios" Height="auto" Width="100" Margin="5,0">
+                    <Button Name="BtnRelatorios" Height="auto" Width="100" Margin="5,0" Click="BtnRelatorios_Click">
                         <TextBlock TextWrapping="Wrap" TextAlignment="Center">Relatórios</TextBlock>
                     </Button>
                     <Button Name="BtnConfigurações" Height="auto" Width="130" Margin="5,0">

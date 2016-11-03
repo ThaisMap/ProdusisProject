@@ -126,6 +126,9 @@
     <Compile Include="PesquisarDocumento.xaml.cs">
       <DependentUpon>PesquisarDocumento.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Relatorios.xaml.cs">
+      <DependentUpon>Relatorios.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Separacao.xaml.cs">
       <DependentUpon>Separacao.xaml</DependentUpon>
     </Compile>
@@ -201,6 +204,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PesquisarDocumento.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Relatorios.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
