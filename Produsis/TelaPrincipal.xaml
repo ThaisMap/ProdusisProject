@@ -55,55 +55,48 @@
                 Grid.ColumnSpan="2"
                 Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button
-                    Name="BtnHome"
+                    x:Name="BtnAdministrativo"
                     Width="auto"
                     Height="auto"
                     Margin="2,5"
-                    Click="BtnHome_Click"
-                    Content="Home" />
+                    Click="BtnAdministrativo_Click"
+                    Content="Administrativo" />
                 <Button
-                    Name="BtnDescarga"
+                    x:Name="BtnDescarga"
                     Width="auto"
                     Height="auto"
                     Margin="2,5"
                     Click="BtnDescarga_Click"
                     Content="Descarga" />
                 <Button
-                    Name="BtnSerapacao"
+                    x:Name="BtnSerapacao"
                     Width="auto"
                     Height="auto"
                     Margin="2,5"
                     Click="BtnSerapacao_Click"
                     Content="Separação" />
                 <Button
-                    Name="BtnConferencia"
+                    x:Name="BtnConferencia"
                     Width="auto"
                     Height="auto"
                     Margin="2,5"
                     Click="BtnConferencia_Click"
                     Content="Conferência" />
                 <Button
-                    Name="BtnSeparacaoCarga"
+                    x:Name="BtnSeparacaoCarga"
                     Width="200"
                     Height="auto"
                     Margin="2,5"
                     Click="BtnSeparacaoCarga_Click">
-                    <TextBlock TextAlignment="Left" TextWrapping="Wrap">Separação Para Carregar</TextBlock>
+                    <TextBlock TextAlignment="Left" TextWrapping="Wrap"><Run Text="Separação Para Carregar"/></TextBlock>
                 </Button>
                 <Button
-                    Name="BtnCarregamento"
+                    x:Name="BtnCarregamento"
                     Width="auto"
                     Height="auto"
                     Margin="2,5"
                     Click="BtnCarregamento_Click"
                     Content="Carregamento" />
-                <Button
-                    Name="BtnAdministrativo"
-                    Width="auto"
-                    Height="auto"
-                    Margin="2,5"
-                    Click="BtnAdministrativo_Click"
-                    Content="Administrativo" />
             </StackPanel>
             <Frame
                 Name="Navegador"

@@ -45,5 +45,16 @@ namespace BLL
         {
             return t.finalizarTarefa(idTarefa);
         }
+
+        public int iniciadaHojePendente(string tipo)
+        {
+            return t.getTarefasHojePendentes(tipo);
+        }
+
+        public int iniciadaHojeFinalizada(string tipo)
+        {
+            return t.getTarefasHojeFinalizadas(tipo);
+        }
+
     }
 }

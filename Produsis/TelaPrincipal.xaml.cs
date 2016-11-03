@@ -22,8 +22,8 @@ namespace GUI
         public TelaPrincipal()
         {
             InitializeComponent();
-            BtnHome.Opacity = 0.5;
-            //Navegador.Navigate(new Home());
+            BtnAdministrativo.Opacity = 0.5;
+            Navegador.Navigate(new Administrativo());
         }
 
         public void ResetarOpacidade()
@@ -34,17 +34,10 @@ namespace GUI
             BtnDescarga.Opacity = 1;
             BtnSeparacaoCarga.Opacity = 1;
             BtnSerapacao.Opacity = 1;
-            BtnHome.Opacity = 1;
         }
 
         #region Botoes
-        private void BtnHome_Click(object sender, RoutedEventArgs e)
-        {
-            ResetarOpacidade();
-            BtnHome.Opacity = 0.5;
-
-        }
-
+      
         private void BtnDescarga_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();

@@ -105,6 +105,40 @@ namespace DAL
             }
         }
 
+        public int getTarefasHojePendentes(string tipoTarefa)
+        {
+            List<Tarefas> pendentes = new List<Tarefas>();
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    pendentes = (from Tarefas in BancoDeDados.Tarefas where Tarefas.inicioTarefa >= DateTime.Today where Tarefas.fimTarefa == null where Tarefas.tipoTarefa == tipoTarefa select Tarefas).ToList();
+                }
+                return pendentes.Count;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public int getTarefasHojeFinalizadas(string tipoTarefa)
+        {
+            List<Tarefas> pendentes = new List<Tarefas>();
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                { 
+                    pendentes = (from Tarefas in BancoDeDados.Tarefas where Tarefas.inicioTarefa >= DateTime.Today where Tarefas.fimTarefa != null where Tarefas.tipoTarefa == tipoTarefa select Tarefas).ToList();
+                }
+                return pendentes.Count;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
         public bool verificaDocumentoTarefa(int numDocumento, string tipoTarefa)
         {
             try
@@ -154,7 +188,7 @@ namespace DAL
                                 select t;
 
                     // Have to rethink that, I know it will be hard, but you can do it
-
+                    /*
                     if (f.volumeInicio > 0)
                     {
                         var getManifestos = query.Where(t => t.Manifestos.VolumesManifesto >= f.volumeInicio);
@@ -207,7 +241,7 @@ namespace DAL
                                       where t.Ctes.NotasFiscais.Sum(NF => NF.pesoNF) <= f.pesoFim
                                       select t;
                         query = getManifestos.Union(getCtes);
-                    }
+                    }*/
 
                     return query.ToList();
                 }

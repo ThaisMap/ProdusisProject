@@ -24,6 +24,7 @@ namespace GUI
         public Administrativo()
         {
             InitializeComponent();
+            NavegadorInterno.Navigate(new IniciadasHoje());
         }
 
         private void BtnCadFuncionarios_Click(object sender, RoutedEventArgs e)
@@ -44,6 +45,16 @@ namespace GUI
         private void BtnRelatorios_Click(object sender, RoutedEventArgs e)
         {
             NavegadorInterno.Navigate(new Relatorios());
+        }
+
+        private void BtnConfiguracoes_Click(object sender, RoutedEventArgs e)
+        {
+            NavegadorInterno.Navigate(new Configuracao());
+        }
+
+        private void BtnTarefasInitHoje_Click(object sender, RoutedEventArgs e)
+        {
+            NavegadorInterno.Navigate(new IniciadasHoje());
         }
     }
 }

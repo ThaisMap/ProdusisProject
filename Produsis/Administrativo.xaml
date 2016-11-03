@@ -39,7 +39,7 @@
                 <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Administrativo</TextBlock>
                 <Separator></Separator>
                 <StackPanel HorizontalAlignment="Center" Height="30" Orientation="Horizontal">
-                    <Button Name="BtnTarefasInitHoje" Height="auto" Width="180" Margin="5,0">
+                    <Button Name="BtnTarefasInitHoje" Height="auto" Width="180" Margin="5,0" Click="BtnTarefasInitHoje_Click">
                         <TextBlock TextWrapping="Wrap" TextAlignment="Center">Tarefas Iniciadas Hoje</TextBlock>
                     </Button>
                     <Button Name="BtnCadFuncionarios" Height="auto" Width="180" Margin="5,0" Click="BtnCadFuncionarios_Click">
@@ -52,7 +52,7 @@
                     <Button Name="BtnRelatorios" Height="auto" Width="100" Margin="5,0" Click="BtnRelatorios_Click">
                         <TextBlock TextWrapping="Wrap" TextAlignment="Center">Relatórios</TextBlock>
                     </Button>
-                    <Button Name="BtnConfigurações" Height="auto" Width="130" Margin="5,0" Click="BtnConfigurações_Click">
+                    <Button Name="BtnConfiguracoes" Height="auto" Width="130" Margin="5,0" Click="BtnConfiguracoes_Click">
                         <TextBlock TextWrapping="Wrap" TextAlignment="Center">Configurações</TextBlock>
                     </Button>
                 </StackPanel>

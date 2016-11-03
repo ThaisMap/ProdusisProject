@@ -1,5 +1,6 @@
 ﻿using ProdusisBD;
 using System.Collections.Generic;
+using System;
 using System.Linq;
 
 namespace DAL
@@ -176,6 +177,7 @@ namespace DAL
         /// <returns>Id do documento se este for encontrado, -1 se nao for ou se ocorrer algum erro</returns>
         public int? verificarDocumentoCadastrado(int tipodoc, string numDocumento)
         {
+            int doc;
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
@@ -183,11 +185,13 @@ namespace DAL
                     int? documento = null;
                     if (tipodoc == 0)
                     {
-                        documento = (from Manifestos in BancoDeDados.Manifestos where Manifestos.numeroManifesto == int.Parse(numDocumento) select Manifestos.numeroManifesto).FirstOrDefault();
+                        doc = int.Parse(numDocumento);
+                        documento = (from Manifestos in BancoDeDados.Manifestos where Manifestos.numeroManifesto == doc select Manifestos.numeroManifesto).FirstOrDefault();
                     }
                     else if (tipodoc == 1)
                     {
-                        documento = (from Ctes in BancoDeDados.Ctes where Ctes.numeroCte == int.Parse(numDocumento) select Ctes.numeroCte).FirstOrDefault();
+                        doc = int.Parse(numDocumento);
+                        documento = (from Ctes in BancoDeDados.Ctes where Ctes.numeroCte == doc select Ctes.numeroCte).FirstOrDefault();
                     }
                     else
                     {
@@ -197,7 +201,7 @@ namespace DAL
                     return documento;
                 }
             }
-            catch
+            catch(Exception e)
             {
                 return null;
             }

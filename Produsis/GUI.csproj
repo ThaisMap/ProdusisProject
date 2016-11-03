@@ -134,6 +134,9 @@
       <DependentUpon>FiltrarTarefas.xaml</DependentUpon>
     </Compile>
     <Compile Include="FuncionariosTag.cs" />
+    <Compile Include="IniciadasHoje.xaml.cs">
+      <DependentUpon>IniciadasHoje.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PesquisarDocumento.xaml.cs">
       <DependentUpon>PesquisarDocumento.xaml</DependentUpon>
     </Compile>
@@ -215,6 +218,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FiltrarTarefas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="IniciadasHoje.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
