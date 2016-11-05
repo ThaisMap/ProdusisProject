@@ -56,5 +56,10 @@ namespace BLL
             return t.getTarefasHojeFinalizadas(tipo);
         }
 
+        public List<TarefaModelo> filtrar(Filtro f)
+        {
+            return t.getTarefasFiltradas(f);
+        }
+
     }
 }

@@ -23,9 +23,8 @@ namespace ProdusisBD
         public int idTarefa { get; set; }
         public System.DateTime inicioTarefa { get; set; }
         public Nullable<System.DateTime> fimTarefa { get; set; }
-        public Nullable<int> documentoTarefa { get; set; }
+        public int documentoTarefa { get; set; }
         public string tipoTarefa { get; set; }
-        //public string nomesFuncionarios { get; set; }
         public string tempoGasto { get; set; }
         public virtual Ctes Ctes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

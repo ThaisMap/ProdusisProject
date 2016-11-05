@@ -130,9 +130,6 @@
     <Compile Include="EdicaoFuncionarios.xaml.cs">
       <DependentUpon>EdicaoFuncionarios.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FiltrarTarefas.xaml.cs">
-      <DependentUpon>FiltrarTarefas.xaml</DependentUpon>
-    </Compile>
     <Compile Include="FuncionariosTag.cs" />
     <Compile Include="IniciadasHoje.xaml.cs">
       <DependentUpon>IniciadasHoje.xaml</DependentUpon>
@@ -214,10 +211,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EdicaoFuncionarios.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FiltrarTarefas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

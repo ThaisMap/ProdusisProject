@@ -25,7 +25,7 @@ namespace ProdusisBD
         public int quantCtesManifesto { get; set; }
         public double pesoManifesto { get; set; }
         public int VolumesManifesto { get; set; }
-        public Nullable<int> skusManifesto { get; set; }
+        public int skusManifesto { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cte_Manifesto> Cte_Manifesto { get; set; }

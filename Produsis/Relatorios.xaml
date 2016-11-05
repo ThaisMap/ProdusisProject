@@ -14,7 +14,7 @@
     TextElement.FontSize="16"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Loaded="UserControl_Loaded">
     <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Auto">
         <StackPanel CanHorizontallyScroll="True" CanVerticallyScroll="True">
             <TextBlock
@@ -25,7 +25,7 @@
             </TextBlock>
             <Separator/>
             <TextBlock HorizontalAlignment="Center" Style="{StaticResource MaterialDesignHeadlineTextBlock}" FontSize="18">Filtros</TextBlock>
-            <Grid Height="auto" HorizontalAlignment="Center">
+            <Grid x:Name="GridFiltros" Height="auto" HorizontalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="auto" />
@@ -41,226 +41,175 @@
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
-                    <RowDefinition />
                 </Grid.RowDefinitions>
 
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="0"
                     Margin="5,10"
-                    VerticalAlignment="Center">
-                    Tipo de tarefa:
-                </TextBlock>
-                <ComboBox
+                    VerticalAlignment="Center"><Run Text="Tipo de tarefa:"/></TextBlock>
+                <ComboBox x:Name="cbTipoTarefa"
                     Grid.Row="0"
                     Grid.Column="1"
                     Width="160"
                     Margin="5,10"
-                    VerticalAlignment="Center" />
-
-                <TextBlock
-                    Grid.Row="0"
-                    Grid.Column="2"
-                    Margin="5,10"
-                    VerticalAlignment="Center">
-                    Documento:
-                </TextBlock>
-                <TextBox
-                    Grid.Row="0"
-                    Grid.Column="3"
-                    Width="160"
-                    Margin="5,10"
-                    VerticalAlignment="Center" />
-
-                <TextBlock
-                    Grid.Row="0"
-                    Grid.Column="4"
-                    Margin="5,10"
-                    VerticalAlignment="Center">
-                    Volumes:
-                </TextBlock>
-                <TextBox
-                    Grid.Row="0"
-                    Grid.Column="5"
-                    Width="40"
-                    Margin="5,10"
-                    VerticalAlignment="Center" />
-
-                <TextBlock
-                    Grid.Row="0"
-                    Grid.Column="6"
-                    Margin="5,10"
-                    VerticalAlignment="Center">
-                    Até:
-                </TextBlock>
-                <TextBox
-                    Grid.Row="0"
-                    Grid.Column="7"
-                    Width="40"
-                    Margin="5,10"
-                    VerticalAlignment="Center" />
+                    VerticalAlignment="Center" >
+                    <ComboBoxItem Content="Descarga" HorizontalAlignment="Left" Width="158"/>
+                    <ComboBoxItem Content="Separação" HorizontalAlignment="Left" Width="158"/>
+                    <ComboBoxItem Content="Conferência" HorizontalAlignment="Left" Width="158"/>
+                    <ComboBoxItem Content="Separação para carregar" HorizontalAlignment="Left" Width="190"/>
+                    <ComboBoxItem Content="Carregamento" HorizontalAlignment="Left" Width="158"/>
+                </ComboBox>
 
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="0"
                     Margin="5,10"
-                    VerticalAlignment="Center">
-                    Data de Início:
-                </TextBlock>
-                <DatePicker
+                    VerticalAlignment="Center"><Run Text="Documento:"/></TextBlock>
+                <TextBox x:Name="tbDocumento"
                     Grid.Row="1"
                     Grid.Column="1"
+                    Width="160"
+                    Margin="5,10"
+                    VerticalAlignment="Center" PreviewTextInput="testarCaractere" />
+
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="4"
+                    Margin="5,10"
+                    VerticalAlignment="Center"><Run Text="Volumes:"/></TextBlock>
+                <TextBox x:Name="volumeInicial"
+                    Grid.Row="0"
+                    Grid.Column="5"
+                    Width="40"
+                    Margin="5,10"
+                    VerticalAlignment="Center" PreviewTextInput="testarCaractere"/>
+
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="6"
+                    Margin="5,10"
+                    VerticalAlignment="Center"><Run Text="Até:"/></TextBlock>
+                <TextBox x:Name="volumeFinal"
+                    Grid.Row="0"
+                    Grid.Column="7"
+                    Width="40"
+                    Margin="5,10"
+                    VerticalAlignment="Center" PreviewTextInput="testarCaractere" />
+
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Margin="5,10"
+                    VerticalAlignment="Center"><Run Text="Data Inicial:"/></TextBlock>
+                <DatePicker x:Name="dataInicio"
+                    Grid.Row="0"
+                    Grid.Column="3"
                     Width="160"
                     Margin="5,10"
                     VerticalAlignment="Center"
                     Language="pt-br" />
                 <TextBlock
                     Grid.Row="1"
-                    Grid.Column="2"
-                    Margin="5,10"
-                    VerticalAlignment="Center">
-                    Hora de Início:
-                </TextBlock>
-                <materialDesign:TimePicker
-                    Grid.Row="1"
-                    Grid.Column="3"
-                    Width="160"
-                    Margin="5,10"
-                    VerticalAlignment="Center"
-                    materialDesign:HintAssist.Hint="Selecione a Hora"
-                    Language="pt-br"
-                    SelectedTimeFormat="Short" />
-                <TextBlock
-                    Grid.Row="1"
                     Grid.Column="4"
                     Margin="5,10"
-                    VerticalAlignment="Center">
-                    SKU's:
-                </TextBlock>
-                <TextBox
+                    VerticalAlignment="Center"><Run Text="SKU's:"/></TextBlock>
+                <TextBox x:Name="skuInicio"
                     Grid.Row="1"
                     Grid.Column="5"
                     Width="40"
                     Margin="5,10"
-                    VerticalAlignment="Center" />
+                    VerticalAlignment="Center" PreviewTextInput="testarCaractere" />
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="6"
                     Margin="5,10"
-                    VerticalAlignment="Center">
-                    Até:
-                </TextBlock>
-                <TextBox
+                    VerticalAlignment="Center"><Run Text="Até:"/></TextBlock>
+                <TextBox x:Name="skuFinal"
                     Grid.Row="1"
                     Grid.Column="7"
                     Width="40"
                     Margin="5,10"
-                    VerticalAlignment="Center" />
+                    VerticalAlignment="Center" PreviewTextInput="testarCaractere" />
                 <TextBlock
-                    Grid.Row="2"
-                    Grid.Column="0"
-                    Margin="5,10"
-                    VerticalAlignment="Center">
-                    Data de Término:
-                </TextBlock>
-                <DatePicker
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    Width="160"
-                    Margin="5,10"
-                    VerticalAlignment="Center"
-                    Language="pt-br" />
-                <TextBlock
-                    Grid.Row="2"
+                    Grid.Row="1"
                     Grid.Column="2"
                     Margin="5,10"
-                    VerticalAlignment="Center">
-                    Hora de Término:
-                </TextBlock>
-                <materialDesign:TimePicker
-                    Grid.Row="2"
+                    VerticalAlignment="Center"><Run Text="Data Final:"/></TextBlock>
+                <DatePicker x:Name="dataFinal"
+                    Grid.Row="1"
                     Grid.Column="3"
                     Width="160"
                     Margin="5,10"
                     VerticalAlignment="Center"
-                    materialDesign:HintAssist.Hint="Selecione a Hora"
-                    Language="pt-br"
-                    SelectedTimeFormat="Short" />
+                    Language="pt-br" 
+                    />
                 <TextBlock
                     Grid.Row="2"
                     Grid.Column="4"
                     Margin="5,10"
-                    VerticalAlignment="Center">
-                    Peso:
-                </TextBlock>
-                <TextBox
+                    VerticalAlignment="Center"><Run Text="Peso:"/></TextBlock>
+                <TextBox x:Name="pesoInicio"
                     Grid.Row="2"
                     Grid.Column="5"
                     Width="40"
                     Margin="5,10"
-                    VerticalAlignment="Center" />
+                    VerticalAlignment="Center" PreviewTextInput="testarCaractere" />
                 <TextBlock
                     Grid.Row="2"
                     Grid.Column="6"
                     Margin="5,10"
-                    VerticalAlignment="Center">
-                    Até:
-                </TextBlock>
-                <TextBox
+                    VerticalAlignment="Center"><Run Text="Até:"/></TextBlock>
+                <TextBox x:Name="pesoFinal"
                     Grid.Row="2"
                     Grid.Column="7"
                     Width="40"
                     Margin="5,10"
-                    VerticalAlignment="Center" />
+                    VerticalAlignment="Center" PreviewTextInput="testarCaractere" />
                 <TextBlock
-                    Grid.Row="3"
+                    Grid.Row="2"
                     Grid.Column="0"
                     Margin="5,10"
-                    VerticalAlignment="Center">
-                    Funcionário:
-                </TextBlock>
-                <ComboBox
-                    Grid.Row="3"
+                    VerticalAlignment="Center"><Run Text="Funcionário:"/></TextBlock>
+                <ComboBox x:Name="cbFuncionario"
+                    Grid.Row="2"
                     Grid.Column="1"
                     Width="160"
                     Margin="5,10"
                     VerticalAlignment="Center" />
-                <TextBlock
+                <Button x:Name="btnLimpar"
                     Grid.Row="3"
-                    Grid.Column="2"
-                    Margin="5,10"
-                    VerticalAlignment="Center">
-                    Fornecedor:
-                </TextBlock>
-                <ComboBox
-                    Grid.Row="3"
-                    Grid.Column="3"
-                    Width="160"
-                    Margin="5,10"
-                    VerticalAlignment="Center" />
-                <Button
-                    Grid.Row="4"
                     Grid.Column="4"
                     Grid.ColumnSpan="2"
                     Width="100"
                     Margin="5,10"
                     VerticalAlignment="Center"
-                    Style="{StaticResource MaterialDesignFlatButton}">
-                    Limpar
-                </Button>
-                <Button
-                    Grid.Row="4"
+                    Style="{StaticResource MaterialDesignFlatButton}" Click="btnLimpar_Click" Content="Limpar"/>
+                <Button x:Name="btnConsultar"
+                    Grid.Row="3"
                     Grid.Column="6"
                     Grid.ColumnSpan="2"
                     Width="100"
                     Margin="5,10"
                     VerticalAlignment="Center"
-                    Style="{StaticResource MaterialDesignFlatButton}">
-                    Consultar
-                </Button>
+                    Style="{StaticResource MaterialDesignFlatButton}" Click="btnConsultar_Click" Content="Consultar"/>
             </Grid>
             <Separator/>
-            <DataGrid Height="600"></DataGrid>
+            <DataGrid Name="dgTarefas"  Height="auto" ColumnWidth="auto" HorizontalAlignment="Center" AutoGenerateColumns="False" IsReadOnly="True" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding documentoTarefa}" Header="Documento" />
+                    <DataGridTextColumn Binding="{Binding tipoTarefa}" Header="Tipo" />
+                    <DataGridTextColumn Binding="{Binding dataInicio}" Header="Data Início" />
+                    <DataGridTextColumn Binding="{Binding horaInicio}" Header="Hora Início" />
+                    <DataGridTextColumn Binding="{Binding dataFim}" Header="Data Fim" />
+                    <DataGridTextColumn Binding="{Binding horaFim}" Header="Hora Fim" />
+                    <DataGridTextColumn Binding="{Binding tempoGasto}" Header="Tempo Gasto" />
+                    <DataGridTextColumn Binding="{Binding nomesFuncionarios}" Header="Funcionarios" />
+                    <DataGridTextColumn Binding="{Binding volumes}" Header="Volumes" />
+                    <DataGridTextColumn Binding="{Binding skus}" Header="SKU's" />
+                    <DataGridTextColumn Binding="{Binding peso}" Header="Peso (Kg)" />
+                </DataGrid.Columns>
+            </DataGrid>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

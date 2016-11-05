@@ -59,7 +59,7 @@
     <Compile Include="Cte_Manifesto.cs">
       <DependentUpon>Model_pBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Filtros.cs" />
+    <Compile Include="Filtro.cs" />
     <Compile Include="Funcionarios.cs">
       <DependentUpon>Model_pBD.tt</DependentUpon>
     </Compile>

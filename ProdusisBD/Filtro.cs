@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace ProdusisBD
 {
-    public class Filtros
+    public class Filtro
     {
         public string TipoTarefa;
         public int numDocumento;
-        public DateTime dataInicio;
+        public DateTime? dataInicio;
         public DateTime? dataFim;
-        public int idFuncionario;
+        public string nomeFuncionario;
         public int volumeInicio;
         public int volumeFim;
         public int skuInicio;
