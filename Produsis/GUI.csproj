@@ -56,6 +56,11 @@
       <HintPath>..\packages\MaterialDesignThemes.2.1.0.657\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -247,6 +252,10 @@
     <ProjectReference Include="..\BLL\BLL.csproj">
       <Project>{70b2b01b-3731-4790-ba2b-eb106973a3ad}</Project>
       <Name>BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{A1BD5847-5FE4-4DC5-A701-963C11C48988}</Project>
+      <Name>DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\ProdusisBD\ProdusisBD.csproj">
       <Project>{f928f7a8-9172-41ad-857a-4caf573b0a29}</Project>

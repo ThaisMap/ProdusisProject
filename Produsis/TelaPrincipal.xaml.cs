@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace GUI
 {
@@ -37,7 +25,7 @@ namespace GUI
         }
 
         #region Botoes
-      
+
         private void BtnDescarga_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();
@@ -79,8 +67,7 @@ namespace GUI
             BtnSerapacao.Opacity = 0.5;
             Navegador.Navigate(new Separacao());
         }
-        #endregion
 
-
+        #endregion Botoes
     }
 }

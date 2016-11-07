@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProdusisBD;
-using DAL;
+﻿using DAL;
 using DAL.Properties;
+using ProdusisBD;
 
 namespace BLL
 {
     public class DocumentosBLL
     {
-        DocumentosBD d = new DocumentosBD();
+        private DocumentosBD d = new DocumentosBD();
+
         public Manifestos getDadosManifesto(int numero)
         {
             return d.getManifestoPorNumero(numero);
@@ -32,11 +28,11 @@ namespace BLL
             return d.getVolumesCte(num);
         }
 
-        public string fornecedorCte (int num)
+        public string fornecedorCte(int num)
         {
             return d.getFornecedorCte(num);
         }
-               
+
         public double pesoCte(int num)
         {
             return d.getPesoCte(num);
@@ -59,7 +55,8 @@ namespace BLL
             }
             else return false;
         }
-        public NotasFiscais getDadosNF (string numero)
+
+        public NotasFiscais getDadosNF(string numero)
         {
             return d.getNFPorNumero(numero);
         }
@@ -78,6 +75,7 @@ namespace BLL
         {
             PastasXml.Default.PastaNFs = caminho;
         }
+
         public void setPastasManifesto(string caminho)
         {
             PastasXml.Default.PastaManifestos = caminho;

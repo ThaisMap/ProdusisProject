@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BLL;
+using ProdusisBD;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using BLL;
-using ProdusisBD;
 
 namespace GUI
 {
@@ -22,7 +10,7 @@ namespace GUI
     /// </summary>
     public partial class CadastroFuncionarios : UserControl
     {
-        FuncionarioBLL f = new FuncionarioBLL();
+        private FuncionarioBLL f = new FuncionarioBLL();
 
         public CadastroFuncionarios()
         {
@@ -43,7 +31,7 @@ namespace GUI
                 MessageBox.Show("Funcionário não foi cadastrado. Verifique as informações fornecidas.", "Funcionário não cadastrado - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        
+
         private Funcionarios montarObjeto()
         {
             Funcionarios func = new Funcionarios();

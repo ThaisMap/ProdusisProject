@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProdusisBD;
+﻿using ProdusisBD;
 
 namespace BLL
 {
@@ -15,13 +10,13 @@ namespace BLL
     public enum tiposDocumento
     {
         Manifesto,
-        Cte, 
+        Cte,
         NotaFiscal
     }
 
     public enum tipoFuncionario
     {
-        Administrativo, 
+        Administrativo,
         Externo,
         Operador
     }

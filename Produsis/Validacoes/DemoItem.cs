@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Produsis.Validacoes
 {
-    class DemoItem : INotifyPropertyChanged
+    internal class DemoItem : INotifyPropertyChanged
     {
         private string _name;
         private object _content;

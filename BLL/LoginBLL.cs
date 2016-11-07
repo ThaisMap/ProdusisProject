@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProdusisBD;
-using DAL;
+﻿using DAL;
 
 namespace BLL
 {
     public class LoginBLL
     {
         private FuncionariosBD f = new FuncionariosBD();
-        
+
         /// <summary>
         /// Verifica se o funcionario está cadastrado
         /// </summary>

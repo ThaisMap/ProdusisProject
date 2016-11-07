@@ -88,7 +88,7 @@
                     Height="auto"
                     Margin="2,5"
                     Click="BtnSeparacaoCarga_Click">
-                    <TextBlock TextAlignment="Left" TextWrapping="Wrap"><Run Text="Separação Para Carregar"/></TextBlock>
+                    <TextBlock TextAlignment="Left" TextWrapping="Wrap"><Run Text="Separação Para Carregar" /></TextBlock>
                 </Button>
                 <Button
                     x:Name="BtnCarregamento"

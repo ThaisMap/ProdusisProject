@@ -3,7 +3,7 @@ using ProdusisBD;
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls; 
+using System.Windows.Controls;
 
 namespace GUI
 {
@@ -25,6 +25,7 @@ namespace GUI
             CBFuncionario.ItemsSource = ListaFunc;
             dgTarefas.ItemsSource = t.tarefasPendentes("1");
         }
+
         public static string CriaChipTag(string Nome)
         {
             string[] PrimeirosNomes = Nome.Split(' ');
@@ -112,6 +113,7 @@ namespace GUI
                 ListaDeFuncionarios.Items.Add(FuncionarioSelecionado);
             }
         }
+
         private Tarefas montarTarefa()
         {
             Tarefas novaTarefa = new Tarefas();

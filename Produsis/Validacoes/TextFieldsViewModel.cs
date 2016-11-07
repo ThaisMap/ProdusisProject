@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Produsis.Validacoes
 {
-    class TextFieldsViewModel : INotifyPropertyChanged
+    internal class TextFieldsViewModel : INotifyPropertyChanged
     {
         private string _name;
         private int? _selectedValueOne;

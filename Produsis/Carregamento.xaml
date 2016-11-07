@@ -113,7 +113,7 @@
                                 </Button>
                             </Grid>
                             <Separator />
-                            <Grid >
+                            <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
@@ -143,7 +143,7 @@
                                     HorizontalAlignment="Center"
                                     AutoGenerateColumns="False"
                                     ColumnWidth="*"
-                                    IsReadOnly="True" >
+                                    IsReadOnly="True">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Manifesto" Binding="{Binding documentoTarefa}" />
                                         <DataGridTextColumn Header="Funcionarios" Binding="{Binding nomesFuncionarios}" />

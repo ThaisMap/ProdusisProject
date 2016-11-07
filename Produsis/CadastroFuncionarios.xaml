@@ -35,20 +35,20 @@
                         <ColumnDefinition Width="60" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
                         <RowDefinition Height="26*" />
-                            <RowDefinition Height="25*" />
-                            <RowDefinition Height="25*" />
-                            <RowDefinition Height="26*" />
-                            <RowDefinition Height="0*" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
+                        <RowDefinition Height="25*" />
+                        <RowDefinition Height="25*" />
+                        <RowDefinition Height="26*" />
+                        <RowDefinition Height="0*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="21*" />
                     </Grid.RowDefinitions>
                     <materialDesign:PackIcon Grid.Row="0"
@@ -135,9 +135,9 @@
                               Width="300"
                               Margin="0,5,5,15"
                               materialDesign:HintAssist.Hint="Tipo"
-                              materialDesign:HintAssist.IsFloating="True" >
-                        <ComboBoxItem Content="Administrativo" HorizontalAlignment="Left" Width="298"/>
-                        <ComboBoxItem Content="Operador" HorizontalAlignment="Left" Width="298"/>
+                              materialDesign:HintAssist.IsFloating="True">
+                        <ComboBoxItem Content="Administrativo" HorizontalAlignment="Left" Width="298" />
+                        <ComboBoxItem Content="Operador" HorizontalAlignment="Left" Width="298" />
                     </ComboBox>
                     <materialDesign:PackIcon Grid.Row="4"
                                              Grid.Column="0"
@@ -162,8 +162,8 @@
                                   Grid.Column="1"
                                   Width="auto"
                                   Margin="10,0,0,0"
-                                  HorizontalAlignment="Left" IsChecked="True" 
-                                  VerticalAlignment="Center"/>
+                                  HorizontalAlignment="Left" IsChecked="True"
+                                  VerticalAlignment="Center" />
                     <StackPanel Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3" HorizontalAlignment="Right" Orientation="Horizontal">
                         <Button Name="Limpar"
                             Width="80"
@@ -179,7 +179,6 @@
                             Style="{StaticResource MaterialDesignFlatButton}" Click="Salvar_Click" />
                     </StackPanel>
                 </Grid>
-
             </StackPanel>
         </ScrollViewer>
     </Grid>

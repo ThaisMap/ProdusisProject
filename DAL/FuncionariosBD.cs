@@ -1,15 +1,8 @@
-﻿using System;
+﻿using ProdusisBD;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections;
-using System.Data.Common;
 using System.Data;
-using System.IO;
-using System.Data.SqlClient;
-using System.Data.Entity;
-using ProdusisBD;
+using System.Linq;
 
 namespace DAL
 {

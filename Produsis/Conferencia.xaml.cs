@@ -17,6 +17,7 @@ namespace GUI
         private FuncionariosTag FuncionarioSelecionado;
         private List<string> ListaFunc;
         private TarefasBLL t = new TarefasBLL();
+
         public Conferencia()
         {
             InitializeComponent();
@@ -24,6 +25,7 @@ namespace GUI
             CBFuncionario.ItemsSource = ListaFunc;
             dgTarefas.ItemsSource = t.tarefasPendentes("2");
         }
+
         public static string CriaChipTag(string Nome)
         {
             string[] PrimeirosNomes = Nome.Split(' ');
@@ -34,6 +36,7 @@ namespace GUI
         {
             dgTarefas.ItemsSource = t.tarefasPendentes("2");
         }
+
         private void Finalizar_Click(object sender, RoutedEventArgs e)
         {
             Tarefas item = (Tarefas)dgTarefas.SelectedItem;
@@ -88,7 +91,8 @@ namespace GUI
             if (checarCampos() && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "2"))
             {
                 if (t.inserirTarefa(montarTarefa(), funcionarios()))
-                { dgTarefas.ItemsSource = t.tarefasPendentes("2");
+                {
+                    dgTarefas.ItemsSource = t.tarefasPendentes("2");
                     MessageBox.Show("Conferência iniciada para o " + d.linhaDados(int.Parse(Documento.Text.Replace("_", ""))), "Conferência iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
@@ -109,6 +113,7 @@ namespace GUI
                 ListaDeFuncionarios.Items.Add(FuncionarioSelecionado);
             }
         }
+
         private Tarefas montarTarefa()
         {
             Tarefas novaTarefa = new Tarefas();

@@ -52,10 +52,10 @@
                           HorizontalAlignment="Center"
                           VerticalAlignment="Center"
                           materialDesign:HintAssist.Hint="Tipo de Documento"
-                          materialDesign:HintAssist.IsFloating="True" SelectionChanged="TipoDeDocumento_SelectionChanged" >
-                    <ComboBoxItem Content="Conhecimento" HorizontalAlignment="Left" Width="278"/>
-                    <ComboBoxItem Content="Manifesto" HorizontalAlignment="Left" Width="278"/>
-                    <ComboBoxItem Content="Nota Fiscal" HorizontalAlignment="Left" Width="278"/>
+                          materialDesign:HintAssist.IsFloating="True" SelectionChanged="TipoDeDocumento_SelectionChanged">
+                    <ComboBoxItem Content="Conhecimento" HorizontalAlignment="Left" Width="278" />
+                    <ComboBoxItem Content="Manifesto" HorizontalAlignment="Left" Width="278" />
+                    <ComboBoxItem Content="Nota Fiscal" HorizontalAlignment="Left" Width="278" />
                 </ComboBox>
                 <materialDesign:PackIcon Grid.Row="1"
                                          Grid.Column="0"
@@ -76,7 +76,7 @@
                                     VerticalAlignment="Center"
                                     materialDesign:HintAssist.Hint="Número do Documento"
                                     materialDesign:HintAssist.IsFloating="True"
-                                    Mask="9999999999999999999999999999999999999999"                                      
+                                    Mask="9999999999999999999999999999999999999999"
                                     Style="{StaticResource MaterialDesignTextBox}" />
                 <Button Grid.Row="1"
                         Grid.Column="2"
@@ -119,7 +119,7 @@
                            Grid.Column="1"
                            Margin="5"
                            TextWrapping="Wrap" />
-               
+
                 <TextBlock Grid.Row="1"
                            Grid.Column="0"
                            Margin="5"

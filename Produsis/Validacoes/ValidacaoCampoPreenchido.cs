@@ -1,8 +1,9 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
+
 namespace Produsis.Validacoes
 {
-    class ValidacaoCampoPreenchido : ValidationRule
+    internal class ValidacaoCampoPreenchido : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
@@ -12,7 +13,7 @@ namespace Produsis.Validacoes
             }
             else
             {
-               return new ValidationResult(true, "");
+                return new ValidationResult(true, "");
             }
         }
     }

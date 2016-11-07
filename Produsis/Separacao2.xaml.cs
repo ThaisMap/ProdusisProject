@@ -25,6 +25,7 @@ namespace GUI
             CBFuncionario.ItemsSource = ListaFunc;
             dgTarefas.ItemsSource = t.tarefasPendentes("3");
         }
+
         public static string CriaChipTag(string Nome)
         {
             string[] PrimeirosNomes = Nome.Split(' ');
@@ -112,6 +113,7 @@ namespace GUI
                 ListaDeFuncionarios.Items.Add(FuncionarioSelecionado);
             }
         }
+
         private Tarefas montarTarefa()
         {
             Tarefas novaTarefa = new Tarefas();

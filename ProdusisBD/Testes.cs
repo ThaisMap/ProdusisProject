@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ProdusisBD;
 using System.Data;
-using System.Data.SqlClient;
-using ProdusisBD;
-
+using System.Linq;
 
 namespace DAL
 {
@@ -18,15 +12,11 @@ namespace DAL
 
             using (produsisBDEntities pbd = new produsisBDEntities())
             {
-                
                 resultado = (from func in pbd.Funcionarios
-                              where func.idFunc == 1
-                              select func.nomeFunc).FirstOrDefault();
-                
+                             where func.idFunc == 1
+                             select func.nomeFunc).FirstOrDefault();
             }
-            
 
-          
             return resultado;
         }
     }

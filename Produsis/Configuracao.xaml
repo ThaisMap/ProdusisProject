@@ -21,54 +21,53 @@
     <Grid>
         <Grid Margin="0,10,0,10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="45*"/>
-                <RowDefinition Height="65*"/>
-                <RowDefinition Height="65*"/>
-                <RowDefinition Height="60*"/>
+                <RowDefinition Height="45*" />
+                <RowDefinition Height="65*" />
+                <RowDefinition Height="65*" />
+                <RowDefinition Height="60*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="97*"/>
-                <ColumnDefinition Width="53*"/>
+                <ColumnDefinition Width="97*" />
+                <ColumnDefinition Width="53*" />
             </Grid.ColumnDefinitions>
             <!--Título-->
-            <StackPanel 
+            <StackPanel
                 Grid.Row="0"
                 Grid.ColumnSpan="2"
                 Margin="10,0,-10,0">
-                <TextBlock 
-                    Margin="40,0,0,0" 
+                <TextBlock
+                    Margin="40,0,0,0"
                     Style="{StaticResource MaterialDesignHeadlineTextBlock}">
                     Configuração de pastas</TextBlock>
-                <Separator/>
+                <Separator />
             </StackPanel>
             <!--Pasta NFs-->
-            <TextBox 
+            <TextBox
                     Grid.Column="0"
                     Grid.Row="1"
-                VerticalAlignment="Top"    
-                Name="CaminhoPastaNFs" 
+                VerticalAlignment="Top"
+                Name="CaminhoPastaNFs"
                          IsReadOnly="True" Margin="20,10" Height="28">Pasta NFs</TextBox>
-            <Button 
+            <Button
                 Grid.Column="1" Grid.Row="1"
                 VerticalAlignment="Top" HorizontalAlignment="Left"
-                x:Name="AlteraNF" Content="Alterar" 
+                x:Name="AlteraNF" Content="Alterar"
                 Style="{StaticResource MaterialDesignFlatButton}"
-                Margin="5,10,80,0" Height="30" Width="100" Click="AlteraNF_Click"/>
-            <TextBox 
+                Margin="5,10,80,0" Height="30" Width="100" Click="AlteraNF_Click" />
+            <TextBox
                     Grid.Column="0"
                     Grid.Row="2"
-                VerticalAlignment="Top" 
-                    Name="CaminhoPastaMan" 
+                VerticalAlignment="Top"
+                    Name="CaminhoPastaMan"
                          IsReadOnly="True" Margin="20,10,20,0" Height="28">Pasta Manifestos</TextBox>
-            <Button 
+            <Button
                 Grid.Column="1" Grid.Row="2"
                 VerticalAlignment="Top" HorizontalAlignment="Left"
-                x:Name="AlteraMan" Content="Alterar" 
+                x:Name="AlteraMan" Content="Alterar"
                 Style="{StaticResource MaterialDesignFlatButton}"
-                Margin="5,10,80,0" Height="30" Width="100" Click="AlteraMan_Click"/>
+                Margin="5,10,80,0" Height="30" Width="100" Click="AlteraMan_Click" />
             <Button Grid.Column="1" Grid.Row="3"
-                x:Name="Salvar" Content="Salvar" Margin="73,10,0,0" VerticalAlignment="Top" Width="100" Click="Salvar_Click"/>
-
+                x:Name="Salvar" Content="Salvar" Margin="73,10,0,0" VerticalAlignment="Top" Width="100" Click="Salvar_Click" />
         </Grid>
     </Grid>
 </UserControl>

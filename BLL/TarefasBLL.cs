@@ -8,6 +8,7 @@ namespace BLL
     {
         private TarefasBD t = new TarefasBD();
         private DocumentosBLL d = new DocumentosBLL();
+
         public bool inserirTarefa(Tarefas novaTarefa, string[] funcionarios)
         {
             if (novaTarefa.tipoTarefa == "2")
@@ -60,6 +61,5 @@ namespace BLL
         {
             return t.getTarefasFiltradas(f);
         }
-
     }
 }

@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BLL;
+using ProdusisBD;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using BLL;
-using ProdusisBD;
 
 namespace Produsis
 {
@@ -22,8 +10,9 @@ namespace Produsis
     /// </summary>
     public partial class EdicaoFuncionarios : UserControl
     {
-        FuncionarioBLL f = new FuncionarioBLL();
-        Funcionarios emEdicao;
+        private FuncionarioBLL f = new FuncionarioBLL();
+        private Funcionarios emEdicao;
+
         public EdicaoFuncionarios()
         {
             InitializeComponent();
@@ -61,11 +50,11 @@ namespace Produsis
 
         private void Salvar_Click(object sender, RoutedEventArgs e)
         {
-            if (f.validarSenha(emEdicao.matriculaFunc, Senha.Password)&&checarCampos())
+            if (f.validarSenha(emEdicao.matriculaFunc, Senha.Password) && checarCampos())
             {
                 Funcionarios novosDados = montarObjeto();
-                if(f.editar(novosDados))
-                MessageBox.Show("Funcionário editado com sucesso.", "Funcionário editado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (f.editar(novosDados))
+                    MessageBox.Show("Funcionário editado com sucesso.", "Funcionário editado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 limpar(sender, e);
             }
@@ -75,7 +64,6 @@ namespace Produsis
                 Senha.Focus();
             }
         }
-
 
         private Funcionarios montarObjeto()
         {
@@ -88,7 +76,6 @@ namespace Produsis
             func.tipoFunc = Tipo.SelectedIndex.ToString();
             if (Senha2.Password != "")
                 func.senhaFunc = Senha2.Password;
-
             else
                 func.senhaFunc = emEdicao.senhaFunc;
 
@@ -103,6 +90,5 @@ namespace Produsis
             }
             return false;
         }
-                   
     }
 }

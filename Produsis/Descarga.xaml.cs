@@ -17,6 +17,7 @@ namespace GUI
         private FuncionariosTag FuncionarioSelecionado;
         private List<string> ListaFunc;
         private TarefasBLL t = new TarefasBLL();
+
         public Descarga()
         {
             InitializeComponent();
@@ -39,7 +40,7 @@ namespace GUI
         private void Finalizar_Click(object sender, RoutedEventArgs e)
         {
             Tarefas item = (Tarefas)dgTarefas.SelectedItem;
-            if(t.finalizarTarefa(item.idTarefa))
+            if (t.finalizarTarefa(item.idTarefa))
                 MessageBox.Show("Descarga finalizada após " + item.tempoGasto, "Descarga finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
             else
                 MessageBox.Show("Houve um erro e a descarga não pode ser finalizada.", "Descarga não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -112,6 +113,7 @@ namespace GUI
                 ListaDeFuncionarios.Items.Add(FuncionarioSelecionado);
             }
         }
+
         private Tarefas montarTarefa()
         {
             Tarefas novaTarefa = new Tarefas();
