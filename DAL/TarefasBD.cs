@@ -35,7 +35,7 @@ namespace DAL
                 }
                 return true;
             }
-            catch (Exception e)
+            catch
             {
                 return false;
             }
@@ -69,6 +69,97 @@ namespace DAL
         }
 
         /// <summary>
+        /// Retorna uma lista com as tarefas que atendam os filtros informados
+        /// </summary>
+        /// <param name="f">Parâmetros de pesquisa</param>
+        public List<TarefaModelo> getTarefasFiltradas(Filtro f)
+        {
+            List<TarefaModelo> lista = new List<TarefaModelo>();
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var query = BancoDeDados.Tarefas.AsQueryable();
+
+                    if (f.dataFim != null)
+                        query = query.Where(t => t.inicioTarefa <= f.dataFim);
+
+                    if (f.dataInicio != null)
+                        query = query.Where(t => t.inicioTarefa >= f.dataInicio);
+
+                    if (f.numDocumento > 0)
+                        query = query.Where(t => t.documentoTarefa == f.numDocumento);
+
+                    if (f.TipoTarefa != "-1")
+                        query = query.Where(t => t.tipoTarefa == f.TipoTarefa);
+
+                    lista = tarefaModeloParse(query.ToList());
+                }
+
+                if (f.nomeFuncionario != "")
+                    lista = lista.Where(l => l.nomesFuncionarios.Contains(f.nomeFuncionario)).ToList();
+
+                if (f.volumeInicio > 0)
+                    lista = lista.Where(l => l.volumes >= f.volumeInicio).ToList();
+
+                if (f.volumeFim > 0)
+                    lista = lista.Where(l => l.volumes <= f.volumeFim).ToList();
+
+                if (f.skuInicio > 0)
+                    lista = lista.Where(l => l.skus >= f.skuInicio).ToList();
+
+                if (f.skuFim > 0)
+                    lista = lista.Where(l => l.skus <= f.skuFim).ToList();
+
+                if (f.pesoInicio > 0)
+                    lista = lista.Where(l => l.peso >= f.pesoInicio).ToList();
+
+                if (f.pesoFim > 0)
+                    lista = lista.Where(l => l.peso <= f.pesoFim).ToList();
+            }
+            catch (Exception e)
+            {
+                var whatHapened = e;
+            }
+
+            return lista;
+        }
+
+        public int getTarefasHojeFinalizadas(string tipoTarefa)
+        {
+            List<Tarefas> pendentes = new List<Tarefas>();
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    pendentes = (from Tarefas in BancoDeDados.Tarefas where Tarefas.inicioTarefa >= DateTime.Today where Tarefas.fimTarefa != null where Tarefas.tipoTarefa == tipoTarefa select Tarefas).ToList();
+                }
+                return pendentes.Count;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public int getTarefasHojePendentes(string tipoTarefa)
+        {
+            List<Tarefas> pendentes = new List<Tarefas>();
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    pendentes = (from Tarefas in BancoDeDados.Tarefas where Tarefas.inicioTarefa >= DateTime.Today where Tarefas.fimTarefa == null where Tarefas.tipoTarefa == tipoTarefa select Tarefas).ToList();
+                }
+                return pendentes.Count;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        /// <summary>
         /// Retorna uma lista com as tarefas do tipo indicado sem hora de finalização
         /// </summary>
         public List<TarefaModelo> getTarefasPendentes(string tipoTarefa)
@@ -93,7 +184,7 @@ namespace DAL
                 }
                 return pendentesModelo;
             }
-            catch (Exception e)
+            catch
             {
                 return new List<TarefaModelo>();
             }
@@ -122,40 +213,6 @@ namespace DAL
             {
                 return "";
             }
-            
-                }
-        public int getTarefasHojePendentes(string tipoTarefa)
-        {
-            List<Tarefas> pendentes = new List<Tarefas>();
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    pendentes = (from Tarefas in BancoDeDados.Tarefas where Tarefas.inicioTarefa >= DateTime.Today where Tarefas.fimTarefa == null where Tarefas.tipoTarefa == tipoTarefa select Tarefas).ToList();
-                }
-                return pendentes.Count;
-            }
-            catch
-            {
-                return 0;
-            }
-        }
-
-        public int getTarefasHojeFinalizadas(string tipoTarefa)
-        {
-            List<Tarefas> pendentes = new List<Tarefas>();
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                { 
-                    pendentes = (from Tarefas in BancoDeDados.Tarefas where Tarefas.inicioTarefa >= DateTime.Today where Tarefas.fimTarefa != null where Tarefas.tipoTarefa == tipoTarefa select Tarefas).ToList();
-                }
-                return pendentes.Count;
-            }
-            catch
-            {
-                return 0;
-            }
         }
 
         public bool verificaDocumentoTarefa(int numDocumento, string tipoTarefa)
@@ -171,12 +228,11 @@ namespace DAL
                         return false;
                 }
             }
-            catch (Exception e)
+            catch
             {
                 return false;
             }
         }
-
 
         private List<TarefaModelo> tarefaModeloParse(List<Tarefas> tarefas)
         {
@@ -189,80 +245,18 @@ namespace DAL
                 aux = new TarefaModelo(tar);
                 if (tar.tipoTarefa == "2")
                 {
-                    aux.valores(d.getSkuCte(tar.documentoTarefa), d.getVolumesCte(tar.documentoTarefa), d.getPesoCte(tar.documentoTarefa));
+                    aux.valores(d.getSkuCte(tar.documentoTarefa), d.getVolumesCte(tar.documentoTarefa), (int)d.getPesoCte(tar.documentoTarefa));
                 }
                 else
                 {
                     m = d.getManifestoPorNumero(tar.documentoTarefa);
-                    aux.valores(m.skusManifesto, m.VolumesManifesto, m.pesoManifesto);
+                    aux.valores(m.skusManifesto, m.VolumesManifesto, (int)m.pesoManifesto);
                 }
-                    aux.nomesFuncionarios = nomesFuncTarefa(tar.idTarefa);
+                aux.nomesFuncionarios = nomesFuncTarefa(tar.idTarefa);
                 modelos.Add(aux);
             }
 
             return modelos;
         }
-
-        /// <summary>
-        /// Retorna uma lista com as tarefas que atendam os filtros informados
-        /// </summary>
-        /// <param name="f">Parâmetros de pesquisa</param>
-        public List<TarefaModelo> getTarefasFiltradas(Filtro f)
-        {
-            List<TarefaModelo> lista = new List<TarefaModelo>();
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                   var query = BancoDeDados.Tarefas.AsQueryable();
-
-                    if (f.dataFim != null)
-                        query = query.Where(t => t.inicioTarefa <= f.dataFim);                   
-                   
-                    if (f.dataInicio != null)
-                        query = query.Where(t => t.inicioTarefa >= f.dataInicio);
-
-                    if (f.numDocumento > 0)
-                        query = query.Where(t => t.documentoTarefa == f.numDocumento);
-
-                    if (f.TipoTarefa != "-1")
-                        query = query.Where(t => t.tipoTarefa == f.TipoTarefa);
-                       
-                    lista = tarefaModeloParse(query.ToList());
-                }
-
-                if (f.nomeFuncionario != "")
-                    lista = lista.Where(l => l.nomesFuncionarios.Contains(f.nomeFuncionario)).ToList();
-
-                if (f.volumeInicio > 0)
-                    lista = lista.Where(l => l.volumes >= f.volumeInicio).ToList();
-
-                if (f.volumeFim > 0)
-                    lista = lista.Where(l => l.volumes <= f.volumeFim).ToList();
-
-                if (f.skuInicio > 0)
-                    lista = lista.Where(l => l.skus >= f.skuInicio).ToList();
-
-                if (f.skuFim > 0)
-                    lista = lista.Where(l => l.skus <= f.skuFim).ToList();
-
-                if (f.pesoInicio > 0)
-                    lista = lista.Where(l => l.peso >= f.pesoInicio).ToList();
-
-                if (f.pesoFim > 0)
-                    lista = lista.Where(l => l.peso <= f.pesoFim).ToList();
-            }
-
-            catch (Exception e)
-            {
-                var whatHapened = e;
-            }
-
-            return lista;
-        }
-
-
-
-   
     }
 }

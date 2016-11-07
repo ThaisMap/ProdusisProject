@@ -1,35 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using BLL;
+using Microsoft.Win32;
+using ProdusisBD;
+using System;
+using System.Globalization;
+using System.IO;
+using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using ProdusisBD;
-using BLL;
 
-namespace Produsis
+namespace GUI
 {
     /// <summary>
     /// Interaction logic for Relatorios.xaml
     /// </summary>
     public partial class Relatorios : UserControl
     {
-        
-
         public Relatorios()
         {
             InitializeComponent();
         }
 
-      
         public Filtro montarObjeto()
         {
             Filtro filtros = new Filtro();
@@ -44,7 +36,7 @@ namespace Produsis
             aux = double.TryParse(pesoInicio.Text, out filtros.pesoInicio);
             aux = double.TryParse(pesoFinal.Text, out filtros.pesoFim);
             filtros.nomeFuncionario = cbFuncionario.SelectionBoxItem.ToString();
-            return filtros;   
+            return filtros;
         }
 
         private void btnConsultar_Click(object sender, RoutedEventArgs e)
@@ -80,6 +72,38 @@ namespace Produsis
             dataInicio.SelectedDate = null;
             dataFinal.SelectedDate = DateTime.Today;
             cbFuncionario.ItemsSource = f.carregaFuncionarios();
+        }
+
+        private void btnExportar_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgTarefas.Items.Count > 0)
+            {
+                SaveFileDialog dialogo = new SaveFileDialog();
+                dialogo.Title = "Salvar relatório - Produsis";
+
+                if (dialogo.ShowDialog() == true)
+                {
+                    dgTarefas.SelectAllCells();
+                    dgTarefas.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
+                    ApplicationCommands.Copy.Execute(null, dgTarefas);
+                    dgTarefas.UnselectAllCells();
+                    String Clipboardresult = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
+                    Clipboardresult = Clipboardresult.Replace(",", ";");
+                    StreamWriter swObj = new StreamWriter(extensao(dialogo.FileName), false, Encoding.GetEncoding(CultureInfo.GetCultureInfo("pt-BR").TextInfo.ANSICodePage));
+                    swObj.WriteLine(Clipboardresult);
+                    swObj.Close();
+                }
+            }
+        }
+
+        private string extensao(string nomeArquivo)
+        {
+            if (nomeArquivo.Contains("."))
+            {
+                nomeArquivo = nomeArquivo.Remove(nomeArquivo.Length - 3);
+            }
+            nomeArquivo += "csv";
+            return nomeArquivo;
         }
     }
 }

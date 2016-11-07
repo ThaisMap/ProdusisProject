@@ -1,34 +1,11 @@
 ﻿using ProdusisBD;
 using System.Collections.Generic;
-using System;
 using System.Linq;
 
 namespace DAL
 {
     public class DocumentosBD
     {
-        /// <summary>
-        /// Insere um registro de manifesto no banco de dados
-        /// </summary>
-        /// <param name="novoManifesto">Dados do novo registro</param>
-        /// <returns>True se o comando foi executado sem erros, False se houve algum erro</returns>
-        public bool cadastrarManifesto(Manifestos novoManifesto)
-        {
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    BancoDeDados.Manifestos.Add(novoManifesto);
-                    BancoDeDados.SaveChanges();
-                }
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
         public bool alterarSkuManifesto(int numManifesto)
         {
             try
@@ -70,6 +47,50 @@ namespace DAL
         }
 
         /// <summary>
+        /// Insere  um registro de cte em manifesto no banco de dados
+        /// </summary>
+        /// <param name="novo">Dados do novo registro</param>
+        /// <returns>True se o comando foi executado sem erros, False se houve algum erro</returns>
+        public bool cadastrarCteManifesto(Cte_Manifesto novo)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    BancoDeDados.Cte_Manifesto.Add(novo);
+                    BancoDeDados.SaveChanges();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Insere um registro de manifesto no banco de dados
+        /// </summary>
+        /// <param name="novoManifesto">Dados do novo registro</param>
+        /// <returns>True se o comando foi executado sem erros, False se houve algum erro</returns>
+        public bool cadastrarManifesto(Manifestos novoManifesto)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    BancoDeDados.Manifestos.Add(novoManifesto);
+                    BancoDeDados.SaveChanges();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Insere um registro de nota fiscal no banco de dados
         /// </summary>
         /// <param name="novaNf">Dados do novo registro</param>
@@ -92,42 +113,46 @@ namespace DAL
         }
 
         /// <summary>
-        /// Insere  um registro de cte em manifesto no banco de dados
+        /// Retorna uma string com o resumo dos dados do documento
         /// </summary>
-        /// <param name="novo">Dados do novo registro</param>
-        /// <returns>True se o comando foi executado sem erros, False se houve algum erro</returns>
-        public bool cadastrarCteManifesto(Cte_Manifesto novo)
+        /// <param name="tipoDocumento">Tipo de documento 0 - Manifesto, 1 - Cte, 2 - Nota fiscal</param>
+        /// <param name="idDoc">Parâmetro de busca</param>
+        public string getDadosDocumentos(int tipoDocumento, int idDoc)
         {
+            string dados = "Dados não encontrados";
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    BancoDeDados.Cte_Manifesto.Add(novo);
-                    BancoDeDados.SaveChanges();
+                    if (tipoDocumento == 0)
+                    {
+                        dados = getDadosManifesto(idDoc);
+                    }
+                    else if (tipoDocumento == 1)
+                    {
+                        dados = getDadosCte(idDoc);
+                    }
                 }
-                return true;
             }
             catch
             {
-                return false;
+                dados = "Dados não encontrados";
             }
+            return dados;
         }
 
-        public bool inserirCteNf(string numNF, string fornecedor, int numeroCte)
+        public string getFornecedorCte(int idCte)
         {
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    NotasFiscais nfAtual = BancoDeDados.NotasFiscais.FirstOrDefault(nf => nf.numeroNF == numNF && nf.fonecedorNF == fornecedor);
-                    nfAtual.CteNF = numeroCte;
-                    BancoDeDados.SaveChanges();
+                    return (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais.fonecedorNF).FirstOrDefault();
                 }
-                return true;
             }
             catch
             {
-                return false;
+                return "Fornecedor não encontrado";
             }
         }
 
@@ -170,114 +195,58 @@ namespace DAL
         }
 
         /// <summary>
-        /// Verifica se o documento indicado esta cadastrado no banco de dados
+        /// Retorna a soma do peso de cada nota componente do Cte
         /// </summary>
-        /// <param name="tipodoc">Tipo de documento 0 - Manifesto, 1 - Cte, 2 - Nota fiscal</param>
-        /// <param name="numDocumento">Parâmetro de busca</param>
-        /// <returns>Id do documento se este for encontrado, -1 se nao for ou se ocorrer algum erro</returns>
-        public int? verificarDocumentoCadastrado(int tipodoc, string numDocumento)
+        /// <param name="idCte">Parâmetro de pesquisa</param>
+        /// <returns>O múmero de skus ou 0, caso nao encontre alguma nota, -1 se ocorrer um erro</returns>
+        public double getPesoCte(int idCte)
         {
-            int doc;
+            double peso = 0;
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    int? documento = null;
-                    if (tipodoc == 0)
+                    List<NotasFiscais> ListaNFs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais).ToList();
+                    foreach (NotasFiscais n in ListaNFs)
                     {
-                        doc = int.Parse(numDocumento);
-                        documento = (from Manifestos in BancoDeDados.Manifestos where Manifestos.numeroManifesto == doc select Manifestos.numeroManifesto).FirstOrDefault();
-                    }
-                    else if (tipodoc == 1)
-                    {
-                        doc = int.Parse(numDocumento);
-                        documento = (from Ctes in BancoDeDados.Ctes where Ctes.numeroCte == doc select Ctes.numeroCte).FirstOrDefault();
-                    }
-                    else
-                    {
-                        documento = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.numeroNF == numDocumento select NotasFiscais.idNF).FirstOrDefault();
-                    }
-
-                    return documento;
-                }
-            }
-            catch(Exception e)
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Retorna uma string com o resumo dos dados do documento
-        /// </summary>
-        /// <param name="tipoDocumento">Tipo de documento 0 - Manifesto, 1 - Cte, 2 - Nota fiscal</param>
-        /// <param name="idDoc">Parâmetro de busca</param>
-        public string getDadosDocumentos(int tipoDocumento, int idDoc)
-        {
-            string dados = "Dados não encontrados";
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    if (tipoDocumento == 0)
-                    {
-                        dados = getDadosManifesto(idDoc);
-                    }
-                    else if (tipoDocumento == 1)
-                    {
-                        dados = getDadosCte(idDoc);
+                        if (verificarDocumentoCadastrado(2, n.numeroNF) > 0)
+                            peso += n.pesoNF;
                     }
                 }
             }
             catch
             {
-                dados = "Dados não encontrados";
+                return -1;
             }
-            return dados;
+
+            return peso;
         }
 
         /// <summary>
-        /// Retorna uma string com os dados do manifesto indicado
+        /// Retorna a soma dos skus de cada nota componente do Cte
         /// </summary>
-        private string getDadosManifesto(int numDoc)
+        /// <param name="idCte">Parâmetro de pesquisa</param>
+        /// <returns>O múmero de skus ou 0, caso nao encontre alguma nota, -1 se ocorrer um erro</returns>
+        public int getSkuCte(int idCte)
         {
-            string dados;
+            int sku = 0;
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    //Funcionarios funcAtual = BancoDeDados.Funcionarios.Single(f => f.idFunc == novoFunc.idFunc);
-
-                    Manifestos m = BancoDeDados.Manifestos.SingleOrDefault(man => man.numeroManifesto == numDoc);
-                    dados = "Manifesto nº " + m.numeroManifesto + " - " + m.quantCtesManifesto + " entregas - " + m.VolumesManifesto + " volumes - " + m.VolumesManifesto + " SKU's - " + m.pesoManifesto + " Kg";
+                    List<NotasFiscais> ListaNFs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais).ToList();
+                    foreach (NotasFiscais n in ListaNFs)
+                    {
+                        if (verificarDocumentoCadastrado(2, n.numeroNF) > 0)
+                            sku += n.skuNF;
+                    }
                 }
             }
             catch
             {
-                dados = "Dados não encontrados";
+                return -1;
             }
-            return dados;
-        }
-
-        /// <summary>
-        /// Retorna uma string com os dados do cte indicado
-        /// </summary>
-        private string getDadosCte(int numDoc)
-        {
-            string dados;
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    int numeroCte = (from Ctes in BancoDeDados.Ctes where Ctes.numeroCte == numDoc select Ctes.numeroCte).FirstOrDefault();
-                    dados = "Cte n º " + numeroCte + " - " + getVolumesCte(numDoc) + " volumes - " + getSkuCte(numDoc) + " SKU's - " + getPesoCte(numDoc) + " kg";
-                }
-            }
-            catch
-            {
-                dados = "Dados não encontrados";
-            }
-            return dados;
+            return sku;
         }
 
         /// <summary>
@@ -312,76 +281,6 @@ namespace DAL
         /// <summary>
         /// Retorna a soma dos skus de cada nota componente do Cte
         /// </summary>
-        /// <param name="idCte">Parâmetro de pesquisa</param>
-        /// <returns>O múmero de skus ou 0, caso nao encontre alguma nota, -1 se ocorrer um erro</returns>
-        public int getSkuCte(int idCte)
-        {
-            int sku = 0;
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    List<NotasFiscais> ListaNFs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais).ToList();
-                    foreach (NotasFiscais n in ListaNFs)
-                    {
-                        if (verificarDocumentoCadastrado(2, n.numeroNF) > 0)
-                            sku += n.skuNF;
-                    }
-                }
-            }
-            catch
-            {
-                return -1;
-            }
-            return sku;
-        }
-
-        public string getFornecedorCte(int idCte)
-        {
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    return (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais.fonecedorNF).FirstOrDefault();
-                }
-            }
-            catch
-            {
-                return "Fornecedor não encontrado";
-            }
-        }
-
-        /// <summary>
-        /// Retorna a soma do peso de cada nota componente do Cte
-        /// </summary>
-        /// <param name="idCte">Parâmetro de pesquisa</param>
-        /// <returns>O múmero de skus ou 0, caso nao encontre alguma nota, -1 se ocorrer um erro</returns>
-        public double getPesoCte(int idCte)
-        {
-            double peso = 0;
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    List<NotasFiscais> ListaNFs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais).ToList();
-                    foreach (NotasFiscais n in ListaNFs)
-                    {
-                        if (verificarDocumentoCadastrado(2, n.numeroNF) > 0)
-                            peso += n.pesoNF;
-                    }
-                }
-            }
-            catch
-            {
-                return -1;
-            }
-
-            return peso;
-        }
-
-        /// <summary>
-        /// Retorna a soma dos skus de cada nota componente do Cte
-        /// </summary>
         /// <param name="numeroCte">Parâmetro de pesquisa</param>
         /// <returns>O múmero de skus ou 0, caso nao encontre alguma nota, -1 se ocorrer um erro</returns>
         public int getVolumesCte(int numeroCte)
@@ -405,6 +304,106 @@ namespace DAL
             }
 
             return volumes;
+        }
+
+        public bool inserirCteNf(string numNF, string fornecedor, int numeroCte)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    NotasFiscais nfAtual = BancoDeDados.NotasFiscais.FirstOrDefault(nf => nf.numeroNF == numNF && nf.fonecedorNF == fornecedor);
+                    nfAtual.CteNF = numeroCte;
+                    BancoDeDados.SaveChanges();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Verifica se o documento indicado esta cadastrado no banco de dados
+        /// </summary>
+        /// <param name="tipodoc">Tipo de documento 0 - Manifesto, 1 - Cte, 2 - Nota fiscal</param>
+        /// <param name="numDocumento">Parâmetro de busca</param>
+        /// <returns>Id do documento se este for encontrado, -1 se nao for ou se ocorrer algum erro</returns>
+        public int? verificarDocumentoCadastrado(int tipodoc, string numDocumento)
+        {
+            int doc;
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    int? documento = null;
+                    if (tipodoc == 0)
+                    {
+                        doc = int.Parse(numDocumento);
+                        documento = (from Manifestos in BancoDeDados.Manifestos where Manifestos.numeroManifesto == doc select Manifestos.numeroManifesto).FirstOrDefault();
+                    }
+                    else if (tipodoc == 1)
+                    {
+                        doc = int.Parse(numDocumento);
+                        documento = (from Ctes in BancoDeDados.Ctes where Ctes.numeroCte == doc select Ctes.numeroCte).FirstOrDefault();
+                    }
+                    else
+                    {
+                        documento = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.numeroNF == numDocumento select NotasFiscais.idNF).FirstOrDefault();
+                    }
+
+                    return documento;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Retorna uma string com os dados do cte indicado
+        /// </summary>
+        private string getDadosCte(int numDoc)
+        {
+            string dados;
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    int numeroCte = (from Ctes in BancoDeDados.Ctes where Ctes.numeroCte == numDoc select Ctes.numeroCte).FirstOrDefault();
+                    dados = "Cte n º " + numeroCte + " - " + getVolumesCte(numDoc) + " volumes - " + getSkuCte(numDoc) + " SKU's - " + getPesoCte(numDoc) + " kg";
+                }
+            }
+            catch
+            {
+                dados = "Dados não encontrados";
+            }
+            return dados;
+        }
+
+        /// <summary>
+        /// Retorna uma string com os dados do manifesto indicado
+        /// </summary>
+        private string getDadosManifesto(int numDoc)
+        {
+            string dados;
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    //Funcionarios funcAtual = BancoDeDados.Funcionarios.Single(f => f.idFunc == novoFunc.idFunc);
+
+                    Manifestos m = BancoDeDados.Manifestos.SingleOrDefault(man => man.numeroManifesto == numDoc);
+                    dados = "Manifesto nº " + m.numeroManifesto + " - " + m.quantCtesManifesto + " entregas - " + m.VolumesManifesto + " volumes - " + m.VolumesManifesto + " SKU's - " + m.pesoManifesto + " Kg";
+                }
+            }
+            catch
+            {
+                dados = "Dados não encontrados";
+            }
+            return dados;
         }
     }
 }

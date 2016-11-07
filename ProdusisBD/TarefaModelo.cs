@@ -2,7 +2,7 @@
 
 namespace ProdusisBD
 {
-    public class TarefaModelo : Tarefas 
+    public class TarefaModelo : Tarefas
     {
         public TarefaModelo(Tarefas tarefa)
         {
@@ -22,9 +22,9 @@ namespace ProdusisBD
         public string nomesFuncionarios { get; set; }
         public int skus { get; set; }
         public int volumes { get; set; }
-        public double peso { get; set; }
+        public int peso { get; set; }
 
-        public void valores(int sku, int volume, double kg)
+        public void valores(int sku, int volume, int kg)
         {
             skus = sku;
             volumes = volume;
@@ -52,7 +52,7 @@ namespace ProdusisBD
 
             if (fimTarefa != null)
             {
-                dataFim = ((DateTime)fimTarefa).ToString("dd\\-mm\\-yyyy");
+                dataFim = ((DateTime)fimTarefa).ToString("dd\\/MM\\/yyyy");
                 horaFim = ((DateTime)fimTarefa).ToString("hh\\:mm\\:ss");
             }
         }

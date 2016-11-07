@@ -1,42 +1,33 @@
 ﻿using DAL.Properties;
 using Microsoft.Office.Interop.Outlook;
 using ProdusisBD;
-using System;
 using System.Xml;
 
 namespace DAL
 {
     public class Xml
     {
-        public bool lerNotaFiscal(string nomeArquivo)
+        public void abrirEmail(string nomeArquivo)
         {
+            Application app = new Application();
             try
             {
-                if (isXml(nomeArquivo))
+                MailItem email = (MailItem)app.Session.OpenSharedItem(nomeArquivo);
+
+                foreach (Attachment anexo in email.Attachments)
                 {
-                    NotasFiscais nfLida = new NotasFiscais();
-
-                    XmlDocument nf = new XmlDocument();
-
-                    nf.Load(nomeArquivo);
-
-                    var result = nf.GetElementsByTagName("det");
-                    nfLida.skuNF = result.Count;
-                    nfLida.numeroNF = nf.GetElementsByTagName("nNF")[0].InnerText + '-' + nf.GetElementsByTagName("serie")[0].InnerText;
-                    nfLida.fonecedorNF = nf.GetElementsByTagName("xNome")[0].InnerText;
-                    nfLida.volumesNF = int.Parse(nf.GetElementsByTagName("qVol")[0].InnerText);
-                    nfLida.pesoNF = double.Parse(nf.GetElementsByTagName("pesoB")[0].InnerText.Replace(".", ","));
-
-                    DocumentosBD dbd = new DocumentosBD();
-                    if (!dbd.cadastrarNF(nfLida)) { return false; }
-
-                    return true;
+                    if (isXml(anexo.FileName))
+                    {
+                        string nomeXML = PastasXml.Default.PastaNFs + "\\" + anexo.FileName;
+                        anexo.SaveAsFile(nomeXML);
+                    }
                 }
-                return false;
+
+                app.Quit();
             }
             catch
             {
-                return false;
+                app.Quit();
             }
         }
 
@@ -44,36 +35,33 @@ namespace DAL
         {
             try
             {
-                if (isXml(nomeArquivo))
+                Manifestos lido = new Manifestos();
+
+                XmlDocument manifesto = new XmlDocument();
+                manifesto.Load(nomeArquivo);
+
+                DocumentosBD dbd = new DocumentosBD();
+                lido.numeroManifesto = int.Parse(nomeArquivo.Replace(PastasXml.Default.PastaManifestos + "\\", "").Replace(".xml", ""));
+
+                var result = manifesto.GetElementsByTagName("Value");
+                lido.VolumesManifesto = (int)double.Parse(result[result.Count - 2].InnerText.Replace('.', ','));
+                lido.pesoManifesto = double.Parse(result[result.Count - 3].InnerText.Replace('.', ','));
+                lido.quantCtesManifesto = (int)double.Parse(result[result.Count - 4].InnerText.Replace('.', ','));
+
+                if (!dbd.cadastrarManifesto(lido))
+                { return false; }
+
+                int cte;
+                for (int i = 0; i < result.Count - 4; i = i + 10)
                 {
-                    Manifestos lido = new Manifestos();
-
-                    XmlDocument manifesto = new XmlDocument();
-                    manifesto.Load(nomeArquivo);
-
-                    DocumentosBD dbd = new DocumentosBD();
-                    lido.numeroManifesto = int.Parse(nomeArquivo.Replace(PastasXml.Default.PastaManifestos + "\\", "").Replace(".xml", ""));
-
-                    var result = manifesto.GetElementsByTagName("Value");
-                    lido.VolumesManifesto = (int)double.Parse(result[result.Count - 2].InnerText.Replace('.', ','));
-                    lido.pesoManifesto = double.Parse(result[result.Count - 3].InnerText.Replace('.', ','));
-                    lido.quantCtesManifesto = (int)double.Parse(result[result.Count - 4].InnerText.Replace('.', ','));
-
-                    if (!dbd.cadastrarManifesto(lido)) { return false; }
-
-                    int cte;
-                    for (int i = 0; i < result.Count - 4; i = i + 10)
-                    {
-                        cte = int.Parse(result[i].InnerText);
-                        criarCte(cte);
-                        alterarNfs(result[i + 1].InnerText, result[i + 7].InnerText, cte);
-                        criarCteManifesto(cte, lido.numeroManifesto);
-                    }
-
-                    dbd.alterarSkuManifesto(lido.numeroManifesto);
-                    return true;
+                    cte = int.Parse(result[i].InnerText);
+                    criarCte(cte);
+                    alterarNfs(result[i + 1].InnerText, result[i + 7].InnerText, cte);
+                    criarCteManifesto(cte, lido.numeroManifesto);
                 }
-                return false;
+
+                dbd.alterarSkuManifesto(lido.numeroManifesto);
+                return true;
             }
             catch
             {
@@ -81,21 +69,33 @@ namespace DAL
             }
         }
 
-        private void criarCte(int cte)
+        public bool lerNotaFiscal(string nomeArquivo)
         {
-            DocumentosBD dbd = new DocumentosBD();
-            Ctes novoCte = new Ctes();
-            novoCte.numeroCte = cte;
-            dbd.cadastrarCte(novoCte);
-        }
+            try
+            {
+                NotasFiscais nfLida = new NotasFiscais();
 
-        private void criarCteManifesto(int cte, int manifesto)
-        {
-            DocumentosBD dbd = new DocumentosBD();
-            Cte_Manifesto novo = new Cte_Manifesto();
-            novo.Cte = cte;
-            novo.Manifesto = manifesto;
-            dbd.cadastrarCteManifesto(novo);
+                XmlDocument nf = new XmlDocument();
+
+                nf.Load(nomeArquivo);
+
+                var result = nf.GetElementsByTagName("det");
+                nfLida.skuNF = result.Count;
+                nfLida.numeroNF = nf.GetElementsByTagName("nNF")[0].InnerText + '-' + nf.GetElementsByTagName("serie")[0].InnerText;
+                nfLida.fonecedorNF = nf.GetElementsByTagName("xNome")[0].InnerText.Remove(49);
+                nfLida.volumesNF = int.Parse(nf.GetElementsByTagName("qVol")[0].InnerText);
+                nfLida.pesoNF = double.Parse(nf.GetElementsByTagName("pesoB")[0].InnerText.Replace(".", ","));
+
+                DocumentosBD dbd = new DocumentosBD();
+                if (!dbd.cadastrarNF(nfLida))
+                { return false; }
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private bool alterarNfs(string nfs, string fornecedor, int cte)
@@ -116,26 +116,26 @@ namespace DAL
             return retorno;
         }
 
-        public void abrirEmail(string nomeArquivo)
+        private void criarCte(int cte)
         {
-            Application app = new Application();
-            MailItem email = (MailItem)app.Session.OpenSharedItem(nomeArquivo);
+            DocumentosBD dbd = new DocumentosBD();
+            Ctes novoCte = new Ctes();
+            novoCte.numeroCte = cte;
+            dbd.cadastrarCte(novoCte);
+        }
 
-            foreach (Attachment anexo in email.Attachments)
-            {
-                if (isXml(anexo.FileName))
-                {
-                    string nomeXML = PastasXml.Default.PastaNFs + "\\" + anexo.FileName;
-                    anexo.SaveAsFile(nomeXML);
-                }
-            }
-
-            app.Quit();
+        private void criarCteManifesto(int cte, int manifesto)
+        {
+            DocumentosBD dbd = new DocumentosBD();
+            Cte_Manifesto novo = new Cte_Manifesto();
+            novo.Cte = cte;
+            novo.Manifesto = manifesto;
+            dbd.cadastrarCteManifesto(novo);
         }
 
         private bool isXml(string caminho)
         {
-            string extensao = String.Concat(caminho[caminho.Length - 3], caminho[caminho.Length - 2], caminho[caminho.Length - 1]);
+            string extensao = string.Concat(caminho[caminho.Length - 3], caminho[caminho.Length - 2], caminho[caminho.Length - 1]);
             if (extensao == "xml") return true;
             return false;
         }
