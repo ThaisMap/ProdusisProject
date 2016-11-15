@@ -1,5 +1,6 @@
 ﻿using BLL;
 using System.Windows;
+using System.Threading;
 
 namespace GUI
 {
@@ -8,6 +9,7 @@ namespace GUI
     /// </summary>
     public partial class Login : Window
     {
+        Thread t = new Thread(lerXmls);
         public Login()
         {
             InitializeComponent();
@@ -15,9 +17,7 @@ namespace GUI
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
-            xmlBLL x = new xmlBLL();
-            x.lerXML();
-
+            
             if (verificaCampos())
             {
                 LoginBLL l = new LoginBLL();
@@ -25,6 +25,7 @@ namespace GUI
                 {
                     if (l.validarSenha(TxbLogin.Text, TxbSenha.Password))
                     {
+                        //t.Start();
                         TelaPrincipal view = new TelaPrincipal();
                         this.Close();
                         view.Show();
@@ -56,6 +57,12 @@ namespace GUI
                 return false;
             }
             return true;
+        }
+
+        static void lerXmls()
+        {
+            xmlBLL x = new xmlBLL();
+            x.lerXML();
         }
     }
 }

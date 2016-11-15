@@ -129,6 +129,7 @@
     <Compile Include="Configuracao.xaml.cs">
       <DependentUpon>Configuracao.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Validacoes\DemoItem.cs" />
     <Compile Include="Descarga.xaml.cs">
       <DependentUpon>Descarga.xaml</DependentUpon>
     </Compile>
@@ -139,6 +140,7 @@
     <Compile Include="IniciadasHoje.xaml.cs">
       <DependentUpon>IniciadasHoje.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Validacoes\NotifyPropertyChangedExtention.cs" />
     <Compile Include="PesquisarDocumento.xaml.cs">
       <DependentUpon>PesquisarDocumento.xaml</DependentUpon>
     </Compile>
@@ -154,8 +156,6 @@
     <Compile Include="TelaPrincipal.xaml.cs">
       <DependentUpon>TelaPrincipal.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Validacoes\DemoItem.cs" />
-    <Compile Include="Validacoes\NotifyPropertyChangedExtention.cs" />
     <Compile Include="Validacoes\TextFieldsViewModel.cs" />
     <Compile Include="Validacoes\ValidacaoCampoPreenchido.cs" />
   </ItemGroup>
@@ -265,6 +265,7 @@
   <ItemGroup>
     <Resource Include="Icone Produsis.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

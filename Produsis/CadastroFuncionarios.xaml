@@ -68,13 +68,7 @@
                              Margin="0,5,5,15"
                              materialDesign:HintAssist.Hint="Nome"
                              materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Right">
-                        <TextBox.Text>
-                            <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <Validacoes:ValidacaoCampoPreenchido ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
+                        
                     </TextBox>
                     <materialDesign:PackIcon Grid.Row="1"
                                              Grid.Column="0"

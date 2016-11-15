@@ -15,7 +15,6 @@ namespace GUI
         public CadastroFuncionarios()
         {
             InitializeComponent();
-            DataContext = new Produsis.Validacoes.TextFieldsViewModel();
         }
 
         private void Salvar_Click(object sender, RoutedEventArgs e)

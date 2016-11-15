@@ -10,11 +10,27 @@ namespace ProdusisBD
             fimTarefa = tarefa.fimTarefa;
             idTarefa = tarefa.idTarefa;
             documentoTarefa = tarefa.documentoTarefa;
-            tipoTarefa = tarefa.tipoTarefa;
+            tipoTarefa = tipoExtenso(tarefa.tipoTarefa);
             preencheDatas();
             atualizaTempoGasto();
         }
 
+        private string tipoExtenso(string tipo)
+        {
+            switch (tipo)
+            {
+                case "0":
+                    return "Descarga";
+                case "1":
+                    return "Separação";
+                case "2":
+                    return "Conferência";
+                case "3":
+                    return "Sep. para carregar";
+                default:
+                    return "Carregamento";
+            }
+        }
         public string dataInicio { get; set; }
         public string horaInicio { get; set; }
         public string dataFim { get; set; }

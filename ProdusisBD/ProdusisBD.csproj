@@ -91,7 +91,6 @@
     <Compile Include="Tarefas.cs">
       <DependentUpon>Model_pBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Testes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
