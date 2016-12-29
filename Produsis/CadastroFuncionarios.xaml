@@ -80,15 +80,14 @@
                                              Foreground="{Binding ElementName=Matricula,
                                                                   Path=BorderBrush}"
                                              Kind="FileDocumentBox" />
-                    <xctk:MaskedTextBox Name="Matricula"
+                    <TextBox Name="Matricula"
                                         Grid.Row="1"
                                         Grid.Column="1"
                                         Width="300"
                                         Margin="0,5,5,15"
                                         materialDesign:HintAssist.Hint="Nº de matrícula"
                                         materialDesign:HintAssist.IsFloating="True"
-                                        Mask="99999"
-                                        Style="{StaticResource MaterialDesignTextBox}" />
+                                        Style="{StaticResource MaterialDesignTextBox}" PreviewTextInput="testarCaractere"/>
                     <materialDesign:PackIcon Grid.Row="2"
                                              Grid.Column="0"
                                              Width="24"

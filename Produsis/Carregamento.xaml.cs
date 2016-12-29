@@ -2,8 +2,10 @@
 using ProdusisBD;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace GUI
 {
@@ -31,6 +33,7 @@ namespace GUI
             string[] PrimeirosNomes = Nome.Split(' ');
             return PrimeirosNomes[0].Substring(0, 1).ToUpper() + PrimeirosNomes[1].Substring(0, 1).ToUpper();
         }
+
 
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
@@ -121,6 +124,13 @@ namespace GUI
             novaTarefa.inicioTarefa = DateTime.Now;
             novaTarefa.tipoTarefa = "4";
             return novaTarefa;
+        }
+
+
+        private void testarCaractere(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

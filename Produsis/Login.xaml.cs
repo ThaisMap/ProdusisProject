@@ -17,15 +17,14 @@ namespace GUI
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
-            
             if (verificaCampos())
             {
-                LoginBLL l = new LoginBLL();
+                FuncionarioBLL l = new FuncionarioBLL();
                 if (l.validarUsuario(TxbLogin.Text))
                 {
                     if (l.validarSenha(TxbLogin.Text, TxbSenha.Password))
                     {
-                        //t.Start();
+                        t.Start();
                         TelaPrincipal view = new TelaPrincipal();
                         this.Close();
                         view.Show();

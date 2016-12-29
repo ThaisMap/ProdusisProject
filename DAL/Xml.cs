@@ -2,6 +2,7 @@
 using Microsoft.Office.Interop.Outlook;
 using ProdusisBD;
 using System.Xml;
+using System;
 
 namespace DAL
 {
@@ -16,16 +17,15 @@ namespace DAL
 
                 foreach (Attachment anexo in email.Attachments)
                 {
-                    if (isXml(anexo.FileName))
-                    {
+                    
                         string nomeXML = PastasXml.Default.PastaNFs + "\\" + anexo.FileName;
-                        anexo.SaveAsFile(nomeXML);
-                    }
+                        anexo.SaveAsFile(nomeXML);                    
                 }
 
                 app.Quit();
+                email.Close(OlInspectorClose.olDiscard);
             }
-            catch
+            catch 
             {
                 app.Quit();
             }
@@ -40,7 +40,7 @@ namespace DAL
                 XmlDocument manifesto = new XmlDocument();
                 manifesto.Load(nomeArquivo);
 
-                DocumentosBD dbd = new DocumentosBD();
+                DocumentosBD docBD = new DocumentosBD();
                 lido.numeroManifesto = int.Parse(nomeArquivo.Replace(PastasXml.Default.PastaManifestos + "\\", "").Replace(".xml", ""));
 
                 var result = manifesto.GetElementsByTagName("Value");
@@ -48,19 +48,19 @@ namespace DAL
                 lido.pesoManifesto = double.Parse(result[result.Count - 3].InnerText.Replace('.', ','));
                 lido.quantCtesManifesto = (int)double.Parse(result[result.Count - 4].InnerText.Replace('.', ','));
 
-                if (!dbd.cadastrarManifesto(lido))
-                { return false; }
+               //if (!docBD.cadastrarManifesto(lido))
+               // { return false; }
 
                 int cte;
                 for (int i = 0; i < result.Count - 4; i = i + 10)
                 {
                     cte = int.Parse(result[i].InnerText);
-                    criarCte(cte);
+                   // criarCte(cte);
                     alterarNfs(result[i + 1].InnerText, result[i + 7].InnerText, cte);
                     criarCteManifesto(cte, lido.numeroManifesto);
                 }
 
-                dbd.alterarSkuManifesto(lido.numeroManifesto);
+                docBD.alterarSkuManifesto(lido.numeroManifesto);
                 return true;
             }
             catch
@@ -82,7 +82,10 @@ namespace DAL
                 var result = nf.GetElementsByTagName("det");
                 nfLida.skuNF = result.Count;
                 nfLida.numeroNF = nf.GetElementsByTagName("nNF")[0].InnerText + '-' + nf.GetElementsByTagName("serie")[0].InnerText;
-                nfLida.fonecedorNF = nf.GetElementsByTagName("xNome")[0].InnerText.Remove(49);
+                var fornecedor = nf.GetElementsByTagName("xNome")[0].InnerText;
+                if (fornecedor.Length > 49)
+                    fornecedor = fornecedor.Remove(49);
+                nfLida.fonecedorNF = fornecedor;
                 nfLida.volumesNF = int.Parse(nf.GetElementsByTagName("qVol")[0].InnerText);
                 nfLida.pesoNF = double.Parse(nf.GetElementsByTagName("pesoB")[0].InnerText.Replace(".", ","));
 
@@ -92,8 +95,9 @@ namespace DAL
 
                 return true;
             }
-            catch
+            catch (System.Exception ex)
             {
+                var erro = ex;
                 return false;
             }
         }
@@ -132,12 +136,5 @@ namespace DAL
             novo.Manifesto = manifesto;
             dbd.cadastrarCteManifesto(novo);
         }
-
-        private bool isXml(string caminho)
-        {
-            string extensao = string.Concat(caminho[caminho.Length - 3], caminho[caminho.Length - 2], caminho[caminho.Length - 1]);
-            if (extensao == "xml") return true;
-            return false;
-        }
-    }
+  }
 }

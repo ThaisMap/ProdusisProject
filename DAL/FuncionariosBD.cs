@@ -263,8 +263,9 @@ namespace DAL
                     else return false;
                 }
             }
-            catch
+            catch (Exception e)
             {
+                var erro = e;
                 return false;
             }
         }

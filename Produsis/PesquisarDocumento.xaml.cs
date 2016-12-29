@@ -1,7 +1,9 @@
 ﻿using BLL;
 using ProdusisBD;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Produsis
 {
@@ -75,23 +77,10 @@ namespace Produsis
             }
         }
 
-        private void TipoDeDocumento_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void testarCaractere(object sender, TextCompositionEventArgs e)
         {
-            switch (TipoDeDocumento.SelectedIndex)
-            {
-                case 0:
-                    NumeroDocumento.Mask = "9999999999999999999999999999999999999999";
-                    break;
-
-                case 1:
-                    NumeroDocumento.Mask = "9999999999999";
-                    break;
-
-                default:
-                    NumeroDocumento.Mask = "";
-                    NumeroDocumento.Text = NumeroDocumento.Text.Replace("_", "");
-                    break;
-            }
+            Regex regex = new Regex("[^0-9][^-]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

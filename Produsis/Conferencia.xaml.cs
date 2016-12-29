@@ -2,8 +2,10 @@
 using ProdusisBD;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace GUI
 {
@@ -112,6 +114,12 @@ namespace GUI
             {
                 ListaDeFuncionarios.Items.Add(FuncionarioSelecionado);
             }
+        }
+
+        private void testarCaractere(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
 
         private Tarefas montarTarefa()

@@ -1,5 +1,6 @@
 ﻿using DAL;
 using DAL.Properties;
+using System.Collections.Generic;
 using System.IO;
 
 namespace BLL
@@ -9,23 +10,40 @@ namespace BLL
         public void lerXML()
         {
             Xml xml = new Xml();
-
+            List<string> arquivosPastaNF = new List<string>();
+    
             foreach (string f in Directory.GetFiles(PastasXml.Default.PastaNFs))
             {
                 var ext = extensao(f);
                 if (ext == "msg")
-                    xml.abrirEmail(f);
-                else if (ext == "xml")
+                {
+                    xml.abrirEmail(moverArquivo(f));
+                }
+                else if (ext != "xml")
+                    File.Delete(f);
+            }
+            foreach (string f in Directory.GetFiles(PastasXml.Default.PastaNFs))
+            {
+                var ext = extensao(f);
+                if (ext == "xml")
+                {
                     xml.lerNotaFiscal(f);
-                moverArquivo(f);
+                    moverArquivo(f);
+                }
+                else
+                    File.Delete(f);
             }
 
             foreach (string f in Directory.GetFiles(PastasXml.Default.PastaManifestos))
             {
                 var ext = extensao(f);
                 if (ext == "xml")
+                {
                     xml.lerManifesto(f);
-                moverArquivo(f);
+                    moverArquivo(f);
+                }
+                else
+                    File.Delete(f);
             }
         }
 
@@ -34,7 +52,7 @@ namespace BLL
             return string.Concat(caminho[caminho.Length - 3], caminho[caminho.Length - 2], caminho[caminho.Length - 1]);
         }
 
-        private void moverArquivo(string nomeArquivo)
+        private string moverArquivo(string nomeArquivo)
         {
             Directory.CreateDirectory(PastasXml.Default.PastaNFs + "\\old");
             Directory.CreateDirectory(PastasXml.Default.PastaManifestos + "\\old");
@@ -43,8 +61,8 @@ namespace BLL
                 novaPasta = nomeArquivo.Replace(PastasXml.Default.PastaManifestos, PastasXml.Default.PastaManifestos + "\\old");
             else
                 novaPasta = nomeArquivo.Replace(PastasXml.Default.PastaNFs, PastasXml.Default.PastaNFs + "\\old");
-
             File.Move(nomeArquivo, novaPasta);
+            return novaPasta;
         }
     }
 }

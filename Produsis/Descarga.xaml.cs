@@ -2,8 +2,10 @@
 using ProdusisBD;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace GUI
 {
@@ -121,6 +123,12 @@ namespace GUI
             novaTarefa.inicioTarefa = DateTime.Now;
             novaTarefa.tipoTarefa = "0";
             return novaTarefa;
+        }
+
+        private void testarCaractere(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

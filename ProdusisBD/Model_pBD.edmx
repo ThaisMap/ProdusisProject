@@ -281,8 +281,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tarefas_Ctes">
-          <End Role="Ctes" Type="Self.Ctes" Multiplicity="0..1" />
-          <End Role="Tarefas" Type="Self.Tarefas" Multiplicity="*" />
+          <End Type="Self.Ctes" Multiplicity="0..1" Role="Ctes" />
+          <End Type="Self.Tarefas" Multiplicity="*" Role="Tarefas" />
           <ReferentialConstraint>
             <Principal Role="Ctes">
               <PropertyRef Name="numeroCte" />
@@ -349,8 +349,8 @@
             <End Role="NotasFiscais" EntitySet="NotasFiscais" />
           </AssociationSet>
           <AssociationSet Name="FK_Tarefas_Ctes" Association="Self.FK_Tarefas_Ctes">
-            <End Role="Ctes" EntitySet="Ctes" />
-            <End Role="Tarefas" EntitySet="Tarefas" />
+            <End EntitySet="Ctes" Role="Ctes" />
+            <End EntitySet="Tarefas" Role="Tarefas" />
           </AssociationSet>
           <AssociationSet Name="FK_Func_Tarefa_Funcionarios" Association="Self.FK_Func_Tarefa_Funcionarios">
             <End Role="Funcionarios" EntitySet="Funcionarios" />

@@ -57,7 +57,7 @@
                                         VerticalAlignment="Bottom"
                                         Foreground="{Binding ElementName=Documento, Path=BorderBrush}"
                                         Kind="FileDocument" />
-                                    <xctk:MaskedTextBox
+                                    <TextBox
                                         Name="Documento"
                                         Grid.Row="1"
                                         Grid.Column="1"
@@ -65,7 +65,7 @@
                                         Margin="5,0,5,5"
                                         materialDesign:HintAssist.Hint="Manifesto"
                                         materialDesign:HintAssist.IsFloating="True"
-                                        Mask="9999999999999"
+                                        PreviewTextInput="testarCaractere"                                                        
                                         Style="{StaticResource MaterialDesignTextBox}" />
                                 </StackPanel>
                                 <StackPanel

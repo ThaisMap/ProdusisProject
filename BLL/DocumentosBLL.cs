@@ -79,6 +79,6 @@ namespace BLL
         public void setPastasManifesto(string caminho)
         {
             PastasXml.Default.PastaManifestos = caminho;
-        }
+        } 
     }
 }

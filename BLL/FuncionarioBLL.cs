@@ -47,5 +47,11 @@ namespace BLL
         {
             return f.getFuncPorNome(nome);
         }
+
+        public bool validarUsuario(string matricula)
+        {
+            return f.verificaUsuarioCadastrado(matricula);
+        }
+      
     }
 }

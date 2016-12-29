@@ -1,6 +1,7 @@
 ﻿using ProdusisBD;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace DAL
 {
@@ -312,14 +313,15 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    NotasFiscais nfAtual = BancoDeDados.NotasFiscais.FirstOrDefault(nf => nf.numeroNF == numNF && nf.fonecedorNF == fornecedor);
+                    NotasFiscais nfAtual = BancoDeDados.NotasFiscais.FirstOrDefault(nf => nf.numeroNF == numNF); //&& nf.fonecedorNF == fornecedor);
                     nfAtual.CteNF = numeroCte;
                     BancoDeDados.SaveChanges();
                 }
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
+                var erro = ex;
                 return false;
             }
         }

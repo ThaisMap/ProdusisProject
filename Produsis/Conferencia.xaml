@@ -55,14 +55,14 @@
                                                              Foreground="{Binding ElementName=Documento,
                                                                                   Path=BorderBrush}"
                                                              Kind="FileDocument" />
-                                    <xctk:MaskedTextBox Name="Documento"
+                                    <TextBox Name="Documento"
                                         Grid.Row="1"
                                         Grid.Column="1"
                                         Width="300"
                                         Margin="5,0,5,5"
                                         materialDesign:HintAssist.Hint="Conhecimento"
                                         materialDesign:HintAssist.IsFloating="True"
-                                        Mask="9999999999999999999999999999999999999999"
+                                        PreviewTextInput="testarCaractere"                                                        
                                         Style="{StaticResource MaterialDesignTextBox}" />
                                 </StackPanel>
                                 <StackPanel Grid.Row="0"

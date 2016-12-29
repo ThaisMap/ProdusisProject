@@ -2,6 +2,8 @@
 using ProdusisBD;
 using System.Windows;
 using System.Windows.Controls;
+using System.Text.RegularExpressions;
+using System.Windows.Input;
 
 namespace Produsis
 {
@@ -89,6 +91,12 @@ namespace Produsis
                 return true;
             }
             return false;
+        }
+
+        private void testarCaractere(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

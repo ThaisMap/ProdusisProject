@@ -52,7 +52,7 @@
                           HorizontalAlignment="Center"
                           VerticalAlignment="Center"
                           materialDesign:HintAssist.Hint="Tipo de Documento"
-                          materialDesign:HintAssist.IsFloating="True" SelectionChanged="TipoDeDocumento_SelectionChanged">
+                          materialDesign:HintAssist.IsFloating="True">
                     <ComboBoxItem Content="Conhecimento" HorizontalAlignment="Left" Width="278" />
                     <ComboBoxItem Content="Manifesto" HorizontalAlignment="Left" Width="278" />
                     <ComboBoxItem Content="Nota Fiscal" HorizontalAlignment="Left" Width="278" />
@@ -67,7 +67,7 @@
                                          Foreground="{Binding ElementName=NumeroDocumento,
                                                               Path=BorderBrush}"
                                          Kind="Numeric" />
-                <xctk:MaskedTextBox Name="NumeroDocumento"
+                <TextBox Name="NumeroDocumento"
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     Width="280"
@@ -76,7 +76,7 @@
                                     VerticalAlignment="Center"
                                     materialDesign:HintAssist.Hint="Número do Documento"
                                     materialDesign:HintAssist.IsFloating="True"
-                                    Mask="9999999999999999999999999999999999999999"
+                                        PreviewTextInput="testarCaractere"                                                        
                                     Style="{StaticResource MaterialDesignTextBox}" />
                 <Button Grid.Row="1"
                         Grid.Column="2"
@@ -90,7 +90,7 @@
             <Separator />
             <Grid HorizontalAlignment="Center">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
