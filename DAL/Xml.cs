@@ -48,14 +48,14 @@ namespace DAL
                 lido.pesoManifesto = double.Parse(result[result.Count - 3].InnerText.Replace('.', ','));
                 lido.quantCtesManifesto = (int)double.Parse(result[result.Count - 4].InnerText.Replace('.', ','));
 
-               //if (!docBD.cadastrarManifesto(lido))
-               // { return false; }
+                if (!docBD.cadastrarManifesto(lido))
+                { return false; }
 
                 int cte;
                 for (int i = 0; i < result.Count - 4; i = i + 10)
                 {
                     cte = int.Parse(result[i].InnerText);
-                   // criarCte(cte);
+                    criarCte(cte);
                     alterarNfs(result[i + 1].InnerText, result[i + 7].InnerText, cte);
                     criarCteManifesto(cte, lido.numeroManifesto);
                 }

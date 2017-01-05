@@ -23,9 +23,15 @@ namespace GUI
         {
             if (checarCampos())
             {
-                f.salvarNovo(montarObjeto());
-                MessageBox.Show("Funcionário cadastrado com sucesso.", "Funcionário cadastrado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-                limpar(sender, e);
+                if (f.salvarNovo(montarObjeto()))
+                {
+                    MessageBox.Show("Funcionário cadastrado com sucesso.", "Funcionário cadastrado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                    limpar(sender, e);
+                }
+                else
+                {
+                    MessageBox.Show("Funcionário não foi cadastrado. Verifique as informações fornecidas.", "Funcionário não cadastrado - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             else
             {
@@ -48,8 +54,12 @@ namespace GUI
          
         private bool checarCampos()
         {
-            if (Nome.Text != "" && Matricula.Text != "_____" && Senha.Password != "" && Tipo.Text != "")
+            if (Nome.Text != "" && Matricula.Text != "_____" && Tipo.Text != "" && Senha.Password == Senha2.Password)
             {
+                if (Tipo.Text == "Administrativo" && Senha.Password == "")
+                    return false;
+
+                //estando tudo certo
                 return true;
             }
             return false;

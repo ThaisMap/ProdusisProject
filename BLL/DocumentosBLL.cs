@@ -40,7 +40,7 @@ namespace BLL
 
         public bool cteCadastrado(int num)
         {
-            if (d.verificarDocumentoCadastrado(1, num.ToString()) != null)
+            if (d.verificarDocumentoCadastrado(1, num.ToString()) != 0)
             {
                 return true;
             }
@@ -49,7 +49,7 @@ namespace BLL
 
         public bool manifestoCadastrado(int num)
         {
-            if (d.verificarDocumentoCadastrado(0, num.ToString()) != null)
+            if (d.verificarDocumentoCadastrado(0, num.ToString()) != 0)
             {
                 return true;
             }
@@ -74,11 +74,13 @@ namespace BLL
         public void setPastasNF(string caminho)
         {
             PastasXml.Default.PastaNFs = caminho;
+            PastasXml.Default.Save();
         }
 
         public void setPastasManifesto(string caminho)
         {
             PastasXml.Default.PastaManifestos = caminho;
-        } 
+            PastasXml.Default.Save();
+        }
     }
 }

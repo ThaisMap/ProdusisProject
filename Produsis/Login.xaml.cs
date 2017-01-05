@@ -17,6 +17,7 @@ namespace GUI
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
+            lerXmls();
             if (verificaCampos())
             {
                 FuncionarioBLL l = new FuncionarioBLL();
@@ -24,7 +25,7 @@ namespace GUI
                 {
                     if (l.validarSenha(TxbLogin.Text, TxbSenha.Password))
                     {
-                        t.Start();
+                        //t.Start();
                         TelaPrincipal view = new TelaPrincipal();
                         this.Close();
                         view.Show();

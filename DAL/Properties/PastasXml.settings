@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="PastaNFs" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\thais\OneDrive\Documentos\ProdusisXML\NF</Value>
+      <Value Profile="(Default)">C:\Users\thais.maria\Documents\xml produsis\NF</Value>
     </Setting>
     <Setting Name="PastaManifestos" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\thais\OneDrive\Documentos\ProdusisXML\Manifesto</Value>
+      <Value Profile="(Default)">C:\Users\thais.maria\Documents\xml produsis\Manifesto</Value>
     </Setting>
   </Settings>
 </SettingsFile>
