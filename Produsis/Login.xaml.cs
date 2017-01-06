@@ -9,7 +9,6 @@ namespace GUI
     /// </summary>
     public partial class Login : Window
     {
-        Thread t = new Thread(lerXmls);
         public Login()
         {
             InitializeComponent();
@@ -25,7 +24,6 @@ namespace GUI
                 {
                     if (l.validarSenha(TxbLogin.Text, TxbSenha.Password))
                     {
-                        //t.Start();
                         TelaPrincipal view = new TelaPrincipal();
                         this.Close();
                         view.Show();

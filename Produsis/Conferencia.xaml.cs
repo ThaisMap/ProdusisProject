@@ -26,6 +26,7 @@ namespace GUI
             ListaFunc = f.carregaFuncionariosLivres();
             CBFuncionario.ItemsSource = ListaFunc;
             dgTarefas.ItemsSource = t.tarefasPendentes("2");
+            lerXmls();
         }
 
         public static string CriaChipTag(string Nome)
@@ -120,6 +121,12 @@ namespace GUI
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        static void lerXmls()
+        {
+            xmlBLL x = new xmlBLL();
+            x.lerXML();
         }
 
         private Tarefas montarTarefa()

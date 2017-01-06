@@ -108,7 +108,7 @@
                                         Grid.Column="1"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Bottom"
-                                        Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,0,10" Width="71" Click="Iniciar_Click">
+                                        Margin="0,0,0,10" Width="71" Click="Iniciar_Click">
                                     Iniciar
                                 </Button>
                             </Grid>
@@ -129,6 +129,7 @@
                                         Height="25"
                                         Width="100"
                                         HorizontalAlignment="Right"
+                                         Style="{StaticResource MaterialDesignFlatButton}"
                                         Content="Atualizar" Margin="75,0,7,0" Click="AtualizarDg_Click" />
                                 <TextBlock Grid.Column="0"
                                        Grid.Row="0"

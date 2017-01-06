@@ -26,6 +26,7 @@ namespace GUI
             ListaFunc = f.carregaFuncionariosLivres();
             CBFuncionario.ItemsSource = ListaFunc;
             dgTarefas.ItemsSource = t.tarefasPendentes("0");
+            lerXmls();
         }
 
         public static string CriaChipTag(string Nome)
@@ -116,6 +117,12 @@ namespace GUI
             }
         }
 
+        static void lerXmls()
+        {
+            xmlBLL x = new xmlBLL();
+            x.lerXML();
+        }
+
         private Tarefas montarTarefa()
         {
             Tarefas novaTarefa = new Tarefas();
@@ -124,7 +131,7 @@ namespace GUI
             novaTarefa.tipoTarefa = "0";
             return novaTarefa;
         }
-
+        
         private void testarCaractere(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");

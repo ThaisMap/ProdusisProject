@@ -19,13 +19,14 @@ namespace GUI
         private FuncionariosTag FuncionarioSelecionado;
         private List<string> ListaFunc;
         private TarefasBLL t = new TarefasBLL();
-
+        
         public Carregamento()
         {
             InitializeComponent();
             ListaFunc = f.carregaFuncionariosLivres();
             CBFuncionario.ItemsSource = ListaFunc;
             dgTarefas.ItemsSource = t.tarefasPendentes("4");
+            lerXmls();
         }
 
         public static string CriaChipTag(string Nome)
@@ -117,6 +118,12 @@ namespace GUI
             }
         }
 
+        static void lerXmls()
+        {
+            xmlBLL x = new xmlBLL();
+            x.lerXML();
+        }
+
         private Tarefas montarTarefa()
         {
             Tarefas novaTarefa = new Tarefas();
@@ -125,7 +132,6 @@ namespace GUI
             novaTarefa.tipoTarefa = "4";
             return novaTarefa;
         }
-
 
         private void testarCaractere(object sender, TextCompositionEventArgs e)
         {

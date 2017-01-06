@@ -26,6 +26,7 @@ namespace GUI
             ListaFunc = f.carregaFuncionariosLivres();
             CBFuncionario.ItemsSource = ListaFunc;
             dgTarefas.ItemsSource = t.tarefasPendentes("1");
+            lerXmls();
         }
 
         public static string CriaChipTag(string Nome)
@@ -114,6 +115,12 @@ namespace GUI
             {
                 ListaDeFuncionarios.Items.Add(FuncionarioSelecionado);
             }
+        }
+
+        static void lerXmls()
+        {
+            xmlBLL x = new xmlBLL();
+            x.lerXML();
         }
 
         private Tarefas montarTarefa()
