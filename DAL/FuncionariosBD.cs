@@ -255,8 +255,8 @@ namespace DAL
                 {
                     var cadastrado = (from Funcionarios in BancoDeDados.Funcionarios
                                       where Funcionarios.matriculaFunc == matricula
-                                      select Funcionarios).FirstOrDefault();
-                    if (cadastrado != null)
+                                      select Funcionarios.tipoFunc).FirstOrDefault();
+                    if (cadastrado != null && cadastrado != "1")
                     {
                         return true;
                     }

@@ -63,7 +63,8 @@
                                         materialDesign:HintAssist.Hint="Conhecimento"
                                         materialDesign:HintAssist.IsFloating="True"
                                         PreviewTextInput="testarCaractere"                                                        
-                                        Style="{StaticResource MaterialDesignTextBox}" />
+                                        Style="{StaticResource MaterialDesignTextBox}" 
+                                        LostFocus="normalizarDocumento" />
                                 </StackPanel>
                                 <StackPanel Grid.Row="0"
                                             Grid.RowSpan="3"

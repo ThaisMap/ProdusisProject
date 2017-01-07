@@ -54,7 +54,7 @@ namespace GUI
 
         private void CBFuncionario_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            FuncionarioSelecionado = new FuncionariosTag(CBFuncionario.SelectedItem.ToString(), CriaChipTag(CBFuncionario.SelectedItem.ToString()));
+           FuncionarioSelecionado = new FuncionariosTag(CBFuncionario.SelectedItem.ToString(), CriaChipTag(CBFuncionario.SelectedItem.ToString()));
         }
 
         private bool checarCampos()
@@ -121,6 +121,7 @@ namespace GUI
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+            
         }
 
         static void lerXmls()
@@ -137,5 +138,21 @@ namespace GUI
             novaTarefa.tipoTarefa = "2";
             return novaTarefa;
         }
+
+        private void normalizarDocumento(object sender, RoutedEventArgs e)
+        {
+            if (Documento.Text.Length == 44)
+            {
+                Documento.Text = Documento.Text.Remove(0, 22);
+                Documento.Text = Documento.Text.Remove(12);
+                Documento.Text = int.Parse(Documento.Text).ToString();
+            }
+        }
+
+        private void Documento_LostFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+        
     }
 }

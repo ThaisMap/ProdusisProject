@@ -17,6 +17,7 @@ namespace GUI
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             lerXmls();
+           
             if (verificaCampos())
             {
                 FuncionarioBLL l = new FuncionarioBLL();

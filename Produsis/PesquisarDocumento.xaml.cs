@@ -31,36 +31,35 @@ namespace Produsis
             if (TipoDeDocumento.SelectedIndex > -1)
             {
                 DocumentosBLL d = new DocumentosBLL();
-                int numDoc;
-                if (int.TryParse(NumeroDocumento.Text.Replace("_", ""), out numDoc))
-                {
-                    if (TipoDeDocumento.SelectedIndex == 0)
-                    {
-                        if (d.cteCadastrado(numDoc))
-                        {
-                            Numero.Text = NumeroDocumento.Text.Replace("_", "");
-                            NumeroDeVolumes.Text = d.volumesCte(numDoc).ToString();
-                            NumeroDeSKUS.Text = d.skuCte(numDoc).ToString();
-                            Peso.Text = d.pesoCte(numDoc).ToString();
-                            Fornecedor.Text = d.fornecedorCte(numDoc);
-                        }
-                        else limpar();
-                    }
-                    else if (TipoDeDocumento.SelectedIndex == 1)
-                    {
-                        Manifestos documento = d.getDadosManifesto(numDoc);
+                int numDoc = int.Parse(NumeroDocumento.Text);
 
-                        if (documento != null)
-                        {
-                            Numero.Text = documento.numeroManifesto.ToString();
-                            NumeroDeVolumes.Text = documento.VolumesManifesto.ToString();
-                            NumeroDeSKUS.Text = documento.skusManifesto.ToString();
-                            Peso.Text = documento.pesoManifesto.ToString();
-                            Fornecedor.Text = "Não se aplica";
-                        }
-                        else limpar();
+                if (TipoDeDocumento.SelectedIndex == 0)
+                {
+                    if (d.cteCadastrado(numDoc))
+                    {
+                        Numero.Text = NumeroDocumento.Text.Replace("_", "");
+                        NumeroDeVolumes.Text = d.volumesCte(numDoc).ToString();
+                        NumeroDeSKUS.Text = d.skuCte(numDoc).ToString();
+                        Peso.Text = d.pesoCte(numDoc).ToString();
+                        Fornecedor.Text = d.fornecedorCte(numDoc);
                     }
+                    else limpar();
                 }
+                else if (TipoDeDocumento.SelectedIndex == 1)
+                {
+                    Manifestos documento = d.getDadosManifesto(numDoc);
+
+                    if (documento != null)
+                    {
+                        Numero.Text = documento.numeroManifesto.ToString();
+                        NumeroDeVolumes.Text = documento.VolumesManifesto.ToString();
+                        NumeroDeSKUS.Text = documento.skusManifesto.ToString();
+                        Peso.Text = documento.pesoManifesto.ToString();
+                        Fornecedor.Text = "Não se aplica";
+                    }
+                    else limpar();
+                }
+
                 else if (TipoDeDocumento.SelectedIndex == 2)
                 {
                     NotasFiscais documento = d.getDadosNF(NumeroDocumento.Text);

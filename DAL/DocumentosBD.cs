@@ -186,7 +186,7 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    return (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.numeroNF == numNF+"*" select NotasFiscais).FirstOrDefault();
+                    return (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.numeroNF.StartsWith(numNF) select NotasFiscais).FirstOrDefault();
                 }
             }
             catch
