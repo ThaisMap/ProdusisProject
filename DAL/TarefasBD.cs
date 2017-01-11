@@ -119,6 +119,7 @@ namespace DAL
 
                 foreach(var tar in lista)
                 {
+                    if (tar.tipoTarefa == "Conferência")
                     {
                         DocumentosBD d = new DocumentosBD();
                         tar.fornecedor = d.getFornecedorCte(tar.documentoTarefa);
