@@ -13,7 +13,12 @@ namespace BLL
             return d.getManifestoPorNumero(numero);
         }
 
-        public string linhaDados(int numero)
+        public string linhaDadosCte(int numero)
+        {
+            return d.getDadosDocumentos(1, numero);
+        }
+
+        public string linhaDadosManifesto(int numero)
         {
             return d.getDadosDocumentos(0, numero);
         }

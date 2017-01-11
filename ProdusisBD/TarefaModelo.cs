@@ -39,6 +39,7 @@ namespace ProdusisBD
         public int skus { get; set; }
         public int volumes { get; set; }
         public int peso { get; set; }
+        public string fornecedor { get; set; }
 
         public void valores(int sku, int volume, int kg)
         {
@@ -58,19 +59,19 @@ namespace ProdusisBD
             {
                 tempo = (DateTime)fimTarefa - inicioTarefa;
             }
-            tempoGasto = (tempo.Days * 24 + tempo.Hours) + ":" + tempo.Minutes + ":" + tempo.Seconds;
+            tempoGasto = (tempo.Days * 24 + tempo.Hours).ToString("00") + ":" + tempo.Minutes.ToString("00") + ":" + tempo.Seconds.ToString("00");
         }
 
         public void preencheDatas()
         {
             dataInicio = inicioTarefa.Date.ToString("dd\\/MM\\/yyyy");
-            horaInicio = inicioTarefa.ToString("hh\\:mm\\:ss");
+            horaInicio = inicioTarefa.ToString("HH\\:mm\\:ss");
 
             if (fimTarefa != null)
             {
                 dataFim = ((DateTime)fimTarefa).ToString("dd\\/MM\\/yyyy");
-                horaFim = ((DateTime)fimTarefa).ToString("hh\\:mm\\:ss");
+                horaFim = ((DateTime)fimTarefa).ToString("HH\\:mm\\:ss");
             }
-        }
+        }        
     }
 }

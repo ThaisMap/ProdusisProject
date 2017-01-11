@@ -54,7 +54,8 @@ namespace GUI
 
         private void CBFuncionario_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           FuncionarioSelecionado = new FuncionariosTag(CBFuncionario.SelectedItem.ToString(), CriaChipTag(CBFuncionario.SelectedItem.ToString()));
+            if (CBFuncionario.SelectedIndex > -1)
+                FuncionarioSelecionado = new FuncionariosTag(CBFuncionario.SelectedItem.ToString(), CriaChipTag(CBFuncionario.SelectedItem.ToString()));
         }
 
         private bool checarCampos()
@@ -96,8 +97,12 @@ namespace GUI
                 if (t.inserirTarefa(montarTarefa(), funcionarios()))
                 {
                     dgTarefas.ItemsSource = t.tarefasPendentes("2");
-                    MessageBox.Show("Conferência iniciada para o " + d.linhaDados(int.Parse(Documento.Text.Replace("_", ""))), "Conferência iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Conferência iniciada para o " + d.linhaDadosCte(int.Parse(Documento.Text.Replace("_", ""))), "Conferência iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Documento.Text = "";
+                    CBFuncionario.SelectedIndex = -1;
+                    ListaDeFuncionarios.Items.Clear();
                 }
+
                 else
                 {
                     MessageBox.Show("Não foi possível iniciar a conferência.", "Conferência não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -121,7 +126,7 @@ namespace GUI
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
-            
+
         }
 
         static void lerXmls()
@@ -148,11 +153,5 @@ namespace GUI
                 Documento.Text = int.Parse(Documento.Text).ToString();
             }
         }
-
-        private void Documento_LostFocus(object sender, RoutedEventArgs e)
-        {
-
-        }
-        
     }
 }

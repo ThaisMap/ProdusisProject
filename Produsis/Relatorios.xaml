@@ -11,20 +11,20 @@
     VerticalAlignment="Stretch"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-    TextElement.FontSize="16"
+    TextElement.FontSize="14"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d" Loaded="UserControl_Loaded">
     <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Auto">
-        <StackPanel CanHorizontallyScroll="True" CanVerticallyScroll="True" Height="450">
+        <StackPanel CanHorizontallyScroll="True" CanVerticallyScroll="True" Height="500">
             <TextBlock
-                Margin="40,10,0,0"
+                Margin="20,10,0,0"
                 HorizontalAlignment="Left"
                 Style="{StaticResource MaterialDesignHeadlineTextBlock}">
                 Relatórios
             </TextBlock>
             <Separator />
-            <Grid x:Name="GridFiltros" Height="200" HorizontalAlignment="Center">
+            <Grid x:Name="GridFiltros" Height="193" HorizontalAlignment="Left" Margin="30,5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="auto" />
@@ -50,7 +50,7 @@
                 <ComboBox x:Name="cbTipoTarefa"
                     Grid.Row="0"
                     Grid.Column="1"
-                    Width="160"
+                    Width="180"
                     Margin="5,10"
                     VerticalAlignment="Center">
                     <ComboBoxItem Content="Descarga" HorizontalAlignment="Left" Width="158" />
@@ -68,14 +68,14 @@
                 <TextBox x:Name="tbDocumento"
                     Grid.Row="1"
                     Grid.Column="1"
-                    Width="160"
+                    Width="180"
                     Margin="5,10"
                     VerticalAlignment="Center" PreviewTextInput="testarCaractere" />
 
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="4"
-                    Margin="5,10"
+                    Margin="15,10"
                     VerticalAlignment="Center"><Run Text="Volumes:" /></TextBlock>
                 <TextBox x:Name="volumeInicial"
                     Grid.Row="0"
@@ -99,19 +99,19 @@
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="2"
-                    Margin="5,10"
+                    Margin="15,10"
                     VerticalAlignment="Center"><Run Text="Data Inicial:" /></TextBlock>
                 <DatePicker x:Name="dataInicio"
                     Grid.Row="0"
                     Grid.Column="3"
-                    Width="160"
+                    Width="150"
                     Margin="5,10"
                     VerticalAlignment="Center"
                     Language="pt-br" />
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="4"
-                    Margin="5,10"
+                    Margin="15,10"
                     VerticalAlignment="Center"><Run Text="SKU's:" /></TextBlock>
                 <TextBox x:Name="skuInicio"
                     Grid.Row="1"
@@ -133,19 +133,19 @@
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="2"
-                    Margin="5,10"
+                    Margin="15,10"
                     VerticalAlignment="Center"><Run Text="Data Final:" /></TextBlock>
                 <DatePicker x:Name="dataFinal"
                     Grid.Row="1"
                     Grid.Column="3"
-                    Width="160"
+                    Width="150"
                     Margin="5,10"
                     VerticalAlignment="Center"
                     Language="pt-br" />
                 <TextBlock
                     Grid.Row="2"
                     Grid.Column="4"
-                    Margin="5,10"
+                    Margin="15,10"
                     VerticalAlignment="Center"><Run Text="Peso:" /></TextBlock>
                 <TextBox x:Name="pesoInicio"
                     Grid.Row="2"
@@ -172,7 +172,7 @@
                 <ComboBox x:Name="cbFuncionario"
                     Grid.Row="2"
                     Grid.Column="1"
-                    Width="160"
+                    Width="180"
                     Margin="5,10"
                     VerticalAlignment="Center" />
                 <Button x:Name="btnLimpar"
@@ -188,28 +188,28 @@
                     Grid.Column="6"
                     Grid.ColumnSpan="2"
                     Width="100"
-                    Margin="5,10"
-                    VerticalAlignment="Center"
-                    Style="{StaticResource MaterialDesignFlatButton}" Click="btnConsultar_Click" Content="Consultar" />
+                    Margin="5,0,5,9"
+                    VerticalAlignment="Bottom" Click="btnConsultar_Click" Content="Consultar" />
             </Grid>
             <Separator />
 
-                <DataGrid Name="dgTarefas" Margin="0,0,0,10" ColumnWidth="auto" HorizontalAlignment="Center" AutoGenerateColumns="False" IsReadOnly="True">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding documentoTarefa}" Header="Documento" />
-                        <DataGridTextColumn Binding="{Binding tipoTarefa}" Header="Tipo" />
-                        <DataGridTextColumn Binding="{Binding dataInicio}" Header="Data Início" />
-                        <DataGridTextColumn Binding="{Binding horaInicio}" Header="Hora Início" />
-                        <DataGridTextColumn Binding="{Binding dataFim}" Header="Data Fim" />
-                        <DataGridTextColumn Binding="{Binding horaFim}" Header="Hora Fim" />
-                        <DataGridTextColumn Binding="{Binding tempoGasto}" Header="Tempo Gasto" />
-                        <DataGridTextColumn Binding="{Binding nomesFuncionarios}" Header="Funcionarios" />
-                        <DataGridTextColumn Binding="{Binding volumes}" Header="Volumes" />
-                        <DataGridTextColumn Binding="{Binding skus}" Header="SKU's" />
-                        <DataGridTextColumn Binding="{Binding peso}" Header="Peso (Kg)" />
-                    </DataGrid.Columns>
-                </DataGrid>
-             <Button x:Name="btnExportar" Content="Exportar" Width="90" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="btnExportar_Click" />
+            <DataGrid Name="dgTarefas" Margin="0,0,0,10" ColumnWidth="auto" HorizontalAlignment="Center" AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding documentoTarefa}" Header="Documento" />
+                    <DataGridTextColumn Binding="{Binding tipoTarefa}" Header="Tipo" />
+                    <DataGridTextColumn Binding="{Binding dataInicio}" Header="Data Início" />
+                    <DataGridTextColumn Binding="{Binding horaInicio}" Header="Hora Início" />
+                    <DataGridTextColumn Binding="{Binding dataFim}" Header="Data Fim" />
+                    <DataGridTextColumn Binding="{Binding horaFim}" Header="Hora Fim" />
+                    <DataGridTextColumn Binding="{Binding tempoGasto}" Header="Tempo Gasto" />
+                    <DataGridTextColumn Binding="{Binding nomesFuncionarios}" Header="Funcionários" />
+                    <DataGridTextColumn Binding="{Binding volumes}" Header="Volumes" />
+                    <DataGridTextColumn Binding="{Binding skus}" Header="SKU's" />
+                    <DataGridTextColumn Binding="{Binding peso}" Header="Peso (Kg)" />
+                    <DataGridTextColumn Binding="{Binding fornecedor}" Header="Fornecedor" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button x:Name="btnExportar" Content="Exportar" Width="90" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="btnExportar_Click" />
         </StackPanel>
     </ScrollViewer>
 </UserControl>

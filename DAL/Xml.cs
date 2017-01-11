@@ -17,7 +17,6 @@ namespace DAL
 
                 foreach (Attachment anexo in email.Attachments)
                 {
-                    
                         string nomeXML = PastasXml.Default.PastaNFs + "\\" + anexo.FileName;
                         anexo.SaveAsFile(nomeXML);                    
                 }

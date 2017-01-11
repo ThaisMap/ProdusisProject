@@ -31,7 +31,7 @@
                     <Grid Grid.Row="1"
                           Grid.Column="1"
                           Grid.ColumnSpan="2"
-                          Margin="60,20,0,5">
+                          Margin="20,20,0,5">
                         <StackPanel>
                             <TextBlock Text="Novo Carregamento" Margin="0,0,350,0" />
                             <Grid Margin="40,5">
@@ -147,7 +147,7 @@
                                     IsReadOnly="True">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Manifesto" Binding="{Binding documentoTarefa}" />
-                                        <DataGridTextColumn Header="Funcionarios" Binding="{Binding nomesFuncionarios}" />
+                                        <DataGridTextColumn Header="Funcionários" Binding="{Binding nomesFuncionarios}" />
                                         <DataGridTextColumn Header="Data Início" Binding="{Binding dataInicio}" />
                                         <DataGridTextColumn Header="Hora Início" Binding="{Binding horaInicio}" />
                                         <DataGridTextColumn Header="Tempo Gasto" Binding="{Binding tempoGasto}" />

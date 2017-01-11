@@ -52,6 +52,7 @@ namespace Produsis
 
         private void Salvar_Click(object sender, RoutedEventArgs e)
         {
+            
             if (f.validarSenha(emEdicao.matriculaFunc, Senha.Password) && checarCampos())
             {
                 Funcionarios novosDados = montarObjeto();
@@ -76,18 +77,28 @@ namespace Produsis
             func.ocupadoFunc = false;
             func.ativoFunc = (bool)Ativo.IsChecked;
             func.tipoFunc = Tipo.SelectedIndex.ToString();
-            if (Senha2.Password != "")
-                func.senhaFunc = Senha2.Password;
+            if (Tipo.SelectedIndex == 0)
+            {
+                if (Senha2.Password != "")
+                    func.senhaFunc = Senha2.Password;
+                else
+                    func.senhaFunc = emEdicao.senhaFunc;
+            }
             else
-                func.senhaFunc = emEdicao.senhaFunc;
+            {
+                func.senhaFunc = "";
+            }
 
             return func;
         }
 
         private bool checarCampos()
         {
-            if (Nome.Text != "" && Matricula.Text != "_____" && Senha.Password != "" && Tipo.Text != "")
+            if (Nome.Text != "" && Matricula.Text != "_____" && Tipo.Text != "")
             {
+                if (Tipo.Text == "Administrativo" && Senha.Password == "")
+                    return false;
+
                 return true;
             }
             return false;

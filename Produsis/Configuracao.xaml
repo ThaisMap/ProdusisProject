@@ -47,25 +47,25 @@
                     Grid.Row="1"
                 VerticalAlignment="Top"
                 Name="CaminhoPastaNFs"
-                         IsReadOnly="True" Margin="20,10" Height="28">Pasta NFs</TextBox>
+                         IsReadOnly="True" Margin="20,10" Height="38">Pasta NFs</TextBox>
             <Button
                 Grid.Column="1" Grid.Row="1"
                 VerticalAlignment="Top" HorizontalAlignment="Left"
                 x:Name="AlteraNF" Content="Alterar"
                 Style="{StaticResource MaterialDesignFlatButton}"
-                Margin="5,10,80,0" Height="30" Width="100" Click="AlteraNF_Click" />
+                Margin="5,18,0,0" Height="30" Width="100" Click="AlteraNF_Click" />
             <TextBox
                     Grid.Column="0"
                     Grid.Row="2"
                 VerticalAlignment="Top"
                     Name="CaminhoPastaMan"
-                         IsReadOnly="True" Margin="20,10,20,0" Height="28">Pasta Manifestos</TextBox>
+                         IsReadOnly="True" Margin="20,10,20,0" Height="38">Pasta Manifestos</TextBox>
             <Button
                 Grid.Column="1" Grid.Row="2"
                 VerticalAlignment="Top" HorizontalAlignment="Left"
                 x:Name="AlteraMan" Content="Alterar"
                 Style="{StaticResource MaterialDesignFlatButton}"
-                Margin="5,10,80,0" Height="30" Width="100" Click="AlteraMan_Click" />
+                Margin="5,18,0,0" Height="30" Width="100" Click="AlteraMan_Click" />
             <Button Grid.Column="1" Grid.Row="3"
                 x:Name="Salvar" Content="Salvar" Margin="73,10,0,0" VerticalAlignment="Top" Width="100" Click="Salvar_Click" />
         </Grid>

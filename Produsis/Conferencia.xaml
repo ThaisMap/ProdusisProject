@@ -32,7 +32,7 @@
                     <Grid Grid.Row="1"
                           Grid.Column="1"
                           Grid.ColumnSpan="2"
-                          Margin="60,20,0,5">
+                          Margin="20,20,0,5">
                         <StackPanel>
                             <TextBlock Text="Nova Conferência" Margin="0,0,350,0" />
                             <Grid Margin="40,5">
@@ -52,10 +52,9 @@
                                     <materialDesign:PackIcon Width="22"
                                                              Height="auto"
                                                              VerticalAlignment="Bottom"
-                                                             Foreground="{Binding ElementName=Documento,
-                                                                                  Path=BorderBrush}"
+                                                             Foreground="{Binding BorderBrush, ElementName=Documento}"
                                                              Kind="FileDocument" />
-                                    <TextBox Name="Documento"
+                                    <TextBox x:Name="Documento"
                                         Grid.Row="1"
                                         Grid.Column="1"
                                         Width="300"
@@ -71,8 +70,8 @@
                                             CanVerticallyScroll="True"
                                             Grid.Column="1"
                                             Margin="10,-28,-10,10">
-                                    <TextBlock>Funcionários Responsaveis:</TextBlock>
-                                    <ListBox Name="ListaDeFuncionarios"
+                                    <TextBlock><Run Text="Funcionários Responsaveis:"/></TextBlock>
+                                    <ListBox x:Name="ListaDeFuncionarios"
                                              materialDesign:ShadowAssist.ShadowDepth="Depth2"
                                              DataContext="Funcionarios" Height="185">
                                         <ListBox.ItemTemplate>
@@ -105,14 +104,12 @@
                                             Click="Inserir_Click"
                                             Style="{StaticResource MaterialDesignFlatButton}" Content="Incluir" />
                                 </StackPanel>
-                                <Button Name= "Iniciar"
+                                <Button x:Name= "Iniciar"
                                         Grid.Row="3"
                                         Grid.Column="1"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Bottom"
-                                         Margin="0,0,0,10" Width="71" Click="Iniciar_Click">
-                                    Iniciar
-                                </Button>
+                                         Margin="0,0,0,10" Width="71" Click="Iniciar_Click" Content="Iniciar"/>
                             </Grid>
                             <Separator />
                             <Grid>
@@ -127,7 +124,7 @@
 
                                 <Button Grid.Column="1"
                                        Grid.Row="0"
-                                        Name="AtualizarDg"
+                                        x:Name="AtualizarDg"
                                         Height="25"
                                         Width="100"
                                         HorizontalAlignment="Right"
@@ -141,22 +138,22 @@
                                     Grid.Column="0"
                                     Grid.Row="1"
                                     Grid.ColumnSpan="2"
-                                    Name="dgTarefas"
+                                    x:Name="dgTarefas"
                                     Margin="40,5"
                                     HorizontalAlignment="Center"
                                     AutoGenerateColumns="False"
                                     ColumnWidth="*"
                                     IsReadOnly="True">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Manifesto" Binding="{Binding documentoTarefa}" />
-                                        <DataGridTextColumn Header="Funcionarios" Binding="{Binding nomesFuncionarios}" />
+                                        <DataGridTextColumn Header="CT-e" Binding="{Binding documentoTarefa}" />
+                                        <DataGridTextColumn Header="Funcionários" Binding="{Binding nomesFuncionarios}" />
                                         <DataGridTextColumn Header="Data Início" Binding="{Binding dataInicio}" />
                                         <DataGridTextColumn Header="Hora Início" Binding="{Binding horaInicio}" />
                                         <DataGridTextColumn Header="Tempo Gasto" Binding="{Binding tempoGasto}" />
                                         <DataGridTemplateColumn Header="Finalizar Tarefa">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Button Click="Finalizar_Click">Finalizar</Button>
+                                                    <Button Click="Finalizar_Click" Content="Finalizar"/>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>

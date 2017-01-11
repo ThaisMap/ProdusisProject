@@ -98,11 +98,7 @@ namespace GUI
 
         private string extensao(string nomeArquivo)
         {
-            if (nomeArquivo.Contains("."))
-            {
-                nomeArquivo = nomeArquivo.Remove(nomeArquivo.Length - 3);
-            }
-            nomeArquivo += "csv";
+            nomeArquivo += ".csv";
             return nomeArquivo;
         }
     }

@@ -116,6 +116,16 @@ namespace DAL
 
                 if (f.pesoFim > 0)
                     lista = lista.Where(l => l.peso <= f.pesoFim).ToList();
+
+                foreach(var tar in lista)
+                {
+                    {
+                        DocumentosBD d = new DocumentosBD();
+                        tar.fornecedor = d.getFornecedorCte(tar.documentoTarefa);
+                    }
+                    else
+                        tar.fornecedor = "";
+                }
             }
             catch (Exception e)
             {

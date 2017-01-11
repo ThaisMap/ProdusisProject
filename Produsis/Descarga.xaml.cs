@@ -54,7 +54,8 @@ namespace GUI
 
         private void CBFuncionario_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            FuncionarioSelecionado = new FuncionariosTag(CBFuncionario.SelectedItem.ToString(), CriaChipTag(CBFuncionario.SelectedItem.ToString()));
+            if (CBFuncionario.SelectedIndex > -1)
+                FuncionarioSelecionado = new FuncionariosTag(CBFuncionario.SelectedItem.ToString(), CriaChipTag(CBFuncionario.SelectedItem.ToString()));
         }
 
         private bool checarCampos()
@@ -96,7 +97,10 @@ namespace GUI
                 if (t.inserirTarefa(montarTarefa(), funcionarios()))
                 {
                     dgTarefas.ItemsSource = t.tarefasPendentes("0");
-                    MessageBox.Show("Descarga iniciada para o " + d.linhaDados(int.Parse(Documento.Text.Replace("_", ""))), "Descarga iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Descarga iniciada para o " + d.linhaDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Descarga iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Documento.Text = "";
+                    CBFuncionario.SelectedIndex = -1;
+                    ListaDeFuncionarios.Items.Clear();
                 }
                 else
                 {

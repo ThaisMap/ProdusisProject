@@ -396,9 +396,8 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     //Funcionarios funcAtual = BancoDeDados.Funcionarios.Single(f => f.idFunc == novoFunc.idFunc);
-
                     Manifestos m = BancoDeDados.Manifestos.SingleOrDefault(man => man.numeroManifesto == numDoc);
-                    dados = "Manifesto nº " + m.numeroManifesto + " - " + m.quantCtesManifesto + " entregas - " + m.VolumesManifesto + " volumes - " + m.VolumesManifesto + " SKU's - " + m.pesoManifesto + " Kg";
+                    dados = "Manifesto nº " + m.numeroManifesto + " - " + m.quantCtesManifesto + " entregas - " + m.VolumesManifesto + " volumes - " + m.skusManifesto + " SKU's - " + m.pesoManifesto + " Kg";
                 }
             }
             catch

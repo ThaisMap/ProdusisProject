@@ -96,7 +96,7 @@ namespace GUI
                 if (t.inserirTarefa(montarTarefa(), funcionarios()))
                 {
                     dgTarefas.ItemsSource = t.tarefasPendentes("1");
-                    MessageBox.Show("Separação iniciada para o " + d.linhaDados(int.Parse(Documento.Text.Replace("_", ""))), "Separação iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Separação iniciada para o " + d.linhaDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Separação iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {

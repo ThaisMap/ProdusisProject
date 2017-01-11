@@ -54,6 +54,7 @@ namespace GUI
 
         private void CBFuncionario_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (CBFuncionario.SelectedIndex > -1)
             FuncionarioSelecionado = new FuncionariosTag(CBFuncionario.SelectedItem.ToString(), CriaChipTag(CBFuncionario.SelectedItem.ToString()));
         }
 
@@ -95,8 +96,11 @@ namespace GUI
             {
                 if (t.inserirTarefa(montarTarefa(), funcionarios()))
                 {
-                    MessageBox.Show("Separação iniciada para carregar o " + d.linhaDados(int.Parse(Documento.Text.Replace("_", ""))), "Separação iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Separação iniciada para carregar o " + d.linhaDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Separação iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                     dgTarefas.ItemsSource = t.tarefasPendentes("3");
+                    Documento.Text = "";
+                    CBFuncionario.SelectedIndex = -1;
+                    ListaDeFuncionarios.Items.Clear();
                 }
                 else
                 {

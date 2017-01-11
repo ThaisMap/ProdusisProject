@@ -99,25 +99,7 @@ namespace DAL
             }
         }
 
-        /// <summary>
-        /// Retorna a dos funcionários cadastrados
-        /// </summary>
-        /// <returns></returns>
-        public List<Funcionarios> getFuncionarios()
-        {
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    return BancoDeDados.Funcionarios.OrderBy(f => f.nomeFunc).ToList();
-                }
-            }
-            catch
-            {
-                return new List<Funcionarios>();
-            }
-        }
-
+        
         /// <summary>
         /// Retorna um Funcionário com base no id
         /// </summary>
@@ -129,25 +111,6 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     return BancoDeDados.Funcionarios.Where(f => f.idFunc == id).FirstOrDefault();
-                }
-            }
-            catch
-            {
-                return new Funcionarios();
-            }
-        }
-
-        /// <summary>
-        ///  Retorna um Funcionário com base na matrícula
-        /// </summary>
-        /// <param name="matricula">Parâmetro de consulta</param>
-        public Funcionarios getFuncPorMatricula(string matricula)
-        {
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    return (from Funcionarios in BancoDeDados.Funcionarios where Funcionarios.matriculaFunc == matricula select Funcionarios).FirstOrDefault();
                 }
             }
             catch
@@ -194,26 +157,6 @@ namespace DAL
         }
 
         /// <summary>
-        /// Retorna o tipo do Funcionário informado
-        /// </summary>
-        /// <param name="nomeUsuario">Pa~râmetro de busca</param>
-        /// <returns>A - Admin, E - Externo, O - Operador</returns>
-        public string getTipoFuncionario(string nomeUsuario)
-        {
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    return (from Funcionarios in BancoDeDados.Funcionarios where Funcionarios.nomeFunc == nomeUsuario select Funcionarios.tipoFunc).FirstOrDefault();
-                }
-            }
-            catch
-            {
-                return "N";
-            }
-        }
-
-        /// <summary>
         /// Verifica se a senha do Funcionário indicado coincide com a registrada no banco de dados
         /// </summary>
         /// <param name="matricula">Parâmetro de busca</param>
@@ -229,7 +172,7 @@ namespace DAL
                                    where Funcionarios.matriculaFunc == matricula
                                    select Funcionarios.senhaFunc).FirstOrDefault();
 
-                    if (senhaBD != null && senhaBD == senha)
+                    if (senhaBD == senha)
                     {
                         return true;
                     }

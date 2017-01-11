@@ -163,7 +163,7 @@
                                     IsReadOnly="True">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Manifesto" Binding="{Binding documentoTarefa}" />
-                                        <DataGridTextColumn Header="Funcionarios" Binding="{Binding nomesFuncionarios}" />
+                                        <DataGridTextColumn Header="Funcionários" Binding="{Binding nomesFuncionarios}" />
                                         <DataGridTextColumn Header="Data Início" Binding="{Binding dataInicio}" />
                                         <DataGridTextColumn Header="Hora Início" Binding="{Binding horaInicio}" />
                                         <DataGridTextColumn Header="Tempo Gasto" Binding="{Binding tempoGasto}" />
