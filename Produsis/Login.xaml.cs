@@ -17,8 +17,12 @@ namespace GUI
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             lerXmls();
-           
-            if (verificaCampos())
+
+            TelaPrincipal view = new TelaPrincipal();
+            this.Close();
+            view.Show();
+
+            /*if (verificaCampos())
             {
                 FuncionarioBLL l = new FuncionarioBLL();
                 if (l.validarUsuario(TxbLogin.Text))
@@ -35,9 +39,10 @@ namespace GUI
                         TxbSenha.Focus();
                     }
                 }
+
                 else
                     TxbLogin.Focus();
-            }
+            }*/
         }
 
         private bool verificaCampos()

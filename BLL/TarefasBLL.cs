@@ -1,6 +1,8 @@
 ﻿using DAL;
 using ProdusisBD;
+using System;
 using System.Collections.Generic;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace BLL
 {
@@ -57,9 +59,92 @@ namespace BLL
             return t.getTarefasHojeFinalizadas(tipo);
         }
 
+        public List<TarefaModelo> filtrarDivergencias(int Tipo, int Manifesto)
+        {
+            return t.getTarefasDivergencia(Tipo, Manifesto);
+        }
+
         public List<TarefaModelo> filtrar(Filtro f)
         {
             return t.getTarefasFiltradas(f);
+        }
+
+        public void exportarExcel(List<TarefaModelo> Tarefas, string nomeArquivo)
+        {
+            try
+            {
+                Excel.Application xlApp;
+                Excel.Workbook xlWorkBook;
+                Excel.Worksheet xlWorkSheet;
+                object misValue = System.Reflection.Missing.Value;
+
+                xlApp = new Excel.Application();
+                xlWorkBook = xlApp.Workbooks.Add(misValue);
+
+                xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+                xlWorkSheet.Cells[1, 1] = "Documento";
+                xlWorkSheet.Cells[1, 2] = "Tipo";
+                xlWorkSheet.Cells[1, 3] = "Data Início";
+                xlWorkSheet.Cells[1, 4] = "Hora Início";
+                xlWorkSheet.Cells[1, 5] = "Data Fim";
+                xlWorkSheet.Cells[1, 6] = "Hora Fim";
+                xlWorkSheet.Cells[1, 7] = "Tempo Gasto";
+                xlWorkSheet.Cells[1, 8] = "Funcionário(s)";
+                xlWorkSheet.Cells[1, 9] = "Volumes";
+                xlWorkSheet.Cells[1, 10] = "SKU's";
+                xlWorkSheet.Cells[1, 11] = "Peso(Kg)";
+                xlWorkSheet.Cells[1, 12] = "Fornecedor";
+                int linha = 2;
+
+                foreach (TarefaModelo i in Tarefas)
+                {
+                    xlWorkSheet.Cells[linha, 1] = i.documentoTarefa;
+                    xlWorkSheet.Cells[linha, 2] = i.tipoTarefa;
+                    xlWorkSheet.Cells[linha, 3] = i.dataInicio;
+                    xlWorkSheet.Cells[linha, 4] = i.horaInicio;
+                    xlWorkSheet.Cells[linha, 5] = i.dataFim;
+                    xlWorkSheet.Cells[linha, 6] = i.horaFim;
+                    xlWorkSheet.Cells[linha, 7] = i.tempoGasto;
+                    xlWorkSheet.Cells[linha, 8] = i.nomesFuncionarios;
+                    xlWorkSheet.Cells[linha, 9] = i.volumes;
+                    xlWorkSheet.Cells[linha, 10] = i.skus;
+                    xlWorkSheet.Cells[linha, 11] = i.peso;
+                    xlWorkSheet.Cells[linha, 12] = i.fornecedor;
+                    linha++;
+                }
+                
+                xlWorkBook.SaveAs(nomeArquivo, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue,
+ Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+                xlWorkBook.Close(true, misValue, misValue);
+                xlApp.Quit();
+
+                liberarObjetos(xlWorkSheet);
+                liberarObjetos(xlWorkBook);
+                liberarObjetos(xlApp);
+            }
+
+            catch (Exception ex)
+            {
+                var erro = ex;
+            }
+        }
+
+        private void liberarObjetos(object obj)
+        {
+            try
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
+            catch (Exception ex)
+            {
+                var erro = ex;
+            }
+
+            finally
+            {
+                GC.Collect();
+            }
         }
     }
 }

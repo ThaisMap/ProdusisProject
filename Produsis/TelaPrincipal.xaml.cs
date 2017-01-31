@@ -22,6 +22,7 @@ namespace GUI
             BtnDescarga.Opacity = 1;
             BtnSeparacaoCarga.Opacity = 1;
             BtnSerapacao.Opacity = 1;
+            BtnDivergencia.Opacity = 1;
         }
 
         #region Botoes
@@ -66,6 +67,13 @@ namespace GUI
             ResetarOpacidade();
             BtnSerapacao.Opacity = 0.5;
             Navegador.Navigate(new Separacao());
+        }        
+
+        private void BtnDivergencia_Click(object sender, RoutedEventArgs e)
+        {
+            ResetarOpacidade();
+            BtnDivergencia.Opacity = 0.5;
+            Navegador.Navigate(new Divergencia());
         }
 
         #endregion Botoes

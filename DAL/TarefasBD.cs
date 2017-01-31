@@ -68,6 +68,41 @@ namespace DAL
             }
         }
 
+        public List<TarefaModelo> getTarefasDivergencia(int tipo, int manifesto)
+        {
+            List<TarefaModelo> listaModelo = new List<TarefaModelo>();
+            List<Tarefas> lista = new List<Tarefas>();
+
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    if (tipo == 2)
+                    {
+                        var ctes = BancoDeDados.Cte_Manifesto.Where(m => m.Manifesto == manifesto).Select(c => c.Cte).ToList();
+                        foreach (int cte in ctes)
+                        {
+                            lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == cte).FirstOrDefault());
+                        }
+                        listaModelo = tarefaModeloParse(lista);
+
+                    }
+                    else
+                    {
+                        lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == manifesto).FirstOrDefault());
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                var whatHapened = e;
+            }
+
+            return listaModelo;
+
+        }
+
+
         /// <summary>
         /// Retorna uma lista com as tarefas que atendam os filtros informados
         /// </summary>
@@ -253,18 +288,26 @@ namespace DAL
             Manifestos m;
             foreach (Tarefas tar in tarefas)
             {
-                aux = new TarefaModelo(tar);
-                if (tar.tipoTarefa == "2")
+                if (tar == null)
                 {
-                    aux.valores(d.getSkuCte(tar.documentoTarefa), d.getVolumesCte(tar.documentoTarefa), (int)d.getPesoCte(tar.documentoTarefa));
+                    tarefas.Remove(tar);
                 }
                 else
                 {
-                    m = d.getManifestoPorNumero(tar.documentoTarefa);
-                    aux.valores(m.skusManifesto, m.VolumesManifesto, (int)m.pesoManifesto);
+                    aux = new TarefaModelo(tar);
+                    if (tar.tipoTarefa == "2")
+                    {
+                        aux.valores(d.getSkuCte(tar.documentoTarefa), d.getVolumesCte(tar.documentoTarefa), (int)d.getPesoCte(tar.documentoTarefa));
+                        aux.fornecedor = d.getFornecedorCte(tar.documentoTarefa);
+                    }
+                    else
+                    {
+                        m = d.getManifestoPorNumero(tar.documentoTarefa);
+                        aux.valores(m.skusManifesto, m.VolumesManifesto, (int)m.pesoManifesto);
+                    }
+                    aux.nomesFuncionarios = nomesFuncTarefa(tar.idTarefa);
+                    modelos.Add(aux);
                 }
-                aux.nomesFuncionarios = nomesFuncTarefa(tar.idTarefa);
-                modelos.Add(aux);
             }
 
             return modelos;

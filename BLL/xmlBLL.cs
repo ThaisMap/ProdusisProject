@@ -15,17 +15,17 @@ namespace BLL
             foreach (string f in Directory.GetFiles(PastasXml.Default.PastaNFs))
             {
                 var ext = extensao(f);
-                if (ext == "msg")
+                if (ext == "msg" || ext == "MSG")
                 {
                     xml.abrirEmail(moverArquivo(f));
                 }
-                else if (ext != "xml")
+                else if (ext != "xml" && ext!="XML")
                     File.Delete(f);
             }
             foreach (string f in Directory.GetFiles(PastasXml.Default.PastaNFs))
             {
                 var ext = extensao(f);
-                if (ext == "xml")
+                if (ext == "xml" || ext == "XML")
                 {
                     xml.lerNotaFiscal(f);
                     moverArquivo(f);

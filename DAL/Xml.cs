@@ -26,8 +26,13 @@ namespace DAL
             }
             catch 
             {
-                app.Quit();
+                try
+                {
+                    app.Quit();
+                }
+                catch { }
             }
+
         }
 
         public bool lerManifesto(string nomeArquivo)

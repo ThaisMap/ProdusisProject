@@ -15,8 +15,8 @@
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d" Loaded="UserControl_Loaded">
-    <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Auto">
-        <StackPanel CanHorizontallyScroll="True" CanVerticallyScroll="True" Height="500">
+    <ScrollViewer Height="450" CanContentScroll="True" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
             <TextBlock
                 Margin="20,10,0,0"
                 HorizontalAlignment="Left"
@@ -24,7 +24,7 @@
                 Relatórios
             </TextBlock>
             <Separator />
-            <Grid x:Name="GridFiltros" Height="193" HorizontalAlignment="Left" Margin="30,5">
+            <Grid x:Name="GridFiltros" Height="185" HorizontalAlignment="Left" Margin="30,5" Width="825">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="auto" />
@@ -188,12 +188,11 @@
                     Grid.Column="6"
                     Grid.ColumnSpan="2"
                     Width="100"
-                    Margin="5,0,5,9"
-                    VerticalAlignment="Bottom" Click="btnConsultar_Click" Content="Consultar" />
+                    Margin="6,6,6,0"
+                    VerticalAlignment="Top" Click="btnConsultar_Click" Content="Consultar" />
             </Grid>
             <Separator />
-
-            <DataGrid Name="dgTarefas" Margin="0,0,0,10" ColumnWidth="auto" HorizontalAlignment="Center" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid Name="dgTarefas" Height="380" Margin="0,0,0,10" ColumnWidth="auto" HorizontalAlignment="Center" AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding documentoTarefa}" Header="Documento" />
                     <DataGridTextColumn Binding="{Binding tipoTarefa}" Header="Tipo" />
@@ -209,7 +208,10 @@
                     <DataGridTextColumn Binding="{Binding fornecedor}" Header="Fornecedor" />
                 </DataGrid.Columns>
             </DataGrid>
-            <Button x:Name="btnExportar" Content="Exportar" Width="90" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="btnExportar_Click" />
+            <Button Grid.Column="8" Grid.Row="3" x:Name="btnExportar" Content="Exportar" Width="100"
+                    Margin="55,0,5,9"
+                    VerticalAlignment="Bottom"  HorizontalAlignment="Right"  Click="btnExportar_Click"  />
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>

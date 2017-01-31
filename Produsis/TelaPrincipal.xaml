@@ -97,6 +97,12 @@
                     Margin="2,5"
                     Click="BtnCarregamento_Click"
                     Content="Carregamento" />
+                <Button
+                    x:Name="BtnDivergencia"
+                    Width="auto"
+                    Height="auto"
+                    Margin="2,5"
+                    Content="Divergências" Click="BtnDivergencia_Click" />
             </StackPanel>
             <Frame
                 Name="Navegador"

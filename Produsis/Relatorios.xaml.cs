@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using ProdusisBD;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -21,6 +22,8 @@ namespace GUI
         {
             InitializeComponent();
         }
+
+        public List<TarefaModelo> source;
 
         public Filtro montarObjeto()
         {
@@ -42,7 +45,8 @@ namespace GUI
         private void btnConsultar_Click(object sender, RoutedEventArgs e)
         {
             TarefasBLL t = new TarefasBLL();
-            dgTarefas.ItemsSource = t.filtrar(montarObjeto());
+            source = t.filtrar(montarObjeto());
+            dgTarefas.ItemsSource = source;
         }
 
         private void btnLimpar_Click(object sender, RoutedEventArgs e)
@@ -79,19 +83,14 @@ namespace GUI
             if (dgTarefas.Items.Count > 0)
             {
                 SaveFileDialog dialogo = new SaveFileDialog();
+                dialogo.DefaultExt = "xls";
+
                 dialogo.Title = "Salvar relatório - Produsis";
 
                 if (dialogo.ShowDialog() == true)
                 {
-                    dgTarefas.SelectAllCells();
-                    dgTarefas.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
-                    ApplicationCommands.Copy.Execute(null, dgTarefas);
-                    dgTarefas.UnselectAllCells();
-                    String Clipboardresult = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
-                    Clipboardresult = Clipboardresult.Replace(",", ";");
-                    StreamWriter swObj = new StreamWriter(extensao(dialogo.FileName), false, Encoding.GetEncoding(CultureInfo.GetCultureInfo("pt-BR").TextInfo.ANSICodePage));
-                    swObj.WriteLine(Clipboardresult);
-                    swObj.Close();
+                    TarefasBLL t = new TarefasBLL();
+                    t.exportarExcel(source, dialogo.FileName);
                 }
             }
         }
