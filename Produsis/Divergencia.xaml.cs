@@ -45,6 +45,15 @@ namespace GUI
                 dgDivergencias.ItemsSource = source;
             }
         }
+
+        private void btnSalvar_Click(object sender, RoutedEventArgs e)
+        {
+            string texto;
+            foreach(TarefaModelo tar in dgDivergencias.Items)
+            {
+                texto = tar.divergenciaTarefa;
+            }
+        }
     }
     
 }

@@ -61,7 +61,11 @@ namespace BLL
                 novaPasta = nomeArquivo.Replace(PastasXml.Default.PastaManifestos, PastasXml.Default.PastaManifestos + "\\old");
             else
                 novaPasta = nomeArquivo.Replace(PastasXml.Default.PastaNFs, PastasXml.Default.PastaNFs + "\\old");
-            File.Move(nomeArquivo, novaPasta);
+            try { File.Move(nomeArquivo, novaPasta); }
+            catch
+            {
+                File.Delete(nomeArquivo);
+            }
             return novaPasta;
         }
     }

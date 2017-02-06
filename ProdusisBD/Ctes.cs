@@ -19,7 +19,6 @@ namespace ProdusisBD
         {
             this.Cte_Manifesto = new HashSet<Cte_Manifesto>();
             this.NotasFiscais = new HashSet<NotasFiscais>();
-            this.Tarefas = new HashSet<Tarefas>();
         }
     
         public int numeroCte { get; set; }
@@ -28,7 +27,5 @@ namespace ProdusisBD
         public virtual ICollection<Cte_Manifesto> Cte_Manifesto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NotasFiscais> NotasFiscais { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tarefas> Tarefas { get; set; }
     }
 }

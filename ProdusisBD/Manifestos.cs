@@ -18,7 +18,6 @@ namespace ProdusisBD
         public Manifestos()
         {
             this.Cte_Manifesto = new HashSet<Cte_Manifesto>();
-            this.Tarefas = new HashSet<Tarefas>();
         }
     
         public int numeroManifesto { get; set; }
@@ -29,7 +28,5 @@ namespace ProdusisBD
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cte_Manifesto> Cte_Manifesto { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tarefas> Tarefas { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace ProdusisBD
         public int volumesNF { get; set; }
         public int skuNF { get; set; }
         public double pesoNF { get; set; }
-        public int? CteNF { get; set; }
+        public Nullable<int> CteNF { get; set; }
     
         public virtual Ctes Ctes { get; set; }
     }

@@ -15,11 +15,8 @@
         <AssociationConnector Association="produsisBDModel.FK_Cte_Manifesto_Cte" ManuallyRouted="false" />
         <AssociationConnector Association="produsisBDModel.FK_Cte_Manifesto_Manifesto" ManuallyRouted="false" />
         <AssociationConnector Association="produsisBDModel.FK_NotasFiscais_Ctes" ManuallyRouted="false" />
-        <AssociationConnector ManuallyRouted="false" Association="produsisBDModel.FK_Tarefas_Ctes">
-        </AssociationConnector>
         <AssociationConnector Association="produsisBDModel.FK_Func_Tarefa_Funcionarios" ManuallyRouted="false" />
         <AssociationConnector Association="produsisBDModel.FK_Func_Tarefa_Tarefas" ManuallyRouted="false" />
-        <AssociationConnector Association="produsisBDModel.FK_Tarefas_Manifesto" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

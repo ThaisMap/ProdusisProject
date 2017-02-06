@@ -25,11 +25,9 @@ namespace ProdusisBD
         public Nullable<System.DateTime> fimTarefa { get; set; }
         public int documentoTarefa { get; set; }
         public string tipoTarefa { get; set; }
-        public string tempoGasto { get; set; }    
         public string divergenciaTarefa { get; set; }
-        public virtual Ctes Ctes { get; set; }
+        public string tempoGasto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Func_Tarefa> Func_Tarefa { get; set; }
-        public virtual Manifestos Manifestos { get; set; }
     }
 }

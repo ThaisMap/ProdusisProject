@@ -224,7 +224,7 @@ namespace DAL
                     {
                         Aux = new TarefaModelo(tarefa);
                         Aux.nomesFuncionarios = nomesFuncTarefa(Aux.idTarefa);
-
+                        
                         pendentesModelo.Add(Aux);
                     }
                 }

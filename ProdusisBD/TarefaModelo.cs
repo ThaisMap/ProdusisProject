@@ -13,6 +13,7 @@ namespace ProdusisBD
             tipoTarefa = tipoExtenso(tarefa.tipoTarefa);
             preencheDatas();
             atualizaTempoGasto();
+            divergenciaTarefa = tarefa.divergenciaTarefa;
         }
 
         private string tipoExtenso(string tipo)
@@ -40,6 +41,7 @@ namespace ProdusisBD
         public int volumes { get; set; }
         public int peso { get; set; }
         public string fornecedor { get; set; }
+      
 
         public void valores(int sku, int volume, int kg)
         {

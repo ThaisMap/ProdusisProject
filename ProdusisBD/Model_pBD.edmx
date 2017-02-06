@@ -68,8 +68,9 @@
           <Property Name="idTarefa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="inicioTarefa" Type="datetime2" Precision="0" Nullable="false" />
           <Property Name="fimTarefa" Type="datetime2" Precision="0" />
-          <Property Name="documentoTarefa" Type="int" />
+          <Property Name="documentoTarefa" Type="int" Nullable="false" />
           <Property Name="tipoTarefa" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="divergenciaTarefa" Type="nvarchar" MaxLength="120" />
         </EntityType>
         <Association Name="FK_Cte_Manifesto_Cte">
           <End Role="Ctes" Type="Self.Ctes" Multiplicity="1" />
@@ -181,7 +182,6 @@
           <Property Name="numeroCte" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Cte_Manifesto" Relationship="Self.FK_Cte_Manifesto_Cte" FromRole="Ctes" ToRole="Cte_Manifesto" />
           <NavigationProperty Name="NotasFiscais" Relationship="Self.FK_NotasFiscais_Ctes" FromRole="Ctes" ToRole="NotasFiscais" />
-          <NavigationProperty Name="Tarefas" Relationship="Self.FK_Tarefas_Ctes" FromRole="Ctes" ToRole="Tarefas" />
         </EntityType>
         <EntityType Name="Func_Tarefa">
           <Key>
@@ -216,7 +216,6 @@
           <Property Name="VolumesManifesto" Type="Int32" Nullable="false" />
           <Property Name="skusManifesto" Type="Int32" />
           <NavigationProperty Name="Cte_Manifesto" Relationship="Self.FK_Cte_Manifesto_Manifesto" FromRole="Manifestos" ToRole="Cte_Manifesto" />
-          <NavigationProperty Name="Tarefas" Relationship="Self.FK_Tarefas_Manifesto" FromRole="Manifestos" ToRole="Tarefas" />
         </EntityType>
         <EntityType Name="NotasFiscais">
           <Key>
@@ -238,11 +237,10 @@
           <Property Name="idTarefa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="inicioTarefa" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="fimTarefa" Type="DateTime" Precision="0" />
-          <Property Name="documentoTarefa" Type="Int32" />
+          <Property Name="documentoTarefa" Type="Int32" Nullable="false" />
           <Property Name="tipoTarefa" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Ctes" Relationship="Self.FK_Tarefas_Ctes" FromRole="Tarefas" ToRole="Ctes" />
           <NavigationProperty Name="Func_Tarefa" Relationship="Self.FK_Func_Tarefa_Tarefas" FromRole="Tarefas" ToRole="Func_Tarefa" />
-          <NavigationProperty Name="Manifestos" Relationship="Self.FK_Tarefas_Manifesto" FromRole="Tarefas" ToRole="Manifestos" />
+          <Property Name="divergenciaTarefa" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Cte_Manifesto_Cte">
           <End Role="Ctes" Type="Self.Ctes" Multiplicity="1" />
@@ -280,18 +278,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tarefas_Ctes">
-          <End Type="Self.Ctes" Multiplicity="0..1" Role="Ctes" />
-          <End Type="Self.Tarefas" Multiplicity="*" Role="Tarefas" />
-          <ReferentialConstraint>
-            <Principal Role="Ctes">
-              <PropertyRef Name="numeroCte" />
-            </Principal>
-            <Dependent Role="Tarefas">
-              <PropertyRef Name="documentoTarefa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Func_Tarefa_Funcionarios">
           <End Role="Funcionarios" Type="Self.Funcionarios" Multiplicity="1" />
           <End Role="Func_Tarefa" Type="Self.Func_Tarefa" Multiplicity="*" />
@@ -316,18 +302,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tarefas_Manifesto">
-          <End Role="Manifestos" Type="Self.Manifestos" Multiplicity="0..1" />
-          <End Role="Tarefas" Type="Self.Tarefas" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Manifestos">
-              <PropertyRef Name="numeroManifesto" />
-            </Principal>
-            <Dependent Role="Tarefas">
-              <PropertyRef Name="documentoTarefa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="produsisBDEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Cte_Manifesto" EntityType="Self.Cte_Manifesto" />
           <EntitySet Name="Ctes" EntityType="Self.Ctes" />
@@ -348,10 +322,6 @@
             <End Role="Ctes" EntitySet="Ctes" />
             <End Role="NotasFiscais" EntitySet="NotasFiscais" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tarefas_Ctes" Association="Self.FK_Tarefas_Ctes">
-            <End EntitySet="Ctes" Role="Ctes" />
-            <End EntitySet="Tarefas" Role="Tarefas" />
-          </AssociationSet>
           <AssociationSet Name="FK_Func_Tarefa_Funcionarios" Association="Self.FK_Func_Tarefa_Funcionarios">
             <End Role="Funcionarios" EntitySet="Funcionarios" />
             <End Role="Func_Tarefa" EntitySet="Func_Tarefa" />
@@ -359,10 +329,6 @@
           <AssociationSet Name="FK_Func_Tarefa_Tarefas" Association="Self.FK_Func_Tarefa_Tarefas">
             <End Role="Tarefas" EntitySet="Tarefas" />
             <End Role="Func_Tarefa" EntitySet="Func_Tarefa" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tarefas_Manifesto" Association="Self.FK_Tarefas_Manifesto">
-            <End Role="Manifestos" EntitySet="Manifestos" />
-            <End Role="Tarefas" EntitySet="Tarefas" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -436,6 +402,7 @@
           <EntitySetMapping Name="Tarefas">
             <EntityTypeMapping TypeName="produsisBDModel.Tarefas">
               <MappingFragment StoreEntitySet="Tarefas">
+                <ScalarProperty Name="divergenciaTarefa" ColumnName="divergenciaTarefa" />
                 <ScalarProperty Name="idTarefa" ColumnName="idTarefa" />
                 <ScalarProperty Name="inicioTarefa" ColumnName="inicioTarefa" />
                 <ScalarProperty Name="fimTarefa" ColumnName="fimTarefa" />
