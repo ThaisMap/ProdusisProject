@@ -75,9 +75,9 @@ namespace BLL
             return t.getTarefasFiltradas(f);
         }
 
-        public void getRanking(List<TarefaModelo> Tarefas)
+        public List<ItemRanking> getRanking(List<TarefaModelo> Tarefas)
         {
-            t.rankingFuncionarios(Tarefas);
+            return t.rankingFuncionarios(Tarefas);
         }
 
         public void exportarExcel(List<TarefaModelo> Tarefas, string nomeArquivo)

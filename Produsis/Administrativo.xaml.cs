@@ -44,5 +44,10 @@ namespace GUI
         {
             NavegadorInterno.Navigate(new IniciadasHoje());
         }
+
+        private void BtnProdutividade_Click(object sender, RoutedEventArgs e)
+        {
+            NavegadorInterno.Navigate(new Produtividade());
+        }
     }
 }

@@ -102,9 +102,12 @@ namespace DAL
 
         }
 
-        public string[] rankingFuncionarios(List<TarefaModelo> tarefasPeriodo)
+        public List<ItemRanking> rankingFuncionarios(List<TarefaModelo> tarefasPeriodo)
         {
-            string[] ranking = new string[1];
+            foreach (TarefaModelo tar in tarefasPeriodo)
+            {
+                tar.atualizaPontuação();
+            }
 
             var lista = from t in tarefasPeriodo
                         group t by new
@@ -117,7 +120,16 @@ namespace DAL
                             g.Key.nomesFuncionarios
                         };
 
-            return ranking;
+            List<ItemRanking> Rank = new List<ItemRanking>();
+
+            foreach(var item in lista)
+            {
+                Rank.Add(new ItemRanking(item.Average, item.nomesFuncionarios));
+            }
+
+            Rank=Rank.OrderBy(i => i.mediaPorHora).ToList();
+
+            return Rank;
         }
 
         /// <summary>

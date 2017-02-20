@@ -75,7 +75,7 @@ namespace ProdusisBD
         public void atualizaPontuação()
         {
             pontos = skus * 5 + volumes;
-            double segundos = (DateTime.Now - inicioTarefa).TotalSeconds;
+            double segundos = ((DateTime)fimTarefa - inicioTarefa).TotalSeconds;
             pontosPorHora = pontos / segundos * 3600;
         }
 

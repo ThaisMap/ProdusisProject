@@ -39,22 +39,13 @@
                 <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Administrativo</TextBlock>
                 <Separator></Separator>
                 <StackPanel HorizontalAlignment="Center" Height="30" Orientation="Horizontal">
-                    <Button Name="BtnTarefasInitHoje" Height="auto" Width="180" Margin="5,0" Click="BtnTarefasInitHoje_Click">
-                        <TextBlock TextWrapping="Wrap" TextAlignment="Center">Tarefas Iniciadas Hoje</TextBlock>
-                    </Button>
-                    <Button Name="BtnCadFuncionarios" Height="auto" Width="180" Margin="5,0" Click="BtnCadFuncionarios_Click">
-                        <TextBlock TextWrapping="Wrap" TextAlignment="Center">Cadastrar Funcionário</TextBlock>
-                    </Button>
-                    <Button x:Name="BtnEditarFuncionarios" Content="Editar Funcionário" Height="Auto" Width="150" Click="BtnEditarFuncionarios_Click" />
-                    <Button Name="BtnDocumentos" Height="auto" Width="140" Margin="5,0" Click="BtnDocumentos_Click">
-                        <TextBlock TextWrapping="Wrap" TextAlignment="Center">Ver Documentos</TextBlock>
-                    </Button>
-                    <Button Name="BtnRelatorios" Height="auto" Width="100" Margin="5,0" Click="BtnRelatorios_Click">
-                        <TextBlock TextWrapping="Wrap" TextAlignment="Center">Relatórios</TextBlock>
-                    </Button>
-                    <Button Name="BtnConfiguracoes" Height="auto" Width="130" Margin="5,0" Click="BtnConfiguracoes_Click">
-                        <TextBlock TextWrapping="Wrap" TextAlignment="Center">Configurações</TextBlock>
-                    </Button>
+                    <Button Name="BtnTarefasInitHoje" Height="auto" Width="auto" Margin="5,0" Click="BtnTarefasInitHoje_Click">Iniciadas Hoje</Button>
+                    <Button Name="BtnCadFuncionarios" Height="auto" Width="auto" Margin="5,0" Click="BtnCadFuncionarios_Click">Cadastrar Funcionário </Button>
+                    <Button x:Name="BtnEditarFuncionarios" Height="Auto" Width="auto" Click="BtnEditarFuncionarios_Click">Editar Funcionário</Button>
+                    <Button Name="BtnDocumentos" Height="auto" Width="auto" Margin="5,0" Click="BtnDocumentos_Click">Ver Documentos </Button>
+                    <Button Name="BtnRelatorios" Height="auto" Width="auto" Margin="5,0" Click="BtnRelatorios_Click">Relatórios</Button>
+                    <Button Name="BtnProdutividade" Height="auto" Width="auto" Margin="5,0" Click="BtnProdutividade_Click">Produtividade</Button>
+                    <Button Name="BtnConfiguracoes" Height="auto" Width="auto" Margin="5,0" Click="BtnConfiguracoes_Click">Configurações </Button>
                 </StackPanel>
                 <Grid Margin="60,10,0,0">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
