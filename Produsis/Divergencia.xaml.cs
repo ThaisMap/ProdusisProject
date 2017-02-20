@@ -27,8 +27,8 @@ namespace GUI
         {
             InitializeComponent();
         }
-
-        public List<TarefaModelo> source;
+        
+        public List<TarefaModelo> source { get; set; }
 
         private void testarCaractere(object sender, TextCompositionEventArgs e)
         {
@@ -48,11 +48,8 @@ namespace GUI
 
         private void btnSalvar_Click(object sender, RoutedEventArgs e)
         {
-            string texto;
-            foreach(TarefaModelo tar in dgDivergencias.Items)
-            {
-                texto = tar.divergenciaTarefa;
-            }
+            TarefasBLL t = new TarefasBLL();
+            t.inserirDivergencias(source);
         }
     }
     

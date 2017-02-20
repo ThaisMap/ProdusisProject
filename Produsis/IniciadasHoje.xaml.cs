@@ -66,6 +66,9 @@ namespace GUI
                     filtros.dataFim = mesPassado.AddDays(DateTime.DaysInMonth(mesPassado.Year, mesPassado.Month)-1);
                     break;
             }
+            TarefasBLL t = new TarefasBLL();
+            filtros.TipoTarefa = "-1";
+            t.getRanking(t.filtrar(filtros));
         }
 
         public static DateTime comecoDaSemana (DateTime dt)

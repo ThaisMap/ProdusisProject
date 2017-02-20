@@ -16,6 +16,8 @@
              TextElement.FontWeight="Regular"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              mc:Ignorable="d">
+    
+
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,0,-10,0">
             <Grid Width="790">
@@ -46,7 +48,7 @@
                                               Margin="10,18,0,11"
                                               IsEditable="True"
                                               materialDesign:HintAssist.Hint="Tipo de Tarefa"
-                                              materialDesign:HintAssist.IsFloating="True" SelectedIndex="3" Height="42">
+                                              materialDesign:HintAssist.IsFloating="True" SelectedIndex="2" Height="42">
                             <ComboBoxItem Content="Descarga" HorizontalAlignment="Left"/>
                             <ComboBoxItem Content="Separação" HorizontalAlignment="Left"  />
                             <ComboBoxItem Content="Conferência" HorizontalAlignment="Left" />
@@ -91,7 +93,7 @@
                             <DataGridTemplateColumn Header="Ocorrências">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Text="{Binding Path=divergenciaTarefa, Mode=OneWay}" Width="300"></TextBox>
+                                        <TextBox Text="{Binding Path=divergenciaTarefa, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="300"></TextBox>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>

@@ -102,6 +102,23 @@ namespace DAL
 
         }
 
+        public string[] rankingFuncionarios(List<TarefaModelo> tarefasPeriodo)
+        {
+            string[] ranking = new string[1];
+
+            var lista = from t in tarefasPeriodo
+                        group t by new
+                        {
+                            t.nomesFuncionarios
+                        } into g
+                        select new
+                        {
+                            Average = g.Average(p => p.pontosPorHora),
+                            g.Key.nomesFuncionarios
+                        };
+
+            return ranking;
+        }
 
         /// <summary>
         /// Retorna uma lista com as tarefas que atendam os filtros informados
@@ -236,6 +253,28 @@ namespace DAL
             }
         }
 
+        public bool inserirDivergencia(List<TarefaModelo> listaDivergencia)
+        {
+            try
+            {
+                foreach (TarefaModelo tar in listaDivergencia)
+                {
+                    using (var BancoDeDados = new produsisBDEntities())
+                    {
+                        Tarefas tarefaAtual = BancoDeDados.Tarefas.Single(t => t.idTarefa == tar.idTarefa);
+                        tarefaAtual.divergenciaTarefa = tar.divergenciaTarefa;
+                        BancoDeDados.SaveChanges();
+                    }
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
         public string nomesFuncTarefa(int idTarefa)
         {
             FuncionariosBD f = new FuncionariosBD();
@@ -288,12 +327,8 @@ namespace DAL
             Manifestos m;
             foreach (Tarefas tar in tarefas)
             {
-                if (tar == null)
-                {
-                    tarefas.Remove(tar);
-                }
-                else
-                {
+                if (tar != null)
+                {                   
                     aux = new TarefaModelo(tar);
                     if (tar.tipoTarefa == "2")
                     {

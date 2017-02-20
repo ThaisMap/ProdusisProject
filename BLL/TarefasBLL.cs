@@ -3,6 +3,7 @@ using ProdusisBD;
 using System;
 using System.Collections.Generic;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Globalization;
 
 namespace BLL
 {
@@ -44,6 +45,11 @@ namespace BLL
             return t.verificaDocumentoTarefa(documento, tipo);
         }
 
+        public bool inserirDivergencias(List<TarefaModelo> tarefasDivergencia)
+        {
+            return t.inserirDivergencia(tarefasDivergencia);
+        }
+
         public bool finalizarTarefa(int idTarefa)
         {
             return t.finalizarTarefa(idTarefa);
@@ -69,6 +75,11 @@ namespace BLL
             return t.getTarefasFiltradas(f);
         }
 
+        public void getRanking(List<TarefaModelo> Tarefas)
+        {
+            t.rankingFuncionarios(Tarefas);
+        }
+
         public void exportarExcel(List<TarefaModelo> Tarefas, string nomeArquivo)
         {
             try
@@ -84,32 +95,38 @@ namespace BLL
                 xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
                 xlWorkSheet.Cells[1, 1] = "Documento";
                 xlWorkSheet.Cells[1, 2] = "Tipo";
-                xlWorkSheet.Cells[1, 3] = "Data Início";
+                xlWorkSheet.Cells[1, 3] = "Data";
                 xlWorkSheet.Cells[1, 4] = "Hora Início";
-                xlWorkSheet.Cells[1, 5] = "Data Fim";
-                xlWorkSheet.Cells[1, 6] = "Hora Fim";
+                xlWorkSheet.Cells[1, 5] = "Hora Fim";
+                xlWorkSheet.Cells[1, 6] = "Funcionário(s)";
                 xlWorkSheet.Cells[1, 7] = "Tempo Gasto";
-                xlWorkSheet.Cells[1, 8] = "Funcionário(s)";
-                xlWorkSheet.Cells[1, 9] = "Volumes";
-                xlWorkSheet.Cells[1, 10] = "SKU's";
-                xlWorkSheet.Cells[1, 11] = "Peso(Kg)";
-                xlWorkSheet.Cells[1, 12] = "Fornecedor";
+                xlWorkSheet.Cells[1, 8] = "Volumes";
+                xlWorkSheet.Cells[1, 9] = "SKU's";
+                xlWorkSheet.Cells[1, 10] = "Pontos";
+                xlWorkSheet.Cells[1, 11] = "Pontos por hora";
+                xlWorkSheet.Cells[1, 12] = "Peso(Kg)";
+                xlWorkSheet.Cells[1, 13] = "Fornecedor";
+                xlWorkSheet.Cells[1, 14] = "Divergencia";
+
                 int linha = 2;
 
                 foreach (TarefaModelo i in Tarefas)
                 {
+                    i.atualizaPontuação();
                     xlWorkSheet.Cells[linha, 1] = i.documentoTarefa;
                     xlWorkSheet.Cells[linha, 2] = i.tipoTarefa;
-                    xlWorkSheet.Cells[linha, 3] = i.dataInicio;
+                    xlWorkSheet.Cells[linha, 3] = i.inicioTarefa.ToOADate();
                     xlWorkSheet.Cells[linha, 4] = i.horaInicio;
-                    xlWorkSheet.Cells[linha, 5] = i.dataFim;
-                    xlWorkSheet.Cells[linha, 6] = i.horaFim;
+                    xlWorkSheet.Cells[linha, 5] = i.horaFim;
+                    xlWorkSheet.Cells[linha, 6] = i.nomesFuncionarios;
                     xlWorkSheet.Cells[linha, 7] = i.tempoGasto;
-                    xlWorkSheet.Cells[linha, 8] = i.nomesFuncionarios;
-                    xlWorkSheet.Cells[linha, 9] = i.volumes;
-                    xlWorkSheet.Cells[linha, 10] = i.skus;
-                    xlWorkSheet.Cells[linha, 11] = i.peso;
-                    xlWorkSheet.Cells[linha, 12] = i.fornecedor;
+                    xlWorkSheet.Cells[linha, 8] = i.volumes;
+                    xlWorkSheet.Cells[linha, 9] = i.skus;
+                    xlWorkSheet.Cells[linha, 10] = i.pontos;
+                    xlWorkSheet.Cells[linha, 11] = i.pontosPorHora;
+                    xlWorkSheet.Cells[linha, 12] = i.peso;
+                    xlWorkSheet.Cells[linha, 13] = i.fornecedor;
+                    xlWorkSheet.Cells[linha, 14] = i.divergenciaTarefa;
                     linha++;
                 }
                 

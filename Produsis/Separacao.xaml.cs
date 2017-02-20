@@ -91,6 +91,7 @@ namespace GUI
 
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
+
             if (checarCampos() && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "1"))
             {
                 if (t.inserirTarefa(montarTarefa(), funcionarios()))

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+
 
 namespace ProdusisBD
 {
@@ -41,7 +43,9 @@ namespace ProdusisBD
         public int volumes { get; set; }
         public int peso { get; set; }
         public string fornecedor { get; set; }
-      
+        public int pontos { get; set; }
+        public double pontosPorHora { get; set; }
+
 
         public void valores(int sku, int volume, int kg)
         {
@@ -64,14 +68,26 @@ namespace ProdusisBD
             tempoGasto = (tempo.Days * 24 + tempo.Hours).ToString("00") + ":" + tempo.Minutes.ToString("00") + ":" + tempo.Seconds.ToString("00");
         }
 
+        /// <summary>
+        /// Aqui você altera o calculo dos pontos. Peso atual do sku: 5
+        ///
+        /// </summary>
+        public void atualizaPontuação()
+        {
+            pontos = skus * 5 + volumes;
+            double segundos = (DateTime.Now - inicioTarefa).TotalSeconds;
+            pontosPorHora = pontos / segundos * 3600;
+        }
+
         public void preencheDatas()
         {
+            CultureInfo brasil = new CultureInfo("pt-BR");
             dataInicio = inicioTarefa.Date.ToString("dd\\/MM\\/yyyy");
             horaInicio = inicioTarefa.ToString("HH\\:mm\\:ss");
 
             if (fimTarefa != null)
             {
-                dataFim = ((DateTime)fimTarefa).ToString("dd\\/MM\\/yyyy");
+                dataFim = ((DateTime)fimTarefa).ToString("dd-MM-yyyy");
                 horaFim = ((DateTime)fimTarefa).ToString("HH\\:mm\\:ss");
             }
         }        

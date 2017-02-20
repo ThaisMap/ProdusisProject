@@ -18,8 +18,8 @@
              mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="3*" />
@@ -27,14 +27,14 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
             <TextBlock Margin="40,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Tarefas iniciadas hoje</TextBlock>
-            
+
             <Separator />
         </StackPanel>
         <DataGrid Grid.Row="1"
-            Name="dgTarefas"  Margin="40,25"
+            Name="dgTarefas"  Margin="40,25,0,25"
                   Background="#FF878787" RowBackground="#FFC7C7C7"
                   AutoGenerateColumns="False"  IsReadOnly="True"
-                  HorizontalAlignment="Left" Width="auto">
+                  HorizontalAlignment="Left" Width="242">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Tipo" Binding="{Binding Tipo}" />
                 <DataGridTextColumn Header="Finalizadas" Binding="{Binding Finalizadas}" />
@@ -50,14 +50,14 @@
         <ComboBox Grid.Column="1"  Grid.Row="1"
                   x:Name="cbTipoRelatorio"  
                   HorizontalAlignment="Left" VerticalAlignment="Top" 
-                  Margin="31,25,0,0" Width="220" ToolTip="Selecione o periodo do relatório" AutomationProperties.Name="cbTipoRelatorio">
+                  Margin="31,25,0,0" Width="220" ToolTip="Selecione o periodo do relatório" AutomationProperties.Name="cbTipoRelatorio" Height="31">
             <ComboBoxItem Content="Hoje" HorizontalAlignment="Left" Width="218"/>
             <ComboBoxItem Content="Ontem" HorizontalAlignment="Left" Width="218"/>
             <ComboBoxItem Content="Semana atual" HorizontalAlignment="Left" Width="218"/>
             <ComboBoxItem Content="Semana anterior" HorizontalAlignment="Left" Width="218"/>
             <ComboBoxItem Content="Mês atual" HorizontalAlignment="Left" Width="218"/>
             <ComboBoxItem Content="Mês anterior" HorizontalAlignment="Left" Width="218"/>
-            </ComboBox>
+        </ComboBox>
         <Button x:Name="btGerar" Content="Gerar" Grid.Column="1" HorizontalAlignment="Left" Margin="296,25,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="geraRelatorio"/>
     </Grid>
 </UserControl>

@@ -96,7 +96,7 @@ namespace Produsis
         {
             if (Nome.Text != "" && Matricula.Text != "_____" && Tipo.Text != "")
             {
-                if (Tipo.Text == "Administrativo" && Senha.Password == "")
+                if (Tipo.Text == "Administrativo" && Senha2.Password == "")
                     return false;
 
                 return true;
