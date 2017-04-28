@@ -36,8 +36,6 @@ namespace GUI
             aux = int.TryParse(volumeFinal.Text, out filtros.volumeFim);
             aux = int.TryParse(skuInicio.Text, out filtros.skuInicio);
             aux = int.TryParse(skuFinal.Text, out filtros.skuFim);
-            aux = double.TryParse(pesoInicio.Text, out filtros.pesoInicio);
-            aux = double.TryParse(pesoFinal.Text, out filtros.pesoFim);
             filtros.nomeFuncionario = cbFuncionario.SelectionBoxItem.ToString();
             return filtros;
         }
@@ -59,8 +57,6 @@ namespace GUI
             volumeFinal.Text = "";
             skuInicio.Text = "";
             skuFinal.Text = "";
-            pesoInicio.Text = "";
-            pesoFinal.Text = "";
             cbFuncionario.SelectedIndex = -1;
         }
 

@@ -16,18 +16,19 @@ namespace BLL
         {
             if (novaTarefa.tipoTarefa == "2")
             {
-                if (!d.cteCadastrado((int)novaTarefa.documentoTarefa))
+                if (!d.cteCadastrado(novaTarefa.documentoTarefa))
                     return false;
             }
             else
             {
-                if (!d.manifestoCadastrado((int)novaTarefa.documentoTarefa))
+                if (!d.manifestoCadastrado(novaTarefa.documentoTarefa))
                 {
                     return false;
                 }
             }
             FuncionariosBD f = new FuncionariosBD();
             int[] idsFuncionarios = new int[funcionarios.Length];
+            novaTarefa.divergenciaTarefa = "-;0;-;0;-;0";
             for (int i = 0; i < funcionarios.Length; i++)
             {
                 idsFuncionarios[i] = f.getFuncPorNome(funcionarios[i]).idFunc;
@@ -106,12 +107,20 @@ namespace BLL
                 xlWorkSheet.Cells[1, 11] = "Pontos por hora";
                 xlWorkSheet.Cells[1, 12] = "Peso(Kg)";
                 xlWorkSheet.Cells[1, 13] = "Fornecedor";
-                xlWorkSheet.Cells[1, 14] = "Divergencia";
+                xlWorkSheet.Cells[1, 14] = "Códigos Falta";
+                xlWorkSheet.Cells[1, 15] = "Qtde  Falta";
+                xlWorkSheet.Cells[1, 16] = "Códigos Sobra";
+                xlWorkSheet.Cells[1, 17] = "Qtde  Sobra";
+                xlWorkSheet.Cells[1, 18] = "Códigos Avaria";
+                xlWorkSheet.Cells[1, 19] = "Qtde  Avaria";
 
                 int linha = 2;
 
+                string[] divergencias;
+
                 foreach (TarefaModelo i in Tarefas)
                 {
+                    divergencias = i.divergenciaTarefa.Split(';');
                     i.atualizaPontuação();
                     xlWorkSheet.Cells[linha, 1] = i.documentoTarefa;
                     xlWorkSheet.Cells[linha, 2] = i.tipoTarefa;
@@ -126,7 +135,12 @@ namespace BLL
                     xlWorkSheet.Cells[linha, 11] = i.pontosPorHora;
                     xlWorkSheet.Cells[linha, 12] = i.peso;
                     xlWorkSheet.Cells[linha, 13] = i.fornecedor;
-                    xlWorkSheet.Cells[linha, 14] = i.divergenciaTarefa;
+                    xlWorkSheet.Cells[linha, 14] = divergencias[0];
+                    xlWorkSheet.Cells[linha, 15] = divergencias[1];
+                    xlWorkSheet.Cells[linha, 16] = divergencias[2];
+                    xlWorkSheet.Cells[linha, 17] = divergencias[3];
+                    xlWorkSheet.Cells[linha, 18] = divergencias[4];
+                    xlWorkSheet.Cells[linha, 19] = divergencias[5];
                     linha++;
                 }
                 

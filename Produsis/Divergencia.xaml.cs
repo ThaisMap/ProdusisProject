@@ -28,7 +28,8 @@ namespace GUI
             InitializeComponent();
         }
         
-        public List<TarefaModelo> source { get; set; }
+        public List<ItemDivergencia> source { get; set; }
+        public List<TarefaModelo> tarefas = new List<TarefaModelo>();
 
         private void testarCaractere(object sender, TextCompositionEventArgs e)
         {
@@ -38,18 +39,38 @@ namespace GUI
 
         private void btnConsultar_Click(object sender, RoutedEventArgs e)
         {
-            if(cbTipoTarefa.SelectedIndex>-1 && Documento.Text != "")
+            try
             {
-                TarefasBLL t = new TarefasBLL();
-                source = t.filtrarDivergencias(cbTipoTarefa.SelectedIndex, int.Parse(Documento.Text));
-                dgDivergencias.ItemsSource = source;
+                if (cbTipoTarefa.SelectedIndex > -1 && Documento.Text != "")
+                {
+                    TarefasBLL t = new TarefasBLL();
+                    tarefas = t.filtrarDivergencias(cbTipoTarefa.SelectedIndex, int.Parse(Documento.Text));
+                    source = new List<ItemDivergencia>();
+                    foreach (TarefaModelo item in tarefas)
+                    {
+                        source.Add(new ItemDivergencia(item));
+                    }
+                    dgDivergencias.ItemsSource = source;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
             }
         }
 
         private void btnSalvar_Click(object sender, RoutedEventArgs e)
         {
-            TarefasBLL t = new TarefasBLL();
-            t.inserirDivergencias(source);
+            if (source != null)
+            {
+                TarefasBLL t = new TarefasBLL();
+                for (int i = 0; i < source.Count; i++)
+                {
+                    tarefas[i].divergenciaTarefa = source[i].getDivergencia();
+                }
+
+                t.inserirDivergencias(tarefas);
+            }
         }
     }
     

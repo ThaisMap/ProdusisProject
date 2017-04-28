@@ -9,42 +9,46 @@ namespace BLL
     {
         public void lerXML()
         {
-            Xml xml = new Xml();
-            List<string> arquivosPastaNF = new List<string>();
-    
-            foreach (string f in Directory.GetFiles(PastasXml.Default.PastaNFs))
+            try
             {
-                var ext = extensao(f);
-                if (ext == "msg" || ext == "MSG")
-                {
-                    xml.abrirEmail(moverArquivo(f));
-                }
-                else if (ext != "xml" && ext!="XML")
-                    File.Delete(f);
-            }
-            foreach (string f in Directory.GetFiles(PastasXml.Default.PastaNFs))
-            {
-                var ext = extensao(f);
-                if (ext == "xml" || ext == "XML")
-                {
-                    xml.lerNotaFiscal(f);
-                    moverArquivo(f);
-                }
-                else
-                    File.Delete(f);
-            }
+                Xml xml = new Xml();
+                List<string> arquivosPastaNF = new List<string>();
 
-            foreach (string f in Directory.GetFiles(PastasXml.Default.PastaManifestos))
-            {
-                var ext = extensao(f);
-                if (ext == "xml")
+                foreach (string f in Directory.GetFiles(PastasXml.Default.PastaNFs))
                 {
-                    xml.lerManifesto(f);
-                    moverArquivo(f);
+                    var ext = extensao(f);
+                    if (ext == "msg" || ext == "MSG")
+                    {
+                        xml.abrirEmail(moverArquivo(f));
+                    }
+                    else if (ext != "xml" && ext != "XML")
+                        File.Delete(f);
                 }
-                else
-                    File.Delete(f);
+                foreach (string f in Directory.GetFiles(PastasXml.Default.PastaNFs))
+                {
+                    var ext = extensao(f);
+                    if (ext == "xml" || ext == "XML")
+                    {
+                        xml.lerNotaFiscal(f);
+                        moverArquivo(f);
+                    }
+                    else
+                        File.Delete(f);
+                }
+
+                foreach (string f in Directory.GetFiles(PastasXml.Default.PastaManifestos))
+                {
+                    var ext = extensao(f);
+                    if (ext == "xml")
+                    {
+                        xml.lerManifesto(f);
+                        moverArquivo(f);
+                    }
+                    else
+                        File.Delete(f);
+                }
             }
+            catch { }
         }
 
         private string extensao(string caminho)

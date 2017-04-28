@@ -53,6 +53,8 @@ namespace DAL
                 {
                     Tarefas tarefaAtual = BancoDeDados.Tarefas.Single(f => f.idTarefa == idTarefa);
                     tarefaAtual.fimTarefa = DateTime.Now;
+                    if (tarefaAtual.divergenciaTarefa.Length > 120)
+                        tarefaAtual.divergenciaTarefa = tarefaAtual.divergenciaTarefa.Remove(100);
                     BancoDeDados.SaveChanges();
                     FuncionariosBD func = new FuncionariosBD();
                     foreach (Func_Tarefa f in tarefaAtual.Func_Tarefa)
@@ -62,7 +64,8 @@ namespace DAL
                 }
                 return true;
             }
-            catch
+            catch (Exception e)
+
             {
                 return false;
             }
@@ -280,7 +283,7 @@ namespace DAL
                 }
                 return true;
             }
-            catch
+            catch (Exception e)
             {
                 return false;
             }

@@ -16,20 +16,26 @@ namespace GUI
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
-            lerXmls();
+          //  lerXmls();
 
-            TelaPrincipal view = new TelaPrincipal();
+            /*TelaPrincipal view = new TelaPrincipal();
             this.Close();
-            view.Show();
+            view.Show();*/
 
-            /*if (verificaCampos())
+            if (verificaCampos())
             {
                 FuncionarioBLL l = new FuncionarioBLL();
                 if (l.validarUsuario(TxbLogin.Text))
                 {
                     if (l.validarSenha(TxbLogin.Text, TxbSenha.Password))
                     {
+                       
                         TelaPrincipal view = new TelaPrincipal();
+                        if (l.tipoFuncionario(TxbLogin.Text) == "1")
+                        {
+                            view.BtnAdministrativo.IsEnabled = false;
+                            view.BtnDivergencia.IsEnabled = false;
+                        }
                         this.Close();
                         view.Show();
                     }
@@ -42,7 +48,7 @@ namespace GUI
 
                 else
                     TxbLogin.Focus();
-            }*/
+            }
         }
 
         private bool verificaCampos()

@@ -48,6 +48,11 @@ namespace BLL
             return f.getFuncPorNome(nome);
         }
 
+        public string tipoFuncionario(string matricula)
+        {
+            return f.getTipoFuncionario(matricula);
+        }
+
         public bool validarUsuario(string matricula)
         {
             return f.verificaUsuarioCadastrado(matricula);

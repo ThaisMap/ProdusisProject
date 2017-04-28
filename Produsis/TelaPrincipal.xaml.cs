@@ -10,8 +10,8 @@ namespace GUI
         public TelaPrincipal()
         {
             InitializeComponent();
-            BtnAdministrativo.Opacity = 0.5;
-            Navegador.Navigate(new Administrativo());
+            BtnConferencia.Opacity = 0.5;
+            Navegador.Navigate(new Conferencia());
         }
 
         public void ResetarOpacidade()

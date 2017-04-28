@@ -119,6 +119,22 @@ namespace DAL
             }
         }
 
+        public string getTipoFuncionario(string matricula)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    return BancoDeDados.Funcionarios.Where(f => f.matriculaFunc == matricula).Select(f=>f.tipoFunc).FirstOrDefault();
+                }
+            }
+            catch
+            {
+                return "1";
+            }
+        }
+
+
         /// <summary>
         ///  Retorna um Funcionário com base no nome (o primeiro encontrado no banco)
         /// </summary>
@@ -150,9 +166,9 @@ namespace DAL
                     return (from Funcionarios in BancoDeDados.Funcionarios orderby Funcionarios.nomeFunc select Funcionarios.nomeFunc).ToList();
                 }
             }
-            catch
+            catch (Exception e)
             {
-                return new List<string>();
+                return new List<string> { e.Message };
             }
         }
 
@@ -199,7 +215,7 @@ namespace DAL
                     var cadastrado = (from Funcionarios in BancoDeDados.Funcionarios
                                       where Funcionarios.matriculaFunc == matricula
                                       select Funcionarios.tipoFunc).FirstOrDefault();
-                    if (cadastrado != null && cadastrado != "1")
+                    if (cadastrado != null/*&& cadastrado != "1"*/)
                     {
                         return true;
                     }

@@ -66,6 +66,7 @@
     <Compile Include="Func_Tarefa.cs">
       <DependentUpon>Model_pBD.tt</DependentUpon>
     </Compile>
+    <Compile Include="ItemDivergencia.cs" />
     <Compile Include="ItemRanking.cs" />
     <Compile Include="Manifestos.cs">
       <DependentUpon>Model_pBD.tt</DependentUpon>
