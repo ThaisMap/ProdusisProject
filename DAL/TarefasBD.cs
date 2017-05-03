@@ -163,7 +163,7 @@ namespace DAL
                     lista = tarefaModeloParse(query.ToList());
                 }
 
-                if (f.nomeFuncionario != "")
+                if (f.nomeFuncionario != "" && f.nomeFuncionario != null)
                     lista = lista.Where(l => l.nomesFuncionarios.Contains(f.nomeFuncionario)).ToList();
 
                 if (f.volumeInicio > 0)
@@ -193,6 +193,8 @@ namespace DAL
                     }
                     else
                         tar.fornecedor = "";
+
+                    tar.divergenciaTarefa = tar.divergencia(tar.divergenciaTarefa);
                 }
             }
             catch (Exception e)

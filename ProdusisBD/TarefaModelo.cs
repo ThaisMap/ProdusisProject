@@ -34,6 +34,7 @@ namespace ProdusisBD
                     return "Carregamento";
             }
         }
+
         public string dataInicio { get; set; }
         public string horaInicio { get; set; }
         public string dataFim { get; set; }
@@ -53,6 +54,35 @@ namespace ProdusisBD
             volumes = volume;
             peso = kg;
         }
+
+        public string divergencia(string div)
+        {
+            string[] d = div.Split(';');
+            string retorno = "";
+            if (d[0] != "-")
+            {
+                retorno = "Falta código(s): " + d[0] + " qtde(s): " + d[1];
+            }
+            if (d[2] != "-")
+            {
+                if (retorno == "")
+                    retorno = "Sobra código(s): " + d[0] + " qtde(s): " + d[1];
+                else
+                    retorno += " - Sobra código(s): " + d[0] + " qtde(s): " + d[1];
+            }
+            if (d[2] != "-")
+            {
+                if (retorno == "")
+                    retorno = "Avaria código(s): " + d[0] + " qtde(s): " + d[1];
+                else
+                    retorno += " - Avaria código(s): " + d[0] + " qtde(s): " + d[1];
+            }
+            if (retorno == "")
+                return "Nenhuma";
+            return retorno;
+        }
+               
+        
 
         public void atualizaTempoGasto()
         {

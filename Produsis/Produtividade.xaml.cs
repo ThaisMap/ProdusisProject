@@ -43,7 +43,7 @@ namespace GUI
 
         private void geraRelatorio(object sender, System.Windows.RoutedEventArgs e)
         {
-            ProdusisBD.Filtro filtros = new ProdusisBD.Filtro();
+            Filtro filtros = new Filtro();
             switch (cbTipoRelatorio.SelectedIndex)
             {
                 case 0: //hoje

@@ -42,6 +42,5 @@
                 <DataGridTextColumn Header="Executando" Binding="{Binding Pendentes}" />
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid x:Name="dgRanking" Grid.Column="1" HorizontalAlignment="Left" Margin="31,84,0,0" Grid.Row="1" VerticalAlignment="Top" AutoGenerateColumns="True" Width="auto"/>
-    </Grid>
+     </Grid>
 </UserControl>

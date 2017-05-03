@@ -169,7 +169,7 @@
                     VerticalAlignment="Top" Click="btnConsultar_Click" Content="Consultar" />
             </Grid>
             <Separator />
-            <DataGrid Name="dgTarefas" Height="185" Margin="0,0,0,10" ColumnWidth="auto" HorizontalAlignment="Center" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid Name="dgTarefas" Height="176" Margin="0,0,0,10" ColumnWidth="auto" HorizontalAlignment="Center" AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding documentoTarefa}" Header="Documento" />
                     <DataGridTextColumn Binding="{Binding tipoTarefa}" Header="Tipo" />
@@ -181,6 +181,7 @@
                     <DataGridTextColumn Binding="{Binding volumes}" Header="Volumes" />
                     <DataGridTextColumn Binding="{Binding skus}" Header="SKU's" />
                     <DataGridTextColumn Binding="{Binding fornecedor}" Header="Fornecedor" />
+                    <DataGridTextColumn Binding="{Binding divergenciaTarefa}" Header="Ocorrências" />
                 </DataGrid.Columns>
             </DataGrid>
             <Button x:Name="btnExportar" Content="Exportar" Width="100"
