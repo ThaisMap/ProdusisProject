@@ -9,24 +9,27 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch"
-             d:DesignHeight="400"
+             d:DesignHeight="420"
              d:DesignWidth="800"
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
              TextElement.FontSize="16"
              TextElement.FontWeight="Regular"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance local:Produtividade}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid Name="cabecalho" Height="143" VerticalAlignment="Top">
+        <Grid Name="cabecalho" Height="140" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="97*" />
                 <ColumnDefinition Width="311*" />
+                <ColumnDefinition Width="97*" />
                 <ColumnDefinition Width="392*" />
+                <ColumnDefinition Width="150*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="67" />
@@ -34,34 +37,40 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.ColumnSpan="3" Margin="40,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Indicador de produtividade</TextBlock>
             <Separator Grid.ColumnSpan="3"/>
-            <TextBlock Grid.Row="1" VerticalAlignment="Center" Height="20" Margin="0,28,0,26">Período:</TextBlock>
-            <ComboBox Grid.Column="1"  Grid.Row="1"
-            x:Name="cbTipoRelatorio"  
-            HorizontalAlignment="Left" VerticalAlignment="center" 
-            Width="238" ToolTip="Selecione o periodo do relatório" AutomationProperties.Name="cbTipoRelatorio" Height="32" Margin="0,22,0,20">
-                <ComboBoxItem Content="Hoje" HorizontalAlignment="Left" Width="218"/>
-                <ComboBoxItem Content="Ontem" HorizontalAlignment="Left" Width="218"/>
-                <ComboBoxItem Content="Semana atual" HorizontalAlignment="Left" Width="218"/>
-                <ComboBoxItem Content="Semana anterior" HorizontalAlignment="Left" Width="218"/>
-                <ComboBoxItem Content="Mês atual" HorizontalAlignment="Left" Width="218"/>
-                <ComboBoxItem Content="Mês anterior" HorizontalAlignment="Left" Width="218"/>
-            </ComboBox>
-            <Button x:Name="btGerar" Content="Gerar" Grid.Column="2" HorizontalAlignment="Left"  Grid.Row="1" VerticalAlignment="Center" Width="75" Click="geraRelatorio" Margin="0,22,0,20"/>
+            <TextBlock Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" Height="20" Margin="0,28,0,26">Início:</TextBlock>
+            <DatePicker x:Name="dataInicio"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Width="150"
+                    Margin="5,10"
+                    VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                    Language="pt-br" />
+            <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Height="20" Margin="0,28,0,26">Fim:</TextBlock>
+            <DatePicker x:Name="dataFim"
+                    Grid.Row="1"
+                    Grid.Column="3"
+                    Width="150"
+                    Margin="5,10"
+                    VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                    Language="pt-br" />
+            <Button x:Name="btGerar" Content="Gerar" Grid.Column="4" HorizontalAlignment="Left"  Grid.Row="1" VerticalAlignment="Center" Width="75" Click="geraRelatorio" Margin="0,22,0,20"/>
         </Grid>
-        <Grid Grid.Row="1" Height="300"
-            Name="Grafico">
+        <Grid
+            Name="Grafico" Margin="0,145,0,0" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="19*"/>
                 <ColumnDefinition Width="381*"/>
             </Grid.ColumnDefinitions>
-            <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Left" Grid.ColumnSpan="2">
-                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis  Labels="{Binding Labels}"></lvc:Axis>
-                </lvc:CartesianChart.AxisX>
-                <lvc:LineSeries Stroke="Red" Fill="RosyBrown"></lvc:LineSeries>
+            <lvc:CartesianChart Series="{Binding Colecao}"  LegendLocation="Bottom" Height="265">
+               <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Funcionário" Labels="{Binding Rotulos}"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>                
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                    <lvc:Axis Title="Produtividade" LabelFormatter="{Binding Formatter}"></lvc:Axis>
                 </lvc:CartesianChart.AxisY>
+               
+               <!--  lvc:LineSeries Stroke="Red" Fill="Red"/-->
             </lvc:CartesianChart>
         </Grid>
 

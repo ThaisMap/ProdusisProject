@@ -15,13 +15,7 @@ namespace GUI
         }
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
-        {
-          //  lerXmls();
-
-            /*TelaPrincipal view = new TelaPrincipal();
-            this.Close();
-            view.Show();*/
-
+        {          
             if (verificaCampos())
             {
                 FuncionarioBLL l = new FuncionarioBLL();

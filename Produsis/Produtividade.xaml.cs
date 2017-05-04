@@ -25,8 +25,8 @@ namespace GUI
     /// </summary>
     public partial class Produtividade : UserControl
     {
-        public SeriesCollection SeriesCollection { get; set; }
-        public string[] Labels { get; set; }
+        public SeriesCollection Colecao { get; set; }
+        public string[] Rotulos { get; set; }
         public Func<double, string> Formatter { get; set; }
 
         List<double> valores = new List<double>();
@@ -34,44 +34,16 @@ namespace GUI
 
         public Produtividade()
         {
-            InitializeComponent();
-
-            
+            InitializeComponent();          
 
         }
 
 
-        private void geraRelatorio(object sender, System.Windows.RoutedEventArgs e)
+        private void geraRelatorio(object sender, RoutedEventArgs e)
         {
             Filtro filtros = new Filtro();
-            switch (cbTipoRelatorio.SelectedIndex)
-            {
-                case 0: //hoje
-                    filtros.dataInicio = DateTime.Today;
-                    filtros.dataFim = DateTime.Today.AddDays(1).AddSeconds(-1);
-                    break;
-                case 1://ontem
-                    filtros.dataInicio = DateTime.Today.AddDays(-1);
-                    filtros.dataFim = DateTime.Today.AddDays(-1);
-                    break;
-                case 2://esta semana
-                    filtros.dataInicio = comecoDaSemana(DateTime.Today);
-                    filtros.dataFim = DateTime.Today.AddDays(1).AddSeconds(-1);
-                    break;
-                case 3://semana passada
-                    filtros.dataInicio = comecoDaSemana(DateTime.Today.AddDays(-7));
-                    filtros.dataFim = comecoDaSemana(DateTime.Today).AddDays(-1);
-                    break;
-                case 4:// este mes
-                    filtros.dataInicio = DateTime.Today.AddDays(-DateTime.Today.Day + 1);
-                    filtros.dataFim = DateTime.Today;
-                    break;
-                default://mes passado
-                    var mesPassado = DateTime.Today.AddDays(-DateTime.Today.Day + 1).AddMonths(-1);
-                    filtros.dataInicio = mesPassado;
-                    filtros.dataFim = mesPassado.AddDays(DateTime.DaysInMonth(mesPassado.Year, mesPassado.Month) - 1);
-                    break;
-            }
+            filtros.dataInicio = dataInicio.SelectedDate;
+            filtros.dataFim = dataFim.SelectedDate.Value.AddDays(1).AddSeconds(-1);
             TarefasBLL t = new TarefasBLL();
             filtros.TipoTarefa = "-1";
 
@@ -86,18 +58,23 @@ namespace GUI
                 nomes.Add(item.nomesFuncionarios);
             }
 
-            SeriesCollection = new SeriesCollection
+      
+            ColumnSeries colunas = new ColumnSeries
             {
-                new ColumnSeries
-                {
-                    Title = "Pontos por hora",
-                    Values = new ChartValues<double> (valores)
-
-                }
+                Title = "Pontos por hora",
+                Values = new ChartValues<double>(valores)
             };
-            Labels = nomes.ToArray();
-            Formatter = value => value.ToString("N");
 
+            colunas.Stroke = Brushes.Red;
+            colunas.Fill = Brushes.Firebrick;
+
+            Colecao = new SeriesCollection
+            {    colunas    };
+
+            Rotulos = nomes.ToArray();
+            Formatter = value => value.ToString("N");            
+            
+       
             DataContext = this;
         } 
 
