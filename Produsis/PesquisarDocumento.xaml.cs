@@ -22,7 +22,6 @@ namespace Produsis
             Numero.Text = "Não encontrado";
             NumeroDeVolumes.Text = "";
             NumeroDeSKUS.Text = "";
-            Peso.Text = "";
             Fornecedor.Text = "";
         }
 
@@ -40,7 +39,6 @@ namespace Produsis
                         Numero.Text = NumeroDocumento.Text.Replace("_", "");
                         NumeroDeVolumes.Text = d.volumesCte(numDoc).ToString();
                         NumeroDeSKUS.Text = d.skuCte(numDoc).ToString();
-                        Peso.Text = d.pesoCte(numDoc).ToString();
                         Fornecedor.Text = d.fornecedorCte(numDoc);
                     }
                     else limpar();
@@ -54,7 +52,6 @@ namespace Produsis
                         Numero.Text = documento.numeroManifesto.ToString();
                         NumeroDeVolumes.Text = documento.VolumesManifesto.ToString();
                         NumeroDeSKUS.Text = documento.skusManifesto.ToString();
-                        Peso.Text = documento.pesoManifesto.ToString();
                         Fornecedor.Text = "Não se aplica";
                     }
                     else limpar();
@@ -68,7 +65,6 @@ namespace Produsis
                         Numero.Text = documento.numeroNF;
                         NumeroDeVolumes.Text = documento.volumesNF.ToString();
                         NumeroDeSKUS.Text = documento.skuNF.ToString();
-                        Peso.Text = documento.pesoNF.ToString();
                         Fornecedor.Text = documento.fonecedorNF;
                     }
                     else limpar();

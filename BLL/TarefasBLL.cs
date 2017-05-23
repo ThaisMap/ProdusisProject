@@ -133,7 +133,6 @@ namespace BLL
                     xlWorkSheet.Cells[linha, 9] = i.skus;
                     xlWorkSheet.Cells[linha, 10] = i.pontos;
                     xlWorkSheet.Cells[linha, 11] = i.pontosPorHora;
-                    xlWorkSheet.Cells[linha, 12] = i.peso;
                     xlWorkSheet.Cells[linha, 13] = i.fornecedor;
                     xlWorkSheet.Cells[linha, 14] = divergencias[0];
                     xlWorkSheet.Cells[linha, 15] = divergencias[1];

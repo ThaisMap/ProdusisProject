@@ -195,34 +195,7 @@ namespace DAL
             }
         }
 
-        /// <summary>
-        /// Retorna a soma do peso de cada nota componente do Cte
-        /// </summary>
-        /// <param name="idCte">Parâmetro de pesquisa</param>
-        /// <returns>O múmero de skus ou 0, caso nao encontre alguma nota, -1 se ocorrer um erro</returns>
-        public double getPesoCte(int idCte)
-        {
-            double peso = 0;
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    List<NotasFiscais> ListaNFs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais).ToList();
-                    foreach (NotasFiscais n in ListaNFs)
-                    {
-                        if (verificarDocumentoCadastrado(2, n.numeroNF) > 0)
-                            peso += n.pesoNF;
-                    }
-                }
-            }
-            catch
-            {
-                return -1;
-            }
-
-            return peso;
-        }
-
+        
         /// <summary>
         /// Retorna a soma dos skus de cada nota componente do Cte
         /// </summary>
@@ -375,7 +348,7 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     int numeroCte = (from Ctes in BancoDeDados.Ctes where Ctes.numeroCte == numDoc select Ctes.numeroCte).FirstOrDefault();
-                    dados = "Cte n º " + numeroCte + " - " + getVolumesCte(numDoc) + " volumes - " + getSkuCte(numDoc) + " SKU's - " + getPesoCte(numDoc) + " kg";
+                    dados = "Cte n º " + numeroCte + " - " + getVolumesCte(numDoc) + " volumes - " + getSkuCte(numDoc) + " SKU's";
                 }
             }
             catch

@@ -138,15 +138,7 @@
                            Grid.Column="1"
                            Margin="5"
                            TextWrapping="Wrap" />
-                <TextBlock Grid.Row="3"
-                           Grid.Column="0"
-                           Margin="5"
-                           Text="Peso:" />
-                <TextBlock Name="Peso"
-                           Grid.Row="3"
-                           Grid.Column="1"
-                           Margin="5"
-                           TextWrapping="Wrap" />
+                
             </Grid>
         </StackPanel>
     </Grid>

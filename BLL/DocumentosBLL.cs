@@ -37,12 +37,7 @@ namespace BLL
         {
             return d.getFornecedorCte(num);
         }
-
-        public double pesoCte(int num)
-        {
-            return d.getPesoCte(num);
-        }
-
+        
         public bool cteCadastrado(int num)
         {
             if (d.verificarDocumentoCadastrado(1, num.ToString()) != 0)

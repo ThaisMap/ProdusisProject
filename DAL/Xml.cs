@@ -93,8 +93,7 @@ namespace DAL
                     fornecedor = fornecedor.Remove(49);
                 nfLida.fonecedorNF = fornecedor;
                 nfLida.volumesNF = int.Parse(nf.GetElementsByTagName("qVol")[0].InnerText);
-                nfLida.pesoNF = double.Parse(nf.GetElementsByTagName("pesoB")[0].InnerText.Replace(".", ","));
-
+               
                 return inserirNotaFiscal(nfLida);
             }
             catch (System.Exception ex)
@@ -164,7 +163,6 @@ namespace DAL
                         if (nf.StartsWith("317"))
                         {
                             nfLida.fonecedorNF = Fornecedor;
-                            nfLida.pesoNF = 0;
                             retorno = inserirNotaFiscal(nfLida);
                         }
                     }

@@ -42,17 +42,15 @@ namespace ProdusisBD
         public string nomesFuncionarios { get; set; }
         public int skus { get; set; }
         public int volumes { get; set; }
-        public int peso { get; set; }
         public string fornecedor { get; set; }
         public int pontos { get; set; }
         public double pontosPorHora { get; set; }
 
 
-        public void valores(int sku, int volume, int kg)
+        public void valores(int sku, int volume)
         {
             skus = sku;
             volumes = volume;
-            peso = kg;
         }
 
         public string divergencia(string div)

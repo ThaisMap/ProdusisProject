@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="produsisBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="produsisBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Cte_Manifesto">
           <Key>
             <PropertyRef Name="idCteManifesto" />
@@ -58,7 +58,6 @@
           <Property Name="fonecedorNF" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="volumesNF" Type="int" Nullable="false" />
           <Property Name="skuNF" Type="int" Nullable="false" />
-          <Property Name="pesoNF" Type="float" Nullable="false" />
           <Property Name="CteNF" Type="int" />
         </EntityType>
         <EntityType Name="Tarefas">
@@ -161,7 +160,8 @@
             <End Role="NotasFiscais" EntitySet="NotasFiscais" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="produsisBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -226,7 +226,6 @@
           <Property Name="fonecedorNF" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="volumesNF" Type="Int32" Nullable="false" />
           <Property Name="skuNF" Type="Int32" Nullable="false" />
-          <Property Name="pesoNF" Type="Double" Nullable="false" />
           <Property Name="CteNF" Type="Int32" />
           <NavigationProperty Name="Ctes" Relationship="Self.FK_NotasFiscais_Ctes" FromRole="NotasFiscais" ToRole="Ctes" />
         </EntityType>
@@ -239,8 +238,8 @@
           <Property Name="fimTarefa" Type="DateTime" Precision="0" />
           <Property Name="documentoTarefa" Type="Int32" Nullable="false" />
           <Property Name="tipoTarefa" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Func_Tarefa" Relationship="Self.FK_Func_Tarefa_Tarefas" FromRole="Tarefas" ToRole="Func_Tarefa" />
           <Property Name="divergenciaTarefa" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Func_Tarefa" Relationship="Self.FK_Func_Tarefa_Tarefas" FromRole="Tarefas" ToRole="Func_Tarefa" />
         </EntityType>
         <Association Name="FK_Cte_Manifesto_Cte">
           <End Role="Ctes" Type="Self.Ctes" Multiplicity="1" />
@@ -394,7 +393,6 @@
                 <ScalarProperty Name="fonecedorNF" ColumnName="fonecedorNF" />
                 <ScalarProperty Name="volumesNF" ColumnName="volumesNF" />
                 <ScalarProperty Name="skuNF" ColumnName="skuNF" />
-                <ScalarProperty Name="pesoNF" ColumnName="pesoNF" />
                 <ScalarProperty Name="CteNF" ColumnName="CteNF" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -402,12 +400,12 @@
           <EntitySetMapping Name="Tarefas">
             <EntityTypeMapping TypeName="produsisBDModel.Tarefas">
               <MappingFragment StoreEntitySet="Tarefas">
-                <ScalarProperty Name="divergenciaTarefa" ColumnName="divergenciaTarefa" />
                 <ScalarProperty Name="idTarefa" ColumnName="idTarefa" />
                 <ScalarProperty Name="inicioTarefa" ColumnName="inicioTarefa" />
                 <ScalarProperty Name="fimTarefa" ColumnName="fimTarefa" />
                 <ScalarProperty Name="documentoTarefa" ColumnName="documentoTarefa" />
                 <ScalarProperty Name="tipoTarefa" ColumnName="tipoTarefa" />
+                <ScalarProperty Name="divergenciaTarefa" ColumnName="divergenciaTarefa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

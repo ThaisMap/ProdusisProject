@@ -27,6 +27,7 @@ namespace ProdusisBD
         public string tipoTarefa { get; set; }
         public string divergenciaTarefa { get; set; }
         public string tempoGasto { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Func_Tarefa> Func_Tarefa { get; set; }
     }

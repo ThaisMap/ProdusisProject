@@ -178,12 +178,6 @@ namespace DAL
                 if (f.skuFim > 0)
                     lista = lista.Where(l => l.skus <= f.skuFim).ToList();
 
-                if (f.pesoInicio > 0)
-                    lista = lista.Where(l => l.peso >= f.pesoInicio).ToList();
-
-                if (f.pesoFim > 0)
-                    lista = lista.Where(l => l.peso <= f.pesoFim).ToList();
-
                 foreach(var tar in lista)
                 {
                     if (tar.tipoTarefa == "Conferência")
@@ -349,13 +343,13 @@ namespace DAL
                     aux = new TarefaModelo(tar);
                     if (tar.tipoTarefa == "2")
                     {
-                        aux.valores(d.getSkuCte(tar.documentoTarefa), d.getVolumesCte(tar.documentoTarefa), (int)d.getPesoCte(tar.documentoTarefa));
+                        aux.valores(d.getSkuCte(tar.documentoTarefa), d.getVolumesCte(tar.documentoTarefa));
                         aux.fornecedor = d.getFornecedorCte(tar.documentoTarefa);
                     }
                     else
                     {
                         m = d.getManifestoPorNumero(tar.documentoTarefa);
-                        aux.valores(m.skusManifesto, m.VolumesManifesto, (int)m.pesoManifesto);
+                        aux.valores(m.skusManifesto, m.VolumesManifesto);
                     }
                     aux.nomesFuncionarios = nomesFuncTarefa(tar.idTarefa);
                     modelos.Add(aux);

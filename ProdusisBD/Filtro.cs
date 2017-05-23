@@ -13,7 +13,5 @@ namespace ProdusisBD
         public int volumeFim;
         public int skuInicio;
         public int skuFim;
-        public double pesoInicio;
-        public double pesoFim;
     }
 }

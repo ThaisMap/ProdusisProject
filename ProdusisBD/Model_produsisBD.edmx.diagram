@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="29e7484b625143c0b325f4cfa0714788" Name="Diagram1">
+        <EntityTypeShape EntityType="produsisBDModel.Cte_Manifesto" Width="1.5" PointX="2.625" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="produsisBDModel.Ctes" Width="1.5" PointX="4.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="produsisBDModel.Func_Tarefa" Width="1.5" PointX="3.375" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="produsisBDModel.Funcionarios" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="produsisBDModel.Manifestos" Width="1.5" PointX="0.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="produsisBDModel.NotasFiscais" Width="1.5" PointX="6.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="produsisBDModel.Tarefas" Width="1.5" PointX="6" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="produsisBDModel.FK_Cte_Manifesto_Cte" ManuallyRouted="false" />
+        <AssociationConnector Association="produsisBDModel.FK_Cte_Manifesto_Manifesto" ManuallyRouted="false" />
+        <AssociationConnector Association="produsisBDModel.FK_NotasFiscais_Ctes" ManuallyRouted="false" />
+        <AssociationConnector Association="produsisBDModel.FK_Func_Tarefa_Funcionarios" ManuallyRouted="false" />
+        <AssociationConnector Association="produsisBDModel.FK_Func_Tarefa_Tarefas" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
