@@ -63,10 +63,10 @@ namespace GUI
             return true;
         }
 
-        static void lerXmls()
+        static void importarArquivos()
         {
             xmlBLL x = new xmlBLL();
-            x.lerXML();
+            x.triagemArquivos();
         }
     }
 }

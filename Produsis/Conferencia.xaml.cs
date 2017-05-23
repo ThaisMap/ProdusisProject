@@ -132,7 +132,7 @@ namespace GUI
         static void lerXmls()
         {
             xmlBLL x = new xmlBLL();
-            x.lerXML();
+            x.triagemArquivos();
         }
 
         private Tarefas montarTarefa()

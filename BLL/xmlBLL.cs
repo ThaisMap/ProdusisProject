@@ -7,7 +7,7 @@ namespace BLL
 {
     public class xmlBLL
     {
-        public void lerXML()
+        public void triagemArquivos()
         {
             try
             {
@@ -21,15 +21,22 @@ namespace BLL
                     {
                         xml.abrirEmail(moverArquivo(f));
                     }
-                    else if (ext != "xml" && ext != "XML")
+                    else if (ext != "xml" && ext != "XML" && ext != "txt" && ext != "TXT")
                         File.Delete(f);
                 }
+
                 foreach (string f in Directory.GetFiles(PastasXml.Default.PastaNFs))
                 {
                     var ext = extensao(f);
                     if (ext == "xml" || ext == "XML")
                     {
-                        xml.lerNotaFiscal(f);
+                        xml.lerXmlNotaFiscal(f);
+                        moverArquivo(f);
+                    }
+                    else
+                        if (ext == "txt" || ext == "TXT")
+                    {
+                        xml.lerNotfisNotaFiscal(f);
                         moverArquivo(f);
                     }
                     else

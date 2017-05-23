@@ -3,6 +3,8 @@ using Microsoft.Office.Interop.Outlook;
 using ProdusisBD;
 using System.Xml;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DAL
 {
@@ -73,7 +75,7 @@ namespace DAL
             }
         }
 
-        public bool lerNotaFiscal(string nomeArquivo)
+        public bool lerXmlNotaFiscal(string nomeArquivo)
         {
             try
             {
@@ -93,17 +95,101 @@ namespace DAL
                 nfLida.volumesNF = int.Parse(nf.GetElementsByTagName("qVol")[0].InnerText);
                 nfLida.pesoNF = double.Parse(nf.GetElementsByTagName("pesoB")[0].InnerText.Replace(".", ","));
 
-                DocumentosBD dbd = new DocumentosBD();
-                if (!dbd.cadastrarNF(nfLida))
-                { return false; }
-
-                return true;
+                return inserirNotaFiscal(nfLida);
             }
             catch (System.Exception ex)
             {
                 var erro = ex;
                 return false;
             }
+        }
+
+        public bool lerNotfisNotaFiscal(string nomeArquivo)
+        {
+            try
+            {
+                NotasFiscais nfLida = new NotasFiscais();
+
+                bool retorno = true;
+                string[] notfis = System.IO.File.ReadAllLines(nomeArquivo);
+                string Fornecedor = "";
+                
+
+                if (notfis[0].StartsWith("000"))
+                {
+                    List<string> conteudoNf;
+                    foreach (string nf in notfis)
+                    {
+                        if (nf.StartsWith("000"))
+                        {
+                            conteudoNf = nf.Split(' ').ToList();
+                            conteudoNf.RemoveAll(l => l == "");
+
+                            Fornecedor = conteudoNf[0].Remove(0, 3);
+                            for (int i = 1; i < conteudoNf.Count - 2; i++)
+                            {
+                                Fornecedor += " ";
+                                Fornecedor += conteudoNf[i];
+                            }
+                        }
+
+                        if (nf.StartsWith("312"))
+                        {
+                            nfLida.skuNF = 0;
+                        }
+
+                        if (nf.StartsWith("313"))
+                        {
+                            conteudoNf = nf.Split(' ').ToList();
+                            conteudoNf.RemoveAll(l => l == "");
+
+                            nfLida.volumesNF = int.Parse(conteudoNf[conteudoNf.Count - 3].Remove(5));
+
+                            string aux = conteudoNf[conteudoNf.Count - 1];
+                            aux = aux.TrimStart('0');
+
+                            aux = aux.Remove(0, 22);
+                            aux = aux.Remove(12);
+                            nfLida.numeroNF = aux.Remove(0, 3) + "-" + aux.Remove(3).TrimStart('0');
+                            nfLida.numeroNF = nfLida.numeroNF.TrimStart('0');
+                        }
+
+                        if (nf.StartsWith("314"))
+                        {
+                            conteudoNf = nf.Split(' ').ToList();
+                            conteudoNf.RemoveAll(l => l == "");
+                            nfLida.skuNF += conteudoNf.Count / 2;
+                        }
+
+                        if (nf.StartsWith("317"))
+                        {
+                            nfLida.fonecedorNF = Fornecedor;
+                            nfLida.pesoNF = 0;
+                            retorno = inserirNotaFiscal(nfLida);
+                        }
+                    }
+                }
+                else
+                {
+                    retorno= false;
+                }
+
+                return retorno;
+            }
+            catch (System.Exception ex)
+            {
+                var erro = ex;
+                return false;
+            }
+        }
+
+        private static bool inserirNotaFiscal(NotasFiscais nfLida)
+        {
+            DocumentosBD dbd = new DocumentosBD();
+            if (!dbd.cadastrarNF(nfLida))
+            { return false; }
+
+            return true;
         }
 
         private bool alterarNfs(string nfs, string fornecedor, int cte)
