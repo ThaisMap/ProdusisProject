@@ -45,14 +45,16 @@ namespace ProdusisBD
         public string fornecedor { get; set; }
         public int pontos { get; set; }
         public double pontosPorHora { get; set; }
-
-
+        
         public void valores(int sku, int volume)
         {
             skus = sku;
             volumes = volume;
         }
 
+        /// <summary>
+        /// Retorna uma string referente às divergencias registradas
+        /// </summary>
         public string divergencia(string div)
         {
             string[] d = div.Split(';');
@@ -64,24 +66,23 @@ namespace ProdusisBD
             if (d[2] != "-")
             {
                 if (retorno == "")
-                    retorno = "Sobra código(s): " + d[0] + " qtde(s): " + d[1];
+                    retorno = "Sobra código(s): " + d[2] + " qtde(s): " + d[3];
                 else
-                    retorno += " - Sobra código(s): " + d[0] + " qtde(s): " + d[1];
+                    retorno += " - Sobra código(s): " + d[2] + " qtde(s): " + d[3];
             }
-            if (d[2] != "-")
+            if (d[4] != "-")
             {
                 if (retorno == "")
-                    retorno = "Avaria código(s): " + d[0] + " qtde(s): " + d[1];
+                    retorno = "Avaria código(s): " + d[4] + " qtde(s): " + d[5];
                 else
-                    retorno += " - Avaria código(s): " + d[0] + " qtde(s): " + d[1];
+                    retorno += " - Avaria código(s): " + d[4] + " qtde(s): " + d[5];
             }
             if (retorno == "")
                 return "Nenhuma";
+
             return retorno;
         }
-               
         
-
         public void atualizaTempoGasto()
         {
             TimeSpan tempo;
@@ -97,8 +98,7 @@ namespace ProdusisBD
         }
 
         /// <summary>
-        /// Aqui você altera o calculo dos pontos. Peso atual do sku: 5
-        ///
+        /// Calcula pontuação para ranking. Calulo atual (volumes + sku*5)/tempo gasto    
         /// </summary>
         public void atualizaPontuação()
         {
@@ -109,7 +109,6 @@ namespace ProdusisBD
 
         public void preencheDatas()
         {
-            CultureInfo brasil = new CultureInfo("pt-BR");
             dataInicio = inicioTarefa.Date.ToString("dd\\/MM\\/yyyy");
             horaInicio = inicioTarefa.ToString("HH\\:mm\\:ss");
 

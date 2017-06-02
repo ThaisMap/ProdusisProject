@@ -10,9 +10,12 @@ namespace DAL
 {
     public class Xml
     {
-        public void abrirEmail(string nomeArquivo)
+        /// <summary>
+        /// Abre o email e salva todos os anexos na pasta de notas fiscais
+        /// </summary>
+        public void extrairAnexosDeEmail(string nomeArquivo)
         {
-            Application app = new Application();
+            Application app = new Application(); 
             try
             {
                 MailItem email = (MailItem)app.Session.OpenSharedItem(nomeArquivo);
@@ -20,7 +23,7 @@ namespace DAL
                 foreach (Attachment anexo in email.Attachments)
                 {
                         string nomeXML = PastasXml.Default.PastaNFs + "\\" + anexo.FileName;
-                        anexo.SaveAsFile(nomeXML);                    
+                        anexo.SaveAsFile(nomeXML);
                 }
 
                 app.Quit();
@@ -37,6 +40,9 @@ namespace DAL
 
         }
 
+        /// <summary>
+        /// Importa os dados de xml de manifestos na pasta padrão
+        /// </summary>
         public bool lerManifesto(string nomeArquivo)
         {
             try
@@ -58,11 +64,12 @@ namespace DAL
                 { return false; }
 
                 int cte;
+
                 for (int i = 0; i < result.Count - 4; i = i + 10)
                 {
                     cte = int.Parse(result[i].InnerText);
                     criarCte(cte);
-                    alterarNfs(result[i + 1].InnerText, result[i + 7].InnerText, cte);
+                    alterarNfs(result[i + 1].InnerText, cte);
                     criarCteManifesto(cte, lido.numeroManifesto);
                 }
 
@@ -75,6 +82,9 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// Importa os dados de xml de notas fiscais na pasta padrão
+        /// </summary>
         public bool lerXmlNotaFiscal(string nomeArquivo)
         {
             try
@@ -103,6 +113,9 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// Importa os dados de notfis de notas fiscais na pasta padrão
+        /// </summary>
         public bool lerNotfisNotaFiscal(string nomeArquivo)
         {
             try
@@ -111,14 +124,13 @@ namespace DAL
 
                 bool retorno = true;
                 string[] notfis = System.IO.File.ReadAllLines(nomeArquivo);
-                string Fornecedor = "";
-                
+                string Fornecedor = "";                
 
                 if (notfis[0].StartsWith("000"))
                 {
                     List<string> conteudoNf;
                     foreach (string nf in notfis)
-                    {
+                    {   //Fornecedor
                         if (nf.StartsWith("000"))
                         {
                             conteudoNf = nf.Split(' ').ToList();
@@ -131,12 +143,14 @@ namespace DAL
                                 Fornecedor += conteudoNf[i];
                             }
                         }
-
+                        
+                        //Zerar SKU
                         if (nf.StartsWith("312"))
                         {
                             nfLida.skuNF = 0;
                         }
 
+                        //Volumes e número da NF
                         if (nf.StartsWith("313"))
                         {
                             conteudoNf = nf.Split(' ').ToList();
@@ -152,7 +166,8 @@ namespace DAL
                             nfLida.numeroNF = aux.Remove(0, 3) + "-" + aux.Remove(3).TrimStart('0');
                             nfLida.numeroNF = nfLida.numeroNF.TrimStart('0');
                         }
-
+                        
+                        //Contar SKUs
                         if (nf.StartsWith("314"))
                         {
                             conteudoNf = nf.Split(' ').ToList();
@@ -160,6 +175,7 @@ namespace DAL
                             nfLida.skuNF += conteudoNf.Count / 2;
                         }
 
+                        //Salvar NF no banco de dados
                         if (nf.StartsWith("317"))
                         {
                             nfLida.fonecedorNF = Fornecedor;
@@ -190,7 +206,11 @@ namespace DAL
             return true;
         }
 
-        private bool alterarNfs(string nfs, string fornecedor, int cte)
+        /// <summary>
+        /// Dispara a alteração das nfs de um manifesto para incluir o cte
+        /// </summary>
+        /// <param name="nfs">string contendo as notas fiscais separadas por uma '\'</param>
+        private bool alterarNfs(string nfs, int cte)
         {
             bool retorno = true;
             DocumentosBD dbd = new DocumentosBD();
@@ -199,7 +219,7 @@ namespace DAL
             {
                 if (dbd.verificarDocumentoCadastrado(2, nf) >= 0)
                 {
-                    if (!dbd.inserirCteNf(nf, fornecedor, cte))
+                    if (!dbd.inserirCteNf(nf, cte))
                         retorno = false; //false se não for possivel alterar alguma nota
                 }
                 else
@@ -211,18 +231,13 @@ namespace DAL
         private void criarCte(int cte)
         {
             DocumentosBD dbd = new DocumentosBD();
-            Ctes novoCte = new Ctes();
-            novoCte.numeroCte = cte;
-            dbd.cadastrarCte(novoCte);
+            dbd.cadastrarCte(new Ctes(cte));
         }
 
         private void criarCteManifesto(int cte, int manifesto)
         {
-            DocumentosBD dbd = new DocumentosBD();
-            Cte_Manifesto novo = new Cte_Manifesto();
-            novo.Cte = cte;
-            novo.Manifesto = manifesto;
-            dbd.cadastrarCteManifesto(novo);
+            DocumentosBD dbd = new DocumentosBD();            
+            dbd.cadastrarCteManifesto(new Cte_Manifesto(cte, manifesto));
         }
   }
 }

@@ -14,7 +14,7 @@ namespace BLL
 
         public bool inserirTarefa(Tarefas novaTarefa, string[] funcionarios)
         {
-            if (novaTarefa.tipoTarefa == "2")
+            if (novaTarefa.tipoTarefa == "2") 
             {
                 if (!d.cteCadastrado(novaTarefa.documentoTarefa))
                     return false;
@@ -26,8 +26,10 @@ namespace BLL
                     return false;
                 }
             }
+
             FuncionariosBD f = new FuncionariosBD();
             int[] idsFuncionarios = new int[funcionarios.Length];
+
             novaTarefa.divergenciaTarefa = "-;0;-;0;-;0";
             for (int i = 0; i < funcionarios.Length; i++)
             {
@@ -124,7 +126,7 @@ namespace BLL
                     i.atualizaPontuação();
                     xlWorkSheet.Cells[linha, 1] = i.documentoTarefa;
                     xlWorkSheet.Cells[linha, 2] = i.tipoTarefa;
-                    xlWorkSheet.Cells[linha, 3] = i.inicioTarefa.ToOADate();
+                    xlWorkSheet.Cells[linha, 3] = i.inicioTarefa.Date.ToString("MM/dd/yyyy");
                     xlWorkSheet.Cells[linha, 4] = i.horaInicio;
                     xlWorkSheet.Cells[linha, 5] = i.horaFim;
                     xlWorkSheet.Cells[linha, 6] = i.nomesFuncionarios;

@@ -7,6 +7,9 @@ namespace BLL
 {
     public class xmlBLL
     {
+        /// <summary>
+        /// Processa arquivos nas pastas de nf e manifesto
+        /// </summary>
         public void triagemArquivos()
         {
             try
@@ -14,17 +17,19 @@ namespace BLL
                 Xml xml = new Xml();
                 List<string> arquivosPastaNF = new List<string>();
 
+                //Percorre pasta de NFs pela primeira vez, ao encontrar um email , extrai os anexos e mover o email para pasta old
                 foreach (string f in Directory.GetFiles(PastasXml.Default.PastaNFs))
                 {
                     var ext = extensao(f);
                     if (ext == "msg" || ext == "MSG")
                     {
-                        xml.abrirEmail(moverArquivo(f));
-                    }
-                    else if (ext != "xml" && ext != "XML" && ext != "txt" && ext != "TXT")
-                        File.Delete(f);
+                        xml.extrairAnexosDeEmail(moverArquivo(f));
+                    }                    
                 }
 
+                //Percorre pasta de NFs pela segunda vez
+                //Ao encontrar xml ou txt, procede com importação dos dados e move o arquivo para pasta old
+                //Qualquer outro tipo de arquivo é excluido
                 foreach (string f in Directory.GetFiles(PastasXml.Default.PastaNFs))
                 {
                     var ext = extensao(f);
@@ -43,6 +48,7 @@ namespace BLL
                         File.Delete(f);
                 }
 
+                //Percorre pasta de manifestos, importa os dados do xml e apaga o restante
                 foreach (string f in Directory.GetFiles(PastasXml.Default.PastaManifestos))
                 {
                     var ext = extensao(f);
@@ -58,11 +64,17 @@ namespace BLL
             catch { }
         }
 
+        /// <summary>
+        /// Retorna ultimas 3 letras do arquivo informado
+        /// </summary>
         private string extensao(string caminho)
         {
             return string.Concat(caminho[caminho.Length - 3], caminho[caminho.Length - 2], caminho[caminho.Length - 1]);
         }
 
+        /// <summary>
+        /// Move o arquivo da pasta padrão para a pasta old respectiva
+        /// </summary>
         private string moverArquivo(string nomeArquivo)
         {
             Directory.CreateDirectory(PastasXml.Default.PastaNFs + "\\old");

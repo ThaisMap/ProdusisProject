@@ -98,7 +98,6 @@ namespace DAL
                 return new List<String>();
             }
         }
-
         
         /// <summary>
         /// Retorna um Funcionário com base no id
@@ -119,6 +118,10 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// Retorna o tipo do Funcionario
+        /// </summary>
+        /// <returns>0 - Administrativo, 1 - Operacional</returns>
         public string getTipoFuncionario(string matricula)
         {
             try
@@ -133,7 +136,6 @@ namespace DAL
                 return "1";
             }
         }
-
 
         /// <summary>
         ///  Retorna um Funcionário com base no nome (o primeiro encontrado no banco)

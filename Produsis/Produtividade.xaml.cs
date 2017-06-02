@@ -35,9 +35,7 @@ namespace GUI
         public Produtividade()
         {
             InitializeComponent();          
-
         }
-
 
         private void geraRelatorio(object sender, RoutedEventArgs e)
         {
@@ -57,7 +55,6 @@ namespace GUI
                 valores.Add(item.mediaPorHora);
                 nomes.Add(item.nomesFuncionarios);
             }
-
       
             ColumnSeries colunas = new ColumnSeries
             {

@@ -9,7 +9,7 @@ namespace DAL
     public class TarefasBD
     {
         /// <summary>
-        /// Insere um novo registro de tarefa no banco de dados
+        /// Insere um novo registro de tarefa no banco de dados e altera o status dos funcionários
         /// </summary>
         /// <param name="novaTarefa">Dados do novo registro</param>
         /// <returns>True se o comando foi executado sem erros, False se houve algum erro</returns>
@@ -71,6 +71,11 @@ namespace DAL
             }
         }
 
+
+        /// <summary>
+        /// Retorna lista de tarefas referentes a um manifesto. Caso o tipo seja conferências.
+        /// </summary>
+        /// <param name="tipo">Tipo de tarefas desejadas</param>
         public List<TarefaModelo> getTarefasDivergencia(int tipo, int manifesto)
         {
             List<TarefaModelo> listaModelo = new List<TarefaModelo>();
@@ -81,29 +86,28 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     if (tipo == 2)
-                    {
+                    { //Se o tipo desejado for Conferência, retorna todas as tarefas com ctes relacionados com o manifesto informado
                         var ctes = BancoDeDados.Cte_Manifesto.Where(m => m.Manifesto == manifesto).Select(c => c.Cte).ToList();
                         foreach (int cte in ctes)
                         {
                             lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == cte).FirstOrDefault());
-                        }
-                        listaModelo = tarefaModeloParse(lista);
+                        }                        
+                    } 
 
-                    }
                     else
-                    {
-                        lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == manifesto).FirstOrDefault());
+                    { //Se for outro tipo, retorna só aquele tipo e manifesto
+                        lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == manifesto && c.tipoTarefa == tipo.ToString()).FirstOrDefault());
                     }
+                    listaModelo = tarefaModeloParse(lista);
                 }
             }
             catch (Exception e)
             {
                 var whatHapened = e;
             }
-
             return listaModelo;
-
         }
+
 
         public List<ItemRanking> rankingFuncionarios(List<TarefaModelo> tarefasPeriodo)
         {
@@ -284,8 +288,7 @@ namespace DAL
                 return false;
             }
         }
-
-
+        
         public string nomesFuncTarefa(int idTarefa)
         {
             FuncionariosBD f = new FuncionariosBD();

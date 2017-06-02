@@ -7,6 +7,9 @@ namespace DAL
 {
     public class DocumentosBD
     {
+        /// <summary>
+        /// Altera o manifesto para constar a soma dos SKUs de cada NF do manifesto
+        /// </summary>
         public bool alterarSkuManifesto(int numManifesto)
         {
             try
@@ -142,6 +145,9 @@ namespace DAL
             return dados;
         }
 
+        /// <summary>
+        /// Retorna uma string com o Fornecedor das NFs no Cte informado
+        /// </summary>
         public string getFornecedorCte(int idCte)
         {
             try
@@ -280,13 +286,16 @@ namespace DAL
             return volumes;
         }
 
-        public bool inserirCteNf(string numNF, string fornecedor, int numeroCte)
+        /// <summary>
+        /// Altera uma NF para constar o número do Cte
+        /// </summary>
+        public bool inserirCteNf(string numNF, int numeroCte)
         {
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    NotasFiscais nfAtual = BancoDeDados.NotasFiscais.FirstOrDefault(nf => nf.numeroNF == numNF); //&& nf.fonecedorNF == fornecedor);
+                    NotasFiscais nfAtual = BancoDeDados.NotasFiscais.FirstOrDefault(nf => nf.numeroNF == numNF);
                     nfAtual.CteNF = numeroCte;
                     BancoDeDados.SaveChanges();
                 }
@@ -368,7 +377,6 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    //Funcionarios funcAtual = BancoDeDados.Funcionarios.Single(f => f.idFunc == novoFunc.idFunc);
                     Manifestos m = BancoDeDados.Manifestos.SingleOrDefault(man => man.numeroManifesto == numDoc);
                     dados = "Manifesto nº " + m.numeroManifesto + " - " + m.quantCtesManifesto + " entregas - " + m.VolumesManifesto + " volumes - " + m.skusManifesto + " SKU's - " + m.pesoManifesto + " Kg";
                 }
