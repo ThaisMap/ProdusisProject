@@ -110,11 +110,11 @@ namespace BLL
                 xlWorkSheet.Cells[1, 12] = "Peso(Kg)";
                 xlWorkSheet.Cells[1, 13] = "Fornecedor";
                 xlWorkSheet.Cells[1, 14] = "Códigos Falta";
-                xlWorkSheet.Cells[1, 15] = "Qtde  Falta";
+                xlWorkSheet.Cells[1, 15] = "Qtde Falta";
                 xlWorkSheet.Cells[1, 16] = "Códigos Sobra";
-                xlWorkSheet.Cells[1, 17] = "Qtde  Sobra";
+                xlWorkSheet.Cells[1, 17] = "Qtde Sobra";
                 xlWorkSheet.Cells[1, 18] = "Códigos Avaria";
-                xlWorkSheet.Cells[1, 19] = "Qtde  Avaria";
+                xlWorkSheet.Cells[1, 19] = "Qtde Avaria";
 
                 int linha = 2;
 

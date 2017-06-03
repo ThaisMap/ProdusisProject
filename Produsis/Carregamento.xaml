@@ -34,7 +34,7 @@
                           Margin="20,20,0,5">
                         <StackPanel>
                             <TextBlock Text="Novo Carregamento" Margin="0,0,350,0" />
-                            <Grid Margin="40,5">
+                            <Grid Margin="10,5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto" />
                                     <ColumnDefinition />

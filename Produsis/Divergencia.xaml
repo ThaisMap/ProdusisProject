@@ -16,7 +16,7 @@
              TextElement.FontWeight="Regular"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              mc:Ignorable="d">
-    
+
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -39,8 +39,8 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="250" />
                             <ColumnDefinition Width="250" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="79*" />
                         </Grid.ColumnDefinitions>
                         <ComboBox x:Name="cbTipoTarefa" Grid.Column="0"
                                   HorizontalAlignment="Left"
@@ -72,15 +72,13 @@
                                         PreviewTextInput="testarCaractere"                                                        
                                         Style="{StaticResource MaterialDesignTextBox}" />
                         <Button x:Name="btnConsultar"
-                    Grid.Row="0"
-                    Grid.Column="2"
-                    Margin="10,0,40,9"
-                    VerticalAlignment="Bottom" Click="btnConsultar_Click" Content="Consultar" Height="41" Width="100" />
+                                Grid.Row="0"   Grid.Column="2"
+                                Width="100" Height="40" Margin="0,9"
+                                VerticalAlignment="Bottom" Click="btnConsultar_Click" Content="Consultar" />
                         <Button x:Name="btnSalvar"
-                    Grid.Row="0"
-                    Grid.Column="3"
-                    Margin="10,0,40,9"
-                    VerticalAlignment="Bottom"  Content="Salvar" Height="41" Width="100" Click="btnSalvar_Click" />
+                                Grid.Row="0" Grid.Column="3"
+                                Width="100" Height="40" Margin="0,9"
+                                VerticalAlignment="Bottom" HorizontalAlignment="Left" Content="Salvar" Click="btnSalvar_Click" />
                         <TextBlock Grid.Row="1" Margin="10,9,10,8" VerticalAlignment="Center" Style="{StaticResource MaterialDesignHeadlineTextBlock}" Height="28">Ct-es no Manifesto</TextBlock>
 
                     </Grid>
@@ -93,7 +91,7 @@
                             <DataGridTemplateColumn Header="Código Faltas">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                       <TextBox Text="{Binding Path=codFalta, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="50"/>
+                                        <TextBox Text="{Binding Path=codFalta, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="50"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>

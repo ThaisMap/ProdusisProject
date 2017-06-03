@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Menu"
     Width="1060"
-    Height="710"
+    Height="680"
     MinWidth="800"
     MinHeight="600"
     Background="{DynamicResource MaterialDesignPaper}"
@@ -36,19 +36,18 @@
             Width="auto"
             Height="60"
             materialDesign:ShadowAssist.ShadowDepth="Depth2"
-            Mode="PrimaryDark" />
+            Mode="PrimaryLight"/>
         <Grid
-            Grid.Row="1"
-            Grid.Column="1"
             HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch">
+            VerticalAlignment="Stretch" Margin="0,0,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
-                <RowDefinition />
+                <RowDefinition Height="600"/>
             </Grid.RowDefinitions>
+            <!--Botoes-->
             <StackPanel
                 Grid.Row="0"
                 Grid.Column="0"
@@ -109,7 +108,7 @@
                 Grid.Row="1"
                 Grid.Column="0"
                 MinHeight="500"
-                Margin="30,32,30,44"
+                Margin="20,10,20,10"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 NavigationUIVisibility="Hidden" />

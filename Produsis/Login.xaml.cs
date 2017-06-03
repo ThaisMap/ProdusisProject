@@ -27,8 +27,8 @@ namespace GUI
                         TelaPrincipal view = new TelaPrincipal();
                         if (l.tipoFuncionario(TxbLogin.Text) == "1")
                         {
-                            view.BtnAdministrativo.IsEnabled = false;
-                            view.BtnDivergencia.IsEnabled = false;
+                            view.BtnAdministrativo.Visibility = Visibility.Collapsed;
+                            view.BtnDivergencia.Visibility = Visibility.Collapsed;
                         }
                         this.Close();
                         view.Show();
