@@ -13,7 +13,7 @@
     MinHeight="600"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-    Icon="Icone Produsis.ico"
+    Icon="icone_2_produsis.ico"
     TextElement.FontSize="16"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     WindowStartupLocation="CenterScreen"

@@ -20,10 +20,13 @@ namespace DAL
             {
                 MailItem email = (MailItem)app.Session.OpenSharedItem(nomeArquivo);
 
+                int i = 0;
                 foreach (Attachment anexo in email.Attachments)
                 {
-                        string nomeXML = PastasXml.Default.PastaNFs + "\\" + anexo.FileName;
-                        anexo.SaveAsFile(nomeXML);
+                    string nomeXML = PastasXml.Default.PastaNFs + "\\" + anexo.FileName;
+                    nomeXML = nomeXML.Insert(nomeXML.Length - 4, i.ToString());
+                    anexo.SaveAsFile(nomeXML);
+                    i++;
                 }
 
                 app.Quit();

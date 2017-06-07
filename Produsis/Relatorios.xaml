@@ -12,7 +12,7 @@
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d" Loaded="UserControl_Loaded">
-    <ScrollViewer Height="450" CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <StackPanel>
             <TextBlock
                 Margin="20,10,0,0"
