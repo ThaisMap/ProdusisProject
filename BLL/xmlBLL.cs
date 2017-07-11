@@ -1,5 +1,6 @@
 ﻿using DAL;
 using DAL.Properties;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -60,8 +61,22 @@ namespace BLL
                     else
                         File.Delete(f);
                 }
+                //Percorre pasta de manifestos, importa os dados do xml e apaga o restante
+                foreach (string f in Directory.GetFiles(PastasXml.Default.PastaPreManifestos))
+                {
+                    var ext = extensao(f);
+                    if (ext == "xml")
+                    {
+                        xml.lerPreManifesto(f);
+                        moverArquivo(f);
+                    }
+                    else
+                        File.Delete(f);
+                }
             }
-            catch { }
+            catch (Exception ex){
+                var erro = ex;
+            }
         }
 
         /// <summary>
@@ -79,16 +94,17 @@ namespace BLL
         {
             Directory.CreateDirectory(PastasXml.Default.PastaNFs + "\\old");
             Directory.CreateDirectory(PastasXml.Default.PastaManifestos + "\\old");
+            Directory.CreateDirectory(PastasXml.Default.PastaPreManifestos + "\\old");
             string novaPasta;
             if (nomeArquivo.Contains(PastasXml.Default.PastaManifestos))
                 novaPasta = nomeArquivo.Replace(PastasXml.Default.PastaManifestos, PastasXml.Default.PastaManifestos + "\\old");
             else
+                if (nomeArquivo.Contains(PastasXml.Default.PastaPreManifestos))
+                    novaPasta = nomeArquivo.Replace(PastasXml.Default.PastaPreManifestos, PastasXml.Default.PastaPreManifestos + "\\old");
+            else
                 novaPasta = nomeArquivo.Replace(PastasXml.Default.PastaNFs, PastasXml.Default.PastaNFs + "\\old");
             try { File.Move(nomeArquivo, novaPasta); }
-            catch
-            {
-                File.Delete(nomeArquivo);
-            }
+            catch {  File.Delete(nomeArquivo);   }
             return novaPasta;
         }
     }

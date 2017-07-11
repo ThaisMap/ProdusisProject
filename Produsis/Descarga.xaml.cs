@@ -92,11 +92,11 @@ namespace GUI
 
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
-            if (checarCampos() && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "0"))
+            if (checarCampos() && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "0") && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "5"))
             {
                 if (t.inserirTarefa(montarTarefa(), funcionarios()))
                 {
-                    dgTarefas.ItemsSource = t.tarefasPendentes("0");
+                    dgTarefas.ItemsSource = t.tarefasPendentes("0","5");
                     MessageBox.Show("Descarga iniciada para o " + d.linhaDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Descarga iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                     Documento.Text = "";
                     CBFuncionario.SelectedIndex = -1;
@@ -129,10 +129,14 @@ namespace GUI
 
         private Tarefas montarTarefa()
         {
-            Tarefas novaTarefa = new Tarefas();
-            novaTarefa.documentoTarefa = int.Parse(Documento.Text.Replace("_", ""));
-            novaTarefa.inicioTarefa = DateTime.Now;
-            novaTarefa.tipoTarefa = "0";
+            Tarefas novaTarefa = new Tarefas()
+            {
+                documentoTarefa = int.Parse(Documento.Text.Replace("_", "")),
+                inicioTarefa = DateTime.Now
+            };
+            //one line if else  
+            novaTarefa.tipoTarefa = (bool)cbPaletizado.IsChecked ? "5" : "0";
+
             return novaTarefa;
         }
         

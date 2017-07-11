@@ -10,6 +10,8 @@ namespace GUI
         public TelaPrincipal()
         {
             InitializeComponent();
+            Height = SystemParameters.PrimaryScreenHeight-50;
+            Navegador.Height = Height - 60;            
             BtnConferencia.Opacity = 0.5;
             Navegador.Navigate(new Conferencia());
         }

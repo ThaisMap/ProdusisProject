@@ -164,8 +164,9 @@
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Manifesto" Binding="{Binding documentoTarefa}" />
                                         <DataGridTextColumn Header="Funcionários" Binding="{Binding nomesFuncionarios}" />
-                                        <DataGridTextColumn Header="Data Início" Binding="{Binding dataInicio}" />
                                         <DataGridTextColumn Header="Hora Início" Binding="{Binding horaInicio}" />
+                                        <DataGridTextColumn Header="SKU's" Binding="{Binding skus}" />
+                                        <DataGridTextColumn Header="Volumes" Binding="{Binding volumes}" />
                                         <DataGridTextColumn Header="Tempo Gasto" Binding="{Binding tempoGasto}" />
                                         <DataGridTemplateColumn Header="Finalizar Tarefa">
                                             <DataGridTemplateColumn.CellTemplate>

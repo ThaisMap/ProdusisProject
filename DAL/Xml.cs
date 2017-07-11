@@ -5,6 +5,7 @@ using System.Xml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace DAL
 {
@@ -24,7 +25,10 @@ namespace DAL
                 foreach (Attachment anexo in email.Attachments)
                 {
                     string nomeXML = PastasXml.Default.PastaNFs + "\\" + anexo.FileName;
-                    nomeXML = nomeXML.Insert(nomeXML.Length - 4, i.ToString());
+                    while (File.Exists(nomeXML))
+                    {
+                        nomeXML = nomeXML.Insert(nomeXML.Length - 4, i.ToString());
+                    }
                     anexo.SaveAsFile(nomeXML);
                     i++;
                 }
@@ -84,6 +88,54 @@ namespace DAL
                 return false;
             }
         }
+
+        /// <summary>
+        /// Importa os dados de xml de manifestos na pasta padrão
+        /// </summary>
+        public bool lerPreManifesto(string nomeArquivo)
+        {
+            try
+            {
+
+                XmlDocument manifesto = new XmlDocument();
+                manifesto.Load(nomeArquivo);
+
+                var ValueResult = manifesto.GetElementsByTagName("Value");
+                var TextResult = manifesto.GetElementsByTagName("TextValue");
+                DocumentosBD docBD = new DocumentosBD();
+                Manifestos lido = new Manifestos()
+                {
+                    numeroManifesto = int.Parse(nomeArquivo.Replace(PastasXml.Default.PastaPreManifestos + "\\", "").Replace(".xml", "")),
+                    VolumesManifesto = (int)double.Parse(ValueResult[ValueResult.Count - 4].InnerText.Replace('.', ',')),
+                    pesoManifesto = double.Parse(ValueResult[ValueResult.Count - 1].InnerText.Replace('.', ',')),
+                    quantCtesManifesto = (int)double.Parse(ValueResult[ValueResult.Count - 2].InnerText.Replace('.', ','))
+                };
+                if (!docBD.cadastrarManifesto(lido))
+                {
+                   // return false;
+                }
+
+                int cte;
+                int indexNF = 0;
+
+                for (int i = 2; i < ValueResult.Count - 4; i = i + 7)
+                {
+                    cte = int.Parse(ValueResult[i].InnerText);
+                    criarCte(cte);
+                    alterarUmaNf(TextResult[indexNF].InnerText, cte);
+                    indexNF++;
+                    criarCteManifesto(cte, lido.numeroManifesto);
+                }
+
+                docBD.alterarSkuManifesto(lido.numeroManifesto);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
 
         /// <summary>
         /// Importa os dados de xml de notas fiscais na pasta padrão
@@ -229,6 +281,22 @@ namespace DAL
                     retorno = false; //false se alguma nota não estiver cadastrada
             }
             return retorno;
+        }
+
+        /// <summary>
+        /// Dispara a alteração de uma nf para incluir o cte
+        /// </summary>
+        private bool alterarUmaNf(string nf, int cte)
+        {
+           DocumentosBD dbd = new DocumentosBD();
+            nf = nf.TrimStart('0');
+            NotasFiscais nova = dbd.getNFPorNumero(nf);
+            if (nova != null)
+            {
+                return dbd.inserirCteNf(nf, cte);
+            }
+            else
+                return false; //false se a nota não estiver cadastrada
         }
 
         private void criarCte(int cte)

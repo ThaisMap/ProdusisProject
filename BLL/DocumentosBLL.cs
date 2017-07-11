@@ -66,6 +66,11 @@ namespace BLL
             return PastasXml.Default.PastaNFs;
         }
 
+        public string getPastaPreManifestos()
+        {
+            return PastasXml.Default.PastaPreManifestos;
+        }
+
         public string getPastaManifestos()
         {
             return PastasXml.Default.PastaManifestos;
@@ -80,6 +85,11 @@ namespace BLL
         public void setPastasManifesto(string caminho)
         {
             PastasXml.Default.PastaManifestos = caminho;
+            PastasXml.Default.Save();
+        }
+        public void setPastasPreManifesto(string caminho)
+        {
+            PastasXml.Default.PastaPreManifestos = caminho;
             PastasXml.Default.Save();
         }
     }

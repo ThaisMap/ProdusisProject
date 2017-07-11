@@ -15,7 +15,7 @@ namespace ProdusisBD
             tipoTarefa = tipoExtenso(tarefa.tipoTarefa);
             preencheDatas();
             atualizaTempoGasto();
-            divergenciaTarefa = tarefa.divergenciaTarefa;
+            divergenciaTarefa = tarefa.divergenciaTarefa; 
         }
 
         private string tipoExtenso(string tipo)
@@ -30,8 +30,12 @@ namespace ProdusisBD
                     return "Conferência";
                 case "3":
                     return "Sep. para carregar";
-                default:
+                case "4":
                     return "Carregamento";
+                case "5":
+                    return "Descarga Paletizada";
+                default:
+                    return "Carregamento Paletizado";
             }
         }
 
@@ -103,8 +107,12 @@ namespace ProdusisBD
         public void atualizaPontuação()
         {
             pontos = skus * 5 + volumes;
-            double segundos = ((DateTime)fimTarefa - inicioTarefa).TotalSeconds;
-            pontosPorHora = pontos / segundos * 3600;
+            if (fimTarefa != null)
+                pontosPorHora = pontos / ((DateTime)fimTarefa - inicioTarefa).TotalSeconds * 3600;
+            else
+                pontosPorHora = 0;
+
+            
         }
 
         public void preencheDatas()

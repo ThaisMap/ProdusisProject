@@ -17,6 +17,7 @@ namespace GUI
             InitializeComponent();
             CaminhoPastaNFs.Text = d.getPastaNFs();
             CaminhoPastaMan.Text = d.getPastaManifestos();
+            CaminhoPastaPreMan.Text = d.getPastaPreManifestos();
         }
 
         private void AlteraNF_Click(object sender, RoutedEventArgs e)
@@ -39,6 +40,15 @@ namespace GUI
         {
             d.setPastasNF(CaminhoPastaNFs.Text);
             d.setPastasManifesto(CaminhoPastaMan.Text);
+            d.setPastasPreManifesto(CaminhoPastaPreMan.Text);
+        }
+
+        private void AlteraPreMan_Click(object sender, RoutedEventArgs e)
+        {
+            var dialogo = new WPFFolderBrowserDialog("Pasta de Pré-Manifestos");
+            dialogo.InitialDirectory = CaminhoPastaPreMan.Text;
+            if (dialogo.ShowDialog().Value)
+                CaminhoPastaPreMan.Text = dialogo.FileName;
         }
     }
 }

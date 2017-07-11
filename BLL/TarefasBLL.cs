@@ -38,11 +38,21 @@ namespace BLL
             return t.cadastrar(novaTarefa, idsFuncionarios);
         }
 
+        public List<TarefaModelo> tarefasPendentes(string tipo1, string tipo2)
+        {
+            var teste = t.getTarefasPendentes(tipo1);
+            teste.AddRange(t.getTarefasPendentes(tipo2));
+            return teste;
+        }
+
         public List<TarefaModelo> tarefasPendentes(string tipo)
         {
             return t.getTarefasPendentes(tipo);
         }
 
+        /// <summary>
+        /// Retorna true se não for repetido
+        /// </summary>
         public bool tarefaRepetida(int documento, string tipo)
         {
             return t.verificaDocumentoTarefa(documento, tipo);
@@ -137,11 +147,14 @@ namespace BLL
                     xlWorkSheet.Cells[linha, 11] = i.pontosPorHora;
                     xlWorkSheet.Cells[linha, 13] = i.fornecedor;
                     xlWorkSheet.Cells[linha, 14] = divergencias[0];
-                    xlWorkSheet.Cells[linha, 15] = divergencias[1];
-                    xlWorkSheet.Cells[linha, 16] = divergencias[2];
-                    xlWorkSheet.Cells[linha, 17] = divergencias[3];
-                    xlWorkSheet.Cells[linha, 18] = divergencias[4];
-                    xlWorkSheet.Cells[linha, 19] = divergencias[5];
+                    if (divergencias.Length > 1)
+                    {
+                        xlWorkSheet.Cells[linha, 15] = divergencias[1];
+                        xlWorkSheet.Cells[linha, 16] = divergencias[2];
+                        xlWorkSheet.Cells[linha, 17] = divergencias[3];
+                        xlWorkSheet.Cells[linha, 18] = divergencias[4];
+                        xlWorkSheet.Cells[linha, 19] = divergencias[5];
+                    }
                     linha++;
                 }
                 

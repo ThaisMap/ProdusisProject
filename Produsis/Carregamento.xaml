@@ -111,6 +111,7 @@
                                         Margin="0,0,0,10" Width="71" Click="Iniciar_Click">
                                     Iniciar
                                 </Button>
+                                <CheckBox Name="cbPaletizado" Content="Carga paletizada" HorizontalAlignment="Left" Margin="15,0" Grid.Row="2" VerticalAlignment="Center"/>
                             </Grid>
                             <Separator />
                             <Grid>
@@ -148,8 +149,9 @@
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Manifesto" Binding="{Binding documentoTarefa}" />
                                         <DataGridTextColumn Header="Funcionários" Binding="{Binding nomesFuncionarios}" />
-                                        <DataGridTextColumn Header="Data Início" Binding="{Binding dataInicio}" />
                                         <DataGridTextColumn Header="Hora Início" Binding="{Binding horaInicio}" />
+                                        <DataGridTextColumn Header="SKU's" Binding="{Binding skus}" />
+                                        <DataGridTextColumn Header="Volumes" Binding="{Binding volumes}" />
                                         <DataGridTextColumn Header="Tempo Gasto" Binding="{Binding tempoGasto}" />
                                         <DataGridTemplateColumn Header="Finalizar Tarefa">
                                             <DataGridTemplateColumn.CellTemplate>

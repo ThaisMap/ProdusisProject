@@ -8,11 +8,11 @@
     VerticalAlignment="Stretch"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-    TextElement.FontSize="14"
+    TextElement.FontSize="13"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d" Loaded="UserControl_Loaded">
-    <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <ScrollViewer CanContentScroll="True" Height="AUTO" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <StackPanel>
             <TextBlock
                 Margin="20,10,0,0"
@@ -21,7 +21,7 @@
                 Relatórios
             </TextBlock>
             <Separator />
-            <Grid x:Name="GridFiltros" Height="158" HorizontalAlignment="Left" Margin="30,5" Width="825">
+            <Grid x:Name="GridFiltros" Height="auto" HorizontalAlignment="Stretch" Margin="30,5" Width="825">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="auto" />
@@ -183,7 +183,7 @@
                 </DataGrid.Columns>
             </DataGrid>
             <Button x:Name="btnExportar" Content="Exportar" Width="100"
-                    Margin="55,0,5,9"
+                    Margin="55,0,5,5"
                     VerticalAlignment="Bottom"  HorizontalAlignment="Right"  Click="btnExportar_Click"  />
 
         </StackPanel>

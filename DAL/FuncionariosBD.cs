@@ -206,6 +206,7 @@ namespace DAL
         /// <summary>
         /// Verifica se o Funcionário indicado está cadastrado no banco de dados
         /// </summary>
+        /// 
         /// <param name="matricula">Martricula do Funcionário</param>
         /// <returns>True se estiver cadastrado, False se não estiver ou se ocorrer um erro</returns>
         public bool verificaUsuarioCadastrado(string matricula)

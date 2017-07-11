@@ -88,7 +88,7 @@
                         Style="{StaticResource MaterialDesignFlatButton}" Click="Button_Click" />
             </Grid>
             <Separator />
-            <Grid HorizontalAlignment="Center">
+            <Grid Name="dgDados" HorizontalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="auto" />

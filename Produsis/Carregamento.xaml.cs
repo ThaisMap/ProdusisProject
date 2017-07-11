@@ -93,11 +93,11 @@ namespace GUI
 
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
-            if (checarCampos() && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "4"))
+            if (checarCampos() && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "4") && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "6"))
             {
                 if (t.inserirTarefa(montarTarefa(), funcionarios()))
                 {
-                    dgTarefas.ItemsSource = t.tarefasPendentes("4");
+                    dgTarefas.ItemsSource = t.tarefasPendentes("4","6");
                     MessageBox.Show("Carregamento iniciado para o " + d.linhaDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Carregamento iniciado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                     Documento.Text = "";
                     CBFuncionario.SelectedIndex = -1;
@@ -130,10 +130,14 @@ namespace GUI
 
         private Tarefas montarTarefa()
         {
-            Tarefas novaTarefa = new Tarefas();
-            novaTarefa.documentoTarefa = int.Parse(Documento.Text.Replace("_", ""));
-            novaTarefa.inicioTarefa = DateTime.Now;
-            novaTarefa.tipoTarefa = "4";
+            Tarefas novaTarefa = new Tarefas()
+            {
+                documentoTarefa = int.Parse(Documento.Text.Replace("_", "")),
+                inicioTarefa = DateTime.Now
+                };
+            //one line if else  
+            novaTarefa.tipoTarefa = (bool)cbPaletizado.IsChecked ? "6" : "4";
+
             return novaTarefa;
         }
 

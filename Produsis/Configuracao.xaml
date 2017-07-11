@@ -8,7 +8,7 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch"
-             d:DesignHeight="250"
+             d:DesignHeight="320"
              d:DesignWidth="600"
              xmlns:Validacoes ="clr-namespace:Produsis.Validacoes"
              d:DataContext="{d:DesignInstance Validacoes:TextFieldsViewModel, d:IsDesignTimeCreatable=False}"
@@ -21,10 +21,11 @@
     <Grid>
         <Grid Margin="0,10,0,10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="45*" />
+                <RowDefinition Height="45" />
                 <RowDefinition Height="65*" />
                 <RowDefinition Height="65*" />
-                <RowDefinition Height="60*" />
+                <RowDefinition Height="65*" />
+                <RowDefinition Height="60" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="97*" />
@@ -51,9 +52,9 @@
             <Button
                 Grid.Column="1" Grid.Row="1"
                 VerticalAlignment="Top" HorizontalAlignment="Left"
-                x:Name="AlteraNF" Content="Alterar"
+                x:Name="AlteraNF" Content="Alterar NF"
                 Style="{StaticResource MaterialDesignFlatButton}"
-                Margin="5,18,0,0" Height="30" Width="100" Click="AlteraNF_Click" />
+                Margin="5,18,0,0" Height="30" Width="200" Click="AlteraNF_Click" />
             <TextBox
                     Grid.Column="0"
                     Grid.Row="2"
@@ -63,11 +64,23 @@
             <Button
                 Grid.Column="1" Grid.Row="2"
                 VerticalAlignment="Top" HorizontalAlignment="Left"
-                x:Name="AlteraMan" Content="Alterar"
+                x:Name="AlteraMan" Content="Alterar Manifestos"
                 Style="{StaticResource MaterialDesignFlatButton}"
-                Margin="5,18,0,0" Height="30" Width="100" Click="AlteraMan_Click" />
-            <Button Grid.Column="1" Grid.Row="3"
+                Margin="5,18,0,0" Height="30" Width="200" Click="AlteraMan_Click" />
+            <TextBox
+                    Grid.Column="0"
+                    Grid.Row="3"
+                VerticalAlignment="Top"
+                    Name="CaminhoPastaPreMan"
+                         IsReadOnly="True" Margin="20,10,20,0" Height="38">Pasta Pre Manifestos</TextBox>
+            <Button Grid.Column="1" Grid.Row="4"
                 x:Name="Salvar" Content="Salvar" Margin="73,10,0,0" VerticalAlignment="Top" Width="100" Click="Salvar_Click" />
+            <Button
+                Grid.Column="1" Grid.Row="3"
+                VerticalAlignment="Top" HorizontalAlignment="Left"
+                x:Name="AlteraPreMan" Content="Alterar Pré-Manifestos"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                Margin="5,18,0,0" Height="30" Width="200" Click="AlteraPreMan_Click" />
         </Grid>
     </Grid>
 </UserControl>

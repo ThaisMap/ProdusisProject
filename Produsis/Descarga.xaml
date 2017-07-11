@@ -103,6 +103,8 @@
                                             Click="Inserir_Click"
                                             Style="{StaticResource MaterialDesignFlatButton}" Content="Incluir" />
                                 </StackPanel>
+                                <CheckBox Name="cbPaletizado" Content="Carga paletizada" HorizontalAlignment="Left" Margin="15,0" Grid.Row="2" VerticalAlignment="Center"/>
+
                                 <Button Name= "Iniciar"
                                         Grid.Row="3"
                                         Grid.Column="1"
@@ -146,15 +148,16 @@
                                     ColumnWidth="*"
                                     IsReadOnly="True">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Manifesto" Binding="{Binding documentoTarefa}" />
+                                        <DataGridTextColumn Header="Manifesto" Width="Auto" Binding="{Binding documentoTarefa}" />
                                         <DataGridTextColumn Header="Funcionários" Binding="{Binding nomesFuncionarios}" />
-                                        <DataGridTextColumn Header="Data Início" Binding="{Binding dataInicio}" />
-                                        <DataGridTextColumn Header="Hora Início" Binding="{Binding horaInicio}" />
-                                        <DataGridTextColumn Header="Tempo Gasto" Binding="{Binding tempoGasto}" />
-                                        <DataGridTemplateColumn Header="Finalizar Tarefa">
+                                        <DataGridTextColumn Header="Hora Início" Width="Auto" Binding="{Binding horaInicio}" />
+                                        <DataGridTextColumn Header="SKU's" Width="Auto" Binding="{Binding skus}" />
+                                        <DataGridTextColumn Header="Volumes" Width="Auto" Binding="{Binding volumes}" />
+                                        <DataGridTextColumn Header="Tempo Gasto" Width="Auto" Binding="{Binding tempoGasto}" />
+                                        <DataGridTemplateColumn Header="Finalizar Tarefa" Width="Auto">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Button Click="Finalizar_Click">Finalizar</Button>
+                                                    <Button Width="Auto" Click="Finalizar_Click">Finalizar</Button>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>

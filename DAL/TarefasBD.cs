@@ -245,23 +245,17 @@ namespace DAL
             List<Tarefas> pendentes = new List<Tarefas>();
             List<TarefaModelo> pendentesModelo = new List<TarefaModelo>();
             FuncionariosBD f = new FuncionariosBD();
-            TarefaModelo Aux;
 
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     pendentes = (from Tarefas in BancoDeDados.Tarefas where Tarefas.fimTarefa == null where Tarefas.tipoTarefa == tipoTarefa select Tarefas).ToList();
-                    foreach (Tarefas tarefa in pendentes)
-                    {
-                        Aux = new TarefaModelo(tarefa);
-                        Aux.nomesFuncionarios = nomesFuncTarefa(Aux.idTarefa);
-                        
-                        pendentesModelo.Add(Aux);
-                    }
+                    pendentesModelo = tarefaModeloParse(pendentes);
                 }
                 return pendentesModelo;
             }
+
             catch
             {
                 return new List<TarefaModelo>();

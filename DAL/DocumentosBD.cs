@@ -193,7 +193,7 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     return (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.numeroNF.StartsWith(numNF) select NotasFiscais).FirstOrDefault();
-                }
+                } 
             }
             catch
             {
@@ -302,6 +302,28 @@ namespace DAL
                 return true;
             }
             catch(Exception ex)
+            {
+                var erro = ex;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Altera uma NF para constar o número do Cte
+        /// </summary>
+        public bool inserirCteNfPorId(int id, int numeroCte)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    NotasFiscais nfAtual = BancoDeDados.NotasFiscais.FirstOrDefault(nf => nf.idNF == id);
+                    nfAtual.CteNF = numeroCte;
+                    BancoDeDados.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception ex)
             {
                 var erro = ex;
                 return false;
