@@ -68,7 +68,9 @@ namespace DAL
                 lido.quantCtesManifesto = (int)double.Parse(result[result.Count - 4].InnerText.Replace('.', ','));
 
                 if (!docBD.cadastrarManifesto(lido))
-                { return false; }
+                {
+                 //   return false;
+                }
 
                 int cte;
 

@@ -25,9 +25,11 @@ namespace DAL
                     FuncionariosBD fBd = new FuncionariosBD();
                     foreach (int i in funcionarios)
                     {
-                        ft = new Func_Tarefa();
-                        ft.Tarefa = novaTarefa.idTarefa;
-                        ft.Funcionario = i;
+                        ft = new Func_Tarefa()
+                        {
+                            Tarefa = novaTarefa.idTarefa,
+                            Funcionario = i
+                        };
                         BancoDeDados.Func_Tarefa.Add(ft);
                         BancoDeDados.SaveChanges();
                         fBd.editarOcupacaoFuncionario(i, true);
@@ -76,7 +78,7 @@ namespace DAL
         /// Retorna lista de tarefas referentes a um manifesto. Caso o tipo seja conferências.
         /// </summary>
         /// <param name="tipo">Tipo de tarefas desejadas</param>
-        public List<TarefaModelo> getTarefasDivergencia(int tipo, int manifesto)
+        public List<TarefaModelo> getTarefasDivergencia(int tipo, int documento)
         {
             List<TarefaModelo> listaModelo = new List<TarefaModelo>();
             List<Tarefas> lista = new List<Tarefas>();
@@ -86,8 +88,10 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     if (tipo == 2)
-                    { //Se o tipo desejado for Conferência, retorna todas as tarefas com ctes relacionados com o manifesto informado
-                        var ctes = BancoDeDados.Cte_Manifesto.Where(m => m.Manifesto == manifesto).Select(c => c.Cte).ToList();
+                    {
+                        //Se o tipo desejado for Conferência, retorna todas as tarefas com ctes relacionados com o manifesto dp cte informado
+                        int manif = BancoDeDados.Cte_Manifesto.Where(c => c.Cte == documento).Select(m => m.Manifesto).FirstOrDefault();
+                        var ctes = BancoDeDados.Cte_Manifesto.Where(m => m.Manifesto == manif).Select(c => c.Cte).ToList();
                         foreach (int cte in ctes)
                         {
                             lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == cte).FirstOrDefault());
@@ -96,7 +100,7 @@ namespace DAL
 
                     else
                     { //Se for outro tipo, retorna só aquele tipo e manifesto
-                        lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == manifesto && c.tipoTarefa == tipo.ToString()).FirstOrDefault());
+                        lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == documento && c.tipoTarefa == tipo.ToString()).FirstOrDefault());
                     }
                     listaModelo = tarefaModeloParse(lista);
                 }

@@ -11,7 +11,6 @@ namespace GUI
         {
             InitializeComponent();
             Height = SystemParameters.PrimaryScreenHeight-50;
-            Navegador.Height = Height - 60;            
             BtnConferencia.Opacity = 0.5;
             Navegador.Navigate(new Conferencia());
         }
@@ -26,7 +25,6 @@ namespace GUI
             BtnSerapacao.Opacity = 1;
             BtnDivergencia.Opacity = 1;
         }
-
         #region Botoes
 
         private void BtnDescarga_Click(object sender, RoutedEventArgs e)

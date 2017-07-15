@@ -27,11 +27,13 @@ namespace GUI
 
         public Filtro montarObjeto()
         {
-            Filtro filtros = new Filtro();
-            filtros.TipoTarefa = cbTipoTarefa.SelectedIndex.ToString();
+            Filtro filtros = new Filtro()
+            {
+                TipoTarefa = cbTipoTarefa.SelectedIndex.ToString(),
+                dataInicio = dataInicio.SelectedDate,
+                dataFim = dataFinal.SelectedDate.Value.AddDays(1).AddSeconds(-1)
+            };
             var aux = int.TryParse(tbDocumento.Text, out filtros.numDocumento);
-            filtros.dataInicio = dataInicio.SelectedDate;
-            filtros.dataFim = dataFinal.SelectedDate.Value.AddDays(1).AddSeconds(-1);
             aux = int.TryParse(volumeInicial.Text, out filtros.volumeInicio);
             aux = int.TryParse(volumeFinal.Text, out filtros.volumeFim);
             aux = int.TryParse(skuInicio.Text, out filtros.skuInicio);
@@ -78,10 +80,12 @@ namespace GUI
         {
             if (dgTarefas.Items.Count > 0)
             {
-                SaveFileDialog dialogo = new SaveFileDialog();
-                dialogo.DefaultExt = "xls";
-
-                dialogo.Title = "Salvar relatório - Produsis";
+                SaveFileDialog dialogo = new SaveFileDialog()
+                {
+                    DefaultExt = "xls",
+                    Title = "Salvar relatório - Produsis",
+                    AddExtension = true
+                };                
 
                 if (dialogo.ShowDialog() == true)
                 {

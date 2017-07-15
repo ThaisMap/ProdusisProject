@@ -60,14 +60,13 @@
                             Grid.Column="1"
                                         Width="22"
                                         Height="22"
-                                        VerticalAlignment="Bottom"
-                            
+                                        VerticalAlignment="Bottom"                            
                                         Foreground="{Binding ElementName=Documento, Path=BorderBrush}"
                                         Kind="FileDocument" RenderTransformOrigin="1.25,0.455" Margin="0,0,0,10" />
                         <TextBox        Name="Documento"
                                         Grid.Column="1"
                                         Margin="27,10,10,5"
-                                        materialDesign:HintAssist.Hint="Manifesto"
+                                        materialDesign:HintAssist.Hint="Documento"
                                         materialDesign:HintAssist.IsFloating="True"
                                         PreviewTextInput="testarCaractere"                                                        
                                         Style="{StaticResource MaterialDesignTextBox}" />

@@ -25,7 +25,7 @@ namespace GUI
             InitializeComponent();
             ListaFunc = f.carregaFuncionariosLivres();
             CBFuncionario.ItemsSource = ListaFunc;
-            dgTarefas.ItemsSource = t.tarefasPendentes("4");
+            dgTarefas.ItemsSource = t.tarefasPendentes("4","6");
             lerXmls();
         }
 
@@ -38,7 +38,7 @@ namespace GUI
 
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
-            dgTarefas.ItemsSource = t.tarefasPendentes("4");
+            dgTarefas.ItemsSource = t.tarefasPendentes("4", "6");
         }
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
