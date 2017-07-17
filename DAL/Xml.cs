@@ -67,19 +67,16 @@ namespace DAL
                 lido.pesoManifesto = double.Parse(result[result.Count - 3].InnerText.Replace('.', ','));
                 lido.quantCtesManifesto = (int)double.Parse(result[result.Count - 4].InnerText.Replace('.', ','));
 
-                if (!docBD.cadastrarManifesto(lido))
-                {
-                 //   return false;
-                }
+                docBD.cadastrarManifesto(lido);
 
                 int cte;
 
                 for (int i = 0; i < result.Count - 4; i = i + 10)
                 {
                     cte = int.Parse(result[i].InnerText);
-                    criarCte(cte);
+                   if (criarCte(cte))
+                       criarCteManifesto(cte, lido.numeroManifesto);
                     alterarNfs(result[i + 1].InnerText, cte);
-                    criarCteManifesto(cte, lido.numeroManifesto);
                 }
 
                 docBD.alterarSkuManifesto(lido.numeroManifesto);
@@ -112,10 +109,8 @@ namespace DAL
                     pesoManifesto = double.Parse(ValueResult[ValueResult.Count - 1].InnerText.Replace('.', ',')),
                     quantCtesManifesto = (int)double.Parse(ValueResult[ValueResult.Count - 2].InnerText.Replace('.', ','))
                 };
-                if (!docBD.cadastrarManifesto(lido))
-                {
-                   // return false;
-                }
+
+                docBD.cadastrarManifesto(lido);
 
                 int cte;
                 int indexNF = 0;
@@ -123,10 +118,11 @@ namespace DAL
                 for (int i = 2; i < ValueResult.Count - 4; i = i + 7)
                 {
                     cte = int.Parse(ValueResult[i].InnerText);
-                    criarCte(cte);
+                    if (criarCte(cte))
+                        criarCteManifesto(cte, lido.numeroManifesto);
+
                     alterarUmaNf(TextResult[indexNF].InnerText, cte);
                     indexNF++;
-                    criarCteManifesto(cte, lido.numeroManifesto);
                 }
 
                 docBD.alterarSkuManifesto(lido.numeroManifesto);
@@ -301,10 +297,10 @@ namespace DAL
                 return false; //false se a nota não estiver cadastrada
         }
 
-        private void criarCte(int cte)
+        private bool criarCte(int cte)
         {
             DocumentosBD dbd = new DocumentosBD();
-            dbd.cadastrarCte(new Ctes(cte));
+            return dbd.cadastrarCte(new Ctes(cte));
         }
 
         private void criarCteManifesto(int cte, int manifesto)
