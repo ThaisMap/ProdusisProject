@@ -74,7 +74,7 @@ namespace DAL
                 for (int i = 0; i < result.Count - 4; i = i + 10)
                 {
                     cte = int.Parse(result[i].InnerText);
-                   if (criarCte(cte))
+                     if (criarCte(cte))
                        criarCteManifesto(cte, lido.numeroManifesto);
                     alterarNfs(result[i + 1].InnerText, cte);
                 }
