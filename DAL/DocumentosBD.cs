@@ -28,6 +28,24 @@ namespace DAL
             }
         }
 
+        public bool alterarSkuManifesto(int numManifesto, int skus)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    Manifestos atual = BancoDeDados.Manifestos.FirstOrDefault(m => m.numeroManifesto == numManifesto);
+                    atual.skusManifesto = skus;
+                    BancoDeDados.SaveChanges();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// Insere um registro de cte no banco de dados
         /// </summary>
@@ -155,6 +173,31 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     return (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais.fonecedorNF).FirstOrDefault();
+                }
+            }
+            catch
+            {
+                return "Fornecedor não encontrado";
+            }
+        }
+
+        public string getFornecedorManifesto(int numManifesto)
+        {
+            string fornecedor = "";
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var ctesNoManifesto = (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.Manifesto == numManifesto select Cte_Manifesto).ToList();
+                    foreach (var item in ctesNoManifesto)
+                    {
+                        if (fornecedor == "")
+                            fornecedor = getFornecedorCte(item.Cte);
+                        else
+                            if (fornecedor != getFornecedorCte(item.Cte))
+                            return fornecedor = "VARIOS FORNECEDORES";
+                    }
+                    return fornecedor;
                 }
             }
             catch
@@ -400,7 +443,7 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     Manifestos m = BancoDeDados.Manifestos.SingleOrDefault(man => man.numeroManifesto == numDoc);
-                    dados = "Manifesto nº " + m.numeroManifesto + " - " + m.quantCtesManifesto + " entregas - " + m.VolumesManifesto + " volumes - " + m.skusManifesto + " SKU's - " + m.pesoManifesto + " Kg";
+                    dados = "Manifesto nº " + m.numeroManifesto + " - " + m.quantCtesManifesto + " cte's - " + m.VolumesManifesto + " volumes - " + m.skusManifesto + " SKU's - " + m.pesoManifesto + " Kg";
                 }
             }
             catch

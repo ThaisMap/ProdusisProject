@@ -186,15 +186,16 @@ namespace DAL
                 if (f.skuFim > 0)
                     lista = lista.Where(l => l.skus <= f.skuFim).ToList();
 
-                foreach(var tar in lista)
+                DocumentosBD d = new DocumentosBD();
+                foreach (var tar in lista)
                 {
                     if (tar.tipoTarefa == "Conferência")
                     {
-                        DocumentosBD d = new DocumentosBD();
+                       
                         tar.fornecedor = d.getFornecedorCte(tar.documentoTarefa);
                     }
                     else
-                        tar.fornecedor = "";
+                        tar.fornecedor = d.getFornecedorManifesto(tar.documentoTarefa);
 
                     tar.divergenciaTarefa = tar.divergencia(tar.divergenciaTarefa);
                 }

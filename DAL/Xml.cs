@@ -114,18 +114,20 @@ namespace DAL
 
                 int cte;
                 int indexNF = 0;
+                int skuTotal = 0;
 
-                for (int i = 2; i < ValueResult.Count - 4; i = i + 7)
+                for (int i = 2; i < ValueResult.Count - 4; i = i + 6)
                 {
                     cte = int.Parse(ValueResult[i].InnerText);
                     if (criarCte(cte))
                         criarCteManifesto(cte, lido.numeroManifesto);
 
                     alterarUmaNf(TextResult[indexNF].InnerText, cte);
+                    skuTotal += docBD.getSkuCte(cte);
                     indexNF++;
                 }
 
-                docBD.alterarSkuManifesto(lido.numeroManifesto);
+                docBD.alterarSkuManifesto(lido.numeroManifesto, skuTotal);
                 return true;
             }
             catch
@@ -212,10 +214,12 @@ namespace DAL
                             nfLida.volumesNF = int.Parse(conteudoNf[conteudoNf.Count - 3].Remove(5));
 
                             string aux = conteudoNf[conteudoNf.Count - 1];
-                            aux = aux.TrimStart('0');
 
-                            aux = aux.Remove(0, 22);
-                            aux = aux.Remove(12);
+                            if (aux[0] == '3')
+                                aux = aux.Substring(22, 12);
+                            else
+                                aux = aux.Substring(29, 12);
+
                             nfLida.numeroNF = aux.Remove(0, 3) + "-" + aux.Remove(3).TrimStart('0');
                             nfLida.numeroNF = nfLida.numeroNF.TrimStart('0');
                         }
@@ -296,6 +300,8 @@ namespace DAL
             else
                 return false; //false se a nota não estiver cadastrada
         }
+
+
 
         private bool criarCte(int cte)
         {
