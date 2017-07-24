@@ -59,7 +59,7 @@
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="0"
-                    Margin="5,10"
+                    Margin="5"
                     VerticalAlignment="Center"><Run Text="Documento:" /></TextBlock>
                 <TextBox x:Name="tbDocumento"
                     Grid.Row="1"

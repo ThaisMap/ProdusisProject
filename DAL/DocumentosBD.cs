@@ -166,6 +166,36 @@ namespace DAL
         /// <summary>
         /// Retorna uma string com o Fornecedor das NFs no Cte informado
         /// </summary>
+        public string getNfsCte(int idCte)
+        {
+            
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var nfs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais).ToList();
+                    string notas = "";
+                    foreach (var item in nfs)
+                        {
+                            if (notas == "")
+
+                                notas = item.numeroNF;
+                            else
+                                notas += "/" + item.numeroNF;
+                        }
+                        return notas;
+                }
+            }
+            catch
+            {
+                return "Não atrelado a nenhuma NF";
+            }
+        }
+
+
+        /// <summary>
+        /// Retorna uma string com o Fornecedor das NFs no Cte informado
+        /// </summary>
         public string getFornecedorCte(int idCte)
         {
             try
@@ -181,6 +211,34 @@ namespace DAL
             }
         }
 
+        public string get_ListaManifestosCte(int numCte)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var manifestos = (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.Cte == numCte select Cte_Manifesto).ToList();
+                    if (manifestos != null)
+                    {
+                    string notas = "";
+                        foreach (var item in manifestos)
+                        {
+                            if (notas == "")
+                                notas = item.Manifesto.ToString();
+                            else
+                                notas += "/" + item.Manifesto.ToString();
+                        }
+                        return notas;
+                    }
+                    return "Não foi encontrado.";
+                }
+            }
+            catch
+            {
+                return "Não foi encontrado.";
+            }
+        }
+
         public string getFornecedorManifesto(int numManifesto)
         {
             string fornecedor = "";
@@ -188,14 +246,16 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
+                    string aux;
                     var ctesNoManifesto = (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.Manifesto == numManifesto select Cte_Manifesto).ToList();
                     foreach (var item in ctesNoManifesto)
                     {
+                        aux = getFornecedorCte(item.Cte);
                         if (fornecedor == "")
-                            fornecedor = getFornecedorCte(item.Cte);
+                            fornecedor = aux;
                         else
-                            if (fornecedor != getFornecedorCte(item.Cte))
-                            return fornecedor = "VARIOS FORNECEDORES";
+                            if (fornecedor != aux && aux != null)
+                            return "VARIOS FORNECEDORES";
                     }
                     return fornecedor;
                 }
@@ -373,6 +433,8 @@ namespace DAL
             }
         }
 
+
+
         /// <summary>
         /// Verifica se o documento indicado esta cadastrado no banco de dados
         /// </summary>
@@ -403,6 +465,21 @@ namespace DAL
                     }
 
                     return documento;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<Cte_Manifesto> getCtesNoManifesto(int numeroManifesto)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    return (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.Manifesto == numeroManifesto select Cte_Manifesto).ToList();
                 }
             }
             catch

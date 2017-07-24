@@ -1,6 +1,7 @@
 ﻿using DAL;
 using DAL.Properties;
 using ProdusisBD;
+using System.Collections.Generic;
 
 namespace BLL
 {
@@ -33,8 +34,35 @@ namespace BLL
             return d.getVolumesCte(num);
         }
 
-        public string fornecedorCte(int num)
+        public int NFsImportadasNoManifesto(int numeroManifesto)
         {
+            List<Cte_Manifesto> ctes = d.getCtesNoManifesto(numeroManifesto);
+            int cont = 0;
+            foreach (var item in ctes)
+            {
+                if (d.getSkuCte(item.Cte) > 0)
+                    cont++;
+            }
+            return cont;
+        }
+
+        public string getFornecedorManifesto(int numManifesto)
+        {
+            return d.getFornecedorManifesto(numManifesto);
+        }
+
+        public string getNFsCte(int cte)
+        {
+            return d.getNfsCte(cte);
+        }
+
+        public string getManifestosCte(int cte)
+        {
+            return d.get_ListaManifestosCte(cte);
+        }
+            
+        public string fornecedorCte(int num)
+        {            
             return d.getFornecedorCte(num);
         }
         
