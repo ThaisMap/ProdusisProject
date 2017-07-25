@@ -119,20 +119,13 @@ namespace BLL
                 xlWorkSheet.Cells[1, 11] = "Pontos por hora";
                 xlWorkSheet.Cells[1, 12] = "Peso(Kg)";
                 xlWorkSheet.Cells[1, 13] = "Fornecedor";
-                xlWorkSheet.Cells[1, 14] = "Códigos Falta";
-                xlWorkSheet.Cells[1, 15] = "Qtde Falta";
-                xlWorkSheet.Cells[1, 16] = "Códigos Sobra";
-                xlWorkSheet.Cells[1, 17] = "Qtde Sobra";
-                xlWorkSheet.Cells[1, 18] = "Códigos Avaria";
-                xlWorkSheet.Cells[1, 19] = "Qtde Avaria";
+                xlWorkSheet.Cells[1, 14] = "Cliente";
+                xlWorkSheet.Cells[1, 15] = "Divergências";
 
                 int linha = 2;
-
-                string[] divergencias;
-
+                            
                 foreach (TarefaModelo i in Tarefas)
                 {
-                    divergencias = i.divergenciaTarefa.Split(';');
                     i.atualizaPontuação();
                     xlWorkSheet.Cells[linha, 1] = i.documentoTarefa;
                     xlWorkSheet.Cells[linha, 2] = i.tipoTarefa;
@@ -146,15 +139,9 @@ namespace BLL
                     xlWorkSheet.Cells[linha, 10] = i.pontos;
                     xlWorkSheet.Cells[linha, 11] = i.pontosPorHora;
                     xlWorkSheet.Cells[linha, 13] = i.fornecedor;
-                    xlWorkSheet.Cells[linha, 14] = divergencias[0];
-                    if (divergencias.Length > 1)
-                    {
-                        xlWorkSheet.Cells[linha, 15] = divergencias[1];
-                        xlWorkSheet.Cells[linha, 16] = divergencias[2];
-                        xlWorkSheet.Cells[linha, 17] = divergencias[3];
-                        xlWorkSheet.Cells[linha, 18] = divergencias[4];
-                        xlWorkSheet.Cells[linha, 19] = divergencias[5];
-                    }
+                    xlWorkSheet.Cells[linha, 14] = i.cliente;
+                    xlWorkSheet.Cells[linha, 15] = i.divergencia();
+                    
                     linha++;
                 }
                 

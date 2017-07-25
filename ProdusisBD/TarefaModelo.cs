@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 
 
 namespace ProdusisBD
@@ -47,6 +46,7 @@ namespace ProdusisBD
         public int skus { get; set; }
         public int volumes { get; set; }
         public string fornecedor { get; set; }
+        public string cliente { get; set; }
         public int pontos { get; set; }
         public double pontosPorHora { get; set; }
         
@@ -59,9 +59,9 @@ namespace ProdusisBD
         /// <summary>
         /// Retorna uma string referente às divergencias registradas
         /// </summary>
-        public string divergencia(string div)
+        public string divergencia()
         {
-            string[] d = div.Split(';');
+            string[] d = divergenciaTarefa.Split(';');
             string retorno = "";
             if (d[0] != "-")
             {
@@ -103,6 +103,7 @@ namespace ProdusisBD
 
         /// <summary>
         /// Calcula pontuação para ranking. Calulo atual (volumes + sku*5)/tempo gasto    
+        /// pontos/tempo gasto * 1 hora -> no mesmo ritmo de trabalho o funcionario faria x pontos em 1h
         /// </summary>
         public void atualizaPontuação()
         {

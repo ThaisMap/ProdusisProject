@@ -134,7 +134,7 @@ namespace GUI
             {
                 documentoTarefa = int.Parse(Documento.Text.Replace("_", "")),
                 inicioTarefa = DateTime.Now
-                };
+            };
             //one line if else  
             novaTarefa.tipoTarefa = (bool)cbPaletizado.IsChecked ? "6" : "4";
 

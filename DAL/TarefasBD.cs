@@ -197,7 +197,7 @@ namespace DAL
                     else
                         tar.fornecedor = d.getFornecedorManifesto(tar.documentoTarefa);
 
-                    tar.divergenciaTarefa = tar.divergencia(tar.divergenciaTarefa);
+                    tar.divergenciaTarefa = tar.divergencia();
                 }
             }
             catch (Exception e)

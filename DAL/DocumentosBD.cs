@@ -134,6 +134,49 @@ namespace DAL
             }
         }
 
+        public string get_ListaManifestosCte(int numCte)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var manifestos = (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.Cte == numCte select Cte_Manifesto).ToList();
+                    if (manifestos != null)
+                    {
+                        string notas = "";
+                        foreach (var item in manifestos)
+                        {
+                            if (notas == "")
+                                notas = item.Manifesto.ToString();
+                            else
+                                notas += "/" + item.Manifesto.ToString();
+                        }
+                        return notas;
+                    }
+                    return "Não foi encontrado.";
+                }
+            }
+            catch
+            {
+                return "Não foi encontrado.";
+            }
+        }
+
+        public List<Cte_Manifesto> getCtesNoManifesto(int numeroManifesto)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    return (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.Manifesto == numeroManifesto select Cte_Manifesto).ToList();
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// Retorna uma string com o resumo dos dados do documento
         /// </summary>
@@ -166,36 +209,6 @@ namespace DAL
         /// <summary>
         /// Retorna uma string com o Fornecedor das NFs no Cte informado
         /// </summary>
-        public string getNfsCte(int idCte)
-        {
-            
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    var nfs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais).ToList();
-                    string notas = "";
-                    foreach (var item in nfs)
-                        {
-                            if (notas == "")
-
-                                notas = item.numeroNF;
-                            else
-                                notas += "/" + item.numeroNF;
-                        }
-                        return notas;
-                }
-            }
-            catch
-            {
-                return "Não atrelado a nenhuma NF";
-            }
-        }
-
-
-        /// <summary>
-        /// Retorna uma string com o Fornecedor das NFs no Cte informado
-        /// </summary>
         public string getFornecedorCte(int idCte)
         {
             try
@@ -208,34 +221,6 @@ namespace DAL
             catch
             {
                 return "Fornecedor não encontrado";
-            }
-        }
-
-        public string get_ListaManifestosCte(int numCte)
-        {
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    var manifestos = (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.Cte == numCte select Cte_Manifesto).ToList();
-                    if (manifestos != null)
-                    {
-                    string notas = "";
-                        foreach (var item in manifestos)
-                        {
-                            if (notas == "")
-                                notas = item.Manifesto.ToString();
-                            else
-                                notas += "/" + item.Manifesto.ToString();
-                        }
-                        return notas;
-                    }
-                    return "Não foi encontrado.";
-                }
-            }
-            catch
-            {
-                return "Não foi encontrado.";
             }
         }
 
@@ -296,7 +281,7 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     return (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.numeroNF.StartsWith(numNF) select NotasFiscais).FirstOrDefault();
-                } 
+                }
             }
             catch
             {
@@ -304,7 +289,34 @@ namespace DAL
             }
         }
 
-        
+        /// <summary>
+        /// Retorna uma string com o Fornecedor das NFs no Cte informado
+        /// </summary>
+        public string getNfsCte(int idCte)
+        {
+            
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var nfs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais).ToList();
+                    string notas = "";
+                    foreach (var item in nfs)
+                        {
+                            if (notas == "")
+
+                                notas = item.numeroNF;
+                            else
+                                notas += "/" + item.numeroNF;
+                        }
+                        return notas;
+                }
+            }
+            catch
+            {
+                return "Não atrelado a nenhuma NF";
+            }
+        }
         /// <summary>
         /// Retorna a soma dos skus de cada nota componente do Cte
         /// </summary>
@@ -472,22 +484,6 @@ namespace DAL
                 return null;
             }
         }
-
-        public List<Cte_Manifesto> getCtesNoManifesto(int numeroManifesto)
-        {
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    return (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.Manifesto == numeroManifesto select Cte_Manifesto).ToList();
-                }
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
         /// <summary>
         /// Retorna uma string com os dados do cte indicado
         /// </summary>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="produsisBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="produsisBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Cte_Manifesto">
           <Key>
             <PropertyRef Name="idCteManifesto" />
@@ -59,6 +59,7 @@
           <Property Name="volumesNF" Type="int" Nullable="false" />
           <Property Name="skuNF" Type="int" Nullable="false" />
           <Property Name="CteNF" Type="int" />
+          <Property Name="clienteNF" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Tarefas">
           <Key>
@@ -160,8 +161,7 @@
             <End Role="NotasFiscais" EntitySet="NotasFiscais" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="produsisBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -228,6 +228,7 @@
           <Property Name="skuNF" Type="Int32" Nullable="false" />
           <Property Name="CteNF" Type="Int32" />
           <NavigationProperty Name="Ctes" Relationship="Self.FK_NotasFiscais_Ctes" FromRole="NotasFiscais" ToRole="Ctes" />
+          <Property Name="clienteNF" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Tarefas">
           <Key>
@@ -388,6 +389,7 @@
           <EntitySetMapping Name="NotasFiscais">
             <EntityTypeMapping TypeName="produsisBDModel.NotasFiscais">
               <MappingFragment StoreEntitySet="NotasFiscais">
+                <ScalarProperty Name="clienteNF" ColumnName="clienteNF" />
                 <ScalarProperty Name="idNF" ColumnName="idNF" />
                 <ScalarProperty Name="numeroNF" ColumnName="numeroNF" />
                 <ScalarProperty Name="fonecedorNF" ColumnName="fonecedorNF" />

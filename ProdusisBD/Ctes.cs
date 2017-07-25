@@ -14,6 +14,8 @@ namespace ProdusisBD
     
     public partial class Ctes
     {
+        private int cte;
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Ctes()
         {
@@ -21,12 +23,11 @@ namespace ProdusisBD
             this.NotasFiscais = new HashSet<NotasFiscais>();
         }
 
-        public Ctes(int numero)
+        public Ctes(int cte)
         {
-            this.Cte_Manifesto = new HashSet<Cte_Manifesto>();
-            this.NotasFiscais = new HashSet<NotasFiscais>();
-            numeroCte = numero;
+            this.cte = cte;
         }
+
         public int numeroCte { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

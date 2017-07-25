@@ -153,12 +153,19 @@ namespace DAL
                 var result = nf.GetElementsByTagName("det");
                 nfLida.skuNF = result.Count;
                 nfLida.numeroNF = nf.GetElementsByTagName("nNF")[0].InnerText + '-' + nf.GetElementsByTagName("serie")[0].InnerText;
+
                 var fornecedor = nf.GetElementsByTagName("xNome")[0].InnerText;
                 if (fornecedor.Length > 49)
                     fornecedor = fornecedor.Remove(49);
                 nfLida.fonecedorNF = fornecedor;
+
                 nfLida.volumesNF = int.Parse(nf.GetElementsByTagName("qVol")[0].InnerText);
-               
+
+                var cliente = nf.GetElementsByTagName("xNome")[1].InnerText;
+                if (cliente.Length > 49)
+                    cliente = cliente.Remove(49);
+                nfLida.clienteNF = cliente;
+
                 return inserirNotaFiscal(nfLida);
             }
             catch (System.Exception ex)
@@ -178,8 +185,8 @@ namespace DAL
                 NotasFiscais nfLida = new NotasFiscais();
 
                 bool retorno = true;
-                string[] notfis = System.IO.File.ReadAllLines(nomeArquivo);
-                string Fornecedor = "";                
+                string[] notfis = File.ReadAllLines(nomeArquivo);
+                string Fornecedor = "";
 
                 if (notfis[0].StartsWith("000"))
                 {
@@ -199,10 +206,22 @@ namespace DAL
                             }
                         }
                         
-                        //Zerar SKU
+                        //Cliente e Zerar SKU 
                         if (nf.StartsWith("312"))
                         {
                             nfLida.skuNF = 0;
+                            conteudoNf = nf.Split(' ').ToList();
+                            conteudoNf.RemoveAll(l => l == "");
+
+                            nfLida.clienteNF = conteudoNf[0].Substring(3);
+
+                            for (int i = 1; i < conteudoNf.Count; i++)
+                            {
+                                if (conteudoNf[i].Length == 27)
+                                    break;
+                                else
+                                    nfLida.clienteNF += " "+ conteudoNf[i];                              
+                            }
                         }
 
                         //Volumes e número da NF
