@@ -14,21 +14,16 @@ namespace ProdusisBD
     
     public partial class Cte_Manifesto
     {
-        public int idCteManifesto { get; set; }
-        public int Cte { get; set; }
-        public int Manifesto { get; set; }
-
         public Cte_Manifesto(int cte, int manifesto)
         {
             Cte = cte;
             Manifesto = manifesto;
         }
 
-        public Cte_Manifesto()
-        {
-
-        }
-
+        public int idCteManifesto { get; set; }
+        public int Cte { get; set; }
+        public int Manifesto { get; set; }
+    
         public virtual Ctes Ctes { get; set; }
         public virtual Manifestos Manifestos { get; set; }
     }

@@ -25,6 +25,7 @@ namespace ProdusisBD
         {
             numeroCte = cte;
         }
+
         public int numeroCte { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

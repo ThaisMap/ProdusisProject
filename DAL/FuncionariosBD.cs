@@ -41,12 +41,28 @@ namespace DAL
                 }
                 return true;
             }
-            catch
+            catch(Exception e)
             {
+                var olho = e;
                 return false;
             }
         }
 
+        public void deletarObservacao(int idObservacao)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    Observacoes apagar = BancoDeDados.Observacoes.Where(i => i.idObs == idObservacao).FirstOrDefault();
+                    BancoDeDados.Observacoes.Remove(apagar);
+                    BancoDeDados.SaveChanges();
+                }
+            }
+            catch
+            {                
+            }
+        }
 
         public List<Observacoes> getObservacoes(DateTime? inicio, DateTime fim, int idF)
         {

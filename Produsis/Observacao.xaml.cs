@@ -1,5 +1,6 @@
 ﻿using BLL;
 using System;
+using ProdusisBD;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -48,6 +49,18 @@ namespace GUI
         private void Buscar_Click(object sender, RoutedEventArgs e)
         {
             dgObs.ItemsSource = f.getObservacoes(dataInicio.SelectedDate, dataFim.SelectedDate, Nome.SelectedItem.ToString());
+        }
+
+        private void dgObs_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (Key.Delete == e.Key && dgObs.SelectedItems.Count > 0)
+            {
+                if (MessageBox.Show("Apagar motorista definitivamente? ", "Confirmação", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                {
+                    var linha = dgObs.SelectedItem as Observacoes;
+                    f.deletaObservacao(linha.idObs);
+                }
+            }
         }
     }
 }

@@ -95,6 +95,7 @@
             </Grid>
             <DataGrid x:Name="dgObs" Height="250" 
                       AutoGenerateColumns="False" IsReadOnly="True" 
+                      PreviewKeyDown="dgObs_PreviewKeyDown"
                       VerticalScrollBarVisibility="Auto">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding DataObs, StringFormat=dd/MM/yyyy}" Header="Data" />

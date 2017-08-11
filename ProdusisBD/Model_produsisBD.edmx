@@ -65,7 +65,7 @@
           <Key>
             <PropertyRef Name="idObs" />
           </Key>
-          <Property Name="idObs" Type="int" Nullable="false" />
+          <Property Name="idObs" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FuncObs" Type="int" Nullable="false" />
           <Property Name="DataObs" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="TextoObs" Type="nvarchar" MaxLength="120" Nullable="false" />

@@ -26,6 +26,11 @@ namespace BLL
             return f.cadastrarObservacao(obs);
         }
 
+        public void deletaObservacao(int id)
+        {
+            f.deletarObservacao(id);
+        }
+
         public List<Observacoes> getObservacoes(DateTime? inicio, DateTime? fim, string nomeFunc)
         {
             if (fim == null)
