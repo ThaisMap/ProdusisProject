@@ -12,24 +12,13 @@ namespace ProdusisBD
     using System;
     using System.Collections.Generic;
     
-    public partial class Cte_Manifesto
+    public partial class Observacoes
     {
-        public int idCteManifesto { get; set; }
-        public int Cte { get; set; }
-        public int Manifesto { get; set; }
-
-        public Cte_Manifesto(int cte, int manifesto)
-        {
-            Cte = cte;
-            Manifesto = manifesto;
-        }
-
-        public Cte_Manifesto()
-        {
-
-        }
-
-        public virtual Ctes Ctes { get; set; }
-        public virtual Manifestos Manifestos { get; set; }
+        public int idObs { get; set; }
+        public int FuncObs { get; set; }
+        public System.DateTime DataObs { get; set; }
+        public string TextoObs { get; set; }
+    
+        public virtual Funcionarios Funcionarios { get; set; }
     }
 }

@@ -67,14 +67,16 @@ namespace DAL
                 lido.pesoManifesto = double.Parse(result[result.Count - 3].InnerText.Replace('.', ','));
                 lido.quantCtesManifesto = (int)double.Parse(result[result.Count - 4].InnerText.Replace('.', ','));
 
-                docBD.cadastrarManifesto(lido);
-
+                bool cadCte = docBD.cadastrarManifesto(lido);
+                
                 int cte;
 
                 for (int i = 0; i < result.Count - 4; i = i + 10)
                 {
                     cte = int.Parse(result[i].InnerText);
-                     if (criarCte(cte))
+                    criarCte(cte);
+
+                    if (cadCte)
                        criarCteManifesto(cte, lido.numeroManifesto);
                     alterarNfs(result[i + 1].InnerText, cte);
                 }
@@ -82,8 +84,9 @@ namespace DAL
                 docBD.alterarSkuManifesto(lido.numeroManifesto);
                 return true;
             }
-            catch
+            catch (System.Exception ex)
             {
+                var olho = ex;
                 return false;
             }
         }
@@ -110,7 +113,7 @@ namespace DAL
                     quantCtesManifesto = (int)double.Parse(ValueResult[ValueResult.Count - 2].InnerText.Replace('.', ','))
                 };
 
-                docBD.cadastrarManifesto(lido);
+                bool cadCte = docBD.cadastrarManifesto(lido);
 
                 int cte;
                 int indexNF = 0;
@@ -119,7 +122,8 @@ namespace DAL
                 for (int i = 2; i < ValueResult.Count - 4; i = i + 6)
                 {
                     cte = int.Parse(ValueResult[i].InnerText);
-                    if (criarCte(cte))
+                    criarCte(cte);
+                    if (cadCte)
                         criarCteManifesto(cte, lido.numeroManifesto);
 
                     alterarUmaNf(TextResult[indexNF].InnerText, cte);
@@ -217,7 +221,7 @@ namespace DAL
 
                             for (int i = 1; i < conteudoNf.Count; i++)
                             {
-                                if (conteudoNf[i].Length == 27)
+                                if (conteudoNf[i].Length >= 27)
                                     break;
                                 else
                                     nfLida.clienteNF += " "+ conteudoNf[i];                              

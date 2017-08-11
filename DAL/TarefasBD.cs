@@ -30,6 +30,7 @@ namespace DAL
                             Tarefa = novaTarefa.idTarefa,
                             Funcionario = i
                         };
+
                         BancoDeDados.Func_Tarefa.Add(ft);
                         BancoDeDados.SaveChanges();
                         fBd.editarOcupacaoFuncionario(i, true);
@@ -112,11 +113,39 @@ namespace DAL
             return listaModelo;
         }
 
-
-        public List<ItemRanking> rankingFuncionarios(List<TarefaModelo> tarefasPeriodo)
+        public List<Observacoes> observacoesFunc(int id, DateTime? inicio, DateTime fim)
         {
+            List<Observacoes> lista = new List<Observacoes>();
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var query = BancoDeDados.Observacoes.AsQueryable();
+
+                    query = query.Where(t => t.FuncObs == id);
+                    if (fim != null)
+                        query = query.Where(t => t.DataObs <= fim);
+
+                    if (inicio != null)
+                        query = query.Where(t => t.DataObs >= inicio);
+
+                    lista = query.ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                var whatHapened = e;
+            }
+
+            return lista;
+        }
+
+        public List<ItemRanking> rankingFuncionarios(List<TarefaModelo> tarefasPeriodo, double horas)
+        {
+            DocumentosBD d = new DocumentosBD();
             foreach (TarefaModelo tar in tarefasPeriodo)
             {
+                tar.valores(d.getSkuCte(tar.documentoTarefa), d.getVolumesCte(tar.documentoTarefa));
                 tar.atualizaPontuação();
             }
 
@@ -127,20 +156,56 @@ namespace DAL
                         } into g
                         select new
                         {
-                            Average = g.Average(p => p.pontosPorHora),
+                            Sum = g.Sum(p => p.pontos),
                             g.Key.nomesFuncionarios
                         };
 
-            List<ItemRanking> Rank = new List<ItemRanking>();
+            List<ItemRanking> Rank = new List<ItemRanking>();            
 
             foreach(var item in lista)
             {
-                Rank.Add(new ItemRanking(item.Average, item.nomesFuncionarios));
+
+                Rank.Add(new ItemRanking(item.Sum/horas, item.nomesFuncionarios));
             }
 
-            Rank=Rank.OrderBy(i => i.mediaPorHora).ToList();
+            Rank=Rank.OrderByDescending(i => i.mediaPorHora).ToList();
 
             return Rank;
+        }
+
+        public List<TarefaModelo> getTarefasFiltradasRanking(Filtro f)
+        {
+            List<TarefaModelo> lista = new List<TarefaModelo>();
+            List<Tarefas> listaTarefas = new List<Tarefas>();
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var query = BancoDeDados.Tarefas.AsQueryable();
+
+                    if (f.dataInicio != null)
+                        query = query.Where(t => t.inicioTarefa >= f.dataInicio);
+
+                    query = query.Where(t => t.inicioTarefa <= f.dataFim);
+                    query = query.Where(t => t.tipoTarefa == f.TipoTarefa);
+
+                    listaTarefas = query.ToList();
+                }
+
+                foreach (var tar in listaTarefas)
+                {
+                    lista.Add(new TarefaModelo(tar)
+                    {
+                        nomesFuncionarios = nomesFuncTarefa(tar.idTarefa),      
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                var whatHapened = e;
+            }
+
+            return lista;
         }
 
         /// <summary>
@@ -357,8 +422,7 @@ namespace DAL
                     modelos.Add(aux);
                 }
             }
-
             return modelos;
-        }
+        }        
     }
 }

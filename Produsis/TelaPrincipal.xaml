@@ -16,7 +16,8 @@
     Icon="icone_2_produsis.ico"
     TextElement.FontSize="16"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-    WindowStartupLocation="CenterScreen"
+    WindowState="Maximized"
+    Loaded="Window_Loaded"
     mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
@@ -31,21 +32,21 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid Width="auto" Height="auto" VerticalAlignment="Top">
+    <Grid Width="auto"  VerticalAlignment="Top">
         <materialDesign:ColorZone
             Width="auto"
             Height="60"
             materialDesign:ShadowAssist.ShadowDepth="Depth2"
             Mode="PrimaryLight"/>
-        <Grid
+        <Grid           
             HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch" Margin="0,0,0,0">
+            VerticalAlignment="Stretch" Margin="0,0,0,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
-                <RowDefinition Height="600"/>
+                <RowDefinition />
             </Grid.RowDefinitions>
             <!--Botoes-->
             <StackPanel
@@ -107,10 +108,10 @@
                 Name="Navegador"
                 Grid.Row="1"
                 Grid.Column="0"
-                MinHeight="500"
-                Margin="20,10,20,30"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
+                Margin="20,10"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                VerticalContentAlignment="Top"
                 NavigationUIVisibility="Hidden" />
         </Grid>
     </Grid>

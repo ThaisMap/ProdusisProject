@@ -10,9 +10,7 @@ namespace GUI
         public TelaPrincipal()
         {
             InitializeComponent();
-            Height = SystemParameters.PrimaryScreenHeight-50;
             BtnConferencia.Opacity = 0.5;
-            Navegador.Navigate(new Conferencia());
         }
 
         public void ResetarOpacidade()
@@ -45,37 +43,44 @@ namespace GUI
         {
             ResetarOpacidade();
             BtnCarregamento.Opacity = 0.5;
-            Navegador.Navigate(new Carregamento());
+            Navegador.Navigate(new Carregamento(ActualHeight, ActualWidth));
         }
 
         private void BtnSeparacaoCarga_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();
             BtnSeparacaoCarga.Opacity = 0.5;
-            Navegador.Navigate(new Separacao2());
+            Navegador.Navigate(new Separacao2(ActualHeight, ActualWidth));
         }
 
         private void BtnConferencia_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();
             BtnConferencia.Opacity = 0.5;
-            Navegador.Navigate(new Conferencia());
+            Navegador.Navigate(new Conferencia(ActualHeight, ActualWidth));
         }
 
         private void BtnSerapacao_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();
             BtnSerapacao.Opacity = 0.5;
-            Navegador.Navigate(new Separacao());
+            Navegador.Navigate(new Separacao(ActualHeight, ActualWidth));
         }        
 
         private void BtnDivergencia_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();
             BtnDivergencia.Opacity = 0.5;
-            Navegador.Navigate(new Divergencia());
+            Navegador.Navigate(new Divergencia(ActualHeight, ActualWidth));
         }
 
         #endregion Botoes
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Navegador.Height = ActualHeight - 60;
+            Navegador.Width = ActualWidth - 60;
+            Navegador.Navigate(new Conferencia(ActualHeight, ActualWidth));
+        }
     }
 }

@@ -47,8 +47,7 @@ namespace ProdusisBD
         public int volumes { get; set; }
         public string fornecedor { get; set; }
         public string cliente { get; set; }
-        public int pontos { get; set; }
-        public double pontosPorHora { get; set; }
+        public double pontos { get; set; }
         
         public void valores(int sku, int volume)
         {
@@ -107,13 +106,11 @@ namespace ProdusisBD
         /// </summary>
         public void atualizaPontuação()
         {
-            pontos = skus * 5 + volumes;
-            if (fimTarefa != null)
-                pontosPorHora = pontos / ((DateTime)fimTarefa - inicioTarefa).TotalSeconds * 3600;
-            else
-                pontosPorHora = 0;
-
-            
+            pontos = skus * 7 + volumes * 0.4;
+            if (divergenciaTarefa != "Nenhuma" && divergenciaTarefa != "-;0;-;0;-;0")
+            {
+                pontos = 0;
+            }
         }
 
         public void preencheDatas()

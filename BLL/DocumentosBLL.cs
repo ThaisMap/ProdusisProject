@@ -38,6 +38,7 @@ namespace BLL
         {
             List<Cte_Manifesto> ctes = d.getCtesNoManifesto(numeroManifesto);
             int cont = 0;
+            if(ctes != null)
             foreach (var item in ctes)
             {
                 if (d.getSkuCte(item.Cte) > 0)

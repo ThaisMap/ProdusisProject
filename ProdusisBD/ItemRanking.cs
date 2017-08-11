@@ -10,6 +10,7 @@ namespace ProdusisBD
     {
         public double mediaPorHora { get; set; }
         public string nomesFuncionarios { get; set; }
+        public string observacoes { get; set; }
 
         public ItemRanking(double media, string nomes)
         {

@@ -19,13 +19,14 @@ namespace GUI
         private FuncionariosTag FuncionarioSelecionado;
         private List<string> ListaFunc;
         private TarefasBLL t = new TarefasBLL();
-
-        public Conferencia()
+        public Conferencia(double actualHeight, double actualWidth)
         {
             InitializeComponent();
             ListaFunc = f.carregaFuncionariosLivres();
             CBFuncionario.ItemsSource = ListaFunc;
             dgTarefas.ItemsSource = t.tarefasPendentes("2");
+            Height = actualHeight - 100;
+            Width = actualWidth - 60;
             lerXmls();
         }
 

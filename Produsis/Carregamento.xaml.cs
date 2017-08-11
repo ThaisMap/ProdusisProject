@@ -20,12 +20,14 @@ namespace GUI
         private List<string> ListaFunc;
         private TarefasBLL t = new TarefasBLL();
         
-        public Carregamento()
+        public Carregamento(double actualHeight, double actualWidth)
         {
             InitializeComponent();
             ListaFunc = f.carregaFuncionariosLivres();
             CBFuncionario.ItemsSource = ListaFunc;
             dgTarefas.ItemsSource = t.tarefasPendentes("4","6");
+            Height = actualHeight - 150;
+            Width = actualWidth - 60;
             lerXmls();
         }
 

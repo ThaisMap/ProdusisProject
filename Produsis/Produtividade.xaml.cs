@@ -1,22 +1,14 @@
 ﻿using BLL;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Globalization;
 using LiveCharts;
 using LiveCharts.Wpf;
 using ProdusisBD;
+using System.Windows.Input;
 
 namespace GUI
 {
@@ -32,20 +24,43 @@ namespace GUI
         List<double> valores = new List<double>();
         List<string> nomes = new List<string>();
 
-        public Produtividade()
+        public Produtividade(double Altura, double largura)
         {
-            InitializeComponent();          
+            InitializeComponent();
+            dgRanking.Height = Altura - 150 - 100;
+        }
+
+        private void geraRelatorioTabela(object sender, RoutedEventArgs e)
+        {
+            Cursor _cursorAnterior = Mouse.OverrideCursor;
+            Mouse.OverrideCursor = Cursors.Wait;
+            Filtro filtros = new Filtro()
+            {
+                dataInicio = dataInicio.SelectedDate,
+                dataFim = dataFim.SelectedDate.Value.AddDays(1).AddSeconds(-1),
+                TipoTarefa = "2"
+            };
+            TarefasBLL t = new TarefasBLL();
+           
+            var ranking = t.getRanking(filtros);
+
+            dgRanking.ItemsSource = ranking;
+            Mouse.OverrideCursor = _cursorAnterior;
         }
 
         private void geraRelatorio(object sender, RoutedEventArgs e)
         {
-            Filtro filtros = new Filtro();
-            filtros.dataInicio = dataInicio.SelectedDate;
-            filtros.dataFim = dataFim.SelectedDate.Value.AddDays(1).AddSeconds(-1);
+            Filtro filtros = new Filtro()
+            {
+                dataInicio = dataInicio.SelectedDate,
+                dataFim = dataFim.SelectedDate.Value.AddDays(1).AddSeconds(-1),
+                TipoTarefa = "2"
+            };
             TarefasBLL t = new TarefasBLL();
-            filtros.TipoTarefa = "-1";
 
-            var ranking = t.getRanking(t.filtrar(filtros));
+            int dias = (filtros.dataFim - filtros.dataInicio).Value.Days + 1;
+
+            var ranking = t.getRanking(filtros);
 
             valores.Clear();
             nomes.Clear();
@@ -58,7 +73,7 @@ namespace GUI
       
             ColumnSeries colunas = new ColumnSeries
             {
-                Title = "Pontos por hora",
+                Title = "Pontos Acumulados",
                 Values = new ChartValues<double>(valores)
             };
 

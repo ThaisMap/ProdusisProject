@@ -30,6 +30,43 @@ namespace DAL
             }
         }
 
+        public bool cadastrarObservacao(Observacoes novaObs)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    BancoDeDados.Observacoes.Add(novaObs);
+                    BancoDeDados.SaveChanges();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+        public List<Observacoes> getObservacoes(DateTime? inicio, DateTime fim, int idF)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var lista = (from Observacoes in BancoDeDados.Observacoes where Observacoes.FuncObs == idF select Observacoes).ToList();
+                    lista = lista.Where(d => d.DataObs.Date <= fim.Date).ToList();
+                    if (inicio != null)
+                        lista = lista.Where(d => d.DataObs.Date >= inicio).ToList();
+                    return lista;
+                }
+            }
+            catch
+            {
+                return new List<Observacoes>();
+            }
+        }
+
         /// <summary>
         /// Altera um registro de funcionario no banco de dados
         /// </summary>

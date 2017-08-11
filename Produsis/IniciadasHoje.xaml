@@ -29,7 +29,6 @@
         <StackPanel Grid.Row="0">
             <TextBlock Margin="40,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Tarefas iniciadas hoje</TextBlock>
 
-            <Separator />
         </StackPanel>
         <DataGrid Grid.Row="1"
             Name="dgTarefas"  Margin="40,25,0,104"

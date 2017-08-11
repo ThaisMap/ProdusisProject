@@ -61,6 +61,15 @@
           <Property Name="CteNF" Type="int" />
           <Property Name="clienteNF" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Observacoes">
+          <Key>
+            <PropertyRef Name="idObs" />
+          </Key>
+          <Property Name="idObs" Type="int" Nullable="false" />
+          <Property Name="FuncObs" Type="int" Nullable="false" />
+          <Property Name="DataObs" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="TextoObs" Type="nvarchar" MaxLength="120" Nullable="false" />
+        </EntityType>
         <EntityType Name="Tarefas">
           <Key>
             <PropertyRef Name="idTarefa" />
@@ -132,6 +141,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Observacoes_Funcionarios">
+          <End Role="Funcionarios" Type="Self.Funcionarios" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Observacoes" Type="Self.Observacoes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funcionarios">
+              <PropertyRef Name="idFunc" />
+            </Principal>
+            <Dependent Role="Observacoes">
+              <PropertyRef Name="FuncObs" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="produsisBDModelStoreContainer">
           <EntitySet Name="Cte_Manifesto" EntityType="Self.Cte_Manifesto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ctes" EntityType="Self.Ctes" Schema="dbo" store:Type="Tables" />
@@ -139,6 +162,7 @@
           <EntitySet Name="Funcionarios" EntityType="Self.Funcionarios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Manifestos" EntityType="Self.Manifestos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NotasFiscais" EntityType="Self.NotasFiscais" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Observacoes" EntityType="Self.Observacoes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tarefas" EntityType="Self.Tarefas" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Cte_Manifesto_Cte" Association="Self.FK_Cte_Manifesto_Cte">
             <End Role="Ctes" EntitySet="Ctes" />
@@ -159,6 +183,10 @@
           <AssociationSet Name="FK_NotasFiscais_Ctes" Association="Self.FK_NotasFiscais_Ctes">
             <End Role="Ctes" EntitySet="Ctes" />
             <End Role="NotasFiscais" EntitySet="NotasFiscais" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Observacoes_Funcionarios" Association="Self.FK_Observacoes_Funcionarios">
+            <End Role="Funcionarios" EntitySet="Funcionarios" />
+            <End Role="Observacoes" EntitySet="Observacoes" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -205,6 +233,7 @@
           <Property Name="ocupadoFunc" Type="Boolean" Nullable="false" />
           <Property Name="ativoFunc" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Func_Tarefa" Relationship="Self.FK_Func_Tarefa_Funcionarios" FromRole="Funcionarios" ToRole="Func_Tarefa" />
+          <NavigationProperty Name="Observacoes" Relationship="produsisBDModel.FK_Observacoes_Funcionarios" FromRole="Funcionarios" ToRole="Observacoes" />
         </EntityType>
         <EntityType Name="Manifestos">
           <Key>
@@ -330,7 +359,36 @@
             <End Role="Tarefas" EntitySet="Tarefas" />
             <End Role="Func_Tarefa" EntitySet="Func_Tarefa" />
           </AssociationSet>
+          <EntitySet Name="Observacoes" EntityType="produsisBDModel.Observacoes" />
+          <AssociationSet Name="FK_Observacoes_Funcionarios" Association="produsisBDModel.FK_Observacoes_Funcionarios">
+            <End Role="Funcionarios" EntitySet="Funcionarios" />
+            <End Role="Observacoes" EntitySet="Observacoes" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Observacoes">
+          <Key>
+            <PropertyRef Name="idObs" />
+          </Key>
+          <Property Name="idObs" Type="Int32" Nullable="false" />
+          <Property Name="FuncObs" Type="Int32" Nullable="false" />
+          <Property Name="DataObs" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="TextoObs" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Funcionarios" Relationship="produsisBDModel.FK_Observacoes_Funcionarios" FromRole="Observacoes" ToRole="Funcionarios" />
+        </EntityType>
+        <Association Name="FK_Observacoes_Funcionarios">
+          <End Type="produsisBDModel.Funcionarios" Role="Funcionarios" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="produsisBDModel.Observacoes" Role="Observacoes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funcionarios">
+              <PropertyRef Name="idFunc" />
+            </Principal>
+            <Dependent Role="Observacoes">
+              <PropertyRef Name="FuncObs" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -408,6 +466,16 @@
                 <ScalarProperty Name="documentoTarefa" ColumnName="documentoTarefa" />
                 <ScalarProperty Name="tipoTarefa" ColumnName="tipoTarefa" />
                 <ScalarProperty Name="divergenciaTarefa" ColumnName="divergenciaTarefa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Observacoes">
+            <EntityTypeMapping TypeName="produsisBDModel.Observacoes">
+              <MappingFragment StoreEntitySet="Observacoes">
+                <ScalarProperty Name="TextoObs" ColumnName="TextoObs" />
+                <ScalarProperty Name="DataObs" ColumnName="DataObs" />
+                <ScalarProperty Name="FuncObs" ColumnName="FuncObs" />
+                <ScalarProperty Name="idObs" ColumnName="idObs" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

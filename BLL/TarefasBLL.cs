@@ -88,11 +88,52 @@ namespace BLL
             return t.getTarefasFiltradas(f);
         }
 
-        public List<ItemRanking> getRanking(List<TarefaModelo> Tarefas)
+        public List<TarefaModelo> filtraRanking(Filtro f)
         {
-            return t.rankingFuncionarios(Tarefas);
+            return t.getTarefasFiltradasRanking(f);
         }
 
+        private double calculaHorasPeriodo(DateTime inicio, DateTime fim)
+        {
+            double horas = 0;
+            for (DateTime dt = inicio; dt < fim.AddDays(1); dt = dt.AddDays(1))
+            {
+                if (dt.DayOfWeek != DayOfWeek.Sunday)
+                {
+                    if (dt.DayOfWeek == DayOfWeek.Saturday)
+                        horas += 4;
+                    else
+                        horas+=7.5;
+                }
+            }
+            return horas;
+        }
+
+        public List<ItemRanking> getRanking(Filtro f)
+        {
+            var rank = t.rankingFuncionarios(filtraRanking(f), calculaHorasPeriodo((DateTime)f.dataInicio, (DateTime)f.dataFim));
+            foreach (var item in rank)
+            {
+                item.observacoes = getLinhaObs(f.dataInicio, (DateTime)f.dataFim, item.nomesFuncionarios);
+            }
+            return rank;
+        }
+
+        public string getLinhaObs(DateTime? inicio, DateTime fim, string nomeFunc)
+        {
+            string linha = "";
+            FuncionariosBD f = new FuncionariosBD();
+            var obs = f.getObservacoes(inicio, fim, f.getFuncPorNome(nomeFunc).idFunc);
+            foreach (var item in obs)
+            {
+                linha += item.DataObs.ToShortDateString() +" "+ item.TextoObs + " * ";
+            }
+            if (linha.Length > 3)
+                linha = linha.Remove(linha.Length - 3);
+
+            return linha;
+        }
+      
         public void exportarExcel(List<TarefaModelo> Tarefas, string nomeArquivo)
         {
             try
@@ -116,11 +157,9 @@ namespace BLL
                 xlWorkSheet.Cells[1, 8] = "Volumes";
                 xlWorkSheet.Cells[1, 9] = "SKU's";
                 xlWorkSheet.Cells[1, 10] = "Pontos";
-                xlWorkSheet.Cells[1, 11] = "Pontos por hora";
-                xlWorkSheet.Cells[1, 12] = "Peso(Kg)";
-                xlWorkSheet.Cells[1, 13] = "Fornecedor";
-                xlWorkSheet.Cells[1, 14] = "Cliente";
-                xlWorkSheet.Cells[1, 15] = "Divergências";
+                xlWorkSheet.Cells[1, 11] = "Fornecedor";
+                xlWorkSheet.Cells[1, 12] = "Cliente";
+                xlWorkSheet.Cells[1, 13] = "Divergências";
 
                 int linha = 2;
                             
@@ -137,10 +176,9 @@ namespace BLL
                     xlWorkSheet.Cells[linha, 8] = i.volumes;
                     xlWorkSheet.Cells[linha, 9] = i.skus;
                     xlWorkSheet.Cells[linha, 10] = i.pontos;
-                    xlWorkSheet.Cells[linha, 11] = i.pontosPorHora;
-                    xlWorkSheet.Cells[linha, 13] = i.fornecedor;
-                    xlWorkSheet.Cells[linha, 14] = i.cliente;
-                    xlWorkSheet.Cells[linha, 15] = i.divergencia();
+                    xlWorkSheet.Cells[linha, 11] = i.fornecedor;
+                    xlWorkSheet.Cells[linha, 12] = i.cliente;
+                    xlWorkSheet.Cells[linha, 13] = i.divergenciaTarefa;
                     
                     linha++;
                 }

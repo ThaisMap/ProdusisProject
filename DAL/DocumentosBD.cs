@@ -62,8 +62,10 @@ namespace DAL
                 }
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+
+                var olho = ex;
                 return false;
             }
         }
@@ -84,8 +86,9 @@ namespace DAL
                 }
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                var olho = ex;
                 return false;
             }
         }
@@ -171,8 +174,9 @@ namespace DAL
                     return (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.Manifesto == numeroManifesto select Cte_Manifesto).ToList();
                 }
             }
-            catch
+            catch (Exception EX)
             {
+                var OLHO = EX;
                 return null;
             }
         }
@@ -367,8 +371,9 @@ namespace DAL
                     return sku;
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                var olho = ex;
                 return -2;
             }
         }

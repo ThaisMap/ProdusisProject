@@ -18,15 +18,23 @@ namespace GUI
     /// </summary>
     public partial class Relatorios : UserControl
     {
-        public Relatorios()
+        public Relatorios(double Altura, double largura)
         {
             InitializeComponent();
+            Height = Altura - 160;
+            Width = largura - 50;
+            dataFinal.SelectedDate = DateTime.Today;
         }
 
         public List<TarefaModelo> source;
 
         public Filtro montarObjeto()
         {
+            if (dataFinal.SelectedDate == null)
+            {
+                dataFinal.SelectedDate = DateTime.Today;
+            }
+
             Filtro filtros = new Filtro()
             {
                 TipoTarefa = cbTipoTarefa.SelectedIndex.ToString(),
@@ -44,9 +52,12 @@ namespace GUI
 
         private void btnConsultar_Click(object sender, RoutedEventArgs e)
         {
+            Cursor _cursorAnterior = Mouse.OverrideCursor;
+            Mouse.OverrideCursor = Cursors.Wait;
             TarefasBLL t = new TarefasBLL();
             source = t.filtrar(montarObjeto());
             dgTarefas.ItemsSource = source;
+            Mouse.OverrideCursor = _cursorAnterior;
         }
 
         private void btnLimpar_Click(object sender, RoutedEventArgs e)
@@ -74,6 +85,7 @@ namespace GUI
             dataInicio.SelectedDate = null;
             dataFinal.SelectedDate = DateTime.Today;
             cbFuncionario.ItemsSource = f.carregaFuncionarios();
+            dgTarefas.Height = ActualHeight - 270;
         }
 
         private void btnExportar_Click(object sender, RoutedEventArgs e)
@@ -85,7 +97,7 @@ namespace GUI
                     DefaultExt = "xls",
                     Title = "Salvar relatório - Produsis",
                     AddExtension = true
-                };                
+                };
 
                 if (dialogo.ShowDialog() == true)
                 {
@@ -100,5 +112,6 @@ namespace GUI
             nomeArquivo += ".csv";
             return nomeArquivo;
         }
+
     }
 }

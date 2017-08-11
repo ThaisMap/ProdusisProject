@@ -9,7 +9,7 @@
             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
             Background="{DynamicResource MaterialDesignPaper}"
             FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-             d:DesignHeight="590" d:DesignWidth="1050" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+             d:DesignHeight="200" d:DesignWidth="1000" >
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -24,12 +24,11 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid VerticalAlignment="Stretch"
-          HorizontalAlignment="Stretch" Margin="0,0">
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0">
         <Grid Margin="0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="75" />
-                <RowDefinition Height="515"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -42,18 +41,15 @@
                     <Button Name="BtnDocumentos" Height="auto" Width="auto" Margin="5,0" Click="BtnDocumentos_Click">Ver Documentos</Button>
                     <Button Name="BtnRelatorios" Height="auto" Width="auto" Margin="5,0" Click="BtnRelatorios_Click">Relatórios</Button>
                     <Button Name="BtnProdutividade" Height="auto" Width="auto" Margin="5,0" Click="BtnProdutividade_Click">Produtividade</Button>
-                    <Button Name="BtnCadFuncionarios" Height="auto" Width="auto" Margin="5,0" Click="BtnCadFuncionarios_Click">Cadastrar Funcionário</Button>
-                    <Button x:Name="BtnEditarFuncionarios" Height="Auto" Width="auto" Click="BtnEditarFuncionarios_Click">Editar Funcionário</Button>
+                    <Button Name="BtnFuncionarios" Height="auto" Width="auto" Margin="5,0" Click="BtnFuncionarios_Click">Funcionários</Button>
                     <Button Name="BtnConfiguracoes" Height="auto" Width="auto" Margin="5,0" Click="BtnConfiguracoes_Click">Configurações</Button>
                 </StackPanel>
-                <Grid Margin="0">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <DockPanel>
-                            <Frame Name="NavegadorInterno"></Frame>
+                            <Frame Name="NavegadorInterno" HorizontalAlignment="Center"></Frame>
                         </DockPanel>
                     </ScrollViewer>
-                </Grid>
-            </StackPanel>
+           </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

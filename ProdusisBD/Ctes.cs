@@ -14,8 +14,6 @@ namespace ProdusisBD
     
     public partial class Ctes
     {
-        private int cte;
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Ctes()
         {
@@ -25,9 +23,8 @@ namespace ProdusisBD
 
         public Ctes(int cte)
         {
-            this.cte = cte;
+            numeroCte = cte;
         }
-
         public int numeroCte { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

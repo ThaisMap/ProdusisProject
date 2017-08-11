@@ -23,11 +23,13 @@ namespace GUI
     /// </summary>
     public partial class Divergencia : UserControl
     {
-        public Divergencia()
+        public Divergencia(double actualHeight, double actualWidth)
         {
             InitializeComponent();
+            Height = actualHeight - 100;
+            Width = actualWidth - 60;
         }
-        
+
         public List<ItemDivergencia> source { get; set; }
         public List<TarefaModelo> tarefas = new List<TarefaModelo>();
 
