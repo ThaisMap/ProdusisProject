@@ -165,6 +165,16 @@ namespace DAL
 
                 nfLida.volumesNF = int.Parse(nf.GetElementsByTagName("qVol")[0].InnerText);
 
+                if (nfLida.volumesNF <= 1)
+                {
+                    var quantidade = nf.GetElementsByTagName("qCom");
+                    nfLida.volumesNF = 0;
+                    foreach (XmlElement item in quantidade)
+                    {
+                        nfLida.volumesNF += (int)double.Parse(item.InnerText.Replace('.', ','));
+                    }
+                }
+
                 var cliente = nf.GetElementsByTagName("xNome")[1].InnerText;
                 if (cliente.Length > 49)
                     cliente = cliente.Remove(49);
@@ -221,11 +231,13 @@ namespace DAL
 
                             for (int i = 1; i < conteudoNf.Count; i++)
                             {
-                                if (conteudoNf[i].Length >= 27)
+                                if (conteudoNf[i].Length >= 21)
                                     break;
                                 else
                                     nfLida.clienteNF += " "+ conteudoNf[i];                              
                             }
+                            if (nfLida.clienteNF.Length > 49)
+                                nfLida.clienteNF = nfLida.clienteNF.Remove(49);
                         }
 
                         //Volumes e número da NF

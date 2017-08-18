@@ -131,11 +131,30 @@ namespace DAL
                 }
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                var olho = ex;
                 return false;
             }
         }
+
+        //public bool alteraVolumesNF(NotasFiscais NF)
+        //{
+        //    try
+        //    {
+        //        using (var BancoDeDados = new produsisBDEntities())
+        //        {
+        //            NotasFiscais atual = BancoDeDados.NotasFiscais.FirstOrDefault(m => m.numeroNF == NF.numeroNF);
+        //            atual.volumesNF = NF.volumesNF;
+        //            BancoDeDados.SaveChanges();
+        //        }
+        //        return true;
+        //    }
+        //    catch
+        //    {
+        //        return false;
+        //    }
+        //}
 
         public string get_ListaManifestosCte(int numCte)
         {

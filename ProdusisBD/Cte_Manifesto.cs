@@ -20,6 +20,11 @@ namespace ProdusisBD
             Manifesto = manifesto;
         }
 
+        public Cte_Manifesto()
+        {
+
+        }
+
         public int idCteManifesto { get; set; }
         public int Cte { get; set; }
         public int Manifesto { get; set; }
