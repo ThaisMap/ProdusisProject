@@ -43,13 +43,17 @@ namespace GUI
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
         {
-            Tarefas item = (Tarefas)dgTarefas.SelectedItem;
+            TarefaModelo item = (TarefaModelo)dgTarefas.SelectedItem;
             if (t.finalizarTarefa(item.idTarefa))
                 MessageBox.Show("Conferência finalizada após " + item.tempoGasto, "Conferência finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
             else
                 MessageBox.Show("Houve um erro e a conferência não pode ser finalizada.", "Conferência não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
             ListaFunc = f.carregaFuncionariosLivres();
             CBFuncionario.ItemsSource = ListaFunc;
+
+            if (ListaFunc.Contains(item.nomesFuncionarios))
+                CBFuncionario.SelectedValue = item.nomesFuncionarios;
+
             AtualizarDg_Click(sender, e);
         }
 
