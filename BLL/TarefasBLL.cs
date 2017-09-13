@@ -114,7 +114,8 @@ namespace BLL
             var rank = t.rankingFuncionarios(filtraRanking(f), calculaHorasPeriodo((DateTime)f.dataInicio, (DateTime)f.dataFim));
             foreach (var item in rank)
             {
-                item.observacoes = getLinhaObs(f.dataInicio, (DateTime)f.dataFim, item.nomesFuncionarios);
+                if(!item.nomesFuncionarios.Contains("/"))
+                    item.observacoes = getLinhaObs(f.dataInicio, (DateTime)f.dataFim, item.nomesFuncionarios);
             }
             return rank;
         }

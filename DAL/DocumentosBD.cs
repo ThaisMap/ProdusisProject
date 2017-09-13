@@ -71,6 +71,27 @@ namespace DAL
         }
 
         /// <summary>
+        /// verifica se ja foi criada a relação cte_Manifesto 
+        /// </summary>
+        /// <param name="novo"></param>
+        /// <returns></returns>
+        public bool checarCteManifesto(Cte_Manifesto novo)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var quantos = (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.Cte == novo.Cte where Cte_Manifesto.Manifesto == novo.Manifesto select Cte_Manifesto).FirstOrDefault();
+                    return quantos == null;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Insere  um registro de cte em manifesto no banco de dados
         /// </summary>
         /// <param name="novo">Dados do novo registro</param>

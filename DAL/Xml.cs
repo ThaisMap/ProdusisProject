@@ -76,8 +76,7 @@ namespace DAL
                     cte = int.Parse(result[i].InnerText);
                     criarCte(cte);
 
-                    if (cadCte)
-                       criarCteManifesto(cte, lido.numeroManifesto);
+                    criarCteManifesto(cte, lido.numeroManifesto);
                     alterarNfs(result[i + 1].InnerText, cte);
                 }
 
@@ -346,8 +345,9 @@ namespace DAL
 
         private void criarCteManifesto(int cte, int manifesto)
         {
-            DocumentosBD dbd = new DocumentosBD();            
-            dbd.cadastrarCteManifesto(new Cte_Manifesto(cte, manifesto));
+            DocumentosBD dbd = new DocumentosBD();
+            if (dbd.checarCteManifesto(new Cte_Manifesto(cte, manifesto)))
+                dbd.cadastrarCteManifesto(new Cte_Manifesto(cte, manifesto));
         }
   }
 }
