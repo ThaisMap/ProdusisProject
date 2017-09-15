@@ -28,6 +28,7 @@ namespace GUI
             InitializeComponent();
             Height = actualHeight - 100;
             Width = actualWidth - 60;
+            dgDivergencias.Height = actualHeight - 280;
         }
 
         public List<ItemDivergencia> source { get; set; }
@@ -52,7 +53,7 @@ namespace GUI
                     {
                         source.Add(new ItemDivergencia(item));
                     }
-                    dgDivergencias.ItemsSource = source;
+                    dgDivergencias.ItemsSource = source.OrderBy(o=>o.cte);
                 }
             }
             catch(Exception ex)
@@ -72,6 +73,7 @@ namespace GUI
                 }
 
                 t.inserirDivergencias(tarefas);
+                MessageBox.Show("As alterações foram salvas.", "Divergências - Produsis");
             }
         }
     }

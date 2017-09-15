@@ -31,7 +31,11 @@
                     <matDsign:PackIcon Kind="Security" Margin="5" Foreground="{Binding ElementName=TxbSenha, Path=BorderBrush}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="24" Height="24" Grid.Column="0"></matDsign:PackIcon>
                     <PasswordBox Name="TxbSenha" Margin="10" Grid.Column="1" matDsign:HintAssist.Hint="Senha" matDsign:HintAssist.IsFloating="True"></PasswordBox>
                 </Grid>
-                <Button Name="BtnLogin" Width="70" Height="auto" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0" Style="{StaticResource MaterialDesignRaisedDarkButton}" Content="Login" Click="BtnLogin_Click"></Button>
+                <Button Name="BtnLogin" IsDefault="True"
+                        Width="70" Height="auto"
+                        VerticalAlignment="Center" HorizontalAlignment="Right" 
+                        Margin="10,0" Style="{StaticResource MaterialDesignRaisedDarkButton}" 
+                        Content="Login" Click="BtnLogin_Click"></Button>
             </StackPanel>
         </Grid>
     </Grid>

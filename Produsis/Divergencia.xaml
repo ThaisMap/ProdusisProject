@@ -22,8 +22,8 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <Grid Margin="0,10,0,10">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="26*" />
-                    <RowDefinition Height="69*"/>
+                    <RowDefinition Height="104" />
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -62,7 +62,7 @@
                                         Height="22"
                                         VerticalAlignment="Bottom"                            
                                         Foreground="{Binding ElementName=Documento, Path=BorderBrush}"
-                                        Kind="FileDocument" RenderTransformOrigin="1.25,0.455" Margin="0,0,0,10" />
+                                        Kind="FileDocument" Margin="0,0,0,10" />
                         <TextBox        Name="Documento"
                                         Grid.Column="1"
                                         Margin="27,10,10,5"
