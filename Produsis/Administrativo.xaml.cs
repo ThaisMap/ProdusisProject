@@ -75,5 +75,11 @@ namespace GUI
             NavegadorInterno.Navigate(new Produtividade(ActualHeight, ActualWidth));
             ResetarOpacidade(sender as Button);
         }
+
+        private void Temas_Click(object sender, RoutedEventArgs e)
+        {
+            NavegadorInterno.Navigate(new MudarTema(ActualHeight, ActualWidth));
+            ResetarOpacidade(sender as Button);
+        }
     }
 }

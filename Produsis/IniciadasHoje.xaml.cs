@@ -1,8 +1,6 @@
 ﻿using BLL;
-using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
-
 
 namespace GUI
 {
@@ -34,8 +32,6 @@ namespace GUI
             }
             dgTarefas.ItemsSource = ListaIniciadasHoje;
         }
-
-               
     }
 
     public class TarefaIniciada
@@ -44,6 +40,4 @@ namespace GUI
         public int Finalizadas { get; set; }
         public int Pendentes { get; set; }
     }
-
-
 }

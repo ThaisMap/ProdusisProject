@@ -1,0 +1,90 @@
+﻿<UserControl
+    x:Class="GUI.MudarTema"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:GUI"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch"
+    d:DesignHeight="320"
+    d:DesignWidth="720"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+    TextElement.FontSize="16"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    mc:Ignorable="d">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid HorizontalAlignment="Center" Height="300">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" ></RowDefinition>
+                    <RowDefinition Height="1*" ></RowDefinition>
+                    <RowDefinition Height="1*" ></RowDefinition>
+                    <RowDefinition Height="1*" ></RowDefinition>
+
+                    <RowDefinition ></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    Text="Tema Global:"
+                    TextAlignment="Right" />
+                <ComboBox
+                    Name="cbxTema"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Width="240"
+                    Margin="5,0,75,14"
+                    VerticalAlignment="Bottom"
+                    materialDesign:HintAssist.Hint="Tema Global" Grid.ColumnSpan="2" SelectionChanged="cbxTema_SelectionChanged" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    Text="Cor:"
+                    TextAlignment="Right" />
+                <ComboBox
+                    Name="cbxCor"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Width="240"
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    materialDesign:HintAssist.Hint="Cor" SelectionChanged="cbxCor_SelectionChanged" />
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    Text="Destaques:"
+                    TextAlignment="Right" />
+                <ComboBox
+                    Name="cbxDestaque"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Width="240"
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    materialDesign:HintAssist.Hint="Destaques" SelectionChanged="cbxDestaque_SelectionChanged" />
+                <Button
+                    Name="Salva"
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    Margin="5"
+                    Click="Salva_Click"
+                    Content="Salvar" />
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

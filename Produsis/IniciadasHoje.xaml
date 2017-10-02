@@ -28,11 +28,11 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
             <TextBlock Margin="40,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Tarefas iniciadas hoje</TextBlock>
-
         </StackPanel>
         <DataGrid Grid.Row="1"
             Name="dgTarefas"  Margin="40,25,0,104"
-                  Background="#FF878787" RowBackground="#FFC7C7C7"
+                  GridLinesVisibility="All"
+
                   AutoGenerateColumns="False"  IsReadOnly="True"
                   HorizontalAlignment="Left" Width="auto">
             <DataGrid.Columns>
@@ -41,5 +41,5 @@
                 <DataGridTextColumn Header="Executando" Binding="{Binding Pendentes}" />
             </DataGrid.Columns>
         </DataGrid>
-     </Grid>
+    </Grid>
 </UserControl>

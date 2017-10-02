@@ -1,6 +1,6 @@
 ﻿using DAL;
 using DAL.Properties;
-using System;
+using Microsoft.Office.Interop.Outlook;
 using System.Collections.Generic;
 using System.IO;
 
@@ -8,6 +8,7 @@ namespace BLL
 {
     public class xmlBLL
     {
+        Application Outlook;
         /// <summary>
         /// Processa arquivos nas pastas de nf e manifesto
         /// </summary>
@@ -17,16 +18,35 @@ namespace BLL
             {
                 Xml xml = new Xml();
                 List<string> arquivosPastaNF = new List<string>();
-
-                //Percorre pasta de NFs pela primeira vez, ao encontrar um email , extrai os anexos e mover o email para pasta old
-                foreach (string f in Directory.GetFiles(PastasXml.Default.PastaNFs))
+                
+               var listaDeArquivos = Directory.GetFiles(PastasXml.Default.PastaNFs);
+                bool temMSG = false;
+                foreach (string f in listaDeArquivos)
                 {
                     var ext = extensao(f);
                     if (ext == "msg" || ext == "MSG")
                     {
-                        xml.extrairAnexosDeEmail(moverArquivo(f));
-                    }                    
+                        temMSG = true;
+
+                        break;
+                    }
                 }
+
+                //Percorre pasta de NFs pela primeira vez, ao encontrar um email , extrai os anexos e mover o email para pasta old
+                if (temMSG)
+                {
+                    Outlook = new Application();
+                    foreach (string f in listaDeArquivos)
+                    {
+                        var ext = extensao(f);
+                        if (ext == "msg" || ext == "MSG")
+                        {
+                            xml.extrairAnexosDeEmail(moverArquivo(f), Outlook);
+                        }
+                    }
+                    Outlook.Quit();
+                }
+                
 
                 //Percorre pasta de NFs pela segunda vez
                 //Ao encontrar xml ou txt, procede com importação dos dados e move o arquivo para pasta old
@@ -74,7 +94,8 @@ namespace BLL
                         File.Delete(f);
                 }
             }
-            catch (Exception ex){
+            catch (System.Exception ex)
+            {
                 var erro = ex;
             }
         }
@@ -100,7 +121,7 @@ namespace BLL
                 novaPasta = nomeArquivo.Replace(PastasXml.Default.PastaManifestos, PastasXml.Default.PastaManifestos + "\\old");
             else
                 if (nomeArquivo.Contains(PastasXml.Default.PastaPreManifestos))
-                    novaPasta = nomeArquivo.Replace(PastasXml.Default.PastaPreManifestos, PastasXml.Default.PastaPreManifestos + "\\old");
+                novaPasta = nomeArquivo.Replace(PastasXml.Default.PastaPreManifestos, PastasXml.Default.PastaPreManifestos + "\\old");
             else
                 novaPasta = nomeArquivo.Replace(PastasXml.Default.PastaNFs, PastasXml.Default.PastaNFs + "\\old");
             try { File.Move(nomeArquivo, novaPasta); }

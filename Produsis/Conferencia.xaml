@@ -8,7 +8,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              HorizontalAlignment="Left"
              VerticalAlignment="Top"
-             MinHeight="500"             
+             MinHeight="500"
              d:DesignHeight="400"
              d:DesignWidth="800"
              Background="{DynamicResource MaterialDesignPaper}"
@@ -18,112 +18,112 @@
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              mc:Ignorable="d">
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <Grid Margin="0,10,0,10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0">
-                    <TextBlock Margin="40,0,0,0"
+        <Grid Margin="0,10,0,4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock Margin="40,0,0,0"
                                Style="{StaticResource MaterialDesignHeadlineTextBlock}">Conferência</TextBlock>
-                    <Separator />
-                    <Grid Grid.Row="1"
+                <Separator />
+                <Grid Grid.Row="1"
                           Grid.Column="1"
                           Grid.ColumnSpan="2"
                           Margin="10,20,0,5">
-                        <StackPanel>
-                            <TextBlock Text="Nova Conferência" Margin="0,0,350,0" />
-                            <Grid Margin="10,5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="70" />
-                                    <RowDefinition Height="60" />
-                                    <RowDefinition Height="50" />
-                                </Grid.RowDefinitions>
-                                <StackPanel Grid.Row="0"
+                    <StackPanel>
+                        <TextBlock Text="Nova Conferência" Margin="0,0,350,0" />
+                        <Grid Margin="10,5" Name="formSuperior" Height="180">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="70" />
+                                <RowDefinition Height="60" />
+                                <RowDefinition Height="50" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0"
                                             Grid.Column="0"
                                             Margin="5,10"
                                             Orientation="Horizontal">
-                                    <materialDesign:PackIcon Width="22"
+                                <materialDesign:PackIcon Width="22"
                                                              Height="auto"
                                                              VerticalAlignment="Bottom"
                                                              Foreground="{Binding BorderBrush, ElementName=Documento}"
                                                              Kind="FileDocument" />
-                                    <TextBox x:Name="Documento"
+                                <TextBox x:Name="Documento"
                                         Grid.Row="1"
                                         Grid.Column="1"
                                         Width="300"
                                         Margin="5,0,5,5"
                                         materialDesign:HintAssist.Hint="Conhecimento"
                                         materialDesign:HintAssist.IsFloating="True"
-                                        PreviewTextInput="testarCaractere"                                                        
-                                        Style="{StaticResource MaterialDesignTextBox}" 
+                                        PreviewTextInput="testarCaractere"
+                                        Style="{StaticResource MaterialDesignTextBox}"
                                         LostFocus="normalizarDocumento" />
-                                </StackPanel>
-                                <StackPanel Grid.Row="0"
+                            </StackPanel>
+                            <StackPanel Grid.Row="0"
                                             Grid.RowSpan="3"
                                             CanVerticallyScroll="True"
                                             Grid.Column="1"
                                             Margin="10,-28,-10,10">
-                                    <TextBlock><Run Text="Funcionários Responsaveis:"/></TextBlock>
-                                    <ListBox x:Name="ListaDeFuncionarios"
+                                <TextBlock><Run Text="Funcionários Responsaveis:" /></TextBlock>
+                                <ListBox x:Name="ListaDeFuncionarios"
                                              materialDesign:ShadowAssist.ShadowDepth="Depth2"
                                              DataContext="Funcionarios" Height="185">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <materialDesign:Chip Content="{Binding Nome}"
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <materialDesign:Chip Content="{Binding Nome}"
                                                                      Icon="{Binding Tag}"
                                                                      IsDeletable="True"
                                                                      DeleteClick="ChipEx_DeleteClick" />
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
-                                </StackPanel>
-                                <StackPanel Grid.Row="1"
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1"
                                             Grid.Column="0"
                                             Margin="5,0,5,0"
                                             Orientation="Horizontal">
-                                    <materialDesign:PackIcon Width="22"
+                                <materialDesign:PackIcon Width="22"
                                                              Height="auto"
                                                              VerticalAlignment="Center"
                                                              Foreground="{Binding BorderBrush, ElementName=CBFuncionario}"
                                                              Kind="Account" />
-                                    <ComboBox x:Name="CBFuncionario"
+                                <ComboBox x:Name="CBFuncionario"
                                               Width="240"
                                               Margin="10,0"
                                               IsEditable="True"
                                               materialDesign:HintAssist.Hint="Funcionário"
                                               materialDesign:HintAssist.IsFloating="True"
                                               SelectionChanged="CBFuncionario_SelectionChanged" />
-                                    <Button VerticalAlignment="Bottom"
+                                <Button VerticalAlignment="Bottom"
                                             Click="Inserir_Click"
                                             Style="{StaticResource MaterialDesignFlatButton}" Content="Incluir" />
-                                </StackPanel>
-                                <Button x:Name= "Iniciar"
+                            </StackPanel>
+                            <Button x:Name= "Iniciar"
                                         Grid.Row="3"
                                         Grid.Column="1"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Bottom"
-                                         Margin="0,0,0,10" Width="71" Click="Iniciar_Click" Content="Iniciar"/>
-                            </Grid>
-                            <Separator />
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height=" auto" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
+                                         Margin="0,0,0,10" Width="71" Click="Iniciar_Click" Content="Iniciar" />
+                        </Grid>
+                        <Separator />
+                        <ScrollViewer Height="250" CanContentScroll="True" Name="Scrooler">
+                        <Grid ScrollViewer.CanContentScroll="True" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
 
-                                <Button Grid.Column="1"
+                            <Button Grid.Column="1"
                                        Grid.Row="0"
                                         x:Name="AtualizarDg"
                                         Height="25"
@@ -131,42 +131,50 @@
                                         HorizontalAlignment="Right"
                                         Content="Atualizar" Margin="75,0,7,0"
                                         Style="{StaticResource MaterialDesignFlatButton}" Click="AtualizarDg_Click" />
-                                <TextBlock Grid.Column="0"
+                            <TextBlock Grid.Column="0"
                                        Grid.Row="0"
                                        x:Name="TextoExecucao"  Text="Tarefas em execução"
                                        HorizontalAlignment="Left" Margin="50,0,0,0" Width="200" />
                                 <DataGrid
+                                    ScrollViewer.CanContentScroll="True"
                                     Grid.Column="0"
                                     Grid.Row="1"
                                     Grid.ColumnSpan="2"
                                     x:Name="dgTarefas"
                                     Margin="40,5"
-                                    HorizontalAlignment="Center"
+                                    HorizontalAlignment="Stretch"
                                     AutoGenerateColumns="False"
                                     VerticalAlignment="Stretch"
                                     ColumnWidth="*"
                                     IsReadOnly="True">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="CT-e" Width="auto" Binding="{Binding documentoTarefa}" />
-                                        <DataGridTextColumn Header="Funcionários" Binding="{Binding nomesFuncionarios}" />
+                                        <DataGridTextColumn Header="Funcionários" Binding="{Binding nomesFuncionarios}" Width="350" />
                                         <DataGridTextColumn Header="Hora Início" Binding="{Binding horaInicio}" />
                                         <DataGridTextColumn Header="SKU's" Binding="{Binding skus}" />
                                         <DataGridTextColumn Header="Volumes" Binding="{Binding volumes}" />
                                         <DataGridTextColumn Header="Tempo Gasto" Binding="{Binding tempoGasto}" />
+                                        <DataGridTemplateColumn Header="Alterar">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button  Content="Alterar" Click="Alterar_Click" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
                                         <DataGridTemplateColumn Header="Finalizar Tarefa">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Button Click="Finalizar_Click" Content="Finalizar"/>
+                                                    <Button Click="Finalizar_Click" Content="Finalizar" />
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
                                     </DataGrid.Columns>
                                 </DataGrid>
-                            </Grid>
-                        </StackPanel>
-                    </Grid>
-                </StackPanel>
-            </Grid>
-        </ScrollViewer>
+                        </Grid>
+                        </ScrollViewer>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

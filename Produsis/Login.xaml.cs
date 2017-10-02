@@ -12,6 +12,7 @@ namespace GUI
         public Login()
         {
             InitializeComponent();
+            MudarCores iniciarTema = new MudarCores();
         }
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)

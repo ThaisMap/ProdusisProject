@@ -1,11 +1,10 @@
 ﻿using DAL.Properties;
 using Microsoft.Office.Interop.Outlook;
 using ProdusisBD;
-using System.Xml;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
+using System.Linq;
+using System.Xml;
 
 namespace DAL
 {
@@ -14,13 +13,11 @@ namespace DAL
         /// <summary>
         /// Abre o email e salva todos os anexos na pasta de notas fiscais
         /// </summary>
-        public void extrairAnexosDeEmail(string nomeArquivo)
+        public void extrairAnexosDeEmail(string nomeArquivo, Application Outlook)
         {
-            Application app = new Application(); 
+            MailItem email = (MailItem)Outlook.Session.OpenSharedItem(nomeArquivo);
             try
             {
-                MailItem email = (MailItem)app.Session.OpenSharedItem(nomeArquivo);
-
                 int i = 0;
                 foreach (Attachment anexo in email.Attachments)
                 {
@@ -32,19 +29,12 @@ namespace DAL
                     anexo.SaveAsFile(nomeXML);
                     i++;
                 }
-
-                app.Quit();
                 email.Close(OlInspectorClose.olDiscard);
             }
-            catch 
+            catch
             {
-                try
-                {
-                    app.Quit();
-                }
-                catch { }
+                email.Close(OlInspectorClose.olDiscard);
             }
-
         }
 
         /// <summary>
@@ -68,7 +58,7 @@ namespace DAL
                 lido.quantCtesManifesto = (int)double.Parse(result[result.Count - 4].InnerText.Replace('.', ','));
 
                 bool cadCte = docBD.cadastrarManifesto(lido);
-                
+
                 int cte;
 
                 for (int i = 0; i < result.Count - 4; i = i + 10)
@@ -97,7 +87,6 @@ namespace DAL
         {
             try
             {
-
                 XmlDocument manifesto = new XmlDocument();
                 manifesto.Load(nomeArquivo);
 
@@ -139,7 +128,6 @@ namespace DAL
             }
         }
 
-
         /// <summary>
         /// Importa os dados de xml de notas fiscais na pasta padrão
         /// </summary>
@@ -161,9 +149,19 @@ namespace DAL
                 if (fornecedor.Length > 49)
                     fornecedor = fornecedor.Remove(49);
                 nfLida.fonecedorNF = fornecedor;
-
-                nfLida.volumesNF = int.Parse(nf.GetElementsByTagName("qVol")[0].InnerText);
-
+                try
+                {
+                    nfLida.volumesNF = int.Parse(nf.GetElementsByTagName("qVol")[0].InnerText);
+                }
+                catch
+                {
+                    var quantidade = nf.GetElementsByTagName("qCom");
+                    nfLida.volumesNF = 0;
+                    foreach (XmlElement item in quantidade)
+                    {
+                        nfLida.volumesNF += (int)double.Parse(item.InnerText.Replace('.', ','));
+                    }
+                }
                 if (nfLida.volumesNF <= 1)
                 {
                     var quantidade = nf.GetElementsByTagName("qCom");
@@ -218,8 +216,8 @@ namespace DAL
                                 Fornecedor += conteudoNf[i];
                             }
                         }
-                        
-                        //Cliente e Zerar SKU 
+
+                        //Cliente e Zerar SKU
                         if (nf.StartsWith("312"))
                         {
                             nfLida.skuNF = 0;
@@ -233,7 +231,7 @@ namespace DAL
                                 if (conteudoNf[i].Length >= 21)
                                     break;
                                 else
-                                    nfLida.clienteNF += " "+ conteudoNf[i];                              
+                                    nfLida.clienteNF += " " + conteudoNf[i];
                             }
                             if (nfLida.clienteNF.Length > 49)
                                 nfLida.clienteNF = nfLida.clienteNF.Remove(49);
@@ -257,7 +255,7 @@ namespace DAL
                             nfLida.numeroNF = aux.Remove(0, 3) + "-" + aux.Remove(3).TrimStart('0');
                             nfLida.numeroNF = nfLida.numeroNF.TrimStart('0');
                         }
-                        
+
                         //Contar SKUs
                         if (nf.StartsWith("314"))
                         {
@@ -276,7 +274,7 @@ namespace DAL
                 }
                 else
                 {
-                    retorno= false;
+                    retorno = false;
                 }
 
                 return retorno;
@@ -324,7 +322,7 @@ namespace DAL
         /// </summary>
         private bool alterarUmaNf(string nf, int cte)
         {
-           DocumentosBD dbd = new DocumentosBD();
+            DocumentosBD dbd = new DocumentosBD();
             nf = nf.TrimStart('0');
             NotasFiscais nova = dbd.getNFPorNumero(nf);
             if (nova != null)
@@ -334,8 +332,6 @@ namespace DAL
             else
                 return false; //false se a nota não estiver cadastrada
         }
-
-
 
         private bool criarCte(int cte)
         {
@@ -349,5 +345,5 @@ namespace DAL
             if (dbd.checarCteManifesto(new Cte_Manifesto(cte, manifesto)))
                 dbd.cadastrarCteManifesto(new Cte_Manifesto(cte, manifesto));
         }
-  }
+    }
 }

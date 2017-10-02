@@ -127,8 +127,13 @@
     <Compile Include="Configuracao.xaml.cs">
       <DependentUpon>Configuracao.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Cores.cs" />
     <Compile Include="Divergencia.xaml.cs">
       <DependentUpon>Divergencia.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MudarCores.cs" />
+    <Compile Include="MudarTema.xaml.cs">
+      <DependentUpon>MudarTema.xaml</DependentUpon>
     </Compile>
     <Compile Include="NavFuncionarios.xaml.cs">
       <DependentUpon>NavFuncionarios.xaml</DependentUpon>
@@ -230,6 +235,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EdicaoFuncionarios.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MudarTema.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

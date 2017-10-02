@@ -104,6 +104,8 @@ namespace GUI
                     Documento.Text = "";
                     CBFuncionario.SelectedIndex = -1;
                     ListaDeFuncionarios.Items.Clear();
+                    cbPaletizado.IsChecked = false;
+          
                 }
                 else
                 {

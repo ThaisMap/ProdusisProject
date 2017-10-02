@@ -19,6 +19,7 @@ namespace GUI
         private FuncionariosTag FuncionarioSelecionado;
         private List<string> ListaFunc;
         private TarefasBLL t = new TarefasBLL();
+
         public Conferencia(double actualHeight, double actualWidth)
         {
             InitializeComponent();
@@ -27,6 +28,7 @@ namespace GUI
             dgTarefas.ItemsSource = t.tarefasPendentes("2");
             Height = actualHeight - 100;
             Width = actualWidth - 60;
+            Scrooler.Height = actualHeight - (int.Parse(formSuperior.Height.ToString()) + 225);
             lerXmls();
         }
 
@@ -107,7 +109,6 @@ namespace GUI
                     CBFuncionario.SelectedIndex = -1;
                     ListaDeFuncionarios.Items.Clear();
                 }
-
                 else
                 {
                     MessageBox.Show("Não foi possível iniciar a conferência.", "Conferência não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -131,10 +132,9 @@ namespace GUI
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
-
         }
 
-        static void lerXmls()
+        private static void lerXmls()
         {
             xmlBLL x = new xmlBLL();
             x.triagemArquivos();
@@ -157,6 +157,11 @@ namespace GUI
                 Documento.Text = Documento.Text.Remove(12);
                 Documento.Text = int.Parse(Documento.Text).ToString();
             }
+        }
+
+        private void Alterar_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
