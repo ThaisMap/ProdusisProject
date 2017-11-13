@@ -18,19 +18,19 @@
     mc:Ignorable="d">
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Grid HorizontalAlignment="Center" Height="300">
+            <Grid Height="300" HorizontalAlignment="Center">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*" ></RowDefinition>
-                    <RowDefinition Height="1*" ></RowDefinition>
-                    <RowDefinition Height="1*" ></RowDefinition>
-                    <RowDefinition Height="1*" ></RowDefinition>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
 
-                    <RowDefinition ></RowDefinition>
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <TextBlock
                     Grid.Row="0"
@@ -43,10 +43,12 @@
                     Name="cbxTema"
                     Grid.Row="0"
                     Grid.Column="1"
+                    Grid.ColumnSpan="2"
                     Width="240"
                     Margin="5,0,75,14"
-                    VerticalAlignment="Bottom"
-                    materialDesign:HintAssist.Hint="Tema Global" Grid.ColumnSpan="2" SelectionChanged="cbxTema_SelectionChanged" />
+                    VerticalAlignment="Center"
+                    materialDesign:HintAssist.Hint="Tema Global"
+                    SelectionChanged="cbxTema_SelectionChanged" />
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="0"
@@ -61,13 +63,14 @@
                     Width="240"
                     Margin="5"
                     VerticalAlignment="Center"
-                    materialDesign:HintAssist.Hint="Cor" SelectionChanged="cbxCor_SelectionChanged" />
+                    materialDesign:HintAssist.Hint="Cor"
+                    SelectionChanged="cbxCor_SelectionChanged" />
                 <TextBlock
                     Grid.Row="2"
                     Grid.Column="0"
                     Margin="5"
                     VerticalAlignment="Center"
-                    Text="Destaques:"
+                    Text="Destaque:"
                     TextAlignment="Right" />
                 <ComboBox
                     Name="cbxDestaque"
@@ -76,7 +79,8 @@
                     Width="240"
                     Margin="5"
                     VerticalAlignment="Center"
-                    materialDesign:HintAssist.Hint="Destaques" SelectionChanged="cbxDestaque_SelectionChanged" />
+                    materialDesign:HintAssist.Hint="Destaque"
+                    SelectionChanged="cbxDestaque_SelectionChanged" />
                 <Button
                     Name="Salva"
                     Grid.Row="3"

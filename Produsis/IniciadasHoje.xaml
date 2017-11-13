@@ -32,7 +32,6 @@
         <DataGrid Grid.Row="1"
             Name="dgTarefas"  Margin="40,25,0,104"
                   GridLinesVisibility="All"
-
                   AutoGenerateColumns="False"  IsReadOnly="True"
                   HorizontalAlignment="Left" Width="auto">
             <DataGrid.Columns>

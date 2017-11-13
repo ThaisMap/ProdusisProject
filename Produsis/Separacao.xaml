@@ -65,7 +65,7 @@
                                         Margin="5,0,5,5"
                                         materialDesign:HintAssist.Hint="Manifesto"
                                         materialDesign:HintAssist.IsFloating="True"
-                                        PreviewTextInput="testarCaractere"                                                        
+                                        PreviewTextInput="testarCaractere"
                                         Style="{StaticResource MaterialDesignTextBox}" />
                                 </StackPanel>
                                 <StackPanel
@@ -139,36 +139,58 @@
                                     <RowDefinition Height=" auto" />
                                 </Grid.RowDefinitions>
 
-                                <Button Grid.Column="1"
-                                       Grid.Row="0"
-                                        Name="AtualizarDg"
-                                        Height="25"
-                                        Width="100"
-                                        HorizontalAlignment="Right"
-                                        Style="{StaticResource MaterialDesignFlatButton}"
-                                        Content="Atualizar" Margin="75,0,7,0" Click="AtualizarDg_Click" />
-                                <TextBlock Grid.Column="0"
-                                       Grid.Row="0"
-                                       x:Name="TextoExecucao"  Text="Tarefas em execução"
-                                       HorizontalAlignment="Left" Margin="50,0,0,0" Width="200" />
-                                <DataGrid
+                                <Button
+                                    Name="AtualizarDg"
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Width="100"
+                                    Height="25"
+                                    Margin="75,0,7,0"
+                                    HorizontalAlignment="Right"
+                                    Click="AtualizarDg_Click"
+                                    Content="Atualizar"
+                                    Style="{StaticResource MaterialDesignFlatButton}" />
+                                <TextBlock
+                                    x:Name="TextoExecucao"
+                                    Grid.Row="0"
                                     Grid.Column="0"
-                                    Grid.Row="1"
-                                    Grid.ColumnSpan="2"
+                                    Width="200"
+                                    Margin="50,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    Text="Tarefas em execução" />
+                                <DataGrid
                                     Name="dgTarefas"
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
                                     Margin="40,5"
                                     HorizontalAlignment="Center"
                                     AutoGenerateColumns="False"
                                     ColumnWidth="*"
                                     IsReadOnly="True">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Manifesto" Width="Auto" Binding="{Binding documentoTarefa}" />
-                                        <DataGridTextColumn Header="Funcionários" Binding="{Binding nomesFuncionarios}" />
-                                        <DataGridTextColumn Header="Hora Início" Width="Auto" Binding="{Binding horaInicio}" />
-                                        <DataGridTextColumn Header="SKU's" Width="Auto" Binding="{Binding skus}" />
-                                        <DataGridTextColumn Header="Volumes" Width="Auto" Binding="{Binding volumes}" />
-                                        <DataGridTextColumn Header="Tempo Gasto" Width="Auto" Binding="{Binding tempoGasto}" />
-                                        <DataGridTemplateColumn Header="Finalizar Tarefa" Width="Auto">
+                                        <DataGridTextColumn
+                                            Width="Auto"
+                                            Binding="{Binding documentoTarefa}"
+                                            Header="Manifesto" />
+                                        <DataGridTextColumn Binding="{Binding nomesFuncionarios}" Header="Funcionários" />
+                                        <DataGridTextColumn
+                                            Width="Auto"
+                                            Binding="{Binding horaInicio}"
+                                            Header="Hora Início" />
+                                        <DataGridTextColumn
+                                            Width="Auto"
+                                            Binding="{Binding skus}"
+                                            Header="SKU's" />
+                                        <DataGridTextColumn
+                                            Width="Auto"
+                                            Binding="{Binding volumes}"
+                                            Header="Volumes" />
+                                        <DataGridTextColumn
+                                            Width="Auto"
+                                            Binding="{Binding tempoGasto}"
+                                            Header="Tempo Gasto" />
+                                        <DataGridTemplateColumn Width="Auto" Header="Finalizar Tarefa">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <Button Width="Auto" Click="Finalizar_Click">Finalizar</Button>

@@ -361,6 +361,7 @@ namespace DAL
                 return "Não atrelado a nenhuma NF";
             }
         }
+
         /// <summary>
         /// Retorna a soma dos skus de cada nota componente do Cte
         /// </summary>
@@ -490,8 +491,6 @@ namespace DAL
             }
         }
 
-
-
         /// <summary>
         /// Verifica se o documento indicado esta cadastrado no banco de dados
         /// </summary>
@@ -529,6 +528,7 @@ namespace DAL
                 return null;
             }
         }
+
         /// <summary>
         /// Retorna uma string com os dados do cte indicado
         /// </summary>

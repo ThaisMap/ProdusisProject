@@ -28,7 +28,7 @@ namespace GUI
             dgTarefas.ItemsSource = t.tarefasPendentes("3");
             Height = actualHeight - 150;
             Width = actualWidth - 60;
-            dgTarefas.Height = actualHeight - 600;
+            dgTarefas.Height = actualHeight - 500;
             lerXmls();
         }
 

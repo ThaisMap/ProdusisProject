@@ -73,7 +73,6 @@ namespace DAL
             }
         }
 
-
         /// <summary>
         /// Retorna lista de tarefas referentes a um manifesto. Caso o tipo seja conferências.
         /// </summary>

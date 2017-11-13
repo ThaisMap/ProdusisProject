@@ -32,7 +32,10 @@ namespace GUI
             }
             dgTarefas.ItemsSource = ListaIniciadasHoje;
         }
+
     }
+
+
 
     public class TarefaIniciada
     {

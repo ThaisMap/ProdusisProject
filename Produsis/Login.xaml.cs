@@ -13,6 +13,8 @@ namespace GUI
         {
             InitializeComponent();
             MudarCores iniciarTema = new MudarCores();
+            TabIndex = 0;
+            TxbLogin.Focus();
         }
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)

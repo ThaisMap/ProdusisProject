@@ -52,11 +52,11 @@ namespace GUI
         private void GerarListas()
         {
             #region Tema
-            TemasGlobais.Add(new Cores { CorNome = "Escuro", CorXaml = "Dark" });
             TemasGlobais.Add(new Cores { CorNome = "Claro", CorXaml = "Light" });
+            TemasGlobais.Add(new Cores { CorNome = "Escuro", CorXaml = "Dark" });
             #endregion
 
-            #region Cores
+            #region Destaques
             CoresDestaques.Add(new Cores { CorNome = "Vermelho", CorXaml = "Red" });
             CoresDestaques.Add(new Cores { CorNome = "Azul", CorXaml = "Blue" });
             CoresDestaques.Add(new Cores { CorNome = "Indigo", CorXaml = "Indigo" });
@@ -65,6 +65,7 @@ namespace GUI
             CoresDestaques.Add(new Cores { CorNome = "Laranja", CorXaml = "Orange" });
             CoresDestaques.Add(new Cores { CorNome = "Verde", CorXaml = "Green" });
             CoresDestaques.Add(new Cores { CorNome = "Lima", CorXaml = "Lime" });
+            CoresDestaques.Add(new Cores { CorNome = "Rosa", CorXaml = "Pink" });
             CoresDestaques.Add(new Cores { CorNome = "Laranja Escuro", CorXaml = "DeepOrange" });
             CoresDestaques.Add(new Cores { CorNome = "Azul Claro", CorXaml = "LightBlue" });
             CoresDestaques.Add(new Cores { CorNome = "Ambar", CorXaml = "Amber" });
@@ -72,10 +73,9 @@ namespace GUI
             CoresDestaques.Add(new Cores { CorNome = "Ciano", CorXaml = "Cyan" });
             CoresDestaques.Add(new Cores { CorNome = "Roxo Escuro", CorXaml = "DeepPurple" });
             CoresDestaques.Add(new Cores { CorNome = "Verde Claro", CorXaml = "LightGreen" });
-
             #endregion
 
-            #region Destaques
+            #region Cores
             CoresDeTema.Add(new Cores { CorNome = "Vermelho", CorXaml = "Red" });
             CoresDeTema.Add(new Cores { CorNome = "Azul", CorXaml = "Blue" });
             CoresDeTema.Add(new Cores { CorNome = "Indigo", CorXaml = "Indigo" });
@@ -87,6 +87,7 @@ namespace GUI
             CoresDeTema.Add(new Cores { CorNome = "Laranja Escuro", CorXaml = "DeepOrange" });
             CoresDeTema.Add(new Cores { CorNome = "Azul Claro", CorXaml = "LightBlue" });
             CoresDeTema.Add(new Cores { CorNome = "Ambar", CorXaml = "Amber" });
+            CoresDeTema.Add(new Cores { CorNome = "Rosa", CorXaml = "Pink" });
             CoresDeTema.Add(new Cores { CorNome = "Verde Petróleo", CorXaml = "Teal" });
             CoresDeTema.Add(new Cores { CorNome = "Ciano", CorXaml = "Cyan" });
             CoresDeTema.Add(new Cores { CorNome = "Roxo Escuro", CorXaml = "DeepPurple" });

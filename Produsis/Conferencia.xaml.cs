@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Threading;
 
 namespace GUI
 {
@@ -30,6 +31,14 @@ namespace GUI
             Width = actualWidth - 60;
             Scrooler.Height = actualHeight - (int.Parse(formSuperior.Height.ToString()) + 225);
             lerXmls();
+            Thread tick = new Thread(ticktock);
+            tick.Start();
+        }
+
+        private void ticktock()
+        {
+            dgTarefas.ItemsSource = t.tarefasPendentes("2");
+            Thread.Sleep(15000);
         }
 
         public static string CriaChipTag(string Nome)
@@ -55,7 +64,18 @@ namespace GUI
 
             if (ListaFunc.Contains(item.nomesFuncionarios))
                 CBFuncionario.SelectedValue = item.nomesFuncionarios;
+            MessageBoxResult novaTarefa = MessageBox.Show("Deseja Abrir uma nova tarefa para o funcionário?", "Nova Tarefa", MessageBoxButton.YesNo,MessageBoxImage.Question);
+            if(novaTarefa.ToString().ToUpper() == "YES")
+            {
+                FuncionarioSelecionado = new FuncionariosTag(CBFuncionario.SelectedItem.ToString(), CriaChipTag(CBFuncionario.SelectedItem.ToString()));
+                if (!ListaDeFuncionarios.Items.Contains(FuncionarioSelecionado) && CBFuncionario.SelectedIndex > -1)
+                {
+                    ListaDeFuncionarios.Items.Add(FuncionarioSelecionado);
+                }
+                Documento.Focus();
+            }
 
+            this.TabIndex = 1;
             AtualizarDg_Click(sender, e);
         }
 
@@ -161,7 +181,9 @@ namespace GUI
 
         private void Alterar_Click(object sender, RoutedEventArgs e)
         {
-
+            TarefaModelo item = (TarefaModelo)dgTarefas.SelectedItem;
+            AlterarTarefa view = new AlterarTarefa(item);
+            view.Show();
         }
     }
 }

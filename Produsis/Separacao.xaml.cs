@@ -40,6 +40,10 @@ namespace GUI
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
             dgTarefas.ItemsSource = t.tarefasPendentes("1");
+            Tarefas tarefa = new Tarefas();
+            TarefaModelo teste = new TarefaModelo(tarefa);
+            Window view = new AlterarTarefa(teste);
+            view.Show();
         }
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
