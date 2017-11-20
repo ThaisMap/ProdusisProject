@@ -144,6 +144,9 @@
     <Compile Include="Observacao.xaml.cs">
       <DependentUpon>Observacao.xaml</DependentUpon>
     </Compile>
+    <Compile Include="paletes.xaml.cs">
+      <DependentUpon>paletes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Produtividade.xaml.cs">
       <DependentUpon>Produtividade.xaml</DependentUpon>
     </Compile>
@@ -262,6 +265,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Observacao.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="paletes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

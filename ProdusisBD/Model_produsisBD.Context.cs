@@ -31,7 +31,8 @@ namespace ProdusisBD
         public virtual DbSet<Funcionarios> Funcionarios { get; set; }
         public virtual DbSet<Manifestos> Manifestos { get; set; }
         public virtual DbSet<NotasFiscais> NotasFiscais { get; set; }
-        public virtual DbSet<Tarefas> Tarefas { get; set; }
         public virtual DbSet<Observacoes> Observacoes { get; set; }
+        public virtual DbSet<Tarefas> Tarefas { get; set; }
+        public virtual DbSet<NotasManifestos> NotasManifestos { get; set; }
     }
 }

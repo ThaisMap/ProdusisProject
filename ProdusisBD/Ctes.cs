@@ -21,11 +21,11 @@ namespace ProdusisBD
             this.NotasFiscais = new HashSet<NotasFiscais>();
         }
 
-        public Ctes(int cte)
+        public Ctes(int numCte)
         {
-            numeroCte = cte;
+            numeroCte = numCte;
         }
-
+    
         public int numeroCte { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

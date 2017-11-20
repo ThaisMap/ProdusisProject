@@ -12,19 +12,15 @@ namespace ProdusisBD
     using System;
     using System.Collections.Generic;
     
-    public partial class Cte_Manifesto
+    public partial class NotasManifestos
     {
-        public int idCteManifesto { get; set; }
-        public int Cte { get; set; }
         public int Manifesto { get; set; }
-    
-        public virtual Ctes Ctes { get; set; }
-        public virtual Manifestos Manifestos { get; set; }
-
-        public Cte_Manifesto(int numCte, int numManifesto)
-        {
-            Cte = numCte;
-            Manifesto = numManifesto;
-        }
+        public string numeroNF { get; set; }
+        public string fonecedorNF { get; set; }
+        public int volumesNF { get; set; }
+        public Nullable<int> CteNF { get; set; }
+        public int quantCtesManifesto { get; set; }
+        public int VolumesManifesto { get; set; }
+        public Nullable<int> skusManifesto { get; set; }
     }
 }
