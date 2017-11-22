@@ -19,6 +19,7 @@ namespace GUI
         private FuncionariosTag FuncionarioSelecionado;
         private List<string> ListaFunc;
         private TarefasBLL t = new TarefasBLL();
+        private float pallets = 0;
 
         public Descarga()
         {
@@ -94,7 +95,9 @@ namespace GUI
         {
             if (checarCampos() && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "0") && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "5"))
             {
-                if (t.inserirTarefa(montarTarefa(), funcionarios()))
+                pallets = paletes.Perguntar("30");
+
+                if (pallets >= 0 && t.inserirTarefa(montarTarefa(), funcionarios()))
                 {
                     dgTarefas.ItemsSource = t.tarefasPendentes("0","5");
                     MessageBox.Show("Descarga iniciada para o " + d.linhaDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Descarga iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -129,13 +132,14 @@ namespace GUI
 
         private Tarefas montarTarefa()
         {
+            
             Tarefas novaTarefa = new Tarefas()
             {
                 documentoTarefa = int.Parse(Documento.Text.Replace("_", "")),
-                inicioTarefa = DateTime.Now
+                inicioTarefa = DateTime.Now,
+                porcentagemPaletizado = pallets,
+                tipoTarefa = "0"
             };
-            //one line if else  
-            novaTarefa.tipoTarefa = (bool)cbPaletizado.IsChecked ? "5" : "0";
 
             return novaTarefa;
         }

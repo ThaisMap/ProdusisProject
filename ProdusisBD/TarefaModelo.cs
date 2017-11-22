@@ -14,7 +14,8 @@ namespace ProdusisBD
             tipoTarefa = tipoExtenso(tarefa.tipoTarefa);
             preencheDatas();
             atualizaTempoGasto();
-            divergenciaTarefa = tarefa.divergenciaTarefa; 
+            divergenciaTarefa = tarefa.divergenciaTarefa;
+            porcentagemPaletizado = tarefa.porcentagemPaletizado;
         }
 
         private string tipoExtenso(string tipo)
@@ -48,6 +49,7 @@ namespace ProdusisBD
         public string fornecedor { get; set; }
         public string cliente { get; set; }
         public double pontos { get; set; }
+
         
         public void valores(int sku, int volume)
         {
@@ -106,7 +108,15 @@ namespace ProdusisBD
         /// </summary>
         public void atualizaPontuação()
         {
-            pontos = skus * 7 + volumes * 0.4;
+            if (tipoTarefa == "Conferência")
+            {
+                pontos = skus * 7 + volumes * 0.4;
+            }
+            else if (tipoTarefa.Contains("Descarga") || tipoTarefa.Contains("Carregamento"))
+            {
+                pontos = volumes * (float)porcentagemPaletizado * 3;
+                pontos += volumes * (1 - (float)porcentagemPaletizado);
+            }
             if (divergenciaTarefa != "Nenhuma" && divergenciaTarefa != "-;0;-;0;-;0")
             {
                 pontos = 0;

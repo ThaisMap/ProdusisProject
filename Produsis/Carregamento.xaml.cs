@@ -36,8 +36,7 @@ namespace GUI
             string[] PrimeirosNomes = Nome.Split(' ');
             return PrimeirosNomes[0].Substring(0, 1).ToUpper() + PrimeirosNomes[1].Substring(0, 1).ToUpper();
         }
-
-
+        
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
             dgTarefas.ItemsSource = t.tarefasPendentes("4", "6");
@@ -97,15 +96,14 @@ namespace GUI
         {
             if (checarCampos() && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "4") && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "6"))
             {
-                if (t.inserirTarefa(montarTarefa(), funcionarios()))
+                if (paletes.Perguntar("30") > 0 && t.inserirTarefa(montarTarefa(), funcionarios()))
                 {
-                    dgTarefas.ItemsSource = t.tarefasPendentes("4","6");
+                    dgTarefas.ItemsSource = t.tarefasPendentes("4");
                     MessageBox.Show("Carregamento iniciado para o " + d.linhaDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Carregamento iniciado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                     Documento.Text = "";
                     CBFuncionario.SelectedIndex = -1;
                     ListaDeFuncionarios.Items.Clear();
-                    cbPaletizado.IsChecked = false;
-          
+                    //cbPaletizado.IsChecked = false;          
                 }
                 else
                 {
@@ -139,8 +137,8 @@ namespace GUI
                 documentoTarefa = int.Parse(Documento.Text.Replace("_", "")),
                 inicioTarefa = DateTime.Now
             };
-            //one line if else  
-            novaTarefa.tipoTarefa = (bool)cbPaletizado.IsChecked ? "6" : "4";
+            
+            novaTarefa.tipoTarefa = "4";
 
             return novaTarefa;
         }

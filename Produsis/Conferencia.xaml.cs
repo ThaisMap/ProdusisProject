@@ -31,15 +31,15 @@ namespace GUI
             Width = actualWidth - 60;
             Scrooler.Height = actualHeight - (int.Parse(formSuperior.Height.ToString()) + 225);
             lerXmls();
-            Thread tick = new Thread(ticktock);
-            tick.Start();
+          //  Thread tick = new Thread(ticktock);
+          //  tick.Start();
         }
 
-        private void ticktock()
+      /*  private void ticktock()
         {
             dgTarefas.ItemsSource = t.tarefasPendentes("2");
             Thread.Sleep(15000);
-        }
+        }*/
 
         public static string CriaChipTag(string Nome)
         {
