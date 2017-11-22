@@ -18,6 +18,10 @@ namespace ProdusisBD
             porcentagemPaletizado = tarefa.porcentagemPaletizado;
         }
 
+
+
+
+
         private string tipoExtenso(string tipo)
         {
             switch (tipo)
@@ -103,8 +107,7 @@ namespace ProdusisBD
         }
 
         /// <summary>
-        /// Calcula pontuação para ranking. Calulo atual (volumes + sku*5)/tempo gasto    
-        /// pontos/tempo gasto * 1 hora -> no mesmo ritmo de trabalho o funcionario faria x pontos em 1h
+        /// Calcula pontuação para ranking.  
         /// </summary>
         public void atualizaPontuação()
         {

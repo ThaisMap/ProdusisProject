@@ -12,15 +12,18 @@ namespace ProdusisBD
     using System;
     using System.Collections.Generic;
     
-    public partial class NotasManifestos
+    public partial class RelatorioNaoConferencia
     {
-        public int Manifesto { get; set; }
-        public string numeroNF { get; set; }
-        public string fonecedorNF { get; set; }
-        public int volumesNF { get; set; }
-        public Nullable<int> CteNF { get; set; }
-        public int quantCtesManifesto { get; set; }
+        public int idTarefa { get; set; }
+        public int documentoTarefa { get; set; }
+        public System.DateTime inicioTarefa { get; set; }
+        public Nullable<System.DateTime> fimTarefa { get; set; }
+        public string tipoTarefa { get; set; }
+        public string nomeFunc { get; set; }
         public int VolumesManifesto { get; set; }
-        public Nullable<int> skusManifesto { get; set; }
+        public int skusManifesto { get; set; }
+        public int quantCtesManifesto { get; set; }
+        public string divergenciaTarefa { get; set; }
+        public int numeroManifesto { get; set; }
     }
 }

@@ -83,24 +83,55 @@
           <Property Name="porcentagemPaletizado" Type="real" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'produsisBD.dbo.NotasManifestos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="NotasManifestos">
+warning 6002: The table/view 'produsisBD.dbo.RelatorioConferencias' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="RelatorioConferencias">
           <Key>
-            <PropertyRef Name="Manifesto" />
-            <PropertyRef Name="numeroNF" />
-            <PropertyRef Name="fonecedorNF" />
+            <PropertyRef Name="idTarefa" />
+            <PropertyRef Name="documentoTarefa" />
+            <PropertyRef Name="tipoTarefa" />
+            <PropertyRef Name="inicioTarefa" />
+            <PropertyRef Name="nomeFunc" />
             <PropertyRef Name="volumesNF" />
-            <PropertyRef Name="quantCtesManifesto" />
-            <PropertyRef Name="VolumesManifesto" />
+            <PropertyRef Name="skuNF" />
+            <PropertyRef Name="fonecedorNF" />
+            <PropertyRef Name="numeroCte" />
           </Key>
-          <Property Name="Manifesto" Type="int" Nullable="false" />
-          <Property Name="numeroNF" Type="varchar" MaxLength="15" Nullable="false" />
-          <Property Name="fonecedorNF" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="idTarefa" Type="int" Nullable="false" />
+          <Property Name="documentoTarefa" Type="int" Nullable="false" />
+          <Property Name="tipoTarefa" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="inicioTarefa" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="fimTarefa" Type="datetime2" Precision="0" />
+          <Property Name="divergenciaTarefa" Type="nvarchar" MaxLength="120" />
+          <Property Name="nomeFunc" Type="nvarchar" MaxLength="45" Nullable="false" />
           <Property Name="volumesNF" Type="int" Nullable="false" />
-          <Property Name="CteNF" Type="int" />
-          <Property Name="quantCtesManifesto" Type="int" Nullable="false" />
+          <Property Name="skuNF" Type="int" Nullable="false" />
+          <Property Name="fonecedorNF" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="numeroCte" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="RelatorioNaoConferencia">
+          <Key>
+            <PropertyRef Name="idTarefa" />
+            <PropertyRef Name="documentoTarefa" />
+            <PropertyRef Name="inicioTarefa" />
+            <PropertyRef Name="tipoTarefa" />
+            <PropertyRef Name="nomeFunc" />
+            <PropertyRef Name="VolumesManifesto" />
+            <PropertyRef Name="quantCtesManifesto" />
+            <PropertyRef Name="numeroManifesto" />
+          </Key>
+          <Property Name="idTarefa" Type="int" Nullable="false" />
+          <Property Name="documentoTarefa" Type="int" Nullable="false" />
+          <Property Name="inicioTarefa" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="fimTarefa" Type="datetime2" Precision="0" />
+          <Property Name="tipoTarefa" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="nomeFunc" Type="nvarchar" MaxLength="45" Nullable="false" />
           <Property Name="VolumesManifesto" Type="int" Nullable="false" />
           <Property Name="skusManifesto" Type="int" />
+          <Property Name="quantCtesManifesto" Type="int" Nullable="false" />
+          <Property Name="divergenciaTarefa" Type="nvarchar" MaxLength="120" />
+          <Property Name="numeroManifesto" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Cte_Manifesto_Cte">
           <End Role="Ctes" Type="Self.Ctes" Multiplicity="1" />
@@ -185,17 +216,35 @@ warning 6002: The table/view 'produsisBD.dbo.NotasManifestos' does not have a pr
           <EntitySet Name="NotasFiscais" EntityType="Self.NotasFiscais" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Observacoes" EntityType="Self.Observacoes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tarefas" EntityType="Self.Tarefas" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="NotasManifestos" EntityType="Self.NotasManifestos" store:Type="Views" store:Schema="dbo">
+          <EntitySet Name="RelatorioConferencias" EntityType="Self.RelatorioConferencias" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [NotasManifestos].[Manifesto] AS [Manifesto], 
-    [NotasManifestos].[numeroNF] AS [numeroNF], 
-    [NotasManifestos].[fonecedorNF] AS [fonecedorNF], 
-    [NotasManifestos].[volumesNF] AS [volumesNF], 
-    [NotasManifestos].[CteNF] AS [CteNF], 
-    [NotasManifestos].[quantCtesManifesto] AS [quantCtesManifesto], 
-    [NotasManifestos].[VolumesManifesto] AS [VolumesManifesto], 
-    [NotasManifestos].[skusManifesto] AS [skusManifesto]
-    FROM [dbo].[NotasManifestos] AS [NotasManifestos]</DefiningQuery>
+    [RelatorioConferencias].[idTarefa] AS [idTarefa], 
+    [RelatorioConferencias].[documentoTarefa] AS [documentoTarefa], 
+    [RelatorioConferencias].[tipoTarefa] AS [tipoTarefa], 
+    [RelatorioConferencias].[inicioTarefa] AS [inicioTarefa], 
+    [RelatorioConferencias].[fimTarefa] AS [fimTarefa], 
+    [RelatorioConferencias].[divergenciaTarefa] AS [divergenciaTarefa], 
+    [RelatorioConferencias].[nomeFunc] AS [nomeFunc], 
+    [RelatorioConferencias].[volumesNF] AS [volumesNF], 
+    [RelatorioConferencias].[skuNF] AS [skuNF], 
+    [RelatorioConferencias].[fonecedorNF] AS [fonecedorNF], 
+    [RelatorioConferencias].[numeroCte] AS [numeroCte]
+    FROM [dbo].[RelatorioConferencias] AS [RelatorioConferencias]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="RelatorioNaoConferencia" EntityType="Self.RelatorioNaoConferencia" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [RelatorioNaoConferencia].[idTarefa] AS [idTarefa], 
+    [RelatorioNaoConferencia].[documentoTarefa] AS [documentoTarefa], 
+    [RelatorioNaoConferencia].[inicioTarefa] AS [inicioTarefa], 
+    [RelatorioNaoConferencia].[fimTarefa] AS [fimTarefa], 
+    [RelatorioNaoConferencia].[tipoTarefa] AS [tipoTarefa], 
+    [RelatorioNaoConferencia].[nomeFunc] AS [nomeFunc], 
+    [RelatorioNaoConferencia].[VolumesManifesto] AS [VolumesManifesto], 
+    [RelatorioNaoConferencia].[skusManifesto] AS [skusManifesto], 
+    [RelatorioNaoConferencia].[quantCtesManifesto] AS [quantCtesManifesto], 
+    [RelatorioNaoConferencia].[divergenciaTarefa] AS [divergenciaTarefa], 
+    [RelatorioNaoConferencia].[numeroManifesto] AS [numeroManifesto]
+    FROM [dbo].[RelatorioNaoConferencia] AS [RelatorioNaoConferencia]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Cte_Manifesto_Cte" Association="Self.FK_Cte_Manifesto_Cte">
             <End Role="Ctes" EntitySet="Ctes" />
@@ -316,23 +365,52 @@ warning 6002: The table/view 'produsisBD.dbo.NotasManifestos' does not have a pr
           <Property Name="porcentagemPaletizado" Type="Single" />
           <NavigationProperty Name="Func_Tarefa" Relationship="Self.FK_Func_Tarefa_Tarefas" FromRole="Tarefas" ToRole="Func_Tarefa" />
         </EntityType>
-        <EntityType Name="NotasManifestos">
+        <EntityType Name="RelatorioConferencias">
           <Key>
-            <PropertyRef Name="Manifesto" />
-            <PropertyRef Name="numeroNF" />
-            <PropertyRef Name="fonecedorNF" />
+            <PropertyRef Name="idTarefa" />
+            <PropertyRef Name="documentoTarefa" />
+            <PropertyRef Name="tipoTarefa" />
+            <PropertyRef Name="inicioTarefa" />
+            <PropertyRef Name="nomeFunc" />
             <PropertyRef Name="volumesNF" />
-            <PropertyRef Name="quantCtesManifesto" />
-            <PropertyRef Name="VolumesManifesto" />
+            <PropertyRef Name="skuNF" />
+            <PropertyRef Name="fonecedorNF" />
+            <PropertyRef Name="numeroCte" />
           </Key>
-          <Property Name="Manifesto" Type="Int32" Nullable="false" />
-          <Property Name="numeroNF" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="fonecedorNF" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idTarefa" Type="Int32" Nullable="false" />
+          <Property Name="documentoTarefa" Type="Int32" Nullable="false" />
+          <Property Name="tipoTarefa" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="inicioTarefa" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fimTarefa" Type="DateTime" Precision="0" />
+          <Property Name="divergenciaTarefa" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="nomeFunc" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="volumesNF" Type="Int32" Nullable="false" />
-          <Property Name="CteNF" Type="Int32" />
-          <Property Name="quantCtesManifesto" Type="Int32" Nullable="false" />
+          <Property Name="skuNF" Type="Int32" Nullable="false" />
+          <Property Name="fonecedorNF" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="numeroCte" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RelatorioNaoConferencia">
+          <Key>
+            <PropertyRef Name="idTarefa" />
+            <PropertyRef Name="documentoTarefa" />
+            <PropertyRef Name="inicioTarefa" />
+            <PropertyRef Name="tipoTarefa" />
+            <PropertyRef Name="nomeFunc" />
+            <PropertyRef Name="VolumesManifesto" />
+            <PropertyRef Name="quantCtesManifesto" />
+            <PropertyRef Name="numeroManifesto" />
+          </Key>
+          <Property Name="idTarefa" Type="Int32" Nullable="false" />
+          <Property Name="documentoTarefa" Type="Int32" Nullable="false" />
+          <Property Name="inicioTarefa" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fimTarefa" Type="DateTime" Precision="0" />
+          <Property Name="tipoTarefa" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="nomeFunc" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="VolumesManifesto" Type="Int32" Nullable="false" />
           <Property Name="skusManifesto" Type="Int32" />
+          <Property Name="quantCtesManifesto" Type="Int32" Nullable="false" />
+          <Property Name="divergenciaTarefa" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="numeroManifesto" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_Cte_Manifesto_Cte">
           <End Role="Ctes" Type="Self.Ctes" Multiplicity="1" />
@@ -408,7 +486,7 @@ warning 6002: The table/view 'produsisBD.dbo.NotasManifestos' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="produsisBDEntities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="produsisBDEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Cte_Manifesto" EntityType="Self.Cte_Manifesto" />
           <EntitySet Name="Ctes" EntityType="Self.Ctes" />
           <EntitySet Name="Func_Tarefa" EntityType="Self.Func_Tarefa" />
@@ -417,7 +495,8 @@ warning 6002: The table/view 'produsisBD.dbo.NotasManifestos' does not have a pr
           <EntitySet Name="NotasFiscais" EntityType="Self.NotasFiscais" />
           <EntitySet Name="Observacoes" EntityType="Self.Observacoes" />
           <EntitySet Name="Tarefas" EntityType="Self.Tarefas" />
-          <EntitySet Name="NotasManifestos" EntityType="Self.NotasManifestos" />
+          <EntitySet Name="RelatorioConferencias" EntityType="Self.RelatorioConferencias" />
+          <EntitySet Name="RelatorioNaoConferencia" EntityType="Self.RelatorioNaoConferencia" />
           <AssociationSet Name="FK_Cte_Manifesto_Cte" Association="Self.FK_Cte_Manifesto_Cte">
             <End Role="Ctes" EntitySet="Ctes" />
             <End Role="Cte_Manifesto" EntitySet="Cte_Manifesto" />
@@ -448,7 +527,7 @@ warning 6002: The table/view 'produsisBD.dbo.NotasManifestos' does not have a pr
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="produsisBDModelStoreContainer" CdmEntityContainer="produsisBDEntities2">
+        <EntityContainerMapping StorageEntityContainer="produsisBDModelStoreContainer" CdmEntityContainer="produsisBDEntities">
           <EntitySetMapping Name="Cte_Manifesto">
             <EntityTypeMapping TypeName="produsisBDModel.Cte_Manifesto">
               <MappingFragment StoreEntitySet="Cte_Manifesto">
@@ -534,17 +613,37 @@ warning 6002: The table/view 'produsisBD.dbo.NotasManifestos' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="NotasManifestos">
-            <EntityTypeMapping TypeName="produsisBDModel.NotasManifestos">
-              <MappingFragment StoreEntitySet="NotasManifestos">
-                <ScalarProperty Name="Manifesto" ColumnName="Manifesto" />
-                <ScalarProperty Name="numeroNF" ColumnName="numeroNF" />
-                <ScalarProperty Name="fonecedorNF" ColumnName="fonecedorNF" />
+          <EntitySetMapping Name="RelatorioConferencias">
+            <EntityTypeMapping TypeName="produsisBDModel.RelatorioConferencias">
+              <MappingFragment StoreEntitySet="RelatorioConferencias">
+                <ScalarProperty Name="idTarefa" ColumnName="idTarefa" />
+                <ScalarProperty Name="documentoTarefa" ColumnName="documentoTarefa" />
+                <ScalarProperty Name="tipoTarefa" ColumnName="tipoTarefa" />
+                <ScalarProperty Name="inicioTarefa" ColumnName="inicioTarefa" />
+                <ScalarProperty Name="fimTarefa" ColumnName="fimTarefa" />
+                <ScalarProperty Name="divergenciaTarefa" ColumnName="divergenciaTarefa" />
+                <ScalarProperty Name="nomeFunc" ColumnName="nomeFunc" />
                 <ScalarProperty Name="volumesNF" ColumnName="volumesNF" />
-                <ScalarProperty Name="CteNF" ColumnName="CteNF" />
-                <ScalarProperty Name="quantCtesManifesto" ColumnName="quantCtesManifesto" />
+                <ScalarProperty Name="skuNF" ColumnName="skuNF" />
+                <ScalarProperty Name="fonecedorNF" ColumnName="fonecedorNF" />
+                <ScalarProperty Name="numeroCte" ColumnName="numeroCte" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RelatorioNaoConferencia">
+            <EntityTypeMapping TypeName="produsisBDModel.RelatorioNaoConferencia">
+              <MappingFragment StoreEntitySet="RelatorioNaoConferencia">
+                <ScalarProperty Name="idTarefa" ColumnName="idTarefa" />
+                <ScalarProperty Name="documentoTarefa" ColumnName="documentoTarefa" />
+                <ScalarProperty Name="inicioTarefa" ColumnName="inicioTarefa" />
+                <ScalarProperty Name="fimTarefa" ColumnName="fimTarefa" />
+                <ScalarProperty Name="tipoTarefa" ColumnName="tipoTarefa" />
+                <ScalarProperty Name="nomeFunc" ColumnName="nomeFunc" />
                 <ScalarProperty Name="VolumesManifesto" ColumnName="VolumesManifesto" />
                 <ScalarProperty Name="skusManifesto" ColumnName="skusManifesto" />
+                <ScalarProperty Name="quantCtesManifesto" ColumnName="quantCtesManifesto" />
+                <ScalarProperty Name="divergenciaTarefa" ColumnName="divergenciaTarefa" />
+                <ScalarProperty Name="numeroManifesto" ColumnName="numeroManifesto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

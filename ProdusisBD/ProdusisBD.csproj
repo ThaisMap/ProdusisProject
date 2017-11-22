@@ -54,61 +54,67 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ctes.cs">
-      <DependentUpon>Model_ProdusisBD.tt</DependentUpon>
+      <DependentUpon>Model_produsisBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Cte_Manifesto.cs">
-      <DependentUpon>Model_ProdusisBD.tt</DependentUpon>
+      <DependentUpon>Model_produsisBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Filtro.cs" />
     <Compile Include="Funcionarios.cs">
-      <DependentUpon>Model_ProdusisBD.tt</DependentUpon>
+      <DependentUpon>Model_produsisBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Func_Tarefa.cs">
-      <DependentUpon>Model_ProdusisBD.tt</DependentUpon>
+      <DependentUpon>Model_produsisBD.tt</DependentUpon>
     </Compile>
     <Compile Include="ItemDivergencia.cs" />
     <Compile Include="ItemRanking.cs" />
+    <Compile Include="ItemRelatorio.cs" />
     <Compile Include="Manifestos.cs">
-      <DependentUpon>Model_ProdusisBD.tt</DependentUpon>
+      <DependentUpon>Model_produsisBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model_ProdusisBD.Context.cs">
+    <Compile Include="Model_produsisBD.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model_ProdusisBD.Context.tt</DependentUpon>
+      <DependentUpon>Model_produsisBD.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model_ProdusisBD.cs">
+    <Compile Include="Model_produsisBD.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model_ProdusisBD.tt</DependentUpon>
+      <DependentUpon>Model_produsisBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model_ProdusisBD.Designer.cs">
+    <Compile Include="Model_produsisBD.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model_ProdusisBD.edmx</DependentUpon>
+      <DependentUpon>Model_produsisBD.edmx</DependentUpon>
     </Compile>
     <Compile Include="NotasFiscais.cs">
-      <DependentUpon>Model_ProdusisBD.tt</DependentUpon>
-    </Compile>
-    <Compile Include="NotasManifestos.cs">
-      <DependentUpon>Model_ProdusisBD.tt</DependentUpon>
+      <DependentUpon>Model_produsisBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Observacoes.cs">
-      <DependentUpon>Model_ProdusisBD.tt</DependentUpon>
+      <DependentUpon>Model_produsisBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RelatorioConferencias.cs">
+      <DependentUpon>Model_produsisBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RelatorioNaoConferencia.cs">
+      <DependentUpon>Model_produsisBD.tt</DependentUpon>
     </Compile>
     <Compile Include="TarefaModelo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tarefas.cs">
-      <DependentUpon>Model_ProdusisBD.tt</DependentUpon>
+      <DependentUpon>Model_produsisBD.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <EntityDeploy Include="Model_ProdusisBD.edmx">
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="Model_produsisBD.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model_ProdusisBD.Designer.cs</LastGenOutput>
+      <LastGenOutput>Model_produsisBD.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Model_ProdusisBD.edmx.diagram">
-      <DependentUpon>Model_ProdusisBD.edmx</DependentUpon>
+    <None Include="Model_produsisBD.edmx.diagram">
+      <DependentUpon>Model_produsisBD.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -116,15 +122,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Model_ProdusisBD.Context.tt">
+    <Content Include="Model_produsisBD.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_ProdusisBD.edmx</DependentUpon>
-      <LastGenOutput>Model_ProdusisBD.Context.cs</LastGenOutput>
+      <DependentUpon>Model_produsisBD.edmx</DependentUpon>
+      <LastGenOutput>Model_produsisBD.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Model_ProdusisBD.tt">
+    <Content Include="Model_produsisBD.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_ProdusisBD.edmx</DependentUpon>
-      <LastGenOutput>Model_ProdusisBD.cs</LastGenOutput>
+      <DependentUpon>Model_produsisBD.edmx</DependentUpon>
+      <LastGenOutput>Model_produsisBD.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

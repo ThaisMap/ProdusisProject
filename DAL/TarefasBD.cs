@@ -212,12 +212,67 @@ namespace DAL
         public List<TarefaModelo> getTarefasFiltradas(Filtro f)
         {
             List<TarefaModelo> lista = new List<TarefaModelo>();
+            //try
+            //{
+            //    using (var BancoDeDados = new produsisBDEntities())
+            //    {
+            //        var query = BancoDeDados.Tarefas.AsQueryable();
+
+            //        if (f.dataFim != null)
+            //            query = query.Where(t => t.inicioTarefa <= f.dataFim);
+
+            //        if (f.dataInicio != null)
+            //            query = query.Where(t => t.inicioTarefa >= f.dataInicio);
+
+            //        if (f.numDocumento > 0)
+            //            query = query.Where(t => t.documentoTarefa == f.numDocumento);
+
+            //        if (f.TipoTarefa != "-1")
+            //            query = query.Where(t => t.tipoTarefa == f.TipoTarefa);
+
+            //        lista = tarefaModeloParse(query.ToList());
+            //    }
+
+            //    if (f.nomeFuncionario != "" && f.nomeFuncionario != null)
+            //        lista = lista.Where(l => l.nomesFuncionarios.Contains(f.nomeFuncionario)).ToList();
+
+            //    if (f.volumeInicio > 0)
+            //        lista = lista.Where(l => l.volumes >= f.volumeInicio).ToList();
+
+            //    if (f.volumeFim > 0)
+            //        lista = lista.Where(l => l.volumes <= f.volumeFim).ToList();
+
+            //    if (f.skuInicio > 0)
+            //        lista = lista.Where(l => l.skus >= f.skuInicio).ToList();
+
+            //    if (f.skuFim > 0)
+            //        lista = lista.Where(l => l.skus <= f.skuFim).ToList();
+
+            //    DocumentosBD d = new DocumentosBD();
+            //    foreach (var tar in lista)
+            //    {
+            //        if (tar.tipoTarefa == "Conferência")
+            //        {
+                       
+            //            tar.fornecedor = d.getFornecedorCte(tar.documentoTarefa);
+            //        }
+            //        else
+            //            tar.fornecedor = d.getFornecedorManifesto(tar.documentoTarefa);
+
+            //        tar.divergenciaTarefa = tar.divergencia();
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    var whatHapened = e;
+            //}
+
+
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    var query = BancoDeDados.Tarefas.AsQueryable();
-
+                    var query = BancoDeDados.RelatorioNaoConferencia.AsQueryable();
                     if (f.dataFim != null)
                         query = query.Where(t => t.inicioTarefa <= f.dataFim);
 
@@ -230,43 +285,29 @@ namespace DAL
                     if (f.TipoTarefa != "-1")
                         query = query.Where(t => t.tipoTarefa == f.TipoTarefa);
 
-                    lista = tarefaModeloParse(query.ToList());
-                }
+                    if (f.nomeFuncionario != "" && f.nomeFuncionario != null)
 
-                if (f.nomeFuncionario != "" && f.nomeFuncionario != null)
-                    lista = lista.Where(l => l.nomesFuncionarios.Contains(f.nomeFuncionario)).ToList();
+                        query = query.Where(l => l.nomeFunc== f.nomeFuncionario);
 
-                if (f.volumeInicio > 0)
-                    lista = lista.Where(l => l.volumes >= f.volumeInicio).ToList();
+                    if (f.volumeInicio > 0)
+                        query = query.Where(l => l.VolumesManifesto >= f.volumeInicio);
 
-                if (f.volumeFim > 0)
-                    lista = lista.Where(l => l.volumes <= f.volumeFim).ToList();
+                    if (f.volumeFim > 0)
+                        query = query.Where(l => l.VolumesManifesto <= f.volumeFim);
 
-                if (f.skuInicio > 0)
-                    lista = lista.Where(l => l.skus >= f.skuInicio).ToList();
+                    if (f.skuInicio > 0)
+                        query = query.Where(l => l.skusManifesto >= f.skuInicio);
 
-                if (f.skuFim > 0)
-                    lista = lista.Where(l => l.skus <= f.skuFim).ToList();
+                    if (f.skuFim > 0)
+                        query = query.Where(l => l.skusManifesto <= f.skuFim);
 
-                DocumentosBD d = new DocumentosBD();
-                foreach (var tar in lista)
-                {
-                    if (tar.tipoTarefa == "Conferência")
-                    {
-                       
-                        tar.fornecedor = d.getFornecedorCte(tar.documentoTarefa);
-                    }
-                    else
-                        tar.fornecedor = d.getFornecedorManifesto(tar.documentoTarefa);
-
-                    tar.divergenciaTarefa = tar.divergencia();
+                    var relatorio = query.ToList();
                 }
             }
             catch (Exception e)
             {
                 var whatHapened = e;
             }
-
             return lista;
         }
 
@@ -393,6 +434,8 @@ namespace DAL
                 return false;
             }
         }
+
+       
 
         private List<TarefaModelo> tarefaModeloParse(List<Tarefas> tarefas)
         {
