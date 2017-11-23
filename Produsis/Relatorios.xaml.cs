@@ -26,7 +26,7 @@ namespace GUI
             dataFinal.SelectedDate = DateTime.Today;
         }
 
-        public List<TarefaModelo> source;
+        public List<ItemRelatorio> source;
 
         public Filtro montarObjeto()
         {

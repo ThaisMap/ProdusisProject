@@ -80,7 +80,8 @@
           <Property Name="documentoTarefa" Type="int" Nullable="false" />
           <Property Name="tipoTarefa" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="divergenciaTarefa" Type="nvarchar" MaxLength="120" />
-          <Property Name="porcentagemPaletizado" Type="real" />
+          <Property Name="quantPaletizado" Type="int" />
+          <Property Name="totalPaletes" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'produsisBD.dbo.RelatorioConferencias' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -132,6 +133,8 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
           <Property Name="quantCtesManifesto" Type="int" Nullable="false" />
           <Property Name="divergenciaTarefa" Type="nvarchar" MaxLength="120" />
           <Property Name="numeroManifesto" Type="int" Nullable="false" />
+          <Property Name="quantPaletizado" Type="int" />
+          <Property Name="totalPaletes" Type="int" />
         </EntityType>
         <Association Name="FK_Cte_Manifesto_Cte">
           <End Role="Ctes" Type="Self.Ctes" Multiplicity="1" />
@@ -243,7 +246,9 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
     [RelatorioNaoConferencia].[skusManifesto] AS [skusManifesto], 
     [RelatorioNaoConferencia].[quantCtesManifesto] AS [quantCtesManifesto], 
     [RelatorioNaoConferencia].[divergenciaTarefa] AS [divergenciaTarefa], 
-    [RelatorioNaoConferencia].[numeroManifesto] AS [numeroManifesto]
+    [RelatorioNaoConferencia].[numeroManifesto] AS [numeroManifesto], 
+    [RelatorioNaoConferencia].[quantPaletizado] AS [quantPaletizado], 
+    [RelatorioNaoConferencia].[totalPaletes] AS [totalPaletes]
     FROM [dbo].[RelatorioNaoConferencia] AS [RelatorioNaoConferencia]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Cte_Manifesto_Cte" Association="Self.FK_Cte_Manifesto_Cte">
@@ -362,7 +367,8 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
           <Property Name="documentoTarefa" Type="Int32" Nullable="false" />
           <Property Name="tipoTarefa" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="divergenciaTarefa" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
-          <Property Name="porcentagemPaletizado" Type="Single" />
+          <Property Name="quantPaletizado" Type="Int32" />
+          <Property Name="totalPaletes" Type="Int32" />
           <NavigationProperty Name="Func_Tarefa" Relationship="Self.FK_Func_Tarefa_Tarefas" FromRole="Tarefas" ToRole="Func_Tarefa" />
         </EntityType>
         <EntityType Name="RelatorioConferencias">
@@ -411,6 +417,8 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
           <Property Name="quantCtesManifesto" Type="Int32" Nullable="false" />
           <Property Name="divergenciaTarefa" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
           <Property Name="numeroManifesto" Type="Int32" Nullable="false" />
+          <Property Name="quantPaletizado" Type="Int32" />
+          <Property Name="totalPaletes" Type="Int32" />
         </EntityType>
         <Association Name="FK_Cte_Manifesto_Cte">
           <End Role="Ctes" Type="Self.Ctes" Multiplicity="1" />
@@ -609,7 +617,8 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
                 <ScalarProperty Name="documentoTarefa" ColumnName="documentoTarefa" />
                 <ScalarProperty Name="tipoTarefa" ColumnName="tipoTarefa" />
                 <ScalarProperty Name="divergenciaTarefa" ColumnName="divergenciaTarefa" />
-                <ScalarProperty Name="porcentagemPaletizado" ColumnName="porcentagemPaletizado" />
+                <ScalarProperty Name="quantPaletizado" ColumnName="quantPaletizado" />
+                <ScalarProperty Name="totalPaletes" ColumnName="totalPaletes" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -644,6 +653,8 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
                 <ScalarProperty Name="quantCtesManifesto" ColumnName="quantCtesManifesto" />
                 <ScalarProperty Name="divergenciaTarefa" ColumnName="divergenciaTarefa" />
                 <ScalarProperty Name="numeroManifesto" ColumnName="numeroManifesto" />
+                <ScalarProperty Name="quantPaletizado" ColumnName="quantPaletizado" />
+                <ScalarProperty Name="totalPaletes" ColumnName="totalPaletes" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

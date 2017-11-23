@@ -83,7 +83,7 @@ namespace BLL
             return t.getTarefasDivergencia(Tipo, Manifesto);
         }
 
-        public List<TarefaModelo> filtrar(Filtro f)
+        public List<ItemRelatorio> filtrar(Filtro f)
         {
             return t.getTarefasFiltradas(f);
         }

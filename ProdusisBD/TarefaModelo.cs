@@ -15,7 +15,7 @@ namespace ProdusisBD
             preencheDatas();
             atualizaTempoGasto();
             divergenciaTarefa = tarefa.divergenciaTarefa;
-            porcentagemPaletizado = tarefa.porcentagemPaletizado;
+            //porcentagemPaletizado = tarefa.porcentagemPaletizado;
         }
 
 
@@ -105,26 +105,7 @@ namespace ProdusisBD
             }
             tempoGasto = (tempo.Days * 24 + tempo.Hours).ToString("00") + ":" + tempo.Minutes.ToString("00") + ":" + tempo.Seconds.ToString("00");
         }
-
-        /// <summary>
-        /// Calcula pontuação para ranking.  
-        /// </summary>
-        public void atualizaPontuação()
-        {
-            if (tipoTarefa == "Conferência")
-            {
-                pontos = skus * 7 + volumes * 0.4;
-            }
-            else if (tipoTarefa.Contains("Descarga") || tipoTarefa.Contains("Carregamento"))
-            {
-                pontos = volumes * (float)porcentagemPaletizado * 3;
-                pontos += volumes * (1 - (float)porcentagemPaletizado);
-            }
-            if (divergenciaTarefa != "Nenhuma" && divergenciaTarefa != "-;0;-;0;-;0")
-            {
-                pontos = 0;
-            }
-        }
+       
 
         public void preencheDatas()
         {

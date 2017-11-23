@@ -143,7 +143,7 @@ namespace DAL
             foreach (TarefaModelo tar in tarefasPeriodo)
             {
                 tar.valores(d.getSkuCte(tar.documentoTarefa), d.getVolumesCte(tar.documentoTarefa));
-                tar.atualizaPontuação();
+               // tar.atualizaPontuação();
             }
 
             var lista = from t in tarefasPeriodo
@@ -209,69 +209,13 @@ namespace DAL
         /// Retorna uma lista com as tarefas que atendam os filtros informados
         /// </summary>
         /// <param name="f">Parâmetros de pesquisa</param>
-        public List<TarefaModelo> getTarefasFiltradas(Filtro f)
+        public List<ItemRelatorio> getTarefasFiltradas(Filtro f)
         {
-            List<TarefaModelo> lista = new List<TarefaModelo>();
-            //try
-            //{
-            //    using (var BancoDeDados = new produsisBDEntities())
-            //    {
-            //        var query = BancoDeDados.Tarefas.AsQueryable();
-
-            //        if (f.dataFim != null)
-            //            query = query.Where(t => t.inicioTarefa <= f.dataFim);
-
-            //        if (f.dataInicio != null)
-            //            query = query.Where(t => t.inicioTarefa >= f.dataInicio);
-
-            //        if (f.numDocumento > 0)
-            //            query = query.Where(t => t.documentoTarefa == f.numDocumento);
-
-            //        if (f.TipoTarefa != "-1")
-            //            query = query.Where(t => t.tipoTarefa == f.TipoTarefa);
-
-            //        lista = tarefaModeloParse(query.ToList());
-            //    }
-
-            //    if (f.nomeFuncionario != "" && f.nomeFuncionario != null)
-            //        lista = lista.Where(l => l.nomesFuncionarios.Contains(f.nomeFuncionario)).ToList();
-
-            //    if (f.volumeInicio > 0)
-            //        lista = lista.Where(l => l.volumes >= f.volumeInicio).ToList();
-
-            //    if (f.volumeFim > 0)
-            //        lista = lista.Where(l => l.volumes <= f.volumeFim).ToList();
-
-            //    if (f.skuInicio > 0)
-            //        lista = lista.Where(l => l.skus >= f.skuInicio).ToList();
-
-            //    if (f.skuFim > 0)
-            //        lista = lista.Where(l => l.skus <= f.skuFim).ToList();
-
-            //    DocumentosBD d = new DocumentosBD();
-            //    foreach (var tar in lista)
-            //    {
-            //        if (tar.tipoTarefa == "Conferência")
-            //        {
-                       
-            //            tar.fornecedor = d.getFornecedorCte(tar.documentoTarefa);
-            //        }
-            //        else
-            //            tar.fornecedor = d.getFornecedorManifesto(tar.documentoTarefa);
-
-            //        tar.divergenciaTarefa = tar.divergencia();
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    var whatHapened = e;
-            //}
-
-
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
+#region filtrando Nao Conferencias
                     var query = BancoDeDados.RelatorioNaoConferencia.AsQueryable();
                     if (f.dataFim != null)
                         query = query.Where(t => t.inicioTarefa <= f.dataFim);
@@ -301,12 +245,79 @@ namespace DAL
                     if (f.skuFim > 0)
                         query = query.Where(l => l.skusManifesto <= f.skuFim);
 
-                    var relatorio = query.ToList();
+                    var relatorioNaoConferencia = query.ToList();
+                    #endregion
+
+                    #region filtrando Conferencias
+                    var queryConf = BancoDeDados.RelatorioConferencias.AsQueryable();
+                    if (f.dataFim != null)
+                        queryConf = queryConf.Where(t => t.inicioTarefa <= f.dataFim);
+
+                    if (f.dataInicio != null)
+                        queryConf = queryConf.Where(t => t.inicioTarefa >= f.dataInicio);
+
+                    if (f.numDocumento > 0)
+                        queryConf = queryConf.Where(t => t.documentoTarefa == f.numDocumento);
+
+                    if (f.TipoTarefa != "-1")
+                        queryConf = queryConf.Where(t => t.tipoTarefa == f.TipoTarefa);
+
+                    if (f.nomeFuncionario != "" && f.nomeFuncionario != null)
+
+                        queryConf = queryConf.Where(l => l.nomeFunc == f.nomeFuncionario);
+
+                    if (f.volumeInicio > 0)
+                        queryConf = queryConf.Where(l => l.VolumesManifesto >= f.volumeInicio);
+
+                    if (f.volumeFim > 0)
+                        queryConf = queryConf.Where(l => l.VolumesManifesto <= f.volumeFim);
+
+                    if (f.skuInicio > 0)
+                        queryConf = queryConf.Where(l => l.skusManifesto >= f.skuInicio);
+
+                    if (f.skuFim > 0)
+                        queryConf = queryConf.Where(l => l.skusManifesto <= f.skuFim);
+
+                    var relatorioConferencia = queryConf.ToList();
+                    #endregion
+
+                    List<ItemRelatorio> lista = consolidarRelatorio(relatorioConferencia, relatorioNaoConferencia);
+
                 }
             }
             catch (Exception e)
             {
                 var whatHapened = e;
+            }
+            return lista;
+        }
+
+        private List<ItemRelatorio> consolidarRelatorio(List<RelatorioConferencias> conferencias, List<RelatorioNaoConferencia> outros)
+        {
+            List<ItemRelatorio> lista = new List<ItemRelatorio>();
+
+            foreach(var tarefa in conferencias)
+            {
+                var x = lista.Where(id => id.idTarefa == tarefa.idTarefa).FirstOrDefault();
+                if(x == null)
+                lista.Add(new ItemRelatorio(tarefa));
+                else
+                {
+                    int index = lista.IndexOf(x);
+                    lista[index].nomesFunc = lista[index].nomesFunc + "/" + tarefa.nomeFunc;
+                }
+            }
+            DocumentosBD d = new DocumentosBD();
+            foreach (var tarefa in outros)
+            {
+                var x = lista.Where(id => id.idTarefa == tarefa.idTarefa).FirstOrDefault();
+                if (x == null)
+                    lista.Add(new ItemRelatorio(tarefa){ fornecedor =  d.getFornecedorManifesto(tarefa.documentoTarefa)});
+                else
+                {
+                    int index = lista.IndexOf(x);
+                    lista[index].nomesFunc = lista[index].nomesFunc + "/" + tarefa.nomeFunc;
+                }
             }
             return lista;
         }

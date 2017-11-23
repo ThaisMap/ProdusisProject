@@ -25,5 +25,7 @@ namespace ProdusisBD
         public int quantCtesManifesto { get; set; }
         public string divergenciaTarefa { get; set; }
         public int numeroManifesto { get; set; }
+        public Nullable<int> quantPaletizado { get; set; }
+        public Nullable<int> totalPaletes { get; set; }
     }
 }

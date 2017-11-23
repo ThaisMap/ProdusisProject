@@ -20,7 +20,6 @@ namespace ProdusisBD
             this.Cte_Manifesto = new HashSet<Cte_Manifesto>();
             this.NotasFiscais = new HashSet<NotasFiscais>();
         }
-
         public Ctes(int nCte)
         {
             numeroCte = nCte;
