@@ -135,7 +135,7 @@ namespace BLL
             return linha;
         }
       
-        public void exportarExcel(List<TarefaModelo> Tarefas, string nomeArquivo)
+        public void exportarExcel(List<ItemRelatorio> Tarefas, string nomeArquivo)
         {
             try
             {
@@ -159,12 +159,11 @@ namespace BLL
                 xlWorkSheet.Cells[1, 9] = "SKU's";
                 xlWorkSheet.Cells[1, 10] = "Pontos";
                 xlWorkSheet.Cells[1, 11] = "Fornecedor";
-                xlWorkSheet.Cells[1, 12] = "Cliente";
-                xlWorkSheet.Cells[1, 13] = "Divergências";
+                xlWorkSheet.Cells[1, 12] = "Divergências";
 
                 int linha = 2;
                             
-                foreach (TarefaModelo i in Tarefas)
+                foreach (ItemRelatorio i in Tarefas)
                 {
                     i.atualizaPontuação();
                     xlWorkSheet.Cells[linha, 1] = i.documentoTarefa;
@@ -172,14 +171,13 @@ namespace BLL
                     xlWorkSheet.Cells[linha, 3] = i.inicioTarefa.Date.ToString("MM/dd/yyyy");
                     xlWorkSheet.Cells[linha, 4] = i.horaInicio;
                     xlWorkSheet.Cells[linha, 5] = i.horaFim;
-                    xlWorkSheet.Cells[linha, 6] = i.nomesFuncionarios;
+                    xlWorkSheet.Cells[linha, 6] = i.nomesFunc;
                     xlWorkSheet.Cells[linha, 7] = i.tempoGasto;
                     xlWorkSheet.Cells[linha, 8] = i.volumes;
-                    xlWorkSheet.Cells[linha, 9] = i.skus;
+                    xlWorkSheet.Cells[linha, 9] = i.sku;
                     xlWorkSheet.Cells[linha, 10] = i.pontos;
                     xlWorkSheet.Cells[linha, 11] = i.fornecedor;
-                    xlWorkSheet.Cells[linha, 12] = i.cliente;
-                    xlWorkSheet.Cells[linha, 13] = i.divergenciaTarefa;
+                    xlWorkSheet.Cells[linha, 12] = i.divergenciaTarefa;
                     
                     linha++;
                 }

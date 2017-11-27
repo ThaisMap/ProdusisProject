@@ -148,7 +148,7 @@ namespace DAL
                 var fornecedor = nf.GetElementsByTagName("xNome")[0].InnerText;
                 if (fornecedor.Length > 49)
                     fornecedor = fornecedor.Remove(49);
-                nfLida.fonecedorNF = fornecedor;
+                nfLida.fornecedorNF = fornecedor;
                 try
                 {
                     nfLida.volumesNF = int.Parse(nf.GetElementsByTagName("qVol")[0].InnerText);
@@ -267,7 +267,7 @@ namespace DAL
                         //Salvar NF no banco de dados
                         if (nf.StartsWith("317"))
                         {
-                            nfLida.fonecedorNF = Fornecedor;
+                            nfLida.fornecedorNF = Fornecedor;
                             retorno = inserirNotaFiscal(nfLida);
                         }
                     }

@@ -259,7 +259,7 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    return (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais.fonecedorNF).FirstOrDefault();
+                    return (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais.fornecedorNF).FirstOrDefault();
                 }
             }
             catch

@@ -211,6 +211,7 @@ namespace DAL
         /// <param name="f">Parâmetros de pesquisa</param>
         public List<ItemRelatorio> getTarefasFiltradas(Filtro f)
         {
+            List<ItemRelatorio> lista = new List<ItemRelatorio>();
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
@@ -267,21 +268,21 @@ namespace DAL
                         queryConf = queryConf.Where(l => l.nomeFunc == f.nomeFuncionario);
 
                     if (f.volumeInicio > 0)
-                        queryConf = queryConf.Where(l => l.VolumesManifesto >= f.volumeInicio);
+                        queryConf = queryConf.Where(l => l.volumesNF >= f.volumeInicio);
 
                     if (f.volumeFim > 0)
-                        queryConf = queryConf.Where(l => l.VolumesManifesto <= f.volumeFim);
+                        queryConf = queryConf.Where(l => l.volumesNF <= f.volumeFim);
 
                     if (f.skuInicio > 0)
-                        queryConf = queryConf.Where(l => l.skusManifesto >= f.skuInicio);
+                        queryConf = queryConf.Where(l => l.skuNF >= f.skuInicio);
 
                     if (f.skuFim > 0)
-                        queryConf = queryConf.Where(l => l.skusManifesto <= f.skuFim);
+                        queryConf = queryConf.Where(l => l.skuNF <= f.skuFim);
 
                     var relatorioConferencia = queryConf.ToList();
                     #endregion
 
-                    List<ItemRelatorio> lista = consolidarRelatorio(relatorioConferencia, relatorioNaoConferencia);
+                   lista = consolidarRelatorio(relatorioConferencia, relatorioNaoConferencia);
 
                 }
             }

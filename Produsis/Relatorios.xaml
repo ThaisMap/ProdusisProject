@@ -238,9 +238,9 @@
                     <DataGridTextColumn Binding="{Binding horaInicio}" Header="Hora Início" />
                     <DataGridTextColumn Binding="{Binding horaFim}" Header="Hora Fim" />
                     <DataGridTextColumn Binding="{Binding tempoGasto}" Header="Tempo Gasto" />
-                    <DataGridTextColumn Binding="{Binding nomesFuncionarios}" Header="Funcionários" />
+                    <DataGridTextColumn Binding="{Binding nomesFunc}" Header="Funcionários" />
                     <DataGridTextColumn Binding="{Binding volumes}" Header="Volumes" />
-                    <DataGridTextColumn Binding="{Binding skus}" Header="SKU's" />
+                    <DataGridTextColumn Binding="{Binding sku}" Header="SKU's" />
                     <DataGridTextColumn Binding="{Binding fornecedor}" Header="Fornecedor" />
                     <DataGridTextColumn Binding="{Binding divergenciaTarefa}" Header="Ocorrências" />
                 </DataGrid.Columns>

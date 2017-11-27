@@ -17,14 +17,14 @@ namespace ProdusisBD
         public int idCteManifesto { get; set; }
         public int Cte { get; set; }
         public int Manifesto { get; set; }
-    
-        public virtual Ctes Ctes { get; set; }
-        public virtual Manifestos Manifestos { get; set; }
 
         public Cte_Manifesto(int nCte, int nManifesto)
         {
             Cte = nCte;
             Manifesto = nManifesto;
         }
+
+        public virtual Ctes Ctes { get; set; }
+        public virtual Manifestos Manifestos { get; set; }
     }
 }

@@ -77,7 +77,7 @@ namespace Produsis
                         Numero.Text = documento.numeroNF;
                         NumeroDeVolumes.Text = documento.volumesNF.ToString();
                         NumeroDeSKUS.Text = documento.skuNF.ToString();
-                        Fornecedor.Text = documento.fonecedorNF;
+                        Fornecedor.Text = documento.fornecedorNF;
                         texto1.Text = "CT-e:";
                         if (documento.CteNF != null)
                             valor1.Text = documento.CteNF.ToString();

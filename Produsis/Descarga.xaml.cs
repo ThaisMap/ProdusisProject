@@ -137,7 +137,6 @@ namespace GUI
             {
                 documentoTarefa = int.Parse(Documento.Text.Replace("_", "")),
                 inicioTarefa = DateTime.Now,
-                porcentagemPaletizado = pallets,
                 tipoTarefa = "0"
             };
 

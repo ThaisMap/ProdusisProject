@@ -55,7 +55,7 @@
           </Key>
           <Property Name="idNF" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="numeroNF" Type="varchar" MaxLength="15" Nullable="false" />
-          <Property Name="fonecedorNF" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="fornecedorNF" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="volumesNF" Type="int" Nullable="false" />
           <Property Name="skuNF" Type="int" Nullable="false" />
           <Property Name="CteNF" Type="int" />
@@ -340,7 +340,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
           </Key>
           <Property Name="idNF" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="numeroNF" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="fonecedorNF" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fornecedorNF" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="volumesNF" Type="Int32" Nullable="false" />
           <Property Name="skuNF" Type="Int32" Nullable="false" />
           <Property Name="CteNF" Type="Int32" />
@@ -590,7 +590,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
               <MappingFragment StoreEntitySet="NotasFiscais">
                 <ScalarProperty Name="idNF" ColumnName="idNF" />
                 <ScalarProperty Name="numeroNF" ColumnName="numeroNF" />
-                <ScalarProperty Name="fonecedorNF" ColumnName="fonecedorNF" />
+                <ScalarProperty Name="fornecedorNF" ColumnName="fornecedorNF" />
                 <ScalarProperty Name="volumesNF" ColumnName="volumesNF" />
                 <ScalarProperty Name="skuNF" ColumnName="skuNF" />
                 <ScalarProperty Name="CteNF" ColumnName="CteNF" />

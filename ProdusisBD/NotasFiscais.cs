@@ -16,7 +16,7 @@ namespace ProdusisBD
     {
         public int idNF { get; set; }
         public string numeroNF { get; set; }
-        public string fonecedorNF { get; set; }
+        public string fornecedorNF { get; set; }
         public int volumesNF { get; set; }
         public int skuNF { get; set; }
         public Nullable<int> CteNF { get; set; }

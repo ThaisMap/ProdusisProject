@@ -31,14 +31,14 @@ namespace ProdusisBD
         {
             idTarefa = r.idTarefa;
             documentoTarefa = r.documentoTarefa;
-            tipoTarefa = r.tipoTarefa;
+            tipoTarefa = tipoExtenso(r.tipoTarefa);
             inicioTarefa = r.inicioTarefa;
             fimTarefa = r.fimTarefa;
-            divergenciaTarefa = r.divergenciaTarefa;
             nomesFunc = r.nomeFunc;
             volumes = r.volumesNF;
             sku = r.skuNF;
             fornecedor = r.fonecedorNF;
+            divergenciaTarefa = divergencia();
             preencheDatas();
             atualizaTempoGasto();
         }
@@ -47,15 +47,15 @@ namespace ProdusisBD
         {
             idTarefa = r.idTarefa;
             documentoTarefa = r.documentoTarefa;
-            tipoTarefa = r.tipoTarefa;
+            tipoTarefa = tipoExtenso(r.tipoTarefa);
             inicioTarefa = r.inicioTarefa;
             fimTarefa = r.fimTarefa;
-            divergenciaTarefa = r.divergenciaTarefa;
             nomesFunc = r.nomeFunc;
             volumes = r.VolumesManifesto;
             sku = r.skusManifesto;
             quantPaletizado = r.quantPaletizado;
             totalPaletes = r.totalPaletes;
+            divergenciaTarefa = divergencia();
             preencheDatas();
             atualizaTempoGasto();
         }
@@ -132,6 +132,27 @@ namespace ProdusisBD
             if (divergenciaTarefa != "Nenhuma" && divergenciaTarefa != "-;0;-;0;-;0")
             {
                 pontos = 0;
+            }
+        }
+
+        private string tipoExtenso(string tipo)
+        {
+            switch (tipo)
+            {
+                case "0":
+                    return "Descarga";
+                case "1":
+                    return "Separação";
+                case "2":
+                    return "Conferência";
+                case "3":
+                    return "Sep. para carregar";
+                case "4":
+                    return "Carregamento";
+                case "5":
+                    return "Descarga Paletizada";
+                default:
+                    return "Carregamento Paletizado";
             }
         }
     }

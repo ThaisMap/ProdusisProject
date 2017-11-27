@@ -20,10 +20,12 @@ namespace ProdusisBD
             this.Cte_Manifesto = new HashSet<Cte_Manifesto>();
             this.NotasFiscais = new HashSet<NotasFiscais>();
         }
+
         public Ctes(int nCte)
         {
             numeroCte = nCte;
         }
+
         public int numeroCte { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
