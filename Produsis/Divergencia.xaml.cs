@@ -47,13 +47,13 @@ namespace GUI
                 if (cbTipoTarefa.SelectedIndex > -1 && Documento.Text != "")
                 {
                     TarefasBLL t = new TarefasBLL();
-                    tarefas = t.filtrarDivergencias(cbTipoTarefa.SelectedIndex, int.Parse(Documento.Text));
+                    tarefas = t.filtrarDivergencias((cbTipoTarefa.SelectedIndex + 1), int.Parse(Documento.Text));
                     source = new List<ItemDivergencia>();
                     foreach (TarefaModelo item in tarefas)
                     {
                         source.Add(new ItemDivergencia(item));
                     }
-                    dgDivergencias.ItemsSource = source.OrderBy(o=>o.cte);
+                    dgDivergencias.ItemsSource = source.OrderBy(o => o.cte);
                 }
             }
             catch(Exception ex)

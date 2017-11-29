@@ -137,15 +137,10 @@ namespace DAL
             return lista;
         }
 
-        public List<ItemRanking> rankingFuncionarios(List<TarefaModelo> tarefasPeriodo, double horas)
+        public List<ItemRanking> rankingFuncionarios(List<ItemRanking> tarefasPeriodo, double horas)
         {
             DocumentosBD d = new DocumentosBD();
-            foreach (TarefaModelo tar in tarefasPeriodo)
-            {
-                tar.valores(d.getSkuCte(tar.documentoTarefa), d.getVolumesCte(tar.documentoTarefa));
-               // tar.atualizaPontuação();
-            }
-
+            
             var lista = from t in tarefasPeriodo
                         group t by new
                         {
@@ -153,7 +148,7 @@ namespace DAL
                         } into g
                         select new
                         {
-                            Sum = g.Sum(p => p.pontos),
+                            Sum = g.Sum(p => p.mediaPorHora),
                             g.Key.nomesFuncionarios
                         };
 
@@ -170,120 +165,125 @@ namespace DAL
             return Rank;
         }
 
-        public List<TarefaModelo> getTarefasFiltradasRanking(Filtro f)
+        public List<ItemRanking> getRanking(Filtro f)
         {
-            List<TarefaModelo> lista = new List<TarefaModelo>();
-            List<Tarefas> listaTarefas = new List<Tarefas>();
+            List<ItemRanking> listaFinal = new List<ItemRanking>();
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    var query = BancoDeDados.Tarefas.AsQueryable();
+                    var listaTarefas = BancoDeDados.Tarefas.Where(i => i.tipoTarefa == f.TipoTarefa)
+                        .Where(i => i.inicioTarefa > f.dataInicio)
+                        .Where(i => i.inicioTarefa < f.dataFim)
+                        .Select(i => i.idTarefa).ToList();
+                    var resultado = BancoDeDados.Func_Tarefa.Where(t => listaTarefas.Contains(t.Tarefa)).ToList();
 
-                    if (f.dataInicio != null)
-                        query = query.Where(t => t.inicioTarefa >= f.dataInicio);
-
-                    query = query.Where(t => t.inicioTarefa <= f.dataFim);
-                    query = query.Where(t => t.tipoTarefa == f.TipoTarefa);
-
-                    listaTarefas = query.ToList();
-                }
-
-                foreach (var tar in listaTarefas)
-                {
-                    lista.Add(new TarefaModelo(tar)
+                    string nome;
+                    foreach (var item in resultado)
                     {
-                        nomesFuncionarios = nomesFuncTarefa(tar.idTarefa),      
-                    });
+                        nome = BancoDeDados.Funcionarios.Where(func => func.idFunc == item.Funcionario).Select(func => func.nomeFunc).FirstOrDefault();
+                        listaFinal.Add(new ItemRanking((double)item.Pontuacao, nome));
+                    }
                 }
+                return listaFinal;
             }
             catch (Exception e)
             {
-                var whatHapened = e;
+                var erro = e;
+                return listaFinal;
             }
-
-            return lista;
         }
 
         /// <summary>
         /// Retorna uma lista com as tarefas que atendam os filtros informados
         /// </summary>
         /// <param name="f">Parâmetros de pesquisa</param>
-        public List<ItemRelatorio> getTarefasFiltradas(Filtro f)
+        public List<ItemRelatorio> getTarefasFiltradas(Filtro f, bool consolidarFuncionario)
         {
             List<ItemRelatorio> lista = new List<ItemRelatorio>();
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-#region filtrando Nao Conferencias
-                    var query = BancoDeDados.RelatorioNaoConferencia.AsQueryable();
-                    if (f.dataFim != null)
-                        query = query.Where(t => t.inicioTarefa <= f.dataFim);
+                    List<RelatorioNaoConferencia> relatorioNaoConferencia = new List<RelatorioNaoConferencia>();
+                    List<RelatorioConferencias> relatorioConferencia = new List<RelatorioConferencias>();
+     
+                    #region filtrando Nao Conferencias
+                    if (f.TipoTarefa !="2")
+                    {
+                        var query = BancoDeDados.RelatorioNaoConferencia.AsQueryable();
 
-                    if (f.dataInicio != null)
-                        query = query.Where(t => t.inicioTarefa >= f.dataInicio);
+                        if (f.TipoTarefa != "-1")
+                            query = query.Where(t => t.tipoTarefa == f.TipoTarefa);
 
-                    if (f.numDocumento > 0)
-                        query = query.Where(t => t.documentoTarefa == f.numDocumento);
+                        if (f.dataFim != null)
+                            query = query.Where(t => t.inicioTarefa <= f.dataFim);
 
-                    if (f.TipoTarefa != "-1")
-                        query = query.Where(t => t.tipoTarefa == f.TipoTarefa);
+                        if (f.dataInicio != null)
+                            query = query.Where(t => t.inicioTarefa >= f.dataInicio);
 
-                    if (f.nomeFuncionario != "" && f.nomeFuncionario != null)
+                        if (f.numDocumento > 0)
+                            query = query.Where(t => t.documentoTarefa == f.numDocumento);
+                       
+                        if (f.nomeFuncionario != "" && f.nomeFuncionario != null)
 
-                        query = query.Where(l => l.nomeFunc== f.nomeFuncionario);
+                            query = query.Where(l => l.nomeFunc == f.nomeFuncionario);
 
-                    if (f.volumeInicio > 0)
-                        query = query.Where(l => l.VolumesManifesto >= f.volumeInicio);
+                        if (f.volumeInicio > 0)
+                            query = query.Where(l => l.VolumesManifesto >= f.volumeInicio);
 
-                    if (f.volumeFim > 0)
-                        query = query.Where(l => l.VolumesManifesto <= f.volumeFim);
+                        if (f.volumeFim > 0)
+                            query = query.Where(l => l.VolumesManifesto <= f.volumeFim);
 
-                    if (f.skuInicio > 0)
-                        query = query.Where(l => l.skusManifesto >= f.skuInicio);
+                        if (f.skuInicio > 0)
+                            query = query.Where(l => l.skusManifesto >= f.skuInicio);
 
-                    if (f.skuFim > 0)
-                        query = query.Where(l => l.skusManifesto <= f.skuFim);
+                        if (f.skuFim > 0)
+                            query = query.Where(l => l.skusManifesto <= f.skuFim);
 
-                    var relatorioNaoConferencia = query.ToList();
+                        relatorioNaoConferencia = query.ToList();
+                    }
                     #endregion
-
+             
                     #region filtrando Conferencias
-                    var queryConf = BancoDeDados.RelatorioConferencias.AsQueryable();
-                    if (f.dataFim != null)
-                        queryConf = queryConf.Where(t => t.inicioTarefa <= f.dataFim);
+                    if (f.TipoTarefa == "2" || f.TipoTarefa == "-1")
+                    {
+                        var queryConf = BancoDeDados.RelatorioConferencias.AsQueryable();
 
-                    if (f.dataInicio != null)
-                        queryConf = queryConf.Where(t => t.inicioTarefa >= f.dataInicio);
+                        if (f.TipoTarefa != "-1")
+                            queryConf = queryConf.Where(t => t.tipoTarefa == f.TipoTarefa);
 
-                    if (f.numDocumento > 0)
-                        queryConf = queryConf.Where(t => t.documentoTarefa == f.numDocumento);
+                        if (f.dataFim != null)
+                            queryConf = queryConf.Where(t => t.inicioTarefa <= f.dataFim);
 
-                    if (f.TipoTarefa != "-1")
-                        queryConf = queryConf.Where(t => t.tipoTarefa == f.TipoTarefa);
+                        if (f.dataInicio != null)
+                            queryConf = queryConf.Where(t => t.inicioTarefa >= f.dataInicio);
 
-                    if (f.nomeFuncionario != "" && f.nomeFuncionario != null)
+                        if (f.numDocumento > 0)
+                            queryConf = queryConf.Where(t => t.documentoTarefa == f.numDocumento);
+                  
+                        if (f.nomeFuncionario != "" && f.nomeFuncionario != null)
 
-                        queryConf = queryConf.Where(l => l.nomeFunc == f.nomeFuncionario);
+                            queryConf = queryConf.Where(l => l.nomeFunc == f.nomeFuncionario);
 
-                    if (f.volumeInicio > 0)
-                        queryConf = queryConf.Where(l => l.volumesNF >= f.volumeInicio);
+                        if (f.volumeInicio > 0)
+                            queryConf = queryConf.Where(l => l.volumesNF >= f.volumeInicio);
 
-                    if (f.volumeFim > 0)
-                        queryConf = queryConf.Where(l => l.volumesNF <= f.volumeFim);
+                        if (f.volumeFim > 0)
+                            queryConf = queryConf.Where(l => l.volumesNF <= f.volumeFim);
 
-                    if (f.skuInicio > 0)
-                        queryConf = queryConf.Where(l => l.skuNF >= f.skuInicio);
+                        if (f.skuInicio > 0)
+                            queryConf = queryConf.Where(l => l.skuNF >= f.skuInicio);
 
-                    if (f.skuFim > 0)
-                        queryConf = queryConf.Where(l => l.skuNF <= f.skuFim);
+                        if (f.skuFim > 0)
+                            queryConf = queryConf.Where(l => l.skuNF <= f.skuFim);
 
-                    var relatorioConferencia = queryConf.ToList();
+                        relatorioConferencia = queryConf.ToList();
+                    }
+
                     #endregion
-
-                   lista = consolidarRelatorio(relatorioConferencia, relatorioNaoConferencia);
-
+                    
+                    lista = consolidarRelatorio(relatorioConferencia, relatorioNaoConferencia, consolidarFuncionario);
                 }
             }
             catch (Exception e)
@@ -293,31 +293,59 @@ namespace DAL
             return lista;
         }
 
-        private List<ItemRelatorio> consolidarRelatorio(List<RelatorioConferencias> conferencias, List<RelatorioNaoConferencia> outros)
+        private List<ItemRelatorio> consolidarRelatorio(List<RelatorioConferencias> conferencias, List<RelatorioNaoConferencia> outros, bool consolidarFuncionario)
         {
             List<ItemRelatorio> lista = new List<ItemRelatorio>();
+            DocumentosBD d = new DocumentosBD();
+            Manifestos auxiliar = new Manifestos();
 
-            foreach(var tarefa in conferencias)
+            if (consolidarFuncionario)
             {
-                var x = lista.Where(id => id.idTarefa == tarefa.idTarefa).FirstOrDefault();
-                if(x == null)
-                lista.Add(new ItemRelatorio(tarefa));
-                else
+                foreach (var tarefa in conferencias)
                 {
-                    int index = lista.IndexOf(x);
-                    lista[index].nomesFunc = lista[index].nomesFunc + "/" + tarefa.nomeFunc;
+                    var x = lista.Where(id => id.idTarefa == tarefa.idTarefa).Where(id => !(id.nomesFunc.Contains(tarefa.nomeFunc))).FirstOrDefault();
+                    if (x == null)
+                        lista.Add(new ItemRelatorio(tarefa));
+                    else
+                    {
+                        int index = lista.IndexOf(x);
+                        lista[index].nomesFunc = lista[index].nomesFunc + "/" + tarefa.nomeFunc;
+                    }
+                }
+                
+                foreach (var tarefa in outros)
+                {
+                    var x = lista.Where(id => id.idTarefa == tarefa.idTarefa).FirstOrDefault();
+                    if (x == null)
+                    {
+                        auxiliar = d.getManifestoPorNumero(tarefa.documentoTarefa);
+                        lista.Add(new ItemRelatorio(tarefa)
+                        {
+                            fornecedor = d.getFornecedorManifesto(tarefa.documentoTarefa),
+                            ctesNoManifesto = auxiliar.quantCtesManifesto
+                        });
+                    }
+                    else
+                    {
+                        int index = lista.IndexOf(x);
+                        lista[index].nomesFunc = lista[index].nomesFunc + "/" + tarefa.nomeFunc;
+                    }
                 }
             }
-            DocumentosBD d = new DocumentosBD();
-            foreach (var tarefa in outros)
+            else
             {
-                var x = lista.Where(id => id.idTarefa == tarefa.idTarefa).FirstOrDefault();
-                if (x == null)
-                    lista.Add(new ItemRelatorio(tarefa){ fornecedor =  d.getFornecedorManifesto(tarefa.documentoTarefa)});
-                else
+                foreach (var tarefa in conferencias)
                 {
-                    int index = lista.IndexOf(x);
-                    lista[index].nomesFunc = lista[index].nomesFunc + "/" + tarefa.nomeFunc;
+                    lista.Add(new ItemRelatorio(tarefa));
+                }
+                foreach (var tarefa in outros)
+                {
+                    auxiliar = d.getManifestoPorNumero(tarefa.documentoTarefa);
+                    lista.Add(new ItemRelatorio(tarefa)
+                    {
+                        fornecedor = d.getFornecedorManifesto(tarefa.documentoTarefa),
+                        ctesNoManifesto = auxiliar.quantCtesManifesto
+                    });
                 }
             }
             return lista;
@@ -447,7 +475,26 @@ namespace DAL
             }
         }
 
-       
+        public bool inserirPontuacao(int idTarefa, float pontos)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    List<Func_Tarefa> funcTarefas = BancoDeDados.Func_Tarefa.Where(i => i.Tarefa == idTarefa).ToList();
+                    foreach (var item in funcTarefas)
+                    {
+                        item.Pontuacao = pontos;
+                    }
+                    BancoDeDados.SaveChanges();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
         private List<TarefaModelo> tarefaModeloParse(List<Tarefas> tarefas)
         {

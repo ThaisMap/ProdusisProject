@@ -17,6 +17,7 @@ namespace ProdusisBD
         public int idFuncTarefa { get; set; }
         public int Funcionario { get; set; }
         public int Tarefa { get; set; }
+        public Nullable<float> Pontuacao { get; set; }
     
         public virtual Funcionarios Funcionarios { get; set; }
         public virtual Tarefas Tarefas { get; set; }

@@ -23,7 +23,7 @@ namespace ProdusisBD
         public string nomeFunc { get; set; }
         public int volumesNF { get; set; }
         public int skuNF { get; set; }
-        public string fonecedorNF { get; set; }
+        public string fornecedorNF { get; set; }
         public int numeroCte { get; set; }
     }
 }

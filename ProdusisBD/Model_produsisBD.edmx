@@ -26,6 +26,7 @@
           <Property Name="idFuncTarefa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Funcionario" Type="int" Nullable="false" />
           <Property Name="Tarefa" Type="int" Nullable="false" />
+          <Property Name="Pontuacao" Type="real" />
         </EntityType>
         <EntityType Name="Funcionarios">
           <Key>
@@ -94,7 +95,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioConferencias' does not hav
             <PropertyRef Name="nomeFunc" />
             <PropertyRef Name="volumesNF" />
             <PropertyRef Name="skuNF" />
-            <PropertyRef Name="fonecedorNF" />
+            <PropertyRef Name="fornecedorNF" />
             <PropertyRef Name="numeroCte" />
           </Key>
           <Property Name="idTarefa" Type="int" Nullable="false" />
@@ -106,7 +107,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioConferencias' does not hav
           <Property Name="nomeFunc" Type="nvarchar" MaxLength="45" Nullable="false" />
           <Property Name="volumesNF" Type="int" Nullable="false" />
           <Property Name="skuNF" Type="int" Nullable="false" />
-          <Property Name="fonecedorNF" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="fornecedorNF" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="numeroCte" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -230,7 +231,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
     [RelatorioConferencias].[nomeFunc] AS [nomeFunc], 
     [RelatorioConferencias].[volumesNF] AS [volumesNF], 
     [RelatorioConferencias].[skuNF] AS [skuNF], 
-    [RelatorioConferencias].[fonecedorNF] AS [fonecedorNF], 
+    [RelatorioConferencias].[fornecedorNF] AS [fornecedorNF], 
     [RelatorioConferencias].[numeroCte] AS [numeroCte]
     FROM [dbo].[RelatorioConferencias] AS [RelatorioConferencias]</DefiningQuery>
           </EntitySet>
@@ -306,6 +307,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
           <Property Name="idFuncTarefa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Funcionario" Type="Int32" Nullable="false" />
           <Property Name="Tarefa" Type="Int32" Nullable="false" />
+          <Property Name="Pontuacao" Type="Single" />
           <NavigationProperty Name="Funcionarios" Relationship="Self.FK_Func_Tarefa_Funcionarios" FromRole="Func_Tarefa" ToRole="Funcionarios" />
           <NavigationProperty Name="Tarefas" Relationship="Self.FK_Func_Tarefa_Tarefas" FromRole="Func_Tarefa" ToRole="Tarefas" />
         </EntityType>
@@ -380,7 +382,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
             <PropertyRef Name="nomeFunc" />
             <PropertyRef Name="volumesNF" />
             <PropertyRef Name="skuNF" />
-            <PropertyRef Name="fonecedorNF" />
+            <PropertyRef Name="fornecedorNF" />
             <PropertyRef Name="numeroCte" />
           </Key>
           <Property Name="idTarefa" Type="Int32" Nullable="false" />
@@ -392,7 +394,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
           <Property Name="nomeFunc" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="volumesNF" Type="Int32" Nullable="false" />
           <Property Name="skuNF" Type="Int32" Nullable="false" />
-          <Property Name="fonecedorNF" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fornecedorNF" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="numeroCte" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="RelatorioNaoConferencia">
@@ -558,6 +560,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
                 <ScalarProperty Name="idFuncTarefa" ColumnName="idFuncTarefa" />
                 <ScalarProperty Name="Funcionario" ColumnName="Funcionario" />
                 <ScalarProperty Name="Tarefa" ColumnName="Tarefa" />
+                <ScalarProperty Name="Pontuacao" ColumnName="Pontuacao" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -634,7 +637,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
                 <ScalarProperty Name="nomeFunc" ColumnName="nomeFunc" />
                 <ScalarProperty Name="volumesNF" ColumnName="volumesNF" />
                 <ScalarProperty Name="skuNF" ColumnName="skuNF" />
-                <ScalarProperty Name="fonecedorNF" ColumnName="fonecedorNF" />
+                <ScalarProperty Name="fornecedorNF" ColumnName="fornecedorNF" />
                 <ScalarProperty Name="numeroCte" ColumnName="numeroCte" />
               </MappingFragment>
             </EntityTypeMapping>

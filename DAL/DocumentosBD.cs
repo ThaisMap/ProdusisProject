@@ -259,10 +259,11 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    return (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais.fornecedorNF).FirstOrDefault();
+                    var nota = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais).FirstOrDefault();
+                    return nota.fornecedorNF;
                 }
             }
-            catch
+            catch (Exception e)
             {
                 return "Fornecedor não encontrado";
             }
@@ -275,22 +276,39 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    string aux;
-                    var ctesNoManifesto = (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.Manifesto == numManifesto select Cte_Manifesto).ToList();
-                    foreach (var item in ctesNoManifesto)
+                    var result = (from a in BancoDeDados.NotasFiscais
+                                  join b in BancoDeDados.Cte_Manifesto on a.CteNF equals b.Cte
+                                  where b.Manifesto == numManifesto
+                                  select a.fornecedorNF).ToList();
+                    if (result.Count == 0)
                     {
-                        aux = getFornecedorCte(item.Cte);
-                        if (fornecedor == "")
-                            fornecedor = aux;
-                        else
-                            if (fornecedor != aux && aux != null)
-                            return "VARIOS FORNECEDORES";
+                        return "Fornecedor não encontrado";
                     }
+                    if (result.Count == 1)
+                    {
+                        return result[0];
+                    }
+                    if (result.Any(o => o != result[0]))
+                        return "VARIOS FORNECEDORES";
+                    else
+                        return result[0];
+
+                    //var ctesNoManifesto = (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.Manifesto == numManifesto select Cte_Manifesto.Cte).ToList();
+                    //foreach (var item in ctesNoManifesto)
+                    //{
+                    //    aux = getFornecedorCte(item);
+                    //    if (fornecedor == "" && aux != null)
+                    //        fornecedor = aux;
+                    //    else
+                    //        if (fornecedor != aux && aux != null)
+                    //        return "VARIOS FORNECEDORES";
+                    //}
                     return fornecedor;
                 }
             }
-            catch
+            catch(Exception e)
             {
+                var olho = e;
                 return "Fornecedor não encontrado";
             }
         }

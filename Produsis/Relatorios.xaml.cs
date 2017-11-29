@@ -34,10 +34,9 @@ namespace GUI
             {
                 dataFinal.SelectedDate = DateTime.Today;
             }
-
             Filtro filtros = new Filtro()
             {
-                TipoTarefa = cbTipoTarefa.SelectedIndex.ToString(),
+                TipoTarefa = cbTipoTarefa.SelectedIndex == -1? cbTipoTarefa.SelectedIndex.ToString(): (cbTipoTarefa.SelectedIndex +1).ToString(),
                 dataInicio = dataInicio.SelectedDate,
                 dataFim = dataFinal.SelectedDate.Value.AddDays(1).AddSeconds(-1)
             };

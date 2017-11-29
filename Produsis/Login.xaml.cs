@@ -19,6 +19,10 @@ namespace GUI
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
+            TelaPrincipal view = new TelaPrincipal();
+            this.Close();
+            view.Show();
+
             if (verificaCampos())
             {
                 FuncionarioBLL l = new FuncionarioBLL();
@@ -27,7 +31,7 @@ namespace GUI
                     if (l.validarSenha(TxbLogin.Text, TxbSenha.Password))
                     {
 
-                        TelaPrincipal view = new TelaPrincipal();
+                      //TelaPrincipal view = new TelaPrincipal();
                         if (l.tipoFuncionario(TxbLogin.Text) == "1")
                         {
                             view.BtnAdministrativo.Visibility = Visibility.Collapsed;

@@ -1,21 +1,22 @@
-﻿<UserControl x:Class="GUI.Divergencia"
-            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:GUI"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             HorizontalAlignment="Left"
-             VerticalAlignment="Top"
-             d:DesignHeight="400"
-             d:DesignWidth="800"
-             Background="{DynamicResource MaterialDesignPaper}"
-             FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-             TextElement.FontSize="16"
-             TextElement.FontWeight="Regular"
-             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-             mc:Ignorable="d">
+﻿<UserControl
+    x:Class="GUI.Divergencia"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:GUI"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    HorizontalAlignment="Left"
+    VerticalAlignment="Top"
+    d:DesignHeight="400"
+    d:DesignWidth="800"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+    TextElement.FontSize="16"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    mc:Ignorable="d">
 
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -23,12 +24,12 @@
             <Grid Margin="0,10,0,10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="104" />
-                    <RowDefinition/>
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" Grid.RowSpan="2">
+                <StackPanel Grid.RowSpan="2" Grid.Column="0">
                     <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Divergências</TextBlock>
                     <Separator />
                     <Grid Height="116">
@@ -42,47 +43,78 @@
                             <ColumnDefinition Width="150" />
                             <ColumnDefinition Width="79*" />
                         </Grid.ColumnDefinitions>
-                        <ComboBox x:Name="cbTipoTarefa" Grid.Column="0"
-                                  HorizontalAlignment="Left"
-                                  Width="205"
-                                              Margin="10,18,0,11"
-                                              IsEditable="True"
-                                              materialDesign:HintAssist.Hint="Tipo de Tarefa"
-                                              materialDesign:HintAssist.IsFloating="True" SelectedIndex="2" Height="42">
-                            <ComboBoxItem Content="Descarga" HorizontalAlignment="Left"/>
-                            <ComboBoxItem Content="Separação" HorizontalAlignment="Left"  />
-                            <ComboBoxItem Content="Conferência" HorizontalAlignment="Left" />
-                            <ComboBoxItem Content="Separação para carregar" HorizontalAlignment="Left" />
-                            <ComboBoxItem Content="Carregamento" HorizontalAlignment="Left" />
+                        <ComboBox
+                            x:Name="cbTipoTarefa"
+                            Grid.Column="0"
+                            Width="205"
+                            Height="42"
+                            Margin="10,18,0,11"
+                            HorizontalAlignment="Left"
+                            materialDesign:HintAssist.Hint="Tipo de Tarefa"
+                            materialDesign:HintAssist.IsFloating="True"
+                            IsEditable="True"
+                            SelectedIndex="1">
+                            <ComboBoxItem HorizontalAlignment="Left" Content="Descarga" />
+                            <ComboBoxItem HorizontalAlignment="Left" Content="Conferência" />
+                            <ComboBoxItem HorizontalAlignment="Left" Content="Separação de rota" />
+                            <ComboBoxItem HorizontalAlignment="Left" Content="Carregamento" />
 
                         </ComboBox>
                         <materialDesign:PackIcon
                             Grid.Column="1"
-                                        Width="22"
-                                        Height="22"
-                                        VerticalAlignment="Bottom"                            
-                                        Foreground="{Binding ElementName=Documento, Path=BorderBrush}"
-                                        Kind="FileDocument" Margin="0,0,0,10" />
-                        <TextBox        Name="Documento"
-                                        Grid.Column="1"
-                                        Margin="27,10,10,5"
-                                        materialDesign:HintAssist.Hint="Documento"
-                                        materialDesign:HintAssist.IsFloating="True"
-                                        PreviewTextInput="testarCaractere"                                                        
-                                        Style="{StaticResource MaterialDesignTextBox}" />
-                        <Button x:Name="btnConsultar"
-                                Grid.Row="0"   Grid.Column="2"
-                                Width="100" Height="40" Margin="0,9"
-                                VerticalAlignment="Bottom" Click="btnConsultar_Click" Content="Consultar" />
-                        <Button x:Name="btnSalvar"
-                                Grid.Row="0" Grid.Column="3"
-                                Width="100" Height="40" Margin="0,9"
-                                VerticalAlignment="Bottom" HorizontalAlignment="Left" Content="Salvar" Click="btnSalvar_Click" />
-                        <TextBlock Grid.Row="1" Margin="10,9,10,8" VerticalAlignment="Center" Style="{StaticResource MaterialDesignHeadlineTextBlock}" Height="28">Ct-es no Manifesto</TextBlock>
+                            Width="22"
+                            Height="22"
+                            Margin="0,0,0,10"
+                            VerticalAlignment="Bottom"
+                            Foreground="{Binding ElementName=Documento, Path=BorderBrush}"
+                            Kind="FileDocument" />
+                        <TextBox
+                            Name="Documento"
+                            Grid.Column="1"
+                            Margin="27,10,10,5"
+                            materialDesign:HintAssist.Hint="Documento"
+                            materialDesign:HintAssist.IsFloating="True"
+                            PreviewTextInput="testarCaractere"
+                            Style="{StaticResource MaterialDesignTextBox}" />
+                        <Button
+                            x:Name="btnConsultar"
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            Width="100"
+                            Height="40"
+                            Margin="0,9"
+                            VerticalAlignment="Bottom"
+                            Click="btnConsultar_Click"
+                            Content="Consultar" />
+                        <Button
+                            x:Name="btnSalvar"
+                            Grid.Row="0"
+                            Grid.Column="3"
+                            Width="100"
+                            Height="40"
+                            Margin="0,9"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            Click="btnSalvar_Click"
+                            Content="Salvar" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Height="28"
+                            Margin="10,9,10,8"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource MaterialDesignHeadlineTextBlock}">
+                            Ct-es no Manifesto
+                        </TextBlock>
 
                     </Grid>
 
-                    <DataGrid Name="dgDivergencias" Margin="10,0,0,10" ColumnWidth="auto" HorizontalAlignment="Left" AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid
+                        Name="dgDivergencias"
+                        Margin="10,0,0,10"
+                        HorizontalAlignment="Left"
+                        AutoGenerateColumns="False"
+                        ColumnWidth="auto"
+                        IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding cte}" Header="Documento" />
                             <DataGridTextColumn Binding="{Binding fornecedor}" Header="Fornecedor" />
@@ -90,42 +122,42 @@
                             <DataGridTemplateColumn Header="Código Faltas">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Text="{Binding Path=codFalta, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="50"/>
+                                        <TextBox Width="50" Text="{Binding Path=codFalta, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTemplateColumn Header="Qtde">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Text="{Binding Path=qtdFalta, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="50"/>
+                                        <TextBox Width="50" Text="{Binding Path=qtdFalta, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTemplateColumn Header="Código Sobra">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Text="{Binding Path=codSobra, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="50"/>
+                                        <TextBox Width="50" Text="{Binding Path=codSobra, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTemplateColumn Header="Qtde">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Text="{Binding Path=qtdSobra, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="50"/>
+                                        <TextBox Width="50" Text="{Binding Path=qtdSobra, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTemplateColumn Header="Código Avaria">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Text="{Binding Path=codAvaria, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="50"/>
+                                        <TextBox Width="50" Text="{Binding Path=codAvaria, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTemplateColumn Header="Qtde">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Text="{Binding Path=qtdAvaria, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="50"/>
+                                        <TextBox Width="50" Text="{Binding Path=qtdAvaria, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>

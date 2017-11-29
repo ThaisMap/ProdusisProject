@@ -20,7 +20,7 @@ namespace GUI
             BtnConferencia.Opacity = 1;
             BtnDescarga.Opacity = 1;
             BtnSeparacaoCarga.Opacity = 1;
-            BtnSerapacao.Opacity = 1;
+          //  BtnSerapacao.Opacity = 1;
             BtnDivergencia.Opacity = 1;
         }
         #region Botoes
@@ -63,7 +63,7 @@ namespace GUI
         private void BtnSerapacao_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();
-            BtnSerapacao.Opacity = 0.5;
+            //BtnSerapacao.Opacity = 0.5;
             Navegador.Navigate(new Separacao(ActualHeight, ActualWidth));
         }        
 

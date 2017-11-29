@@ -26,6 +26,7 @@ namespace ProdusisBD
         public string dataFim { get; set; }
         public string horaFim { get; set; }
         public double pontos { get; set; }
+        public int ctesNoManifesto { get; set; }
 
         public ItemRelatorio(RelatorioConferencias r)
         {
@@ -37,10 +38,12 @@ namespace ProdusisBD
             nomesFunc = r.nomeFunc;
             volumes = r.volumesNF;
             sku = r.skuNF;
-            fornecedor = r.fonecedorNF;
+            fornecedor = r.fornecedorNF;
+            divergenciaTarefa = r.divergenciaTarefa;
             divergenciaTarefa = divergencia();
             preencheDatas();
             atualizaTempoGasto();
+            ctesNoManifesto = 0;
         }
 
         public ItemRelatorio(RelatorioNaoConferencia r)
@@ -53,11 +56,14 @@ namespace ProdusisBD
             nomesFunc = r.nomeFunc;
             volumes = r.VolumesManifesto;
             sku = r.skusManifesto;
+            fornecedor = "";
             quantPaletizado = r.quantPaletizado;
             totalPaletes = r.totalPaletes;
+            divergenciaTarefa = r.divergenciaTarefa;
             divergenciaTarefa = divergencia();
             preencheDatas();
             atualizaTempoGasto();
+            ctesNoManifesto = 1;
         }
 
         public void atualizaTempoGasto()
@@ -126,23 +132,23 @@ namespace ProdusisBD
             else if (tipoTarefa.Contains("Descarga") || tipoTarefa.Contains("Carregamento"))
             {
                 double porcentagemPaletizado = (double)quantPaletizado / (double)totalPaletes;
-                pontos = volumes * porcentagemPaletizado * 3;
-                pontos += volumes * (1 - porcentagemPaletizado);
+                pontos = volumes * porcentagemPaletizado;
+                pontos += volumes * (1 - porcentagemPaletizado) * 3;
             }
             if (divergenciaTarefa != "Nenhuma" && divergenciaTarefa != "-;0;-;0;-;0")
             {
                 pontos = 0;
             }
+            
         }
 
         private string tipoExtenso(string tipo)
         {
             switch (tipo)
             {
-                case "0":
-                    return "Descarga";
+                case "0":                    
                 case "1":
-                    return "Separação";
+                    return "Descarga";
                 case "2":
                     return "Conferência";
                 case "3":

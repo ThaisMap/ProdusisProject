@@ -26,13 +26,13 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0">
-                <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Separação para carregamento</TextBlock>
+                <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Separação de Rota</TextBlock>
                 <Separator />
                 <Grid
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Grid.ColumnSpan="2"
-                        Margin="10,20,0,5">
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Margin="10,20,0,5">
                     <StackPanel>
                         <TextBlock Margin="0,0,350,0" Text="Nova Separação" />
                         <Grid Margin="10,5">
@@ -46,84 +46,84 @@
                                 <RowDefinition Height="58*" />
                             </Grid.RowDefinitions>
                             <StackPanel
-                                    Grid.Row="0"
-                                    Grid.Column="0"
-                                    Margin="5,10"
-                                    Orientation="Horizontal">
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="5,10"
+                                Orientation="Horizontal">
                                 <materialDesign:PackIcon
-                                        Width="22"
-                                        Height="auto"
-                                        VerticalAlignment="Bottom"
-                                        Foreground="{Binding ElementName=Documento, Path=BorderBrush}"
-                                        Kind="FileDocument" />
+                                    Width="22"
+                                    Height="auto"
+                                    VerticalAlignment="Bottom"
+                                    Foreground="{Binding ElementName=Documento, Path=BorderBrush}"
+                                    Kind="FileDocument" />
                                 <TextBox
-                                        Name="Documento"
-                                        Grid.Row="1"
-                                        Grid.Column="1"
-                                        Width="300"
-                                        Margin="5,0,5,5"
-                                        materialDesign:HintAssist.Hint="Manifesto"
-                                        materialDesign:HintAssist.IsFloating="True"
-                                        PreviewTextInput="testarCaractere"                                                        
-                                        Style="{StaticResource MaterialDesignTextBox}" />
+                                    Name="Documento"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Width="300"
+                                    Margin="5,0,5,5"
+                                    materialDesign:HintAssist.Hint="Manifesto"
+                                    materialDesign:HintAssist.IsFloating="True"
+                                    PreviewTextInput="testarCaractere"
+                                    Style="{StaticResource MaterialDesignTextBox}" />
                             </StackPanel>
                             <StackPanel
-                                    Grid.Row="0"
-                                    Grid.RowSpan="3"
-                                    Grid.Column="1"
-                                    Margin="10,-28,-10,10"
-                                    CanVerticallyScroll="True">
+                                Grid.Row="0"
+                                Grid.RowSpan="3"
+                                Grid.Column="1"
+                                Margin="10,-28,-10,10"
+                                CanVerticallyScroll="True">
                                 <TextBlock>Funcionários Responsaveis:</TextBlock>
                                 <ListBox
-                                        Name="ListaDeFuncionarios"
-                                        Height="185"
-                                        materialDesign:ShadowAssist.ShadowDepth="Depth2"
-                                        DataContext="Funcionarios">
+                                    Name="ListaDeFuncionarios"
+                                    Height="185"
+                                    materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                    DataContext="Funcionarios">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <materialDesign:Chip
-                                                    Content="{Binding Nome}"
-                                                    DeleteClick="ChipEx_DeleteClick"
-                                                    Icon="{Binding Tag}"
-                                                    IsDeletable="True" />
+                                                Content="{Binding Nome}"
+                                                DeleteClick="ChipEx_DeleteClick"
+                                                Icon="{Binding Tag}"
+                                                IsDeletable="True" />
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
                             </StackPanel>
                             <StackPanel
-                                    Grid.Row="1"
-                                    Grid.Column="0"
-                                    Margin="5,0,5,0"
-                                    Orientation="Horizontal">
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Margin="5,0,5,0"
+                                Orientation="Horizontal">
                                 <materialDesign:PackIcon
-                                        Width="22"
-                                        Height="auto"
-                                        VerticalAlignment="Center"
-                                        Foreground="{Binding BorderBrush, ElementName=CBFuncionario}"
-                                        Kind="Account" />
+                                    Width="22"
+                                    Height="auto"
+                                    VerticalAlignment="Center"
+                                    Foreground="{Binding BorderBrush, ElementName=CBFuncionario}"
+                                    Kind="Account" />
                                 <ComboBox
-                                        x:Name="CBFuncionario"
-                                        Width="240"
-                                        Margin="10,0"
-                                        materialDesign:HintAssist.Hint="Funcionário"
-                                        materialDesign:HintAssist.IsFloating="True"
-                                        IsEditable="True"
-                                        SelectionChanged="CBFuncionario_SelectionChanged" />
+                                    x:Name="CBFuncionario"
+                                    Width="240"
+                                    Margin="10,0"
+                                    materialDesign:HintAssist.Hint="Funcionário"
+                                    materialDesign:HintAssist.IsFloating="True"
+                                    IsEditable="True"
+                                    SelectionChanged="CBFuncionario_SelectionChanged" />
                                 <Button
-                                        VerticalAlignment="Bottom"
-                                        Click="Inserir_Click"
-                                        Content="Incluir"
-                                        Style="{StaticResource MaterialDesignFlatButton}" />
+                                    VerticalAlignment="Bottom"
+                                    Click="Inserir_Click"
+                                    Content="Incluir"
+                                    Style="{StaticResource MaterialDesignFlatButton}" />
                             </StackPanel>
                             <Button
-                                    Name="Iniciar"
-                                    Grid.Row="3"
-                                    Grid.Column="1"
-                                    Width="71"
-                                    Margin="0,0,0,10"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Bottom"
-                                    Click="Iniciar_Click">
+                                Name="Iniciar"
+                                Grid.Row="3"
+                                Grid.Column="1"
+                                Width="71"
+                                Margin="0,0,0,10"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Click="Iniciar_Click">
                                 Iniciar
                             </Button>
                         </Grid>
@@ -138,37 +138,59 @@
                                 <RowDefinition Height=" auto" />
                             </Grid.RowDefinitions>
 
-                            <Button Grid.Column="1"
-                                       Grid.Row="0"
-                                        Name="AtualizarDg"
-                                        Height="25"
-                                        Width="100"
-                                        HorizontalAlignment="Right"
-                                    Style="{StaticResource MaterialDesignFlatButton}"
-                                        Content="Atualizar" Margin="75,0,7,0" Click="AtualizarDg_Click" />
-                            <TextBlock Grid.Column="0"
-                                       Grid.Row="0"
-                                       x:Name="TextoExecucao"  Text="Tarefas em execução"
-                                       HorizontalAlignment="Left" Margin="50,0,0,0" Width="200" />
+                            <Button
+                                Name="AtualizarDg"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Width="100"
+                                Height="25"
+                                Margin="75,0,7,0"
+                                HorizontalAlignment="Right"
+                                Click="AtualizarDg_Click"
+                                Content="Atualizar"
+                                Style="{StaticResource MaterialDesignFlatButton}" />
+                            <TextBlock
+                                x:Name="TextoExecucao"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Width="200"
+                                Margin="50,0,0,0"
+                                HorizontalAlignment="Left"
+                                Text="Tarefas em execução" />
                             <DataGrid
-                                    ScrollViewer.CanContentScroll="True"
-                                    Grid.Column="0"
-                                    Grid.Row="1"
-                                    Grid.ColumnSpan="2"
-                                    Name="dgTarefas"
-                                    Margin="40,5"
-                                    HorizontalAlignment="Center"
-                                    AutoGenerateColumns="False"
-                                    ColumnWidth="*"
-                                    IsReadOnly="True">
+                                Name="dgTarefas"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Margin="40,5"
+                                HorizontalAlignment="Center"
+                                AutoGenerateColumns="False"
+                                ColumnWidth="*"
+                                IsReadOnly="True"
+                                ScrollViewer.CanContentScroll="True">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Manifesto" Width="Auto" Binding="{Binding documentoTarefa}" />
-                                    <DataGridTextColumn Header="Funcionários" Binding="{Binding nomesFuncionarios}" />
-                                    <DataGridTextColumn Header="Hora Início" Width="Auto" Binding="{Binding horaInicio}" />
-                                    <DataGridTextColumn Header="SKU's" Width="Auto" Binding="{Binding skus}" />
-                                    <DataGridTextColumn Header="Volumes" Width="Auto" Binding="{Binding volumes}" />
-                                    <DataGridTextColumn Header="Tempo Gasto" Width="Auto" Binding="{Binding tempoGasto}" />
-                                    <DataGridTemplateColumn Header="Finalizar Tarefa" Width="Auto">
+                                    <DataGridTextColumn
+                                        Width="Auto"
+                                        Binding="{Binding documentoTarefa}"
+                                        Header="Manifesto" />
+                                    <DataGridTextColumn Binding="{Binding nomesFuncionarios}" Header="Funcionários" />
+                                    <DataGridTextColumn
+                                        Width="Auto"
+                                        Binding="{Binding horaInicio}"
+                                        Header="Hora Início" />
+                                    <DataGridTextColumn
+                                        Width="Auto"
+                                        Binding="{Binding skus}"
+                                        Header="SKU's" />
+                                    <DataGridTextColumn
+                                        Width="Auto"
+                                        Binding="{Binding volumes}"
+                                        Header="Volumes" />
+                                    <DataGridTextColumn
+                                        Width="Auto"
+                                        Binding="{Binding tempoGasto}"
+                                        Header="Tempo Gasto" />
+                                    <DataGridTemplateColumn Width="Auto" Header="Finalizar Tarefa">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Button Width="Auto" Click="Finalizar_Click">Finalizar</Button>

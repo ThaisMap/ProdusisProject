@@ -24,6 +24,11 @@ namespace ProdusisBD
             Manifesto = nManifesto;
         }
 
+        public Cte_Manifesto()
+        {
+                
+        }
+
         public virtual Ctes Ctes { get; set; }
         public virtual Manifestos Manifestos { get; set; }
     }

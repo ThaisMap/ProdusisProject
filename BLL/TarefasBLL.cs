@@ -85,12 +85,12 @@ namespace BLL
 
         public List<ItemRelatorio> filtrar(Filtro f)
         {
-            return t.getTarefasFiltradas(f);
+            return t.getTarefasFiltradas(f, true);
         }
 
-        public List<TarefaModelo> filtraRanking(Filtro f)
+        public List<ItemRanking> filtraRanking(Filtro f)
         {
-            return t.getTarefasFiltradasRanking(f);
+            return t.getRanking(f);
         }
 
         private double calculaHorasPeriodo(DateTime inicio, DateTime fim)
@@ -111,6 +111,7 @@ namespace BLL
 
         public List<ItemRanking> getRanking(Filtro f)
         {
+           // t.getRanking(f);
             var rank = t.rankingFuncionarios(filtraRanking(f), calculaHorasPeriodo((DateTime)f.dataInicio, (DateTime)f.dataFim));
             foreach (var item in rank)
             {
@@ -135,7 +136,7 @@ namespace BLL
             return linha;
         }
       
-        public void exportarExcel(List<ItemRelatorio> Tarefas, string nomeArquivo)
+        public void exportarExcelOld(List<ItemRelatorio> Tarefas, string nomeArquivo)
         {
             try
             {
@@ -143,6 +144,7 @@ namespace BLL
                 Excel.Workbook xlWorkBook;
                 Excel.Worksheet xlWorkSheet;
                 object misValue = System.Reflection.Missing.Value;
+               
 
                 xlApp = new Excel.Application();
                 xlWorkBook = xlApp.Workbooks.Add(misValue);
@@ -190,6 +192,78 @@ namespace BLL
                 liberarObjetos(xlWorkSheet);
                 liberarObjetos(xlWorkBook);
                 liberarObjetos(xlApp);
+            }
+
+            catch (Exception ex)
+            {
+                var erro = ex;
+            }
+        }
+
+        public void exportarExcel(List<ItemRelatorio> Tarefas, string nomeArquivo)
+        {
+            try
+            {
+                var excel = new Excel.Application();
+                excel.DisplayAlerts = false;
+                var workbooks = excel.Workbooks;
+                var workbook = workbooks.Add(Type.Missing);
+                var worksheets = workbook.Sheets;
+                var worksheet = (Excel.Worksheet)worksheets[1];
+                object misValue = System.Reflection.Missing.Value;
+                
+                string[,] array = new string[Tarefas.Count + 1, 15];
+                array[0, 0] = "Documento";
+                array[0, 1] = "Tipo";
+                array[0, 2] = "Data";
+                array[0, 3] = "Hora Início";
+                array[0, 4] = "Hora Fim";
+                array[0, 5] = "Funcionário(s)";
+                array[0, 6] = "Tempo Gasto";
+                array[0, 7] = "Volumes";
+                array[0, 8] = "SKU's";
+                array[0, 9] = "Pontos";
+                array[0, 10] = "Fornecedor";
+                array[0, 11] = "Divergências";
+                array[0, 12] = "Paletes";
+                array[0, 13] = "Cap paletes";
+                array[0, 14] = "Qtde Ctes no manifesto";
+
+                for (int linha = 0; linha < Tarefas.Count; linha++)
+                {
+                    Tarefas[linha].atualizaPontuação();
+                    t.inserirPontuacao(Tarefas[linha].idTarefa, (float)Tarefas[linha].pontos);
+                    array[linha + 1, 0] = Tarefas[linha].documentoTarefa.ToString("00");
+                    array[linha + 1, 1] = Tarefas[linha].tipoTarefa;
+                    array[linha + 1, 2] = Tarefas[linha].inicioTarefa.Date.ToString("MM/dd/yyyy");
+                    array[linha + 1, 3] = Tarefas[linha].horaInicio;
+                    array[linha + 1, 4] = Tarefas[linha].horaFim;
+                    array[linha + 1, 5] = Tarefas[linha].nomesFunc;
+                    array[linha + 1, 6] = Tarefas[linha].tempoGasto;
+                    array[linha + 1, 7] = Tarefas[linha].volumes.ToString();
+                    array[linha + 1, 8] = Tarefas[linha].sku.ToString();
+                    array[linha + 1, 9] = Tarefas[linha].pontos.ToString();
+                    array[linha + 1, 10] = Tarefas[linha].fornecedor;
+                    array[linha + 1, 11] = Tarefas[linha].divergenciaTarefa;
+                    array[linha + 1, 12] = string.Format("0", Tarefas[linha].quantPaletizado);//.ToString();
+                    array[linha + 1, 13] = Tarefas[linha].totalPaletes.ToString();
+                    array[linha + 1, 14] = Tarefas[linha].ctesNoManifesto.ToString();
+                }
+
+                var startCell = (Excel.Range)worksheet.Cells[1, 1];
+                var endCell = (Excel.Range)worksheet.Cells[Tarefas.Count + 1, 15];
+                var writeRange = worksheet.Range[startCell, endCell];
+
+                writeRange.Value2 = array;
+
+                workbook.SaveAs(nomeArquivo, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue,
+Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+                workbook.Close(true, misValue, misValue);
+                excel.Quit();
+
+                liberarObjetos(worksheet);
+                liberarObjetos(workbook);
+                liberarObjetos(excel);
             }
 
             catch (Exception ex)

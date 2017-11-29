@@ -15,21 +15,15 @@ namespace ProdusisBD
             preencheDatas();
             atualizaTempoGasto();
             divergenciaTarefa = tarefa.divergenciaTarefa;
-            //porcentagemPaletizado = tarefa.porcentagemPaletizado;
         }
-
-
-
-
-
+        
         private string tipoExtenso(string tipo)
         {
             switch (tipo)
             {
                 case "0":
-                    return "Descarga";
                 case "1":
-                    return "Separação";
+                    return "Descarga";
                 case "2":
                     return "Conferência";
                 case "3":
@@ -106,7 +100,6 @@ namespace ProdusisBD
             tempoGasto = (tempo.Days * 24 + tempo.Hours).ToString("00") + ":" + tempo.Minutes.ToString("00") + ":" + tempo.Seconds.ToString("00");
         }
        
-
         public void preencheDatas()
         {
             dataInicio = inicioTarefa.Date.ToString("dd\\/MM\\/yyyy");

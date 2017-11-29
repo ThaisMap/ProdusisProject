@@ -93,13 +93,13 @@ namespace GUI
 
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
-            if (checarCampos() && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "0") && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "5"))
+            if (checarCampos() && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "1") && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "5"))
             {
                 pallets = paletes.Perguntar("30");
 
                 if (pallets >= 0 && t.inserirTarefa(montarTarefa(), funcionarios()))
                 {
-                    dgTarefas.ItemsSource = t.tarefasPendentes("0","5");
+                    dgTarefas.ItemsSource = t.tarefasPendentes("1");
                     MessageBox.Show("Descarga iniciada para o " + d.linhaDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Descarga iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                     Documento.Text = "";
                     CBFuncionario.SelectedIndex = -1;
@@ -137,7 +137,7 @@ namespace GUI
             {
                 documentoTarefa = int.Parse(Documento.Text.Replace("_", "")),
                 inicioTarefa = DateTime.Now,
-                tipoTarefa = "0"
+                tipoTarefa = "1"
             };
 
             return novaTarefa;

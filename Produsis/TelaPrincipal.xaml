@@ -14,10 +14,10 @@
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
     Icon="icone_2_produsis.ico"
+    Loaded="Window_Loaded"
     TextElement.FontSize="16"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     WindowState="Maximized"
-    Loaded="Window_Loaded"
     mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
@@ -32,15 +32,16 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid Width="auto"  VerticalAlignment="Top">
+    <Grid Width="auto" VerticalAlignment="Top">
         <materialDesign:ColorZone
             Width="auto"
             Height="60"
             materialDesign:ShadowAssist.ShadowDepth="Depth2"
-            Mode="PrimaryLight"/>
-        <Grid           
+            Mode="PrimaryLight" />
+        <Grid
+            Margin="0,0,0,10"
             HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch" Margin="0,0,0,10">
+            VerticalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*" />
             </Grid.ColumnDefinitions>
@@ -48,68 +49,62 @@
                 <RowDefinition Height="60" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <!--Botoes-->
+            <!--  Botoes  -->
             <StackPanel
                 Grid.Row="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                Orientation="Horizontal" HorizontalAlignment="Center">
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
                 <Button
                     x:Name="BtnAdministrativo"
-                    IsTabStop="False"
                     Width="auto"
                     Height="auto"
                     Margin="2,5"
                     Click="BtnAdministrativo_Click"
-                    Content="Administrativo" />
+                    Content="Administrativo"
+                    IsTabStop="False" />
                 <Button
                     x:Name="BtnDescarga"
-                    IsTabStop="False"
                     Width="auto"
                     Height="auto"
                     Margin="2,5"
                     Click="BtnDescarga_Click"
-                    Content="Descarga" />
-                <Button
-                    x:Name="BtnSerapacao"
-                    IsTabStop="False"
-                    Width="auto"
-                    Height="auto"
-                    Margin="2,5"
-                    Click="BtnSerapacao_Click"
-                    Content="Separação" />
+                    Content="Descarga"
+                    IsTabStop="False" />
                 <Button
                     x:Name="BtnConferencia"
-                    IsTabStop="False"
                     Width="auto"
                     Height="auto"
                     Margin="2,5"
                     Click="BtnConferencia_Click"
-                    Content="Conferência" />
+                    Content="Conferência"
+                    IsTabStop="False" />
                 <Button
                     x:Name="BtnSeparacaoCarga"
-                    IsTabStop="False"
-                    Width="200"
+                    Width="160"
                     Height="auto"
                     Margin="2,5"
-                    Click="BtnSeparacaoCarga_Click">
-                    <TextBlock TextAlignment="Left" TextWrapping="Wrap"><Run Text="Separação Para Carregar" /></TextBlock>
+                    Click="BtnSeparacaoCarga_Click"
+                    IsTabStop="False">
+                    <TextBlock TextAlignment="Left" TextWrapping="Wrap"><Run Text="Separação de Rota" /></TextBlock>
                 </Button>
                 <Button
                     x:Name="BtnCarregamento"
-                    IsTabStop="False"
                     Width="auto"
                     Height="auto"
                     Margin="2,5"
                     Click="BtnCarregamento_Click"
-                    Content="Carregamento" />
+                    Content="Carregamento"
+                    IsTabStop="False" />
                 <Button
                     x:Name="BtnDivergencia"
-                    IsTabStop="False"
                     Width="auto"
                     Height="auto"
                     Margin="2,5"
-                    Content="Divergências" Click="BtnDivergencia_Click" />
+                    Click="BtnDivergencia_Click"
+                    Content="Divergências"
+                    IsTabStop="False" />
             </StackPanel>
             <Frame
                 Name="Navegador"

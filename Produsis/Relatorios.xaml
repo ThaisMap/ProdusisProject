@@ -70,27 +70,15 @@
                     <ComboBoxItem
                         Width="158"
                         HorizontalAlignment="Left"
-                        Content="Separação" />
+                        Content="Conferência" />
                     <ComboBoxItem
                         Width="158"
                         HorizontalAlignment="Left"
-                        Content="Conferência" />
+                        Content="Separação de rota" />
                     <ComboBoxItem
-                        Width="190"
-                        HorizontalAlignment="Left"
-                        Content="Separação para carregar" />
-                    <ComboBoxItem
-                        Width="190"
+                        Width="158"
                         HorizontalAlignment="Left"
                         Content="Carregamento" />
-                    <ComboBoxItem
-                        Width="190"
-                        HorizontalAlignment="Left"
-                        Content="Descarga Paletizada" />
-                    <ComboBoxItem
-                        Width="190"
-                        HorizontalAlignment="Left"
-                        Content="Carregamento Paletizado" />
                 </ComboBox>
 
                 <TextBlock
