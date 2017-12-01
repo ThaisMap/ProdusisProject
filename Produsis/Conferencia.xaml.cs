@@ -55,7 +55,7 @@ namespace GUI
         private void Finalizar_Click(object sender, RoutedEventArgs e)
         {
             TarefaModelo item = (TarefaModelo)dgTarefas.SelectedItem;
-            if (t.finalizarTarefa(item.idTarefa))
+            if (t.finalizarTarefa(item.idTarefa, 0, 0))
                 MessageBox.Show("Conferência finalizada após " + item.tempoGasto, "Conferência finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
             else
                 MessageBox.Show("Houve um erro e a conferência não pode ser finalizada.", "Conferência não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);

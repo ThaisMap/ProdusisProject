@@ -49,7 +49,7 @@ namespace GUI
         private void Finalizar_Click(object sender, RoutedEventArgs e)
         {
             Tarefas item = (Tarefas)dgTarefas.SelectedItem;
-            if (t.finalizarTarefa(item.idTarefa))
+            if (t.finalizarTarefa(item.idTarefa, 0, 0))
                 MessageBox.Show("Separação finalizada após " + item.tempoGasto, "Separação finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
             else
                 MessageBox.Show("Houve um erro e a separação não pode ser finalizada.", "Separação não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);

@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace GUI
-{
+{  
     /// <summary>
     /// Lógica interna para paletes.xaml
     /// </summary>
@@ -32,33 +32,49 @@ namespace GUI
             txtQtde.Focus();
         }
 
-        public static float Perguntar(string capacidade)
+        public static int[] Perguntar(string capacidade)
         {
-            paletes inst = new paletes(capacidade);
-            inst.ShowDialog();
+            paletes tela = new paletes(capacidade);
+            tela.ShowDialog();
 
-            if (inst.DialogResult == true)
+            if (tela.DialogResult == true)
                 try
                 {
-                   return int.Parse(inst.txtQtde.Text) / float.Parse(inst.txtTotal.Text);
+                    int[] retornoOK = { int.Parse(tela.txtQtde.Text), int.Parse(tela.txtTotal.Text) };
+                    return retornoOK;
                 }
                 catch
                 {
-                    return 0;
+                    int [] retornoErro = { -1, 1 };
+                    return retornoErro;
                 }
-            return -1;
+            int[] retorno = { -1, -1 };
+            return retorno;
         }
 
         private void testarCaractere(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);            
-        }    
+        }
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = true;
-            Close();
+            if (txtQtde.Text == "")
+                txtQtde.Focus();
+            else
+                if (txtTotal.Text == "")
+                txtTotal.Focus();
+            else
+            {
+                if (int.Parse(txtPorcentagem.Text) > 100)
+                    MessageBox.Show("A quantidade paletizada deve ser menor ou igual à capacidade de paletes do veículo.", "Erro - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                else
+                {
+                    DialogResult = true;
+                    Close();
+                }
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

@@ -19,7 +19,7 @@ namespace GUI
         private FuncionariosTag FuncionarioSelecionado;
         private List<string> ListaFunc;
         private TarefasBLL t = new TarefasBLL();
-        private float pallets = 0;
+        private int[] pallets = {0, 0};
 
         public Descarga()
         {
@@ -43,16 +43,21 @@ namespace GUI
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
         {
-            Tarefas item = (Tarefas)dgTarefas.SelectedItem;
-            if (t.finalizarTarefa(item.idTarefa))
-                MessageBox.Show("Descarga finalizada após " + item.tempoGasto, "Descarga finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+            pallets = paletes.Perguntar("30");
+            if (pallets[1] > 0)
+            {
+                Tarefas item = (Tarefas)dgTarefas.SelectedItem;
+                if (t.finalizarTarefa(item.idTarefa, pallets[0], pallets[1]))
+                    MessageBox.Show("Descarga finalizada após " + item.tempoGasto, "Descarga finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                else
+                    MessageBox.Show("Houve um erro e a descarga não pode ser finalizada.", "Descarga não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                ListaFunc = f.carregaFuncionariosLivres();
+                CBFuncionario.ItemsSource = ListaFunc;
+                AtualizarDg_Click(sender, e);
+            }
             else
                 MessageBox.Show("Houve um erro e a descarga não pode ser finalizada.", "Descarga não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-            ListaFunc = f.carregaFuncionariosLivres();
-            CBFuncionario.ItemsSource = ListaFunc;
-            AtualizarDg_Click(sender, e);
         }
-
         private void CBFuncionario_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (CBFuncionario.SelectedIndex > -1)
@@ -63,6 +68,7 @@ namespace GUI
         {
             if (Documento.Text.Replace("_", "") == "" || ListaDeFuncionarios.Items.Count == 0)
             {
+                MessageBox.Show("Digite o documento e inclua os funcionários.", "Descarga não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             return true;
@@ -93,11 +99,10 @@ namespace GUI
 
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
-            if (checarCampos() && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "1") && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "5"))
-            {
-                pallets = paletes.Perguntar("30");
-
-                if (pallets >= 0 && t.inserirTarefa(montarTarefa(), funcionarios()))
+            if (checarCampos())
+                if (t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "1") && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "5"))
+            {    
+                if (t.inserirTarefa(montarTarefa(), funcionarios()))
                 {
                     dgTarefas.ItemsSource = t.tarefasPendentes("1");
                     MessageBox.Show("Descarga iniciada para o " + d.linhaDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Descarga iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -107,12 +112,12 @@ namespace GUI
                 }
                 else
                 {
-                    MessageBox.Show("Não foi possível iniciar a descarga.", "Descarga não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Manifesto não importado.", "Descarga não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Não foi possível iniciar a descarga.", "Descarga não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Já existe uma descarga para esse manifesto.", "Descarga não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -131,8 +136,7 @@ namespace GUI
         }
 
         private Tarefas montarTarefa()
-        {
-            
+        {            
             Tarefas novaTarefa = new Tarefas()
             {
                 documentoTarefa = int.Parse(Documento.Text.Replace("_", "")),

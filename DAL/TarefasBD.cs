@@ -48,7 +48,7 @@ namespace DAL
         /// Grava a data/hora atuais como data/hora de fim da tarefa e desocupa os funcionários
         /// </summary>
         /// <returns>True se o comando foi executado sem erros, False se houve algum erro</returns>
-        public bool finalizarTarefa(int idTarefa)
+        public bool finalizarTarefa(int idTarefa, int quantPalet, int totalPalet)
         {
             try
             {
@@ -56,6 +56,8 @@ namespace DAL
                 {
                     Tarefas tarefaAtual = BancoDeDados.Tarefas.Single(f => f.idTarefa == idTarefa);
                     tarefaAtual.fimTarefa = DateTime.Now;
+                    tarefaAtual.quantPaletizado = quantPalet;
+                    tarefaAtual.totalPaletes = totalPalet;
                     if (tarefaAtual.divergenciaTarefa.Length > 120)
                         tarefaAtual.divergenciaTarefa = tarefaAtual.divergenciaTarefa.Remove(100);
                     BancoDeDados.SaveChanges();
@@ -284,6 +286,7 @@ namespace DAL
                     #endregion
                     
                     lista = consolidarRelatorio(relatorioConferencia, relatorioNaoConferencia, consolidarFuncionario);
+                    lista.OrderBy(o => o.idTarefa);
                 }
             }
             catch (Exception e)

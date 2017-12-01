@@ -14,11 +14,9 @@ namespace BLL
 
         public bool inserirTarefa(Tarefas novaTarefa, string[] funcionarios)
         {
-            if (novaTarefa.tipoTarefa == "2") 
-            {
-                if (!d.cteCadastrado(novaTarefa.documentoTarefa))
+            if (novaTarefa.tipoTarefa == "2" && !d.cteCadastrado(novaTarefa.documentoTarefa))
                     return false;
-            }
+            
             else
             {
                 if (!d.manifestoCadastrado(novaTarefa.documentoTarefa))
@@ -63,9 +61,9 @@ namespace BLL
             return t.inserirDivergencia(tarefasDivergencia);
         }
 
-        public bool finalizarTarefa(int idTarefa)
+        public bool finalizarTarefa(int idTarefa, int quantPalet, int totalPalet)
         {
-            return t.finalizarTarefa(idTarefa);
+            return t.finalizarTarefa(idTarefa, quantPalet, totalPalet);
         }
 
         public int iniciadaHojePendente(string tipo)
@@ -135,8 +133,8 @@ namespace BLL
 
             return linha;
         }
-      
-        public void exportarExcelOld(List<ItemRelatorio> Tarefas, string nomeArquivo)
+
+        public void exportarExcelProdut(List<ItemRanking> Tarefas, string nomeArquivo)
         {
             try
             {
@@ -144,46 +142,27 @@ namespace BLL
                 Excel.Workbook xlWorkBook;
                 Excel.Worksheet xlWorkSheet;
                 object misValue = System.Reflection.Missing.Value;
-               
+
 
                 xlApp = new Excel.Application();
                 xlWorkBook = xlApp.Workbooks.Add(misValue);
 
                 xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-                xlWorkSheet.Cells[1, 1] = "Documento";
-                xlWorkSheet.Cells[1, 2] = "Tipo";
-                xlWorkSheet.Cells[1, 3] = "Data";
-                xlWorkSheet.Cells[1, 4] = "Hora Início";
-                xlWorkSheet.Cells[1, 5] = "Hora Fim";
-                xlWorkSheet.Cells[1, 6] = "Funcionário(s)";
-                xlWorkSheet.Cells[1, 7] = "Tempo Gasto";
-                xlWorkSheet.Cells[1, 8] = "Volumes";
-                xlWorkSheet.Cells[1, 9] = "SKU's";
-                xlWorkSheet.Cells[1, 10] = "Pontos";
-                xlWorkSheet.Cells[1, 11] = "Fornecedor";
-                xlWorkSheet.Cells[1, 12] = "Divergências";
+                xlWorkSheet.Cells[1, 1] = "Nome";
+                xlWorkSheet.Cells[1, 2] = "Media de pontos";
+                xlWorkSheet.Cells[1, 3] = "Observações";
 
                 int linha = 2;
-                            
-                foreach (ItemRelatorio i in Tarefas)
+
+                foreach (ItemRanking i in Tarefas)
                 {
-                    i.atualizaPontuação();
-                    xlWorkSheet.Cells[linha, 1] = i.documentoTarefa;
-                    xlWorkSheet.Cells[linha, 2] = i.tipoTarefa;
-                    xlWorkSheet.Cells[linha, 3] = i.inicioTarefa.Date.ToString("MM/dd/yyyy");
-                    xlWorkSheet.Cells[linha, 4] = i.horaInicio;
-                    xlWorkSheet.Cells[linha, 5] = i.horaFim;
-                    xlWorkSheet.Cells[linha, 6] = i.nomesFunc;
-                    xlWorkSheet.Cells[linha, 7] = i.tempoGasto;
-                    xlWorkSheet.Cells[linha, 8] = i.volumes;
-                    xlWorkSheet.Cells[linha, 9] = i.sku;
-                    xlWorkSheet.Cells[linha, 10] = i.pontos;
-                    xlWorkSheet.Cells[linha, 11] = i.fornecedor;
-                    xlWorkSheet.Cells[linha, 12] = i.divergenciaTarefa;
-                    
+                    xlWorkSheet.Cells[linha, 1] = i.nomesFuncionarios;
+                    xlWorkSheet.Cells[linha, 2] = i.mediaPorHora;
+                    xlWorkSheet.Cells[linha, 3] = i.observacoes;
+                  
                     linha++;
                 }
-                
+
                 xlWorkBook.SaveAs(nomeArquivo, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue,
  Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
                 xlWorkBook.Close(true, misValue, misValue);

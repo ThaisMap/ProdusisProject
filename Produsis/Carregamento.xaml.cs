@@ -19,7 +19,8 @@ namespace GUI
         private FuncionariosTag FuncionarioSelecionado;
         private List<string> ListaFunc;
         private TarefasBLL t = new TarefasBLL();
-        
+        private int[] pallets = {0, 0};
+
         public Carregamento(double actualHeight, double actualWidth)
         {
             InitializeComponent();
@@ -44,14 +45,18 @@ namespace GUI
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
         {
-            Tarefas item = (Tarefas)dgTarefas.SelectedItem;
-            if (t.finalizarTarefa(item.idTarefa))
-                MessageBox.Show("Carregamento finalizado após " + item.tempoGasto, "Carregamento finalizado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-            else
-                MessageBox.Show("Houve um erro e o carregamento não pode ser finalizado.", "Carregamento não finalizado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-            ListaFunc = f.carregaFuncionariosLivres();
-            CBFuncionario.ItemsSource = ListaFunc;
-            AtualizarDg_Click(sender, e);
+            pallets = paletes.Perguntar("30");
+            if (pallets[1] > 0)
+            {
+                Tarefas item = (Tarefas)dgTarefas.SelectedItem;
+                if (t.finalizarTarefa(item.idTarefa, pallets[0], pallets[1]))
+                    MessageBox.Show("Carregamento finalizado após " + item.tempoGasto, "Carregamento finalizado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                else
+                    MessageBox.Show("Houve um erro e o carregamento não pode ser finalizado.", "Carregamento não finalizado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                ListaFunc = f.carregaFuncionariosLivres();
+                CBFuncionario.ItemsSource = ListaFunc;
+                AtualizarDg_Click(sender, e);
+            }
         }
 
         private void CBFuncionario_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -64,6 +69,7 @@ namespace GUI
         {
             if (Documento.Text.Replace("_", "") == "" || ListaDeFuncionarios.Items.Count == 0)
             {
+                MessageBox.Show("Digite o documento e inclua os funcionários.", "Descarga não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             return true;
@@ -94,26 +100,26 @@ namespace GUI
 
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
-            if (checarCampos() && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "4") && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "6"))
-            {
-                if (paletes.Perguntar("30") > 0 && t.inserirTarefa(montarTarefa(), funcionarios()))
+            if (checarCampos())
+                if (t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "4") && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "6"))
                 {
-                    dgTarefas.ItemsSource = t.tarefasPendentes("4");
-                    MessageBox.Show("Carregamento iniciado para o " + d.linhaDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Carregamento iniciado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-                    Documento.Text = "";
-                    CBFuncionario.SelectedIndex = -1;
-                    ListaDeFuncionarios.Items.Clear();
-                    //cbPaletizado.IsChecked = false;          
+                    if (t.inserirTarefa(montarTarefa(), funcionarios()))
+                    {
+                        dgTarefas.ItemsSource = t.tarefasPendentes("4");
+                        MessageBox.Show("Carregamento iniciado para o " + d.linhaDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Carregamento iniciado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                        Documento.Text = "";
+                        CBFuncionario.SelectedIndex = -1;
+                        ListaDeFuncionarios.Items.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Manifesto não importado.", "Carregamento não iniciado - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Não foi possível iniciar o carregamento.", "Carregamento não iniciado - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Já existe um carregamento para esse manifesto.", "Carregamento não iniciado - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }
-            else
-            {
-                MessageBox.Show("Não foi possível iniciar o carregamento.", "Carregamento não iniciado - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
         }
 
         private void Inserir_Click(object sender, RoutedEventArgs e)

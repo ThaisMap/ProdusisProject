@@ -19,7 +19,8 @@ namespace GUI
         private FuncionariosTag FuncionarioSelecionado;
         private List<string> ListaFunc;
         private TarefasBLL t = new TarefasBLL();
-
+        private int[] pallets = { 0, 0 };
+        
         public Separacao2(double actualHeight, double actualWidth)
         {
             InitializeComponent();
@@ -45,14 +46,18 @@ namespace GUI
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
         {
-            Tarefas item = (Tarefas)dgTarefas.SelectedItem;
-            if (t.finalizarTarefa(item.idTarefa))
-                MessageBox.Show("Separação para carregamento finalizada após " + item.tempoGasto, "Separação finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-            else
-                MessageBox.Show("Houve um erro e a separação para carregamento não pode ser finalizada.", "Separação não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-            ListaFunc = f.carregaFuncionariosLivres();
-            CBFuncionario.ItemsSource = ListaFunc;
-            AtualizarDg_Click(sender, e);
+            pallets = paletes.Perguntar("0");
+            if (pallets[1] > 0)
+            {
+                Tarefas item = (Tarefas)dgTarefas.SelectedItem;
+                if (t.finalizarTarefa(item.idTarefa, pallets[0], pallets[1]))
+                    MessageBox.Show("Separação para carregamento finalizada após " + item.tempoGasto, "Separação finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                else
+                    MessageBox.Show("Houve um erro e a separação para carregamento não pode ser finalizada.", "Separação não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                ListaFunc = f.carregaFuncionariosLivres();
+                CBFuncionario.ItemsSource = ListaFunc;
+                AtualizarDg_Click(sender, e);
+            }
         }
 
         private void CBFuncionario_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -65,6 +70,7 @@ namespace GUI
         {
             if (Documento.Text.Replace("_", "") == "" || ListaDeFuncionarios.Items.Count == 0)
             {
+                MessageBox.Show("Digite o documento e inclua os funcionários.", "Descarga não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             return true;
@@ -95,25 +101,26 @@ namespace GUI
 
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
-            if (checarCampos() && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "3"))
-            {
-                if (t.inserirTarefa(montarTarefa(), funcionarios()))
+            if (checarCampos())
+                if (t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "3"))
                 {
-                    MessageBox.Show("Separação iniciada para carregar o " + d.linhaDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Separação iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-                    dgTarefas.ItemsSource = t.tarefasPendentes("3");
-                    Documento.Text = "";
-                    CBFuncionario.SelectedIndex = -1;
-                    ListaDeFuncionarios.Items.Clear();
+                    if (t.inserirTarefa(montarTarefa(), funcionarios()))
+                    {
+                        MessageBox.Show("Separação iniciada para carregar o " + d.linhaDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Separação iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                        dgTarefas.ItemsSource = t.tarefasPendentes("3");
+                        Documento.Text = "";
+                        CBFuncionario.SelectedIndex = -1;
+                        ListaDeFuncionarios.Items.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Pré-manifesto não importado.", "Separação não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Não foi possível iniciar a separação para carregamento.", "Separação não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Esse pré-manifesto já foi separado", "Separação não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }
-            else
-            {
-                MessageBox.Show("Não foi possível iniciar a separação para carregamento.", "Separação não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
         }
 
         private void Inserir_Click(object sender, RoutedEventArgs e)
