@@ -66,6 +66,11 @@ namespace ProdusisBD
             ctesNoManifesto = 1;
         }
 
+        public ItemRelatorio()
+        {
+            pontos = 0;
+        }
+
         public void atualizaTempoGasto()
         {
             TimeSpan tempo;

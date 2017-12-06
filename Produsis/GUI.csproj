@@ -134,6 +134,9 @@
     <Compile Include="Divergencia.xaml.cs">
       <DependentUpon>Divergencia.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Divergencias.xaml.cs">
+      <DependentUpon>Divergencias.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MudarCores.cs" />
     <Compile Include="MudarTema.xaml.cs">
       <DependentUpon>MudarTema.xaml</DependentUpon>
@@ -167,9 +170,6 @@
     </Compile>
     <Compile Include="Relatorios.xaml.cs">
       <DependentUpon>Relatorios.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Separacao.xaml.cs">
-      <DependentUpon>Separacao.xaml</DependentUpon>
     </Compile>
     <Compile Include="Separacao2.xaml.cs">
       <DependentUpon>Separacao2.xaml</DependentUpon>
@@ -244,6 +244,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Divergencias.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EdicaoFuncionarios.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -281,10 +285,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Relatorios.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Separacao.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

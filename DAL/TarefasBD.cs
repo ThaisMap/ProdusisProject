@@ -62,10 +62,33 @@ namespace DAL
                         tarefaAtual.divergenciaTarefa = tarefaAtual.divergenciaTarefa.Remove(100);
                     BancoDeDados.SaveChanges();
                     FuncionariosBD func = new FuncionariosBD();
+
+                    ItemRelatorio item;
+
+                    if (tarefaAtual.tipoTarefa != "2")
+                        item = new ItemRelatorio(BancoDeDados.RelatorioNaoConferencia.SingleOrDefault(i => i.idTarefa == idTarefa));
+                    else
+                    {
+                        try
+                        {
+                            item = new ItemRelatorio(BancoDeDados.RelatorioConferencias.SingleOrDefault(i => i.idTarefa == idTarefa));
+
+                        }
+                        catch
+                        {
+                            item = new ItemRelatorio();
+                        }
+                    }
+                    
+                    item.atualizaPontuação();
+                    inserirPontuacao(idTarefa, (float)item.pontos);
+
                     foreach (Func_Tarefa f in tarefaAtual.Func_Tarefa)
                     {
                         func.editarOcupacaoFuncionario(f.Funcionario, false);
-                    }
+                        f.Pontuacao = (float)item.pontos;
+                        BancoDeDados.SaveChanges();
+                    }                    
                 }
                 return true;
             }
@@ -179,6 +202,7 @@ namespace DAL
                         .Where(i => i.inicioTarefa < f.dataFim)
                         .Select(i => i.idTarefa).ToList();
                     var resultado = BancoDeDados.Func_Tarefa.Where(t => listaTarefas.Contains(t.Tarefa)).ToList();
+
 
                     string nome;
                     foreach (var item in resultado)

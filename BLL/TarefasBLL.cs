@@ -14,9 +14,11 @@ namespace BLL
 
         public bool inserirTarefa(Tarefas novaTarefa, string[] funcionarios)
         {
-            if (novaTarefa.tipoTarefa == "2" && !d.cteCadastrado(novaTarefa.documentoTarefa))
+            if (novaTarefa.tipoTarefa == "2")
+            {
+                if (!d.cteCadastrado(novaTarefa.documentoTarefa))
                     return false;
-            
+            }
             else
             {
                 if (!d.manifestoCadastrado(novaTarefa.documentoTarefa))
@@ -109,7 +111,6 @@ namespace BLL
 
         public List<ItemRanking> getRanking(Filtro f)
         {
-           // t.getRanking(f);
             var rank = t.rankingFuncionarios(filtraRanking(f), calculaHorasPeriodo((DateTime)f.dataInicio, (DateTime)f.dataFim));
             foreach (var item in rank)
             {

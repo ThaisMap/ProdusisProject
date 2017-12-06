@@ -60,13 +60,6 @@ namespace GUI
             Navegador.Navigate(new Conferencia(ActualHeight, ActualWidth));
         }
 
-        private void BtnSerapacao_Click(object sender, RoutedEventArgs e)
-        {
-            ResetarOpacidade();
-            //BtnSerapacao.Opacity = 0.5;
-            Navegador.Navigate(new Separacao(ActualHeight, ActualWidth));
-        }        
-
         private void BtnDivergencia_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();
