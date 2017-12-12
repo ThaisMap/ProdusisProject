@@ -50,7 +50,8 @@ namespace GUI
             if (pallets[1] > 0)
             {
                 Tarefas item = (Tarefas)dgTarefas.SelectedItem;
-                if (t.finalizarTarefa(item.idTarefa, pallets[0], pallets[1]))
+                // lançar apenas quantidade de paletes na separação
+                if (t.finalizarTarefa(item.idTarefa, pallets[0], pallets[0]))
                     MessageBox.Show("Separação para carregamento finalizada após " + item.tempoGasto, "Separação finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
                     MessageBox.Show("Houve um erro e a separação para carregamento não pode ser finalizada.", "Separação não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);

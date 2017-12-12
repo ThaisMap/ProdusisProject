@@ -60,14 +60,18 @@ namespace GUI
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
+            double p = 101;
+            if (txtQtde.Text != "" && txtTotal.Text != "0" && txtTotal.Text != "")
+                p = int.Parse(txtQtde.Text) / double.Parse(txtTotal.Text);
+
             if (txtQtde.Text == "")
                 txtQtde.Focus();
             else
-                if (txtTotal.Text == "")
+            if (txtTotal.Text == "")
                 txtTotal.Focus();
             else
             {
-                if (int.Parse(txtPorcentagem.Text) > 100)
+                if (p > 100)
                     MessageBox.Show("A quantidade paletizada deve ser menor ou igual à capacidade de paletes do veículo.", "Erro - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
                 {
@@ -76,6 +80,7 @@ namespace GUI
                 }
             }
         }
+
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {

@@ -64,7 +64,7 @@ namespace GUI
         {
             ResetarOpacidade();
             BtnDivergencia.Opacity = 0.5;
-            Navegador.Navigate(new Divergencia(ActualHeight, ActualWidth));
+            Navegador.Navigate(new Divergencias(ActualHeight, ActualWidth));
         }
 
         #endregion Botoes

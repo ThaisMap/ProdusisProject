@@ -1,15 +1,17 @@
-﻿<UserControl x:Class="GUI.Administrativo"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             mc:Ignorable="d"
-             TextElement.FontWeight="Regular"
-            TextElement.FontSize="16"
-            TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-            Background="{DynamicResource MaterialDesignPaper}"
-            FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-             d:DesignHeight="200" d:DesignWidth="1000">
+﻿<UserControl
+    x:Class="GUI.Administrativo"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="200"
+    d:DesignWidth="1000"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+    TextElement.FontSize="16"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -24,33 +26,95 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0">
-        <Grid Margin="0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <Grid
+        Margin="0,0"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch">
+        <Grid
+            Margin="0,10"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="75" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <StackPanel CanVerticallyScroll="True" Margin="0,0" Grid.RowSpan="2">
+            <StackPanel
+                Grid.RowSpan="2"
+                Margin="0,0"
+                CanVerticallyScroll="True">
                 <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Administrativo</TextBlock>
-                <Separator></Separator>
-                <StackPanel HorizontalAlignment="Center" Height="30" Margin="10,5" Orientation="Horizontal">
-                    <Button Name="BtnTarefasInitHoje" Height="auto" Width="auto" Margin="5,0" Click="BtnTarefasInitHoje_Click">Iniciadas Hoje</Button>
-                    <Button Name="BtnDocumentos" Height="auto" Width="auto" Margin="5,0" Click="BtnDocumentos_Click">Ver Documentos</Button>
-                    <Button Name="BtnRelatorios" Height="auto" Width="auto" Margin="5,0" Click="BtnRelatorios_Click">Relatórios</Button>
-                    <Button Name="BtnProdutividade" Height="auto" Width="auto" Margin="5,0" Click="BtnProdutividade_Click">Produtividade</Button>
-                    <Button Name="BtnFuncionarios" Height="auto" Width="auto" Margin="5,0" Click="BtnFuncionarios_Click">Funcionários</Button>
-                    <Button Name="BtnConfiguracoes" Height="auto" Width="auto" Margin="5,0" Click="BtnConfiguracoes_Click">Configurações</Button>
-                    <Button Name="Temas" Height="auto" Width="auto" Margin="5,0" Click="Temas_Click">Temas</Button>                
+                <Separator />
+                <StackPanel
+                    Height="30"
+                    Margin="10,5"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+                    <Button
+                        Name="BtnTarefasInitHoje"
+                        Width="auto"
+                        Height="auto"
+                        Margin="5,0"
+                        Click="BtnTarefasInitHoje_Click">
+                        Iniciadas Hoje
+                    </Button>
+                    <Button
+                        Name="BtnDocumentos"
+                        Width="auto"
+                        Height="auto"
+                        Margin="5,0"
+                        Click="BtnDocumentos_Click">
+                        Ver Documentos
+                    </Button>
+                    <Button
+                        Name="BtnRelatorios"
+                        Width="auto"
+                        Height="auto"
+                        Margin="5,0"
+                        Click="BtnRelatorios_Click">
+                        Relatórios
+                    </Button>
+                    <Button
+                        Name="BtnProdutividade"
+                        Width="auto"
+                        Height="auto"
+                        Margin="5,0"
+                        Click="BtnProdutividade_Click">
+                        Produtividade
+                    </Button>
+                    <Button
+                        Name="BtnFuncionarios"
+                        Width="auto"
+                        Height="auto"
+                        Margin="5,0"
+                        Click="BtnFuncionarios_Click">
+                        Funcionários
+                    </Button>
+                    <Button
+                        Name="BtnConfiguracoes"
+                        Width="auto"
+                        Height="auto"
+                        Margin="5,0"
+                        Click="BtnConfiguracoes_Click">
+                        Configurações
+                    </Button>
+                    <Button
+                        Name="Temas"
+                        Width="auto"
+                        Height="auto"
+                        Margin="5,0"
+                        Click="Temas_Click">
+                        Temas
+                    </Button>
                 </StackPanel>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <DockPanel>
-                            <Frame Name="NavegadorInterno" HorizontalAlignment="Center"></Frame>
-                        </DockPanel>
-                    </ScrollViewer>
-           </StackPanel>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <DockPanel>
+                        <Frame Name="NavegadorInterno" HorizontalAlignment="Center" />
+                    </DockPanel>
+                </ScrollViewer>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>
