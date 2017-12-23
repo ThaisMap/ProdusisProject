@@ -42,7 +42,7 @@ namespace GUI
 
         private void btnConsultar_Click(object sender, RoutedEventArgs e)
         {
-            try
+             try
             {
                 if (cbTipoTarefa.SelectedIndex > -1 && Documento.Text != "")
                 {

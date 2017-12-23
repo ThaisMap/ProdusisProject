@@ -113,14 +113,15 @@ namespace DAL
             return listaModelo;
         }
 
-        public Tarefas GetTarefaDivergencia(int tipo, int documento)
+        public TarefaModelo GetTarefaDivergencia(int tipo, int documento)
         {
             Tarefas tarefa = new Tarefas();
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                   //tarefa = BancoDeDados.Tarefas.Where
+                    tarefa = BancoDeDados.Tarefas.Where(t => t.documentoTarefa == documento).FirstOrDefault();
+                    var tmodelo = tarefaModeloParse();
                 }
             }
             catch
@@ -539,22 +540,28 @@ namespace DAL
             {
                 if (tar != null)
                 {                   
-                    aux = new TarefaModelo(tar);
-                    if (tar.tipoTarefa == "2")
-                    {
-                        aux.valores(d.getSkuCte(tar.documentoTarefa), d.getVolumesCte(tar.documentoTarefa));
-                        aux.fornecedor = d.getFornecedorCte(tar.documentoTarefa);
-                    }
-                    else
-                    {
-                        m = d.getManifestoPorNumero(tar.documentoTarefa);
-                        aux.valores(m.skusManifesto, m.VolumesManifesto);
-                    }
-                    aux.nomesFuncionarios = nomesFuncTarefa(tar.idTarefa);
-                    modelos.Add(aux);
+                    modelos.Add(tarefaModeloParse(tar));
                 }
             }
             return modelos;
-        }        
+        }
+
+        private TarefaModelo tarefaModeloParse(Tarefas tarefas)
+        {
+            aux = new TarefaModelo(tarefas);
+            if (tarefas.tipoTarefa == "2")
+            {
+                aux.valores(d.getSkuCte(tarefas.documentoTarefa), d.getVolumesCte(tarefas.documentoTarefa));
+                aux.fornecedor = d.getFornecedorCte(tarefas.documentoTarefa);
+            }
+            else
+            {
+                m = d.getManifestoPorNumero(tarefas.documentoTarefa);
+                aux.valores(m.skusManifesto, m.VolumesManifesto);
+            }
+            aux.nomesFuncionarios = nomesFuncTarefa(tarefas.idTarefa);
+
+            return aux;
+        }           
     }
 }

@@ -71,6 +71,7 @@
                         Height="40"
                         Margin="0,10"
                         VerticalAlignment="Bottom"
+                        Click="btnConsultar_Click"
                         Content="Consultar" />
                 </StackPanel>
 
@@ -78,7 +79,7 @@
                     Margin="0,10,0,0"
                     HorizontalAlignment="Center"
                     Style="{StaticResource MaterialDesignHeadlineTextBlock}">
-                    Funcionario
+                    Funcionário
                 </TextBlock>
                 <StackPanel
                     Name="informacoes"
