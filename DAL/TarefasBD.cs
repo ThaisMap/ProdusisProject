@@ -121,12 +121,13 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     tarefa = BancoDeDados.Tarefas.Where(t => t.documentoTarefa == documento).FirstOrDefault();
-                    var tmodelo = tarefaModeloParse();
+                    var tmodelo = tarefaModeloParse(tarefa);
+                    return tmodelo;
                 }
             }
             catch
             {
-                return tarefa;
+                return new TarefaModelo(tarefa);
             }
             }
 
@@ -548,7 +549,12 @@ namespace DAL
 
         private TarefaModelo tarefaModeloParse(Tarefas tarefas)
         {
+            List<TarefaModelo> modelos = new List<TarefaModelo>();
+            TarefaModelo aux;
+            DocumentosBD d = new DocumentosBD();
+            Manifestos m;
             aux = new TarefaModelo(tarefas);
+
             if (tarefas.tipoTarefa == "2")
             {
                 aux.valores(d.getSkuCte(tarefas.documentoTarefa), d.getVolumesCte(tarefas.documentoTarefa));

@@ -271,7 +271,6 @@ namespace DAL
 
         public string getFornecedorManifesto(int numManifesto)
         {
-            string fornecedor = "";
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
@@ -291,19 +290,7 @@ namespace DAL
                     if (result.Any(o => o != result[0]))
                         return "VARIOS FORNECEDORES";
                     else
-                        return result[0];
-
-                    //var ctesNoManifesto = (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.Manifesto == numManifesto select Cte_Manifesto.Cte).ToList();
-                    //foreach (var item in ctesNoManifesto)
-                    //{
-                    //    aux = getFornecedorCte(item);
-                    //    if (fornecedor == "" && aux != null)
-                    //        fornecedor = aux;
-                    //    else
-                    //        if (fornecedor != aux && aux != null)
-                    //        return "VARIOS FORNECEDORES";
-                    //}
-                    return fornecedor;
+                        return result[0];                                       
                 }
             }
             catch(Exception e)
@@ -468,7 +455,7 @@ namespace DAL
         /// <summary>
         /// Altera uma NF para constar o número do Cte
         /// </summary>
-        public bool inserirCteNf(string numNF, int numeroCte)
+        public bool inserirCteNf(string numNF, int numeroCte, string nomeFornecedor)
         {
             try
             {

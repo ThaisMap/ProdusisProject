@@ -60,6 +60,7 @@ namespace DAL
                 bool cadCte = docBD.cadastrarManifesto(lido);
 
                 int cte;
+                string fornecedor;
 
                 for (int i = 0; i < result.Count - 4; i = i + 10)
                 {
@@ -67,7 +68,8 @@ namespace DAL
                     criarCte(cte);
 
                     criarCteManifesto(cte, lido.numeroManifesto);
-                    alterarNfs(result[i + 1].InnerText, cte);
+                    fornecedor = result[i + 2].InnerText;
+                    alterarNfs(result[i + 1].InnerText, cte, fornecedor);
                 }
 
                 docBD.alterarSkuManifesto(lido.numeroManifesto);
@@ -106,6 +108,7 @@ namespace DAL
                 int cte;
                 int indexNF = 0;
                 int skuTotal = 0;
+                string fornecedor;
 
                 for (int i = 2; i < ValueResult.Count - 4; i = i + 6)
                 {
@@ -114,7 +117,8 @@ namespace DAL
                     if (cadCte)
                         criarCteManifesto(cte, lido.numeroManifesto);
 
-                    alterarUmaNf(TextResult[indexNF].InnerText, cte);
+                    fornecedor = ValueResult[i + 2].InnerText;
+                    alterarUmaNf(TextResult[indexNF].InnerText, cte, fornecedor);
                     skuTotal += docBD.getSkuCte(cte);
                     indexNF++;
                 }
@@ -299,7 +303,7 @@ namespace DAL
         /// Dispara a alteração das nfs de um manifesto para incluir o cte
         /// </summary>
         /// <param name="nfs">string contendo as notas fiscais separadas por uma '\'</param>
-        private bool alterarNfs(string nfs, int cte)
+        private bool alterarNfs(string nfs, int cte, string fornecedor)
         {
             bool retorno = true;
             DocumentosBD dbd = new DocumentosBD();
@@ -308,7 +312,7 @@ namespace DAL
             {
                 if (dbd.verificarDocumentoCadastrado(2, nf) >= 0)
                 {
-                    if (!dbd.inserirCteNf(nf, cte))
+                    if (!dbd.inserirCteNf(nf, cte, fornecedor))
                         retorno = false; //false se não for possivel alterar alguma nota
                 }
                 else
@@ -320,14 +324,14 @@ namespace DAL
         /// <summary>
         /// Dispara a alteração de uma nf para incluir o cte
         /// </summary>
-        private bool alterarUmaNf(string nf, int cte)
+        private bool alterarUmaNf(string nf, int cte, string fornecedor)
         {
             DocumentosBD dbd = new DocumentosBD();
             nf = nf.TrimStart('0');
             NotasFiscais nova = dbd.getNFPorNumero(nf);
             if (nova != null)
             {
-                return dbd.inserirCteNf(nf, cte);
+                return dbd.inserirCteNf(nf, cte, fornecedor);
             }
             else
                 return false; //false se a nota não estiver cadastrada

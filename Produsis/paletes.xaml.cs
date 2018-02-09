@@ -19,12 +19,17 @@ namespace GUI
     /// Lógica interna para paletes.xaml
     /// </summary>
     public partial class paletes : Window
-    {      
+    {
+        string total;
+
         public paletes(string capacidade)
         {
             InitializeComponent();
-            this.Loaded += new RoutedEventHandler(Window_Loaded);            
+            this.Loaded += new RoutedEventHandler(Window_Loaded);
             txtTotal.Text = capacidade;
+            total = capacidade;
+            if (capacidade == "0")
+                txtTotal.IsReadOnly = true;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -96,6 +101,10 @@ namespace GUI
             }
             else
                 txtPorcentagem.Text = "0,00%";
+            if (total == "0")
+            {
+                txtTotal.Text = txtQtde.Text;
+            }
         }
     }
 }
