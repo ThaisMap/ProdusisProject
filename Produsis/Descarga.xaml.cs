@@ -24,9 +24,9 @@ namespace GUI
         public Descarga()
         {
             InitializeComponent();
-            ListaFunc = f.carregaFuncionariosLivres();
+            ListaFunc = f.carregaFuncionariosLivres("1");
             CBFuncionario.ItemsSource = ListaFunc;
-            dgTarefas.ItemsSource = t.tarefasPendentes("1","5");
+            dgTarefas.ItemsSource = t.tarefasPendentes("1");
             lerXmls();
         }
 
@@ -51,7 +51,7 @@ namespace GUI
                     MessageBox.Show("Descarga finalizada após " + item.tempoGasto, "Descarga finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
                     MessageBox.Show("Houve um erro e a descarga não pode ser finalizada.", "Descarga não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-                ListaFunc = f.carregaFuncionariosLivres();
+                ListaFunc = f.carregaFuncionariosLivres("1");
                 CBFuncionario.ItemsSource = ListaFunc;
                 AtualizarDg_Click(sender, e);
             }

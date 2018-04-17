@@ -44,18 +44,20 @@ namespace DAL
         {
             try
             {
-                Manifestos lido = new Manifestos();
-
+              
                 XmlDocument manifesto = new XmlDocument();
                 manifesto.Load(nomeArquivo);
 
                 DocumentosBD docBD = new DocumentosBD();
-                lido.numeroManifesto = int.Parse(nomeArquivo.Replace(PastasXml.Default.PastaManifestos + "\\", "").Replace(".xml", ""));
-
                 var result = manifesto.GetElementsByTagName("Value");
-                lido.VolumesManifesto = (int)double.Parse(result[result.Count - 2].InnerText.Replace('.', ','));
-                lido.pesoManifesto = double.Parse(result[result.Count - 3].InnerText.Replace('.', ','));
-                lido.quantCtesManifesto = (int)double.Parse(result[result.Count - 4].InnerText.Replace('.', ','));
+                Manifestos lido = new Manifestos
+                {
+                    numeroManifesto = int.Parse(nomeArquivo.Replace(PastasXml.Default.PastaManifestos + "\\", "").Replace(".xml", "")),
+                    VolumesManifesto = (int)double.Parse(result[result.Count - 2].InnerText.Replace('.', ',')),
+                    pesoManifesto = double.Parse(result[result.Count - 3].InnerText.Replace('.', ',')),
+                    quantCtesManifesto = (int)double.Parse(result[result.Count - 4].InnerText.Replace('.', ',')),
+                    skusManifesto = 0
+                };
 
                 bool cadCte = docBD.cadastrarManifesto(lido);
 
@@ -72,7 +74,6 @@ namespace DAL
                     alterarNfs(result[i + 1].InnerText, cte, fornecedor);
                 }
 
-                docBD.alterarSkuManifesto(lido.numeroManifesto);
                 return true;
             }
             catch (System.Exception ex)
@@ -95,19 +96,25 @@ namespace DAL
                 var ValueResult = manifesto.GetElementsByTagName("Value");
                 var TextResult = manifesto.GetElementsByTagName("TextValue");
                 DocumentosBD docBD = new DocumentosBD();
+
+                var ctesNoXml = new List<string>();
+                for (int i = 5; i < ValueResult.Count - 4; i = i + 6)
+                { ctesNoXml.Add(ValueResult[i].InnerText); }
+                var quantCtes = ctesNoXml.Distinct().Count();
+
                 Manifestos lido = new Manifestos()
                 {
                     numeroManifesto = int.Parse(nomeArquivo.Replace(PastasXml.Default.PastaPreManifestos + "\\", "").Replace(".xml", "")),
                     VolumesManifesto = (int)double.Parse(ValueResult[ValueResult.Count - 4].InnerText.Replace('.', ',')),
-                    pesoManifesto = double.Parse(ValueResult[ValueResult.Count - 1].InnerText.Replace('.', ',')),
-                    quantCtesManifesto = (int)double.Parse(ValueResult[ValueResult.Count - 2].InnerText.Replace('.', ','))
+                    pesoManifesto = double.Parse(ValueResult[ValueResult.Count - 2].InnerText.Replace('.', ',')),
+                    quantCtesManifesto = quantCtes,
+                    skusManifesto = 0
                 };
 
                 bool cadCte = docBD.cadastrarManifesto(lido);
-
+                
                 int cte;
                 int indexNF = 0;
-                int skuTotal = 0;
                 string fornecedor;
 
                 for (int i = 2; i < ValueResult.Count - 4; i = i + 6)
@@ -115,15 +122,15 @@ namespace DAL
                     cte = int.Parse(ValueResult[i].InnerText);
                     criarCte(cte);
                     if (cadCte)
+                    {
                         criarCteManifesto(cte, lido.numeroManifesto);
-
+                        docBD.alterarPreManifesto(lido);
+                    }
                     fornecedor = ValueResult[i + 2].InnerText;
                     alterarUmaNf(TextResult[indexNF].InnerText, cte, fornecedor);
-                    skuTotal += docBD.getSkuCte(cte);
                     indexNF++;
                 }
 
-                docBD.alterarSkuManifesto(lido.numeroManifesto, skuTotal);
                 return true;
             }
             catch

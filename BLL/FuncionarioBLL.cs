@@ -40,9 +40,9 @@ namespace BLL
             return f.getObservacoes(inicio, (DateTime)fim, idFuncionario);
         }
 
-        public List<String> carregaFuncionariosLivres()
+        public List<String> carregaFuncionariosLivres(string tipo)
         {
-            return f.funcionariosLivres();
+            return f.funcionariosLivres(tipo);
         }
 
         public bool validarSenha(string matricula, string senha)

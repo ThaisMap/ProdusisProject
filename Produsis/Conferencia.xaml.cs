@@ -24,22 +24,14 @@ namespace GUI
         public Conferencia(double actualHeight, double actualWidth)
         {
             InitializeComponent();
-            ListaFunc = f.carregaFuncionariosLivres();
+            ListaFunc = f.carregaFuncionariosLivres("2");
             CBFuncionario.ItemsSource = ListaFunc;
             dgTarefas.ItemsSource = t.tarefasPendentes("2");
             Height = actualHeight - 100;
             Width = actualWidth - 60;
             Scrooler.Height = actualHeight - (int.Parse(formSuperior.Height.ToString()) + 225);
             lerXmls();
-          //  Thread tick = new Thread(ticktock);
-          //  tick.Start();
         }
-
-      /*  private void ticktock()
-        {
-            dgTarefas.ItemsSource = t.tarefasPendentes("2");
-            Thread.Sleep(15000);
-        }*/
 
         public static string CriaChipTag(string Nome)
         {
@@ -59,7 +51,7 @@ namespace GUI
                 MessageBox.Show("Conferência finalizada após " + item.tempoGasto, "Conferência finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
             else
                 MessageBox.Show("Houve um erro e a conferência não pode ser finalizada.", "Conferência não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-            ListaFunc = f.carregaFuncionariosLivres();
+            ListaFunc = f.carregaFuncionariosLivres("2");
             CBFuncionario.ItemsSource = ListaFunc;
 
             if (ListaFunc.Contains(item.nomesFuncionarios))
@@ -173,8 +165,8 @@ namespace GUI
         {
             if (Documento.Text.Length == 44)
             {
-                Documento.Text = Documento.Text.Remove(0, 22);
-                Documento.Text = Documento.Text.Remove(12);
+                Documento.Text = Documento.Text.Remove(0, 25);
+                Documento.Text = Documento.Text.Remove(9);
                 Documento.Text = int.Parse(Documento.Text).ToString();
             }
         }

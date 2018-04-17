@@ -9,7 +9,7 @@
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     HorizontalAlignment="Stretch"
     VerticalAlignment="Stretch"
-    d:DesignHeight="420"
+    d:DesignHeight="450"
     d:DesignWidth="600"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
@@ -46,6 +46,8 @@
                         <RowDefinition Height="26*" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="26*" />
+
                         <RowDefinition Height="21*" />
                     </Grid.RowDefinitions>
                     <materialDesign:PackIcon
@@ -90,7 +92,7 @@
                         PreviewTextInput="testarCaractere"
                         Style="{StaticResource MaterialDesignTextBox}" />
                     <materialDesign:PackIcon
-                        Grid.Row="4"
+                        Grid.Row="5"
                         Grid.Column="0"
                         Width="24"
                         Height="24"
@@ -101,14 +103,14 @@
                         Kind="Security" />
                     <PasswordBox
                         Name="Senha"
-                        Grid.Row="4"
+                        Grid.Row="5"
                         Grid.Column="1"
                         Width="300"
                         Margin="5"
                         materialDesign:HintAssist.Hint="Senha atual"
                         materialDesign:HintAssist.IsFloating="True" />
                     <materialDesign:PackIcon
-                        Grid.Row="5"
+                        Grid.Row="6"
                         Grid.Column="0"
                         Width="24"
                         Height="24"
@@ -119,7 +121,7 @@
                         Kind="Security" />
                     <PasswordBox
                         Name="Senha2"
-                        Grid.Row="5"
+                        Grid.Row="6"
                         Grid.Column="1"
                         Width="300"
                         Margin="5"
@@ -154,7 +156,7 @@
                         Kind="HandPointingRight" />
 
                     <TextBlock
-                        Grid.Row="3"
+                        Grid.Row="4"
                         Grid.Column="0"
                         Margin="5,20,5,0"
                         HorizontalAlignment="Center">
@@ -162,14 +164,25 @@
                     </TextBlock>
                     <ToggleButton
                         Name="Ativo"
-                        Grid.Row="3"
+                        Grid.Row="4"
                         Grid.Column="1"
                         Width="auto"
                         Margin="10,20,0,0"
                         HorizontalAlignment="Left"
                         IsChecked="True" />
+                    <StackPanel Grid.Row="3"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                                Margin="5"
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                        <CheckBox Name="CkConfere" Margin="5,0">Confere</CheckBox>
+                        <CheckBox Name="CkDescarrega" Margin="5,0">Descarrega</CheckBox>
+                        <CheckBox Name="CkSepara" Margin="5,0">Separa</CheckBox>
+                        <CheckBox Name="CkCarrega" Margin="5,0">Carrega</CheckBox>
+                    </StackPanel>
                     <StackPanel
-                        Grid.Row="6"
+                        Grid.Row="7"
                         Grid.Column="0"
                         Grid.ColumnSpan="3"
                         HorizontalAlignment="Right"

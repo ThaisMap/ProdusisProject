@@ -25,6 +25,7 @@ namespace ProdusisBD
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<CapacidadeMotoristas> CapacidadeMotoristas { get; set; }
         public virtual DbSet<Cte_Manifesto> Cte_Manifesto { get; set; }
         public virtual DbSet<Ctes> Ctes { get; set; }
         public virtual DbSet<Func_Tarefa> Func_Tarefa { get; set; }

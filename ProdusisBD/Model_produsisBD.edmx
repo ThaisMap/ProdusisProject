@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="produsisBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CapacidadeMotoristas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Motorista" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Capacidade" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Cte_Manifesto">
           <Key>
             <PropertyRef Name="idCteManifesto" />
@@ -35,7 +43,7 @@
           <Property Name="idFunc" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nomeFunc" Type="nvarchar" MaxLength="45" Nullable="false" />
           <Property Name="matriculaFunc" Type="nchar" MaxLength="4" Nullable="false" />
-          <Property Name="tipoFunc" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="tipoFunc" Type="nchar" MaxLength="4" Nullable="false" />
           <Property Name="senhaFunc" Type="nvarchar" MaxLength="10" />
           <Property Name="ocupadoFunc" Type="bit" Nullable="false" />
           <Property Name="ativoFunc" Type="bit" Nullable="false" />
@@ -212,6 +220,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="produsisBDModelStoreContainer">
+          <EntitySet Name="CapacidadeMotoristas" EntityType="Self.CapacidadeMotoristas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cte_Manifesto" EntityType="Self.Cte_Manifesto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ctes" EntityType="Self.Ctes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Func_Tarefa" EntityType="Self.Func_Tarefa" Schema="dbo" store:Type="Tables" />
@@ -282,6 +291,14 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="produsisBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CapacidadeMotoristas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Motorista" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Capacidade" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityType Name="Cte_Manifesto">
           <Key>
             <PropertyRef Name="idCteManifesto" />
@@ -318,7 +335,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
           <Property Name="idFunc" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nomeFunc" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="matriculaFunc" Type="String" MaxLength="4" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="tipoFunc" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="tipoFunc" Type="String" MaxLength="4" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="senhaFunc" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="ocupadoFunc" Type="Boolean" Nullable="false" />
           <Property Name="ativoFunc" Type="Boolean" Nullable="false" />
@@ -496,7 +513,8 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="produsisBDEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="produsisBDEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CapacidadeMotoristas" EntityType="Self.CapacidadeMotoristas" />
           <EntitySet Name="Cte_Manifesto" EntityType="Self.Cte_Manifesto" />
           <EntitySet Name="Ctes" EntityType="Self.Ctes" />
           <EntitySet Name="Func_Tarefa" EntityType="Self.Func_Tarefa" />
@@ -537,7 +555,16 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="produsisBDModelStoreContainer" CdmEntityContainer="produsisBDEntities">
+        <EntityContainerMapping StorageEntityContainer="produsisBDModelStoreContainer" CdmEntityContainer="produsisBDEntities1">
+          <EntitySetMapping Name="CapacidadeMotoristas">
+            <EntityTypeMapping TypeName="produsisBDModel.CapacidadeMotoristas">
+              <MappingFragment StoreEntitySet="CapacidadeMotoristas">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Motorista" ColumnName="Motorista" />
+                <ScalarProperty Name="Capacidade" ColumnName="Capacidade" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Cte_Manifesto">
             <EntityTypeMapping TypeName="produsisBDModel.Cte_Manifesto">
               <MappingFragment StoreEntitySet="Cte_Manifesto">

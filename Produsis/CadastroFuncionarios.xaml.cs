@@ -47,8 +47,27 @@ namespace GUI
             func.ocupadoFunc = false;
             func.ativoFunc = (bool)Ativo.IsChecked;
             func.senhaFunc = Senha.Password;
-            func.tipoFunc = Tipo.SelectedIndex.ToString();
 
+            if (Tipo.SelectedIndex == 0)
+                func.tipoFunc = "0";
+
+            else
+            {
+                if ((bool)CkDescarrega.IsChecked)
+                    func.tipoFunc += "1";
+
+                if ((bool)CkConfere.IsChecked)
+                    func.tipoFunc += "2";
+
+                if ((bool)CkSepara.IsChecked)
+                    func.tipoFunc += "3";
+
+                if ((bool)CkCarrega.IsChecked)
+                    func.tipoFunc += "4";
+            }
+
+            if (func.tipoFunc == "")
+                func.tipoFunc = "1234";
             return func;
         }
          

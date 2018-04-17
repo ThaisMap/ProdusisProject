@@ -40,5 +40,10 @@ namespace GUI
         {
             NavegadorInterno.Navigate(new Observacao());
         }
+
+        private void BtnMotorista_Click(object sender, RoutedEventArgs e)
+        {
+            NavegadorInterno.Navigate(new CadastroMotorista());
+        }
     }
 }

@@ -132,6 +132,33 @@ namespace DAL
             }
             catch
             {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var manifestoAlterado = BancoDeDados.Manifestos.Where(x=> x.numeroManifesto == novoManifesto.numeroManifesto).First();
+                    manifestoAlterado.pesoManifesto = novoManifesto.pesoManifesto;
+                    manifestoAlterado.quantCtesManifesto = novoManifesto.quantCtesManifesto;
+                    manifestoAlterado.VolumesManifesto = novoManifesto.VolumesManifesto;
+                    
+                    BancoDeDados.SaveChanges();
+                }
+                return false;
+            }
+        }
+
+        public bool alterarPreManifesto(Manifestos novoManifesto)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    Manifestos atual = BancoDeDados.Manifestos.Where(x=> x.numeroManifesto == novoManifesto.numeroManifesto).FirstOrDefault();
+                    atual.quantCtesManifesto = novoManifesto.quantCtesManifesto;
+                    BancoDeDados.SaveChanges();
+                }
+                return true;
+            }
+            catch
+            {
                 return false;
             }
         }

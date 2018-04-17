@@ -24,7 +24,7 @@ namespace GUI
         public Separacao2(double actualHeight, double actualWidth)
         {
             InitializeComponent();
-            ListaFunc = f.carregaFuncionariosLivres();
+            ListaFunc = f.carregaFuncionariosLivres("3");
             CBFuncionario.ItemsSource = ListaFunc;
             dgTarefas.ItemsSource = t.tarefasPendentes("3");
             Height = actualHeight - 150;
@@ -55,7 +55,7 @@ namespace GUI
                     MessageBox.Show("Separação para carregamento finalizada após " + item.tempoGasto, "Separação finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
                     MessageBox.Show("Houve um erro e a separação para carregamento não pode ser finalizada.", "Separação não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-                ListaFunc = f.carregaFuncionariosLivres();
+                ListaFunc = f.carregaFuncionariosLivres("3");
                 CBFuncionario.ItemsSource = ListaFunc;
                 AtualizarDg_Click(sender, e);
             }

@@ -121,6 +121,9 @@
     <Compile Include="CadastroFuncionarios.xaml.cs">
       <DependentUpon>CadastroFuncionarios.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CadastroMotorista.xaml.cs">
+      <DependentUpon>CadastroMotorista.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Carregamento.xaml.cs">
       <DependentUpon>Carregamento.xaml</DependentUpon>
     </Compile>
@@ -224,6 +227,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CadastroMotorista.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Carregamento.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -316,6 +323,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icone_2_produsis.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\DataSources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -11,8 +11,6 @@
              VerticalAlignment="Stretch"
              d:DesignHeight="450"
              d:DesignWidth="600"
-             xmlns:Validacoes ="clr-namespace:Produsis.Validacoes"
-             d:DataContext="{d:DesignInstance Validacoes:TextFieldsViewModel, d:IsDesignTimeCreatable=False}"
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
              TextElement.FontSize="14"

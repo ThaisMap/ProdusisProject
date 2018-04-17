@@ -30,6 +30,76 @@ namespace DAL
             }
         }
 
+
+        public bool cadastrarMotorista(CapacidadeMotoristas novoMot)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    BancoDeDados.CapacidadeMotoristas.Add(novoMot);
+                    BancoDeDados.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                var qualErro = ex;
+                return false;
+            }
+        }
+
+        public void deletarMotorista(int idMot)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    CapacidadeMotoristas apagar = BancoDeDados.CapacidadeMotoristas.Where(i => i.Id == idMot).FirstOrDefault();
+                    BancoDeDados.CapacidadeMotoristas.Remove(apagar);
+                    BancoDeDados.SaveChanges();
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        public bool editarMotorista(CapacidadeMotoristas novoMot)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    CapacidadeMotoristas motAtual = BancoDeDados.CapacidadeMotoristas.Single(f => f.Id == novoMot.Id);
+                    motAtual.Motorista = novoMot.Motorista;
+                    motAtual.Capacidade = novoMot.Capacidade;
+                    BancoDeDados.SaveChanges();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public List<CapacidadeMotoristas> getAllMotoristas()
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var lista = BancoDeDados.CapacidadeMotoristas.OrderBy(x => x.Motorista).ToList();
+                    return lista;
+                }
+            }
+            catch
+            {
+                return new List<CapacidadeMotoristas>();
+            }
+        }
+
         public bool cadastrarObservacao(Observacoes novaObs)
         {
             try
@@ -53,14 +123,14 @@ namespace DAL
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
-                {
-                    Observacoes apagar = BancoDeDados.Observacoes.Where(i => i.idObs == idObservacao).FirstOrDefault();
+                {   Observacoes apagar = BancoDeDados.Observacoes.Where(i => i.idObs == idObservacao).FirstOrDefault();
                     BancoDeDados.Observacoes.Remove(apagar);
                     BancoDeDados.SaveChanges();
                 }
             }
             catch
-            {                
+            {
+
             }
         }
 
@@ -104,8 +174,9 @@ namespace DAL
                 }
                 return true;
             }
-            catch
+            catch (Exception e)
             {
+                var whatHappened = e;
                 return false;
             }
         }
@@ -137,13 +208,13 @@ namespace DAL
         /// <summary>
         /// Retorna a lista de operadores ativos com status livre
         /// </summary>
-        public List<String> funcionariosLivres()
+        public List<String> funcionariosLivres(string tipo)
         {
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    return (from Funcionarios in BancoDeDados.Funcionarios where Funcionarios.ativoFunc == true where Funcionarios.ocupadoFunc == false where Funcionarios.tipoFunc == "1" orderby Funcionarios.nomeFunc select Funcionarios.nomeFunc).ToList();
+                    return (from Funcionarios in BancoDeDados.Funcionarios where Funcionarios.ativoFunc == true where Funcionarios.ocupadoFunc == false where Funcionarios.tipoFunc.Contains(tipo) orderby Funcionarios.nomeFunc select Funcionarios.nomeFunc).ToList();
                 }
             }
             catch

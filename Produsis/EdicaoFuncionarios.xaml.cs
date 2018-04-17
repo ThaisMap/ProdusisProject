@@ -31,9 +31,16 @@ namespace Produsis
             {
                 emEdicao = f.dadosFuncionario(Nome.SelectedItem.ToString());
                 Matricula.Text = emEdicao.matriculaFunc;
-                int aux = 1;
-                bool tentaTipo = int.TryParse(emEdicao.tipoFunc, out aux);
-                Tipo.SelectedIndex = aux;
+                if (emEdicao.tipoFunc.Contains("0"))
+                    Tipo.SelectedIndex = 0;
+                else
+                   Tipo.SelectedIndex = 1;
+
+                CkDescarrega.IsChecked = emEdicao.tipoFunc.Contains("1");
+                CkConfere.IsChecked = emEdicao.tipoFunc.Contains("2");
+                CkSepara.IsChecked = emEdicao.tipoFunc.Contains("3");
+                CkCarrega.IsChecked = emEdicao.tipoFunc.Contains("4");
+                
                 Ativo.IsChecked = emEdicao.ativoFunc;
                 Senha.Password = "";
                 Senha2.Password = "";
@@ -76,9 +83,9 @@ namespace Produsis
             func.matriculaFunc = Matricula.Text.Replace("_", "");
             func.ocupadoFunc = false;
             func.ativoFunc = (bool)Ativo.IsChecked;
-            func.tipoFunc = Tipo.SelectedIndex.ToString();
             if (Tipo.SelectedIndex == 0)
             {
+                func.tipoFunc = "0";
                 if (Senha2.Password != "")
                     func.senhaFunc = Senha2.Password;
                 else
@@ -87,7 +94,22 @@ namespace Produsis
             else
             {
                 func.senhaFunc = "";
+
+                if ((bool)CkDescarrega.IsChecked)
+                    func.tipoFunc += "1";
+
+                if ((bool)CkConfere.IsChecked)
+                    func.tipoFunc += "2";
+
+                if ((bool)CkSepara.IsChecked)
+                    func.tipoFunc += "3";
+
+                if ((bool)CkCarrega.IsChecked)
+                    func.tipoFunc += "4";
             }
+
+            if (func.tipoFunc == "")
+                func.tipoFunc = "1234";
 
             return func;
         }

@@ -12,24 +12,10 @@ namespace ProdusisBD
     using System;
     using System.Collections.Generic;
     
-    public partial class Cte_Manifesto
+    public partial class CapacidadeMotoristas
     {
-
-        public Cte_Manifesto(int nCte, int nManifesto)
-        {
-            Cte = nCte;
-            Manifesto = nManifesto;
-        }
-
-        public Cte_Manifesto()
-        {
-
-        }
-        public int idCteManifesto { get; set; }
-        public int Cte { get; set; }
-        public int Manifesto { get; set; }
-    
-        public virtual Ctes Ctes { get; set; }
-        public virtual Manifestos Manifestos { get; set; }
+        public int Id { get; set; }
+        public string Motorista { get; set; }
+        public int Capacidade { get; set; }
     }
 }

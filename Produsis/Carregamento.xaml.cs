@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using DAL;
 
 namespace GUI
 {
@@ -16,6 +17,8 @@ namespace GUI
     {
         private DocumentosBLL d = new DocumentosBLL();
         private FuncionarioBLL f = new FuncionarioBLL();
+        private FuncionariosBD funcionariosBD = new FuncionariosBD();
+        private List<CapacidadeMotoristas> ListaMotoristas;
         private FuncionariosTag FuncionarioSelecionado;
         private List<string> ListaFunc;
         private TarefasBLL t = new TarefasBLL();
@@ -24,9 +27,13 @@ namespace GUI
         public Carregamento(double actualHeight, double actualWidth)
         {
             InitializeComponent();
-            ListaFunc = f.carregaFuncionariosLivres();
+            ListaFunc = f.carregaFuncionariosLivres("4");
             CBFuncionario.ItemsSource = ListaFunc;
-            dgTarefas.ItemsSource = t.tarefasPendentes("4","6");
+            ListaMotoristas = funcionariosBD.getAllMotoristas();
+            CBmotorista.ItemsSource = ListaMotoristas;
+            CBmotorista.DisplayMemberPath = "Motorista";
+            CBmotorista.SelectedValuePath = "Capacidade";
+            dgTarefas.ItemsSource = t.tarefasPendentes("4");
             Height = actualHeight - 150;
             Width = actualWidth - 60;
             lerXmls();
@@ -40,20 +47,21 @@ namespace GUI
         
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
-            dgTarefas.ItemsSource = t.tarefasPendentes("4", "6");
+            dgTarefas.ItemsSource = t.tarefasPendentes("4");
         }
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
         {
-            pallets = paletes.Perguntar("30");
+            Tarefas item = (Tarefas)dgTarefas.SelectedItem;
+            pallets = paletes.Perguntar(item.totalPaletes.ToString());
+
             if (pallets[1] > 0)
             {
-                Tarefas item = (Tarefas)dgTarefas.SelectedItem;
                 if (t.finalizarTarefa(item.idTarefa, pallets[0], pallets[1]))
                     MessageBox.Show("Carregamento finalizado após " + item.tempoGasto, "Carregamento finalizado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
                     MessageBox.Show("Houve um erro e o carregamento não pode ser finalizado.", "Carregamento não finalizado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-                ListaFunc = f.carregaFuncionariosLivres();
+                ListaFunc = f.carregaFuncionariosLivres("4");
                 CBFuncionario.ItemsSource = ListaFunc;
                 AtualizarDg_Click(sender, e);
             }
@@ -138,9 +146,14 @@ namespace GUI
 
         private Tarefas montarTarefa()
         {
+            var paletes = 0;
+            if (CBmotorista.SelectedValue != null)
+                paletes = (int)CBmotorista.SelectedValue;
+
             Tarefas novaTarefa = new Tarefas()
             {
                 documentoTarefa = int.Parse(Documento.Text.Replace("_", "")),
+                totalPaletes = paletes,
                 inicioTarefa = DateTime.Now
             };
             

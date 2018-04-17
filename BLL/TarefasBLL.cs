@@ -182,17 +182,17 @@ namespace BLL
 
         public void exportarExcel(List<ItemRelatorio> Tarefas, string nomeArquivo)
         {
+            var excel = new Excel.Application();
+            excel.DisplayAlerts = false;
+            var workbooks = excel.Workbooks;
+            var workbook = workbooks.Add(Type.Missing);
+            var worksheets = workbook.Sheets;
+            var worksheet = (Excel.Worksheet)worksheets[1];
+            object misValue = System.Reflection.Missing.Value;
+                string[,] array = new string[Tarefas.Count + 1, 15];
+
             try
             {
-                var excel = new Excel.Application();
-                excel.DisplayAlerts = false;
-                var workbooks = excel.Workbooks;
-                var workbook = workbooks.Add(Type.Missing);
-                var worksheets = workbook.Sheets;
-                var worksheet = (Excel.Worksheet)worksheets[1];
-                object misValue = System.Reflection.Missing.Value;
-                
-                string[,] array = new string[Tarefas.Count + 1, 15];
                 array[0, 0] = "Documento";
                 array[0, 1] = "Tipo";
                 array[0, 2] = "Data";
@@ -211,8 +211,12 @@ namespace BLL
 
                 for (int linha = 0; linha < Tarefas.Count; linha++)
                 {
-                    Tarefas[linha].atualizaPontuação();
-                    t.inserirPontuacao(Tarefas[linha].idTarefa, (float)Tarefas[linha].pontos);
+                    if (Tarefas[linha].horaFim != null)
+                    {                       
+                        Tarefas[linha].atualizaPontuação();
+                        t.inserirPontuacao(Tarefas[linha].idTarefa, (float)Tarefas[linha].pontos);                        
+                    }
+
                     array[linha + 1, 0] = Tarefas[linha].documentoTarefa.ToString("00");
                     array[linha + 1, 1] = Tarefas[linha].tipoTarefa;
                     array[linha + 1, 2] = Tarefas[linha].inicioTarefa.Date.ToString("MM/dd/yyyy");
@@ -225,7 +229,7 @@ namespace BLL
                     array[linha + 1, 9] = Tarefas[linha].pontos.ToString();
                     array[linha + 1, 10] = Tarefas[linha].fornecedor;
                     array[linha + 1, 11] = Tarefas[linha].divergenciaTarefa;
-                    array[linha + 1, 12] = string.Format("0", Tarefas[linha].quantPaletizado);//.ToString();
+                    array[linha + 1, 12] = Tarefas[linha].quantPaletizado.ToString();
                     array[linha + 1, 13] = Tarefas[linha].totalPaletes.ToString();
                     array[linha + 1, 14] = Tarefas[linha].ctesNoManifesto.ToString();
                 }
@@ -249,6 +253,20 @@ Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, mi
             catch (Exception ex)
             {
                 var erro = ex;
+                var startCell = (Excel.Range)worksheet.Cells[1, 1];
+                var endCell = (Excel.Range)worksheet.Cells[Tarefas.Count + 1, 15];
+                var writeRange = worksheet.Range[startCell, endCell];
+
+                writeRange.Value2 = array;
+
+                workbook.SaveAs(nomeArquivo, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue,
+Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+                workbook.Close(true, misValue, misValue);
+                excel.Quit();
+
+                liberarObjetos(worksheet);
+                liberarObjetos(workbook);
+                liberarObjetos(excel);
             }
         }
 

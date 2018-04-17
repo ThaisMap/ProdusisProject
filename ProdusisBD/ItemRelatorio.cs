@@ -136,9 +136,15 @@ namespace ProdusisBD
             }
             else if (tipoTarefa.Contains("Descarga") || tipoTarefa.Contains("Carregamento"))
             {
+                if (quantPaletizado > totalPaletes)
+                    quantPaletizado = totalPaletes;
                 double porcentagemPaletizado = (double)quantPaletizado / (double)totalPaletes;
                 pontos = volumes * porcentagemPaletizado;
                 pontos += volumes * (1 - porcentagemPaletizado) * 3;
+            }
+            else
+            {
+                pontos = (double)totalPaletes + (ctesNoManifesto * 2.0);
             }
             if (divergenciaTarefa != "Nenhuma" && divergenciaTarefa != "-;0;-;0;-;0")
             {

@@ -534,9 +534,7 @@ namespace DAL
         private List<TarefaModelo> tarefaModeloParse(List<Tarefas> tarefas)
         {
             List<TarefaModelo> modelos = new List<TarefaModelo>();
-            TarefaModelo aux;
             DocumentosBD d = new DocumentosBD();
-            Manifestos m;
             foreach (Tarefas tar in tarefas)
             {
                 if (tar != null)
