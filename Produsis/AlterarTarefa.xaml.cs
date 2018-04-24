@@ -30,7 +30,6 @@ namespace GUI
         public AlterarTarefa(ProdusisBD.TarefaModelo tarefa)
         {
             InitializeComponent();
-            ListaFunc = f.carregaFuncionariosLivres(tarefa.tipoTarefa);
             cbxFuncionarios.ItemsSource = ListaFunc;
             TarefaSelecionada = tarefa;
             txbDocumentoTarefa.Text = TarefaSelecionada.documentoTarefa.ToString();

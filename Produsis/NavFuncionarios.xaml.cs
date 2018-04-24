@@ -45,5 +45,10 @@ namespace GUI
         {
             NavegadorInterno.Navigate(new CadastroMotorista());
         }
+
+        private void BtnEquipe_Click(object sender, RoutedEventArgs e)
+        {
+            NavegadorInterno.Navigate(new Equipes());
+        }
     }
 }

@@ -74,7 +74,7 @@
                                     Grid.Column="1"
                                     Margin="10,-28,-10,10"
                                     CanVerticallyScroll="True">
-                                    <TextBlock>Funcionários Responsaveis:</TextBlock>
+                                    <TextBlock>Funcionários Responsáveis:</TextBlock>
                                     <ListBox
                                         Name="ListaDeFuncionarios"
                                         Height="185"
@@ -179,11 +179,7 @@
                                         <DataGridTextColumn
                                             Width="Auto"
                                             Binding="{Binding horaInicio}"
-                                            Header="Hora Início" />
-                                        <DataGridTextColumn
-                                            Width="Auto"
-                                            Binding="{Binding skus}"
-                                            Header="SKU's" />
+                                            Header="Hora Início" />                                      
                                         <DataGridTextColumn
                                             Width="Auto"
                                             Binding="{Binding volumes}"

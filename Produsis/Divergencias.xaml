@@ -97,8 +97,7 @@
                         SelectedIndex="0">
                         <ComboBoxItem HorizontalAlignment="Left" Content="Falta" />
                         <ComboBoxItem HorizontalAlignment="Left" Content="Sobra" />
-                        <ComboBoxItem HorizontalAlignment="Left" Content="Avaria" />
-
+                        <ComboBoxItem HorizontalAlignment="Left" Content="Avaria"/>
                     </ComboBox>
                     <TextBox
                         Name="Codigo"

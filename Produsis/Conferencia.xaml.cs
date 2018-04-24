@@ -24,7 +24,7 @@ namespace GUI
         public Conferencia(double actualHeight, double actualWidth)
         {
             InitializeComponent();
-            ListaFunc = f.carregaFuncionariosLivres("2");
+            ListaFunc = f.carregaConferentesLivres("2");
             CBFuncionario.ItemsSource = ListaFunc;
             dgTarefas.ItemsSource = t.tarefasPendentes("2");
             Height = actualHeight - 100;
@@ -51,7 +51,7 @@ namespace GUI
                 MessageBox.Show("Conferência finalizada após " + item.tempoGasto, "Conferência finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
             else
                 MessageBox.Show("Houve um erro e a conferência não pode ser finalizada.", "Conferência não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-            ListaFunc = f.carregaFuncionariosLivres("2");
+            ListaFunc = f.carregaConferentesLivres("2");
             CBFuncionario.ItemsSource = ListaFunc;
 
             if (ListaFunc.Contains(item.nomesFuncionarios))
@@ -171,11 +171,6 @@ namespace GUI
             }
         }
 
-        private void Alterar_Click(object sender, RoutedEventArgs e)
-        {
-            TarefaModelo item = (TarefaModelo)dgTarefas.SelectedItem;
-            AlterarTarefa view = new AlterarTarefa(item);
-            view.Show();
-        }
+       
     }
 }

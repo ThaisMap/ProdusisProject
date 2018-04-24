@@ -21,7 +21,6 @@ namespace ProdusisBD
         public string tipoTarefa { get; set; }
         public string nomeFunc { get; set; }
         public int VolumesManifesto { get; set; }
-        public int skusManifesto { get; set; }
         public int quantCtesManifesto { get; set; }
         public string divergenciaTarefa { get; set; }
         public int numeroManifesto { get; set; }

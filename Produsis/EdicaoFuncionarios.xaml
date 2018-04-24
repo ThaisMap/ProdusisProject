@@ -64,9 +64,7 @@
                         Name="Nome"
                         Grid.Row="0"
                         Grid.Column="1"
-                        Width="300"
-                        Margin="0,5,5,5"
-                        HorizontalAlignment="Right"
+                        Margin="5"
                         materialDesign:HintAssist.Hint="Nome"
                         materialDesign:HintAssist.IsFloating="True"
                         IsEditable="True"
@@ -127,7 +125,7 @@
                         Margin="5"
                         materialDesign:HintAssist.Hint="Nova senha"
                         materialDesign:HintAssist.IsFloating="True" />
-                    <ComboBox
+                    <!--ComboBox
                         Name="Tipo"
                         Grid.Row="2"
                         Grid.Column="1"
@@ -143,18 +141,19 @@
                             Width="298"
                             HorizontalAlignment="Left"
                             Content="Operador" />
-                    </ComboBox>
+                    </ComboBox-->
                     <materialDesign:PackIcon
                         Grid.Row="2"
                         Grid.Column="0"
                         Width="24"
                         Height="24"
-                        Margin="13,0,13,10"
+                        Margin="13,5,13,10"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Bottom"
-                        Foreground="{Binding ElementName=Tipo, Path=BorderBrush}"
+                        Foreground="{Binding ElementName=CkAdmin, Path=Foreground}"
                         Kind="HandPointingRight" />
-
+                    <CheckBox Grid.Row="2"
+                        Grid.Column="1" Name="CkAdmin" Checked="CkAdmin_Checked" Margin="5,0">Administrativo</CheckBox>
                     <TextBlock
                         Grid.Row="4"
                         Grid.Column="0"
@@ -175,7 +174,7 @@
                         Grid.ColumnSpan="3"
                                 Margin="5"
                         HorizontalAlignment="Left"
-                        Orientation="Horizontal">
+                        Orientation="Horizontal">                        
                         <CheckBox Name="CkConfere" Margin="5,0">Confere</CheckBox>
                         <CheckBox Name="CkDescarrega" Margin="5,0">Descarrega</CheckBox>
                         <CheckBox Name="CkSepara" Margin="5,0">Separa</CheckBox>

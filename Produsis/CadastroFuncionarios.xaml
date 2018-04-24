@@ -114,7 +114,10 @@
                                  Margin="5"
                                  materialDesign:HintAssist.Hint="Confirmar senha"
                                  materialDesign:HintAssist.IsFloating="True" />
-                    <ComboBox Name="Tipo"
+                    <CheckBox Grid.Row="4"
+                        Grid.Column="1" Name="CkAdmin" Checked="CkAdmin_Checked" Margin="5,0">Administrativo</CheckBox>
+
+                    <!--ComboBox Name="Tipo"
                               Grid.Row="4"
                               Grid.Column="1"
                               Width="300"
@@ -123,7 +126,7 @@
                               materialDesign:HintAssist.IsFloating="True">
                         <ComboBoxItem Content="Administrativo" HorizontalAlignment="Left" Width="298" />
                         <ComboBoxItem Content="Operador" HorizontalAlignment="Left" Width="298" />
-                    </ComboBox>
+                    </ComboBox-->
                     <materialDesign:PackIcon Grid.Row="4"
                                              Grid.Column="0"
                                              Width="24"
@@ -131,8 +134,8 @@
                                              Margin="13,0,13,10"
                                              HorizontalAlignment="Center"
                                              VerticalAlignment="Bottom"
-                                             Foreground="{Binding ElementName=Tipo,
-                                                                  Path=BorderBrush}"
+                                             Foreground="{Binding ElementName=CkAdmin,
+                                                                  Path=Foreground}"
                                              Kind="HandPointingRight" />
 
                     <TextBlock Grid.Row="6"

@@ -29,7 +29,7 @@ namespace GUI
         {
             if (cbTipoTarefa.SelectedIndex >= 0 && (dataInicio.SelectedDate != null || dataFim.SelectedDate != null))
             {
-                if (dataInicio.SelectedDate != null && dataFim.SelectedDate != null && dataInicio.SelectedDate < dataFim.SelectedDate)
+                if (dataInicio.SelectedDate != null && dataFim.SelectedDate != null && dataInicio.SelectedDate <= dataFim.SelectedDate)
                 {
                     Cursor _cursorAnterior = Mouse.OverrideCursor;
                     Mouse.OverrideCursor = Cursors.Wait;

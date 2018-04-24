@@ -28,6 +28,7 @@ namespace ProdusisBD
         public string senhaFunc { get; set; }
         public bool ocupadoFunc { get; set; }
         public bool ativoFunc { get; set; }
+        public Nullable<int> equipeFunc { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Func_Tarefa> Func_Tarefa { get; set; }

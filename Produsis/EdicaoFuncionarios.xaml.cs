@@ -31,11 +31,8 @@ namespace Produsis
             {
                 emEdicao = f.dadosFuncionario(Nome.SelectedItem.ToString());
                 Matricula.Text = emEdicao.matriculaFunc;
-                if (emEdicao.tipoFunc.Contains("0"))
-                    Tipo.SelectedIndex = 0;
-                else
-                   Tipo.SelectedIndex = 1;
 
+               CkAdmin.IsChecked = emEdicao.tipoFunc.Contains("0");
                 CkDescarrega.IsChecked = emEdicao.tipoFunc.Contains("1");
                 CkConfere.IsChecked = emEdicao.tipoFunc.Contains("2");
                 CkSepara.IsChecked = emEdicao.tipoFunc.Contains("3");
@@ -53,13 +50,16 @@ namespace Produsis
             Matricula.Text = "";
             Senha.Password = "";
             Senha2.Password = "";
-            Tipo.SelectedIndex = -1;
+            CkAdmin.IsChecked = false;
+            CkCarrega.IsChecked = false;
+            CkConfere.IsChecked = false;
+            CkDescarrega.IsChecked = false;
+            CkSepara.IsChecked = false;
             Ativo.IsChecked = true;
         }
 
         private void Salvar_Click(object sender, RoutedEventArgs e)
-        {
-            
+        {            
             if (f.validarSenha(emEdicao.matriculaFunc, Senha.Password) && checarCampos())
             {
                 Funcionarios novosDados = montarObjeto();
@@ -83,7 +83,7 @@ namespace Produsis
             func.matriculaFunc = Matricula.Text.Replace("_", "");
             func.ocupadoFunc = false;
             func.ativoFunc = (bool)Ativo.IsChecked;
-            if (Tipo.SelectedIndex == 0)
+            if (CkAdmin.IsChecked == true)
             {
                 func.tipoFunc = "0";
                 if (Senha2.Password != "")
@@ -109,18 +109,17 @@ namespace Produsis
             }
 
             if (func.tipoFunc == "")
-                func.tipoFunc = "1234";
-
+                func.tipoFunc = "5";
+            //Se não for selecionado nem administrativo nem nenhuma tarefa o funcionario é cadastrado sem acesso a nada
             return func;
         }
 
         private bool checarCampos()
         {
-            if (Nome.Text != "" && Matricula.Text != "_____" && Tipo.Text != "")
+            if (Nome.Text != "" && Matricula.Text != "_____")
             {
-                if (Tipo.Text == "Administrativo" && Senha2.Password == "")
+                if (CkAdmin.IsChecked==true && Senha2.Password == "")
                     return false;
-
                 return true;
             }
             return false;
@@ -130,6 +129,17 @@ namespace Produsis
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void CkAdmin_Checked(object sender, RoutedEventArgs e)
+        {
+            if(CkAdmin.IsChecked == true)
+            {
+                CkCarrega.IsChecked = false;
+                CkConfere.IsChecked = false;
+                CkDescarrega.IsChecked = false;
+                CkSepara.IsChecked = false;
+            }
         }
     }
 }

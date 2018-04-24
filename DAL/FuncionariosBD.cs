@@ -208,7 +208,22 @@ namespace DAL
         /// <summary>
         /// Retorna a lista de operadores ativos com status livre
         /// </summary>
-        public List<String> funcionariosLivres(string tipo)
+        public List<Funcionarios> funcionariosLivres(string tipo)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    return (from Funcionarios in BancoDeDados.Funcionarios where Funcionarios.ativoFunc == true where Funcionarios.ocupadoFunc == false where Funcionarios.tipoFunc.Contains(tipo) orderby Funcionarios.nomeFunc select Funcionarios).ToList();
+                }
+            }
+            catch
+            {
+                return new List<Funcionarios>();
+            }
+        }
+
+        public List<string> conferentesLivres(string tipo)
         {
             try
             {
@@ -219,10 +234,10 @@ namespace DAL
             }
             catch
             {
-                return new List<String>();
+                return new List<string>();
             }
         }
-        
+
         /// <summary>
         /// Retorna um Funcionário com base no id
         /// </summary>
@@ -298,6 +313,24 @@ namespace DAL
             }
         }
 
+        public List<Funcionarios> getListaFuncionariosAtivos()
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    return (from Funcionarios in BancoDeDados.Funcionarios
+                            where Funcionarios.ativoFunc == true
+                            orderby Funcionarios.nomeFunc
+                            select Funcionarios).ToList();
+                }
+            }
+            catch
+            {
+                return new List<Funcionarios> ();
+            }
+        }
+
         /// <summary>
         /// Verifica se a senha do Funcionário indicado coincide com a registrada no banco de dados
         /// </summary>
@@ -342,7 +375,7 @@ namespace DAL
                     var cadastrado = (from Funcionarios in BancoDeDados.Funcionarios
                                       where Funcionarios.matriculaFunc == matricula
                                       select Funcionarios.tipoFunc).FirstOrDefault();
-                    if (cadastrado != null/*&& cadastrado != "1"*/)
+                    if (cadastrado != null)
                     {
                         return true;
                     }
@@ -355,5 +388,28 @@ namespace DAL
                 return false;
             }
         }
+
+        public bool salvaEquipe(List<string> equipe, int? numEquipe)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var funcEquipe = BancoDeDados.Funcionarios.Where(x => equipe.Contains(x.nomeFunc));
+                    foreach (var item in funcEquipe)
+                    {
+                        item.equipeFunc = numEquipe;
+                    }
+                    BancoDeDados.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                var erro = e;
+                return false;
+            }
+        }
+
     }
 }

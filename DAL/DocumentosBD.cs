@@ -8,45 +8,6 @@ namespace DAL
     public class DocumentosBD
     {
         /// <summary>
-        /// Altera o manifesto para constar a soma dos SKUs de cada NF do manifesto
-        /// </summary>
-        public bool alterarSkuManifesto(int numManifesto)
-        {
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    Manifestos atual = BancoDeDados.Manifestos.FirstOrDefault(m => m.numeroManifesto == numManifesto);
-                    atual.skusManifesto = getSkuManifesto(numManifesto);
-                    BancoDeDados.SaveChanges();
-                }
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        public bool alterarSkuManifesto(int numManifesto, int skus)
-        {
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    Manifestos atual = BancoDeDados.Manifestos.FirstOrDefault(m => m.numeroManifesto == numManifesto);
-                    atual.skusManifesto = skus;
-                    BancoDeDados.SaveChanges();
-                }
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
         /// Insere um registro de cte no banco de dados
         /// </summary>
         /// <param name="novoCte">Dados do novo registro</param>
@@ -186,24 +147,7 @@ namespace DAL
             }
         }
 
-        //public bool alteraVolumesNF(NotasFiscais NF)
-        //{
-        //    try
-        //    {
-        //        using (var BancoDeDados = new produsisBDEntities())
-        //        {
-        //            NotasFiscais atual = BancoDeDados.NotasFiscais.FirstOrDefault(m => m.numeroNF == NF.numeroNF);
-        //            atual.volumesNF = NF.volumesNF;
-        //            BancoDeDados.SaveChanges();
-        //        }
-        //        return true;
-        //    }
-        //    catch
-        //    {
-        //        return false;
-        //    }
-        //}
-
+        
         public string get_ListaManifestosCte(int numCte)
         {
             try
@@ -593,7 +537,7 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     Manifestos m = BancoDeDados.Manifestos.SingleOrDefault(man => man.numeroManifesto == numDoc);
-                    dados = "Manifesto nº " + m.numeroManifesto + " - " + m.quantCtesManifesto + " cte's - " + m.VolumesManifesto + " volumes - " + m.skusManifesto + " SKU's - " + m.pesoManifesto + " Kg";
+                    dados = "Manifesto nº " + m.numeroManifesto + " - " + m.quantCtesManifesto + " cte's - " + m.VolumesManifesto + " volumes - " + m.pesoManifesto + " Kg";
                 }
             }
             catch

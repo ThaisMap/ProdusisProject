@@ -16,7 +16,8 @@
                 <Button Name="BtnCadFuncionarios" Height="auto" Width="auto" Margin="5,0" Click="BtnCadFuncionarios_Click">Cadastrar Funcionário</Button>
                 <Button x:Name="BtnEditarFuncionarios" Height="Auto" Width="auto" Click="BtnEditarFuncionarios_Click">Editar Funcionário</Button>
                 <Button Name="BtnObservacoes" Height="auto" Width="auto" Margin="5,0" Click="BtnObservacoes_Click">Observações</Button>
-                <Button x:Name="BtnMotorista" Height="auto" Width="auto" Click="BtnMotorista_Click" Content="Motorista" />
+                <Button Name="BtnEquipe" Height="auto" Width="auto" Click="BtnEquipe_Click">Equipes</Button>
+                <Button x:Name="BtnMotorista" Height="auto" Width="auto" Margin="5,0" Click="BtnMotorista_Click" Content="Motorista" />
             </StackPanel>
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <DockPanel>

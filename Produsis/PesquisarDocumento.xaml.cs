@@ -59,7 +59,7 @@ namespace Produsis
                     {
                         Numero.Text = documento.numeroManifesto.ToString();
                         NumeroDeVolumes.Text = documento.VolumesManifesto.ToString();
-                        NumeroDeSKUS.Text = documento.skusManifesto.ToString();
+                        NumeroDeSKUS.Text = "Não se aplica";
                         Fornecedor.Text = d.getFornecedorManifesto(numDoc);
                         texto1.Text = "Total de CT-es:";
                         valor1.Text = documento.quantCtesManifesto.ToString();

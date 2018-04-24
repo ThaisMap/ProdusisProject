@@ -2,6 +2,7 @@
 using ProdusisBD;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,8 +17,8 @@ namespace GUI
     {
         private DocumentosBLL d = new DocumentosBLL();
         private FuncionarioBLL f = new FuncionarioBLL();
-        private FuncionariosTag FuncionarioSelecionado;
-        private List<string> ListaFunc;
+        private List<FuncionariosTag> FuncionarioSelecionado = new List<FuncionariosTag>();
+        private List<Funcionarios> ListaFunc;
         private TarefasBLL t = new TarefasBLL();
         private int[] pallets = { 0, 0 };
         
@@ -26,6 +27,7 @@ namespace GUI
             InitializeComponent();
             ListaFunc = f.carregaFuncionariosLivres("3");
             CBFuncionario.ItemsSource = ListaFunc;
+            CBFuncionario.DisplayMemberPath = "nomeFunc";
             dgTarefas.ItemsSource = t.tarefasPendentes("3");
             Height = actualHeight - 150;
             Width = actualWidth - 60;
@@ -64,7 +66,16 @@ namespace GUI
         private void CBFuncionario_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (CBFuncionario.SelectedIndex > -1)
-            FuncionarioSelecionado = new FuncionariosTag(CBFuncionario.SelectedItem.ToString(), CriaChipTag(CBFuncionario.SelectedItem.ToString()));
+            {
+                Funcionarios select = CBFuncionario.SelectedItem as Funcionarios;
+                if (select.equipeFunc != null)
+                    foreach (var item in ListaFunc.Where(x => x.equipeFunc == select.equipeFunc))
+                    {
+                        FuncionarioSelecionado.Add(new FuncionariosTag(item.nomeFunc, CriaChipTag(item.nomeFunc)));
+                    }
+                else
+                    FuncionarioSelecionado.Add(new FuncionariosTag(select.nomeFunc, CriaChipTag(select.nomeFunc)));
+            }
         }
 
         private bool checarCampos()
@@ -126,9 +137,25 @@ namespace GUI
 
         private void Inserir_Click(object sender, RoutedEventArgs e)
         {
-            if (!ListaDeFuncionarios.Items.Contains(FuncionarioSelecionado) && CBFuncionario.SelectedIndex > -1)
+            if (CBFuncionario.SelectedIndex > -1)
             {
-                ListaDeFuncionarios.Items.Add(FuncionarioSelecionado);
+                bool adicionar = true;
+                foreach (FuncionariosTag item in FuncionarioSelecionado)
+                {
+                    foreach (FuncionariosTag ItemDaLista in ListaDeFuncionarios.Items)
+                    {
+                        if (ItemDaLista.Nome == item.Nome)
+                        {
+                            adicionar = false;
+                            break;
+                        }
+                    }
+                    if (adicionar)
+                    {
+                        ListaDeFuncionarios.Items.Add(item);
+                    }
+                }
+                FuncionarioSelecionado.Clear();
             }
         }
 

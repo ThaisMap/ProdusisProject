@@ -19,17 +19,17 @@ namespace ProdusisBD
         {
             this.Func_Tarefa = new HashSet<Func_Tarefa>();
         }
-    
+        
         public int idTarefa { get; set; }
         public System.DateTime inicioTarefa { get; set; }
         public Nullable<System.DateTime> fimTarefa { get; set; }
         public int documentoTarefa { get; set; }
         public string tipoTarefa { get; set; }
         public string divergenciaTarefa { get; set; }
-        public string tempoGasto { get; set; }
         public Nullable<int> quantPaletizado { get; set; }
         public Nullable<int> totalPaletes { get; set; }
-    
+        public string tempoGasto { get; set; }
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Func_Tarefa> Func_Tarefa { get; set; }
     }

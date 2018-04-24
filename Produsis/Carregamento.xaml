@@ -202,10 +202,6 @@
                                             Header="Hora Início" />
                                         <DataGridTextColumn
                                             Width="Auto"
-                                            Binding="{Binding skus}"
-                                            Header="SKU's" />
-                                        <DataGridTextColumn
-                                            Width="Auto"
                                             Binding="{Binding volumes}"
                                             Header="Volumes" />
                                         <DataGridTextColumn

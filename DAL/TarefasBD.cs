@@ -194,12 +194,12 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     var listaConf = BancoDeDados.RelatorioConferencias.Where(i => i.tipoTarefa == f.TipoTarefa)
-                        .Where(i => i.inicioTarefa > f.dataInicio)
-                        .Where(i => i.inicioTarefa < f.dataFim)
+                        .Where(i => i.inicioTarefa >= f.dataInicio)
+                        .Where(i => i.inicioTarefa <= f.dataFim)
                         .ToList();
                     var listaNotConf = BancoDeDados.RelatorioNaoConferencia.Where(i => i.tipoTarefa == f.TipoTarefa)
-                        .Where(i => i.inicioTarefa > f.dataInicio)
-                        .Where(i => i.inicioTarefa < f.dataFim)
+                        .Where(i => i.inicioTarefa >= f.dataInicio)
+                        .Where(i => i.inicioTarefa <= f.dataFim)
                         .ToList();
 
                     var listaItems = consolidarRelatorio(listaConf, listaNotConf, true);
@@ -268,12 +268,6 @@ namespace DAL
 
                         if (f.volumeFim > 0)
                             query = query.Where(l => l.VolumesManifesto <= f.volumeFim);
-
-                        if (f.skuInicio > 0)
-                            query = query.Where(l => l.skusManifesto >= f.skuInicio);
-
-                        if (f.skuFim > 0)
-                            query = query.Where(l => l.skusManifesto <= f.skuFim);
 
                         relatorioNaoConferencia = query.ToList();
                     }
@@ -561,7 +555,7 @@ namespace DAL
             else
             {
                 m = d.getManifestoPorNumero(tarefas.documentoTarefa);
-                aux.valores(m.skusManifesto, m.VolumesManifesto);
+                aux.valores(0, m.VolumesManifesto);
             }
             aux.nomesFuncionarios = nomesFuncTarefa(tarefas.idTarefa);
 

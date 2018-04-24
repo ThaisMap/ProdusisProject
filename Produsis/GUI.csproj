@@ -140,6 +140,9 @@
     <Compile Include="Divergencias.xaml.cs">
       <DependentUpon>Divergencias.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Equipes.xaml.cs">
+      <DependentUpon>Equipes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MudarCores.cs" />
     <Compile Include="MudarTema.xaml.cs">
       <DependentUpon>MudarTema.xaml</DependentUpon>
@@ -256,6 +259,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EdicaoFuncionarios.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Equipes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

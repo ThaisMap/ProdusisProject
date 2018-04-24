@@ -55,8 +55,7 @@ namespace DAL
                     numeroManifesto = int.Parse(nomeArquivo.Replace(PastasXml.Default.PastaManifestos + "\\", "").Replace(".xml", "")),
                     VolumesManifesto = (int)double.Parse(result[result.Count - 2].InnerText.Replace('.', ',')),
                     pesoManifesto = double.Parse(result[result.Count - 3].InnerText.Replace('.', ',')),
-                    quantCtesManifesto = (int)double.Parse(result[result.Count - 4].InnerText.Replace('.', ',')),
-                    skusManifesto = 0
+                    quantCtesManifesto = (int)double.Parse(result[result.Count - 4].InnerText.Replace('.', ','))
                 };
 
                 bool cadCte = docBD.cadastrarManifesto(lido);
@@ -107,8 +106,7 @@ namespace DAL
                     numeroManifesto = int.Parse(nomeArquivo.Replace(PastasXml.Default.PastaPreManifestos + "\\", "").Replace(".xml", "")),
                     VolumesManifesto = (int)double.Parse(ValueResult[ValueResult.Count - 4].InnerText.Replace('.', ',')),
                     pesoManifesto = double.Parse(ValueResult[ValueResult.Count - 2].InnerText.Replace('.', ',')),
-                    quantCtesManifesto = quantCtes,
-                    skusManifesto = 0
+                    quantCtesManifesto = quantCtes
                 };
 
                 bool cadCte = docBD.cadastrarManifesto(lido);

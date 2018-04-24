@@ -15,6 +15,7 @@ namespace ProdusisBD
             preencheDatas();
             atualizaTempoGasto();
             divergenciaTarefa = tarefa.divergenciaTarefa;
+            totalPaletes = tarefa.totalPaletes;
         }
         
         private string tipoExtenso(string tipo)
@@ -47,8 +48,8 @@ namespace ProdusisBD
         public string fornecedor { get; set; }
         public string cliente { get; set; }
         public double pontos { get; set; }
-
         
+
         public void valores(int sku, int volume)
         {
             skus = sku;

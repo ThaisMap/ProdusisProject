@@ -55,7 +55,7 @@ namespace ProdusisBD
             fimTarefa = r.fimTarefa;
             nomesFunc = r.nomeFunc;
             volumes = r.VolumesManifesto;
-            sku = r.skusManifesto;
+            sku = 0;
             fornecedor = "";
             quantPaletizado = r.quantPaletizado;
             totalPaletes = r.totalPaletes;

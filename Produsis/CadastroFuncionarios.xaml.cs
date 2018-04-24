@@ -48,7 +48,7 @@ namespace GUI
             func.ativoFunc = (bool)Ativo.IsChecked;
             func.senhaFunc = Senha.Password;
 
-            if (Tipo.SelectedIndex == 0)
+            if ((bool)CkAdmin.IsChecked)
                 func.tipoFunc = "0";
 
             else
@@ -73,9 +73,9 @@ namespace GUI
          
         private bool checarCampos()
         {
-            if (Nome.Text != "" && Matricula.Text != "_____" && Tipo.Text != "" && Senha.Password == Senha2.Password)
+            if (Nome.Text != "" && Matricula.Text != "_____" && Senha.Password == Senha2.Password)
             {
-                if (Tipo.Text == "Administrativo" && Senha.Password == "")
+                if (CkAdmin.IsChecked == true && Senha.Password == "")
                     return false;
 
                 //estando tudo certo
@@ -90,7 +90,11 @@ namespace GUI
             Matricula.Text = "";
             Senha.Password = "";
             Senha2.Password = "";
-            Tipo.SelectedIndex = -1;
+            CkAdmin.IsChecked = false;
+            CkCarrega.IsChecked = false;
+            CkConfere.IsChecked = false;
+            CkDescarrega.IsChecked = false;
+            CkSepara.IsChecked = false;
             Ativo.IsChecked = true;
         }
 
@@ -98,6 +102,17 @@ namespace GUI
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void CkAdmin_Checked(object sender, RoutedEventArgs e)
+        {
+            if (CkAdmin.IsChecked == true)
+            {
+                CkCarrega.IsChecked = false;
+                CkConfere.IsChecked = false;
+                CkDescarrega.IsChecked = false;
+                CkSepara.IsChecked = false;
+            }
         }
     }
 }

@@ -4,18 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="415e51b33b214eeabcd869db29ae4d20" Name="Diagram1">
-        <EntityTypeShape EntityType="produsisBDModel.CapacidadeMotoristas" Width="1.5" PointX="2.75" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="produsisBDModel.Cte_Manifesto" Width="1.5" PointX="8" PointY="2.875" IsExpanded="true" />
+      <Diagram DiagramId="388a4cc66a2b46d2a90ac782c488949e" Name="Diagram1">
+        <EntityTypeShape EntityType="produsisBDModel.CapacidadeMotoristas" Width="1.5" PointX="2.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="produsisBDModel.Cte_Manifesto" Width="1.5" PointX="8" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="produsisBDModel.Ctes" Width="1.5" PointX="5.75" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="produsisBDModel.Func_Tarefa" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="produsisBDModel.Funcionarios" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="produsisBDModel.Funcionarios" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
         <EntityTypeShape EntityType="produsisBDModel.Manifestos" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="produsisBDModel.NotasFiscais" Width="1.5" PointX="8" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="produsisBDModel.Observacoes" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="produsisBDModel.Tarefas" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="produsisBDModel.RelatorioConferencias" Width="1.5" PointX="4.75" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="produsisBDModel.RelatorioNaoConferencia" Width="1.5" PointX="6.75" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="produsisBDModel.Tarefas" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="produsisBDModel.RelatorioConferencias" Width="1.5" PointX="4.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="produsisBDModel.RelatorioNaoConferencia" Width="1.5" PointX="6.75" PointY="9.75" IsExpanded="true" />
         <AssociationConnector Association="produsisBDModel.FK_Cte_Manifesto_Cte" ManuallyRouted="false" />
         <AssociationConnector Association="produsisBDModel.FK_Cte_Manifesto_Manifesto" ManuallyRouted="false" />
         <AssociationConnector Association="produsisBDModel.FK_NotasFiscais_Ctes" ManuallyRouted="false" />
