@@ -115,20 +115,19 @@ namespace DAL
                 int indexNF = 0;
                 string fornecedor;
 
-                for (int i = 2; i < ValueResult.Count - 4; i = i + 6)
+                for (int i = 5; i < ValueResult.Count - 4; i = i + 6)
                 {
-                    cte = int.Parse(ValueResult[i].InnerText);
+                    cte = int.Parse(ValueResult[i].InnerText.Replace('/',' '));
                     criarCte(cte);
                     if (cadCte)
                     {
                         criarCteManifesto(cte, lido.numeroManifesto);
                         docBD.alterarPreManifesto(lido);
                     }
-                    fornecedor = ValueResult[i + 2].InnerText;
+                    fornecedor = ValueResult[i -5].InnerText;
                     alterarUmaNf(TextResult[indexNF].InnerText, cte, fornecedor);
                     indexNF++;
                 }
-
                 return true;
             }
             catch
