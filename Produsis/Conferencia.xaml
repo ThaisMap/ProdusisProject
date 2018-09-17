@@ -15,7 +15,7 @@
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
     IsTabStop="False"
-    TextElement.FontSize="16"
+    TextElement.FontSize="12"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
@@ -34,27 +34,27 @@
                     Grid.Row="1"
                     Grid.Column="1"
                     Grid.ColumnSpan="2"
-                    Margin="10,20,0,5">
+                    Margin="10,0,0,5">
                     <StackPanel>
-                        <TextBlock Margin="0,0,350,0" Text="Nova Conferência" />
                         <Grid
                             Name="formSuperior"
-                            Height="180"
+                            Height="120"
                             Margin="10,5">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="55" />
+                                <ColumnDefinition Width="308"/>
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="70" />
-                                <RowDefinition Height="60" />
-                                <RowDefinition Height="50" />
+                                <RowDefinition Height="35" />
+                                <RowDefinition Height="45" />
+                                <RowDefinition Height="40" />
                             </Grid.RowDefinitions>
                             <StackPanel
                                 Grid.Row="0"
                                 Grid.Column="0"
-                                Margin="5,10"
-                                Orientation="Horizontal">
+                                Margin="5,0"
+                                Orientation="Horizontal" Grid.ColumnSpan="2">
                                 <materialDesign:PackIcon
                                     Width="22"
                                     Height="auto"
@@ -63,10 +63,8 @@
                                     Kind="FileDocument" />
                                 <TextBox
                                     x:Name="Documento"
-                                    Grid.Row="1"
-                                    Grid.Column="1"
                                     Width="300"
-                                    Margin="5,0,5,5"
+                                    Margin="10,0,5,0"
                                     materialDesign:HintAssist.Hint="Conhecimento"
                                     materialDesign:HintAssist.IsFloating="True"
                                     LostFocus="normalizarDocumento"
@@ -77,13 +75,12 @@
                             <StackPanel
                                 Grid.Row="0"
                                 Grid.RowSpan="3"
-                                Grid.Column="1"
-                                Margin="10,-28,-10,10"
+                                Grid.Column="2"
+                                Margin="10,0"
                                 CanVerticallyScroll="True">
-                                <TextBlock><Run Text="Funcionários Responsaveis:" /></TextBlock>
                                 <ListBox
                                     x:Name="ListaDeFuncionarios"
-                                    Height="185"
+                                    Height="125"
                                     materialDesign:ShadowAssist.ShadowDepth="Depth2"
                                     DataContext="Funcionarios">
                                     <ListBox.ItemTemplate>
@@ -100,8 +97,8 @@
                             <StackPanel
                                 Grid.Row="1"
                                 Grid.Column="0"
-                                Margin="5,0,5,0"
-                                Orientation="Horizontal">
+                                Margin="5,0"
+                                Orientation="Horizontal" Grid.ColumnSpan="2">
                                 <materialDesign:PackIcon
                                     Width="22"
                                     Height="auto"
@@ -126,15 +123,15 @@
                             </StackPanel>
                             <Button
                                 x:Name="Iniciar"
-                                Grid.Row="3"
-                                Grid.Column="1"
+                                Grid.Row="2"
+                                Grid.Column="0"
                                 Width="71"
-                                Margin="0,0,0,10"
-                                HorizontalAlignment="Right"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Bottom"
                                 Click="Iniciar_Click"
-                                Content="Iniciar"
-                                TabIndex="3" />
+                                Content="_Iniciar"
+                                TabIndex="3" Grid.ColumnSpan="2" />
                         </Grid>
                         <Separator />
                         <ScrollViewer
@@ -169,6 +166,7 @@
                                     Grid.Column="0"
                                     Width="200"
                                     Margin="50,0,0,0"
+                                    VerticalAlignment="Center"
                                     HorizontalAlignment="Left"
                                     Text="Tarefas em execução" />
                                 <DataGrid
@@ -181,8 +179,24 @@
                                     VerticalAlignment="Stretch"
                                     AutoGenerateColumns="False"
                                     ColumnWidth="*"
+                                    RowHeight="35"
                                     IsReadOnly="True"
                                     ScrollViewer.CanContentScroll="True">
+                                    <DataGrid.CellStyle>
+                                        <Style TargetType="{x:Type DataGridCell}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                                        <Border Padding="2">
+                                                            <ContentPresenter VerticalAlignment="Center" />
+                                                        </Border>
+
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGrid.CellStyle>
+
                                     <DataGrid.Columns>
                                         <DataGridTextColumn
                                             Width="auto"
@@ -199,7 +213,7 @@
                                         <DataGridTemplateColumn Header="Finalizar Tarefa">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Button Click="Finalizar_Click" Content="Finalizar" />
+                                                    <Button Click="Finalizar_Click" Height="25" Content="Finalizar" />
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>

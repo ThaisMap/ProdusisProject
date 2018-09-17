@@ -74,7 +74,9 @@ namespace GUI
             if (CBFuncionario.SelectedIndex > -1)
             {
                 Funcionarios select = CBFuncionario.SelectedItem as Funcionarios;
-                if(select.equipeFunc != null)
+                FuncionarioSelecionado.Clear();
+
+                if (select.equipeFunc != null)
                     foreach (var item in ListaFunc.Where(x => x.equipeFunc == select.equipeFunc))
                     {
                         FuncionarioSelecionado.Add(new FuncionariosTag(item.nomeFunc, CriaChipTag(item.nomeFunc)));
@@ -173,10 +175,10 @@ namespace GUI
 
         private Tarefas montarTarefa()
         {
-            var paletes = 0;
+            var paletes = 30;
             if (CBmotorista.SelectedValue != null)
                 paletes = (int)CBmotorista.SelectedValue;
-
+            
             Tarefas novaTarefa = new Tarefas()
             {
                 documentoTarefa = int.Parse(Documento.Text.Replace("_", "")),

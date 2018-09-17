@@ -130,6 +130,7 @@ namespace GUI
             {
                 MessageBox.Show("Não foi possível iniciar a conferência.", "Conferência não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            Documento.Focus();
         }
 
         private void Inserir_Click(object sender, RoutedEventArgs e)

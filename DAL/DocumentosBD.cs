@@ -42,12 +42,16 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    var quantos = (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.Cte == novo.Cte where Cte_Manifesto.Manifesto == novo.Manifesto select Cte_Manifesto).FirstOrDefault();
+                    var quantos = (from Cte_Manifesto in BancoDeDados.Cte_Manifesto
+                                   where Cte_Manifesto.Cte == novo.Cte
+                                   where Cte_Manifesto.Manifesto == novo.Manifesto
+                                   select Cte_Manifesto).FirstOrDefault();
                     return quantos == null;
                 }
             }
-            catch
+            catch (Exception e)
             {
+                var erro = e;
                 return false;
             }
         }

@@ -68,6 +68,7 @@ namespace GUI
             if (CBFuncionario.SelectedIndex > -1)
             {
                 Funcionarios select = CBFuncionario.SelectedItem as Funcionarios;
+                FuncionarioSelecionado.Clear();
                 if (select.equipeFunc != null)
                     foreach (var item in ListaFunc.Where(x => x.equipeFunc == select.equipeFunc))
                     {

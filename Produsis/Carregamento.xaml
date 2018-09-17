@@ -13,7 +13,7 @@
     d:DesignWidth="800"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-    TextElement.FontSize="16"
+    TextElement.FontSize="12"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
@@ -33,7 +33,7 @@
                         Grid.Row="1"
                         Grid.Column="1"
                         Grid.ColumnSpan="2"
-                        Margin="20,20,0,5">
+                        Margin="10,0,0,5">
                         <StackPanel>
                            <Grid Margin="10,5">
                                 <Grid.ColumnDefinitions>
@@ -41,9 +41,9 @@
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="55" />
-                                    <RowDefinition Height="55" />
-                                    <RowDefinition Height="55" />
+                                    <RowDefinition Height="35" />
+                                    <RowDefinition Height="45" />
+                                    <RowDefinition Height="40" />
                                 </Grid.RowDefinitions>
                                 <StackPanel
                                     Grid.Row="0"
@@ -61,7 +61,7 @@
                                         Grid.Row="1"
                                         Grid.Column="1"
                                         Width="300"
-                                        Margin="5,0,5,5"
+                                        Margin="10,0"
                                         materialDesign:HintAssist.Hint="Manifesto"
                                         materialDesign:HintAssist.IsFloating="True"
                                         PreviewTextInput="testarCaractere"
@@ -71,12 +71,11 @@
                                     Grid.Row="0"
                                     Grid.RowSpan="3"
                                     Grid.Column="1"
-                                    Margin="10,-28,-10,10"
+                                    Margin="10,0"
                                     CanVerticallyScroll="True">
-                                    <TextBlock>Funcionários Responsaveis:</TextBlock>
                                     <ListBox
                                         Name="ListaDeFuncionarios"
-                                        Height="185"
+                                        Height="120"
                                         materialDesign:ShadowAssist.ShadowDepth="Depth2"
                                         DataContext="Funcionarios">
                                         <ListBox.ItemTemplate>
@@ -118,7 +117,7 @@
                                 <StackPanel
                                     Grid.Row="2"
                                     Grid.Column="0"
-                                    Margin="5,0,5,0"
+                                    Margin="5,0"
                                     Orientation="Horizontal">
                                     <materialDesign:PackIcon
                                         Width="22"
@@ -140,15 +139,14 @@
                                 <Button
                                     Name="Iniciar"
                                     Grid.Row="3"
-                                    Grid.Column="1"
+                                    Grid.Column="0"
                                     Width="71"
-                                    Margin="0,0,0,10"
+                                    Margin="0"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Bottom"
-                                    Click="Iniciar_Click">
-                                    Iniciar
+                                    Click="Iniciar_Click"
+                                    Content="_Iniciar">
                                 </Button>
-                                <!--<CheckBox Name="cbPaletizado" Content="Carga paletizada" HorizontalAlignment="Left" Margin="15,0" Grid.Row="2" VerticalAlignment="Center"/>-->
                             </Grid>
                             <Separator />
                             <Grid>
@@ -172,12 +170,14 @@
                                     Click="AtualizarDg_Click"
                                     Content="Atualizar"
                                     Style="{StaticResource MaterialDesignFlatButton}" />
+                               
                                 <TextBlock
                                     x:Name="TextoExecucao"
                                     Grid.Row="0"
                                     Grid.Column="0"
                                     Width="200"
                                     Margin="50,0,0,0"
+                                    VerticalAlignment="Center"
                                     HorizontalAlignment="Left"
                                     Text="Tarefas em execução" />
                                 <DataGrid
@@ -190,6 +190,21 @@
                                     AutoGenerateColumns="False"
                                     ColumnWidth="*"
                                     IsReadOnly="True">
+
+                                    <DataGrid.CellStyle>
+                                        <Style TargetType="{x:Type DataGridCell}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                                        <Border Padding="2">
+                                                            <ContentPresenter VerticalAlignment="Center" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGrid.CellStyle>
+
                                     <DataGrid.Columns>
                                         <DataGridTextColumn
                                             Width="Auto"
@@ -211,7 +226,7 @@
                                         <DataGridTemplateColumn Width="Auto" Header="Finalizar Tarefa">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Button Width="Auto" Click="Finalizar_Click">Finalizar</Button>
+                                                    <Button Width="Auto" Height="25" Click="Finalizar_Click">Finalizar</Button>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>

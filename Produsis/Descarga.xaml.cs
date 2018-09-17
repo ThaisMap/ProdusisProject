@@ -60,12 +60,14 @@ namespace GUI
             else
                 MessageBox.Show("Houve um erro e a descarga não pode ser finalizada.", "Descarga não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
         private void CBFuncionario_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (CBFuncionario.SelectedIndex > -1)
             {
-                FuncionarioSelecionado.Clear();
                 Funcionarios select = CBFuncionario.SelectedItem as Funcionarios;
+                FuncionarioSelecionado.Clear();
+
                 if (select.equipeFunc != null)
                     foreach (var item in ListaFunc.Where(x => x.equipeFunc == select.equipeFunc))
                     {

@@ -119,11 +119,12 @@ namespace DAL
                 {
                     cte = int.Parse(ValueResult[i].InnerText.Replace('/',' '));
                     criarCte(cte);
-                    if (cadCte)
-                    {
+// alterado                    
+  //                  if (cadCte)
+  //                  {
                         criarCteManifesto(cte, lido.numeroManifesto);
                         docBD.alterarPreManifesto(lido);
-                    }
+  //                  }
                     fornecedor = ValueResult[i -5].InnerText;
                     alterarUmaNf(TextResult[indexNF].InnerText, cte, fornecedor);
                     indexNF++;
