@@ -7,6 +7,101 @@ namespace DAL
 {
     public class DocumentosBD
     {
+        #region Novo Cte
+
+        public bool cadastrarNovoCte(Cte novoCte)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    if (verificarNovoCte(novoCte.numeroCte, novoCte.notasCte) <= 0)
+                    {
+                        BancoDeDados.Cte.Add(novoCte);
+                        BancoDeDados.SaveChanges();
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                var olho = ex;
+                return false;
+            }
+        }
+          
+        public string getNfsNovoCte(int idCte)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    return (from Cte in BancoDeDados.Cte where Cte.idCte == idCte select Cte.notasCte).ToString();
+                }
+            }
+            catch
+            {
+                return "Não atrelado a nenhuma NF";
+            }
+        }
+        
+        /// <summary>
+        /// Verifica se está cadastrado um cte com o numero e notas fiscais fornecidos
+        /// </summary>
+        /// <returns>-1 para erros, 0 se não houver correspondencia, o id do cte se houver correspondencia (>=1)</returns>
+        public int verificarNovoCte(int nCte, string nfs)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    return (from Cte in BancoDeDados.Cte where Cte.numeroCte == nCte where Cte.notasCte == nfs select Cte.idCte).FirstOrDefault();
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+        
+        private string getDadosNovoCte(int numDoc)
+        {
+            string dados;
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    Cte idCte = (from Cte in BancoDeDados.Cte where Cte.numeroCte == numDoc select Cte).FirstOrDefault();
+                    dados = "Cte n º " + idCte.numeroCte + " - " + getVolumesCte(numDoc) + " volumes - " + getSkuCte(numDoc) + " SKU's";
+                }
+            }
+            catch
+            {
+                dados = "Dados não encontrados";
+            }
+            return dados;
+        }
+
+        public List<Cte> getNovoCtePorNum(int numCte)
+        {
+            List<Cte> lista = new List<Cte>();
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    lista = (from Cte in BancoDeDados.Cte where Cte.numeroCte == numCte select Cte).ToList();
+                }
+            }
+            catch
+            {
+               
+            }
+            return lista;
+        }
+
+        #endregion
+
         /// <summary>
         /// Insere um registro de cte no banco de dados
         /// </summary>
@@ -45,6 +140,7 @@ namespace DAL
                     var quantos = (from Cte_Manifesto in BancoDeDados.Cte_Manifesto
                                    where Cte_Manifesto.Cte == novo.Cte
                                    where Cte_Manifesto.Manifesto == novo.Manifesto
+                                   where Cte_Manifesto.CteNovo == novo.CteNovo
                                    select Cte_Manifesto).FirstOrDefault();
                     return quantos == null;
                 }
@@ -151,7 +247,9 @@ namespace DAL
             }
         }
 
-        
+        /// <summary>
+        /// Lista os manifestos onde o cte foi importado
+        /// </summary>
         public string get_ListaManifestosCte(int numCte)
         {
             try
@@ -180,6 +278,9 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// Gera uma lista com todos os ctes de um manifesto
+        /// </summary>
         public List<Cte_Manifesto> getCtesNoManifesto(int numeroManifesto)
         {
             try
@@ -199,9 +300,9 @@ namespace DAL
         /// <summary>
         /// Retorna uma string com o resumo dos dados do documento
         /// </summary>
-        /// <param name="tipoDocumento">Tipo de documento 0 - Manifesto, 1 - Cte, 2 - Nota fiscal</param>
+        /// <param name="tipoDocumento">Tipo de documento 0 - Manifesto, 1 - Cte, 2 - Nota fiscal, 3 - Novo Cte</param>
         /// <param name="idDoc">Parâmetro de busca</param>
-        public string getDadosDocumentos(int tipoDocumento, int idDoc)
+        public string getDadosDocumentos(int tipoDocumento, int idDoc)  // alterado para novo cte
         {
             string dados = "Dados não encontrados";
             try
@@ -216,6 +317,10 @@ namespace DAL
                     {
                         dados = getDadosCte(idDoc);
                     }
+                    else if (tipoDocumento == 3)
+                    {
+                        dados = getDadosNovoCte(idDoc);
+                    }
                 }
             }
             catch
@@ -228,13 +333,13 @@ namespace DAL
         /// <summary>
         /// Retorna uma string com o Fornecedor das NFs no Cte informado
         /// </summary>
-        public string getFornecedorCte(int idCte)
+        public string getFornecedorCte(int numCte)  // Funciona com o novo cte
         {
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    var nota = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais).FirstOrDefault();
+                    var nota = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == numCte select NotasFiscais).FirstOrDefault();
                     return nota.fornecedorNF;
                 }
             }
@@ -314,11 +419,10 @@ namespace DAL
         }
 
         /// <summary>
-        /// Retorna uma string com o Fornecedor das NFs no Cte informado
+        /// Retorna uma string com as NFs atreladas ao Cte informado
         /// </summary>
         public string getNfsCte(int idCte)
-        {
-            
+        {            
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
@@ -331,7 +435,7 @@ namespace DAL
 
                                 notas = item.numeroNF;
                             else
-                                notas += "/" + item.numeroNF;
+                                notas += "\\" + item.numeroNF;
                         }
                         return notas;
                 }
@@ -347,7 +451,7 @@ namespace DAL
         /// </summary>
         /// <param name="idCte">Parâmetro de pesquisa</param>
         /// <returns>O múmero de skus ou 0, caso nao encontre alguma nota, -1 se ocorrer um erro</returns>
-        public int getSkuCte(int idCte)
+        public int getSkuCte(int idCte) //  Funciona com o novo cte
         {
             int sku = 0;
             try
@@ -372,7 +476,7 @@ namespace DAL
         /// <summary>
         /// Retorna a soma dos sku's de todas as notas fiscais em um manifesto
         /// </summary>
-        public int getSkuManifesto(int numManifesto)
+        public int getSkuManifesto(int numManifesto)    //  Funciona com o novo cte
         {
             int sku = 0;
             try
@@ -400,11 +504,11 @@ namespace DAL
         }
 
         /// <summary>
-        /// Retorna a soma dos skus de cada nota componente do Cte
+        /// Retorna a soma dos volumes de cada nota componente do Cte
         /// </summary>
         /// <param name="numeroCte">Parâmetro de pesquisa</param>
         /// <returns>O múmero de skus ou 0, caso nao encontre alguma nota, -1 se ocorrer um erro</returns>
-        public int getVolumesCte(int numeroCte)
+        public int getVolumesCte(int numeroCte) //  Funciona com o novo cte
         {
             int volumes = 0;
             try
@@ -430,7 +534,7 @@ namespace DAL
         /// <summary>
         /// Altera uma NF para constar o número do Cte
         /// </summary>
-        public bool inserirCteNf(string numNF, int numeroCte, string nomeFornecedor)
+        public bool inserirCteNf(string numNF, int numeroCte) //  Funciona com o novo cte
         {
             try
             {
@@ -452,7 +556,7 @@ namespace DAL
         /// <summary>
         /// Altera uma NF para constar o número do Cte
         /// </summary>
-        public bool inserirCteNfPorId(int id, int numeroCte)
+        public bool inserirCteNfPorId(int id, int numeroCte)    //  Funciona com o novo cte
         {
             try
             {
@@ -477,7 +581,7 @@ namespace DAL
         /// <param name="tipodoc">Tipo de documento 0 - Manifesto, 1 - Cte, 2 - Nota fiscal</param>
         /// <param name="numDocumento">Parâmetro de busca</param>
         /// <returns>Id do documento se este for encontrado, -1 se nao for ou se ocorrer algum erro</returns>
-        public int? verificarDocumentoCadastrado(int tipodoc, string numDocumento)
+        public int? verificarDocumentoCadastrado(int tipodoc, string numDocumento) //  Não usar com o novo cte
         {
             int doc;
             try
@@ -499,7 +603,6 @@ namespace DAL
                     {
                         documento = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.numeroNF == numDocumento select NotasFiscais.idNF).FirstOrDefault();
                     }
-
                     return documento;
                 }
             }
@@ -517,11 +620,7 @@ namespace DAL
             string dados;
             try
             {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    int numeroCte = (from Ctes in BancoDeDados.Ctes where Ctes.numeroCte == numDoc select Ctes.numeroCte).FirstOrDefault();
-                    dados = "Cte n º " + numeroCte + " - " + getVolumesCte(numDoc) + " volumes - " + getSkuCte(numDoc) + " SKU's";
-                }
+                dados = "Cte n º " + numDoc + " - " + getVolumesCte(numDoc) + " volumes - " + getSkuCte(numDoc) + " SKU's";
             }
             catch
             {
@@ -529,7 +628,7 @@ namespace DAL
             }
             return dados;
         }
-
+  
         /// <summary>
         /// Retorna uma string com os dados do manifesto indicado
         /// </summary>

@@ -66,11 +66,11 @@ namespace DAL
                 for (int i = 0; i < result.Count - 4; i = i + 10)
                 {
                     cte = int.Parse(result[i].InnerText);
-                    criarCte(cte);
+                    criarCte(cte, result[i + 1].InnerText);     //  alterado para novo cte
 
                     criarCteManifesto(cte, lido.numeroManifesto);
                     fornecedor = result[i + 2].InnerText;
-                    alterarNfs(result[i + 1].InnerText, cte, fornecedor);
+                    alterarNfs(result[i + 1].InnerText, cte);
                 }
 
                 return true;
@@ -109,26 +109,35 @@ namespace DAL
                     quantCtesManifesto = quantCtes
                 };
 
-                bool cadCte = docBD.cadastrarManifesto(lido);
+                docBD.cadastrarManifesto(lido);
                 
                 int cte;
                 int indexNF = 0;
                 string fornecedor;
-
+                List<Cte> ctesNoPreManifesto = new List<Cte>();
                 for (int i = 5; i < ValueResult.Count - 4; i = i + 6)
                 {
-                    cte = int.Parse(ValueResult[i].InnerText.Replace('/',' '));
-                    criarCte(cte);
-// alterado                    
-  //                  if (cadCte)
-  //                  {
-                        criarCteManifesto(cte, lido.numeroManifesto);
-                        docBD.alterarPreManifesto(lido);
-  //                  }
-                    fornecedor = ValueResult[i -5].InnerText;
-                    alterarUmaNf(TextResult[indexNF].InnerText, cte, fornecedor);
+                    cte = int.Parse(ValueResult[i].InnerText.Replace('/', ' '));
+
+                    Cte cteDaVez = ctesNoPreManifesto.Where(x => x.numeroCte == cte).Select(x => x).FirstOrDefault();
+                    if (cteDaVez == null)
+                    {
+                        ctesNoPreManifesto.Add(new Cte(cte, TextResult[indexNF].InnerText.TrimStart('0')));
+                    }
+                    else
+                        cteDaVez.notasCte += "\\" + TextResult[indexNF].InnerText.TrimStart('0');                   
+
+                    fornecedor = ValueResult[i - 5].InnerText;
                     indexNF++;
                 }
+                foreach (var item in ctesNoPreManifesto)
+                {
+                    criarCte(item.numeroCte, item.notasCte);    //  alterado para novo cte
+                    alterarNfs(item.notasCte, item.numeroCte);  //  alterado para novo cte  
+                    criarCteManifesto(item.numeroCte, lido.numeroManifesto);
+                 
+                }
+
                 return true;
             }
             catch
@@ -308,7 +317,7 @@ namespace DAL
         /// Dispara a alteração das nfs de um manifesto para incluir o cte
         /// </summary>
         /// <param name="nfs">string contendo as notas fiscais separadas por uma '\'</param>
-        private bool alterarNfs(string nfs, int cte, string fornecedor)
+        private bool alterarNfs(string nfs, int cte)
         {
             bool retorno = true;
             DocumentosBD dbd = new DocumentosBD();
@@ -317,42 +326,29 @@ namespace DAL
             {
                 if (dbd.verificarDocumentoCadastrado(2, nf) >= 0)
                 {
-                    if (!dbd.inserirCteNf(nf, cte, fornecedor))
+                    if (!dbd.inserirCteNf(nf, cte))
                         retorno = false; //false se não for possivel alterar alguma nota
                 }
                 else
                     retorno = false; //false se alguma nota não estiver cadastrada
             }
             return retorno;
-        }
+        }  
 
-        /// <summary>
-        /// Dispara a alteração de uma nf para incluir o cte
-        /// </summary>
-        private bool alterarUmaNf(string nf, int cte, string fornecedor)
+        private bool criarCte(int cte, string notas)
         {
             DocumentosBD dbd = new DocumentosBD();
-            nf = nf.TrimStart('0');
-            NotasFiscais nova = dbd.getNFPorNumero(nf);
-            if (nova != null)
-            {
-                return dbd.inserirCteNf(nf, cte, fornecedor);
-            }
-            else
-                return false; //false se a nota não estiver cadastrada
+            //  alterado para novo cte
+            return (dbd.cadastrarCte(new Ctes(cte)) || dbd.cadastrarNovoCte(new Cte(cte, notas)));
         }
 
-        private bool criarCte(int cte)
+        private void criarCteManifesto(int cte, int manifesto) //  não alterado para novo cte
         {
             DocumentosBD dbd = new DocumentosBD();
-            return dbd.cadastrarCte(new Ctes(cte));
-        }
+            var ctes = dbd.getNovoCtePorNum(cte);
 
-        private void criarCteManifesto(int cte, int manifesto)
-        {
-            DocumentosBD dbd = new DocumentosBD();
-            if (dbd.checarCteManifesto(new Cte_Manifesto(cte, manifesto)))
-                dbd.cadastrarCteManifesto(new Cte_Manifesto(cte, manifesto));
+            if (dbd.checarCteManifesto(new Cte_Manifesto(cte, manifesto, ctes.Max(x => x.idCte))))
+                dbd.cadastrarCteManifesto(new Cte_Manifesto(cte, manifesto, ctes.Max(x=>x.idCte)));
         }
     }
 }

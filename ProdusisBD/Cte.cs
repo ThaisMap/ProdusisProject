@@ -12,25 +12,28 @@ namespace ProdusisBD
     using System;
     using System.Collections.Generic;
     
-    public partial class Tarefas
+    public partial class Cte
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tarefas()
+        public Cte()
         {
-            this.Func_Tarefa = new HashSet<Func_Tarefa>();
+            this.Cte_Manifesto = new HashSet<Cte_Manifesto>();
+            this.NotasFiscais = new HashSet<NotasFiscais>();
         }
-    
-        public int idTarefa { get; set; }
-        public System.DateTime inicioTarefa { get; set; }
-        public Nullable<System.DateTime> fimTarefa { get; set; }
-        public int documentoTarefa { get; set; }
-        public string tipoTarefa { get; set; }
-        public string divergenciaTarefa { get; set; }
-        public Nullable<int> quantPaletizado { get; set; }
-        public Nullable<int> totalPaletes { get; set; }
-        public string tempoGasto { get; set; }
+        public Cte(int nCte, string nfs)
+        {
+            numeroCte = nCte;
+            notasCte = nfs;
+        }
 
+
+        public int idCte { get; set; }
+        public int numeroCte { get; set; }
+        public string notasCte { get; set; }
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Func_Tarefa> Func_Tarefa { get; set; }
+        public virtual ICollection<Cte_Manifesto> Cte_Manifesto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NotasFiscais> NotasFiscais { get; set; }
     }
 }

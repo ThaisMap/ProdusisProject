@@ -115,24 +115,25 @@ namespace GUI
         {
             if (checarCampos())
                 if (t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "1") && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "5"))
-            {    
-                if (t.inserirTarefa(montarTarefa(), funcionarios()))
                 {
-                    dgTarefas.ItemsSource = t.tarefasPendentes("1");
-                    MessageBox.Show("Descarga iniciada para o " + d.linhaDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Descarga iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-                    Documento.Text = "";
-                    CBFuncionario.SelectedIndex = -1;
-                    ListaDeFuncionarios.Items.Clear();
+                    if (t.inserirTarefa(montarTarefa(), funcionarios()))
+                    {
+                        dgTarefas.ItemsSource = t.tarefasPendentes("1");
+                        MessageBox.Show("Descarga iniciada para o " + d.linhaDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Descarga iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                        Documento.Text = "";
+                        CBFuncionario.SelectedIndex = -1;
+                        ListaDeFuncionarios.Items.Clear();
+                        Documento.Focus();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Manifesto não importado.", "Descarga não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Manifesto não importado.", "Descarga não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Já existe uma descarga para esse manifesto.", "Descarga não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }
-            else
-            {
-                MessageBox.Show("Já existe uma descarga para esse manifesto.", "Descarga não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
         }
 
         private void Inserir_Click(object sender, RoutedEventArgs e)

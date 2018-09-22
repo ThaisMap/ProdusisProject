@@ -24,7 +24,8 @@ namespace ProdusisBD
         public Ctes(int nCte)
         {
             numeroCte = nCte;
-        }
+        }                
+
 
         public int numeroCte { get; set; }
     

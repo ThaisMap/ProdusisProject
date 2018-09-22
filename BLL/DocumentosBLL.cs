@@ -19,6 +19,11 @@ namespace BLL
             return d.getDadosDocumentos(1, numero);
         }
 
+        public string linhaDadosNovoCte(int numero)
+        {
+            return d.getDadosDocumentos(3, numero);
+        }
+
         public string linhaDadosManifesto(int numero)
         {
             return d.getDadosDocumentos(0, numero);
@@ -57,6 +62,11 @@ namespace BLL
             return d.getNfsCte(cte);
         }
 
+        public string getNFsNovoCte(int cte)
+        {
+            return d.getNfsNovoCte(cte);
+        }
+
         public string getManifestosCte(int cte)
         {
             return d.get_ListaManifestosCte(cte);
@@ -68,6 +78,15 @@ namespace BLL
         }
         
         public bool cteCadastrado(int num)
+        {
+            if (d.verificarDocumentoCadastrado(1, num.ToString()) != 0)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+        public bool cteNovoCadastrado(int num)
         {
             if (d.verificarDocumentoCadastrado(1, num.ToString()) != 0)
             {
@@ -116,6 +135,7 @@ namespace BLL
             PastasXml.Default.PastaManifestos = caminho;
             PastasXml.Default.Save();
         }
+
         public void setPastasPreManifesto(string caminho)
         {
             PastasXml.Default.PastaPreManifestos = caminho;

@@ -13,6 +13,14 @@
           <Property Name="Motorista" Type="nvarchar" MaxLength="40" Nullable="false" />
           <Property Name="Capacidade" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Cte">
+          <Key>
+            <PropertyRef Name="idCte" />
+          </Key>
+          <Property Name="idCte" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="numeroCte" Type="int" Nullable="false" />
+          <Property Name="notasCte" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
         <EntityType Name="Cte_Manifesto">
           <Key>
             <PropertyRef Name="idCteManifesto" />
@@ -20,6 +28,7 @@
           <Property Name="idCteManifesto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Cte" Type="int" Nullable="false" />
           <Property Name="Manifesto" Type="int" Nullable="false" />
+          <Property Name="CteNovo" Type="int" />
         </EntityType>
         <EntityType Name="Ctes">
           <Key>
@@ -69,6 +78,7 @@
           <Property Name="skuNF" Type="int" Nullable="false" />
           <Property Name="CteNF" Type="int" />
           <Property Name="clienteNF" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CteNovoNF" Type="int" />
         </EntityType>
         <EntityType Name="Observacoes">
           <Key>
@@ -168,6 +178,18 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Cte_Manifesto_NovoCte">
+          <End Role="Cte" Type="Self.Cte" Multiplicity="0..1" />
+          <End Role="Cte_Manifesto" Type="Self.Cte_Manifesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cte">
+              <PropertyRef Name="idCte" />
+            </Principal>
+            <Dependent Role="Cte_Manifesto">
+              <PropertyRef Name="CteNovo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Func_Tarefa_Funcionarios">
           <End Role="Funcionarios" Type="Self.Funcionarios" Multiplicity="1" />
           <End Role="Func_Tarefa" Type="Self.Func_Tarefa" Multiplicity="*" />
@@ -189,6 +211,18 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
             </Principal>
             <Dependent Role="Func_Tarefa">
               <PropertyRef Name="Tarefa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotasFiscais_CteNovo">
+          <End Role="Cte" Type="Self.Cte" Multiplicity="0..1" />
+          <End Role="NotasFiscais" Type="Self.NotasFiscais" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cte">
+              <PropertyRef Name="idCte" />
+            </Principal>
+            <Dependent Role="NotasFiscais">
+              <PropertyRef Name="CteNovoNF" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -220,6 +254,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
         </Association>
         <EntityContainer Name="produsisBDModelStoreContainer">
           <EntitySet Name="CapacidadeMotoristas" EntityType="Self.CapacidadeMotoristas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cte" EntityType="Self.Cte" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cte_Manifesto" EntityType="Self.Cte_Manifesto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ctes" EntityType="Self.Ctes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Func_Tarefa" EntityType="Self.Func_Tarefa" Schema="dbo" store:Type="Tables" />
@@ -267,6 +302,10 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
             <End Role="Manifestos" EntitySet="Manifestos" />
             <End Role="Cte_Manifesto" EntitySet="Cte_Manifesto" />
           </AssociationSet>
+          <AssociationSet Name="FK_Cte_Manifesto_NovoCte" Association="Self.FK_Cte_Manifesto_NovoCte">
+            <End Role="Cte" EntitySet="Cte" />
+            <End Role="Cte_Manifesto" EntitySet="Cte_Manifesto" />
+          </AssociationSet>
           <AssociationSet Name="FK_Func_Tarefa_Funcionarios" Association="Self.FK_Func_Tarefa_Funcionarios">
             <End Role="Funcionarios" EntitySet="Funcionarios" />
             <End Role="Func_Tarefa" EntitySet="Func_Tarefa" />
@@ -274,6 +313,10 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
           <AssociationSet Name="FK_Func_Tarefa_Tarefas" Association="Self.FK_Func_Tarefa_Tarefas">
             <End Role="Tarefas" EntitySet="Tarefas" />
             <End Role="Func_Tarefa" EntitySet="Func_Tarefa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotasFiscais_CteNovo" Association="Self.FK_NotasFiscais_CteNovo">
+            <End Role="Cte" EntitySet="Cte" />
+            <End Role="NotasFiscais" EntitySet="NotasFiscais" />
           </AssociationSet>
           <AssociationSet Name="FK_NotasFiscais_Ctes" Association="Self.FK_NotasFiscais_Ctes">
             <End Role="Ctes" EntitySet="Ctes" />
@@ -297,6 +340,16 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
           <Property Name="Motorista" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Capacidade" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="Cte">
+          <Key>
+            <PropertyRef Name="idCte" />
+          </Key>
+          <Property Name="idCte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="numeroCte" Type="Int32" Nullable="false" />
+          <Property Name="notasCte" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cte_Manifesto" Relationship="Self.FK_Cte_Manifesto_NovoCte" FromRole="Cte" ToRole="Cte_Manifesto" />
+          <NavigationProperty Name="NotasFiscais" Relationship="Self.FK_NotasFiscais_CteNovo" FromRole="Cte" ToRole="NotasFiscais" />
+        </EntityType>
         <EntityType Name="Cte_Manifesto">
           <Key>
             <PropertyRef Name="idCteManifesto" />
@@ -304,6 +357,8 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
           <Property Name="idCteManifesto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Cte" Type="Int32" Nullable="false" />
           <Property Name="Manifesto" Type="Int32" Nullable="false" />
+          <Property Name="CteNovo" Type="Int32" />
+          <NavigationProperty Name="Cte1" Relationship="Self.FK_Cte_Manifesto_NovoCte" FromRole="Cte_Manifesto" ToRole="Cte" />
           <NavigationProperty Name="Ctes" Relationship="Self.FK_Cte_Manifesto_Cte" FromRole="Cte_Manifesto" ToRole="Ctes" />
           <NavigationProperty Name="Manifestos" Relationship="Self.FK_Cte_Manifesto_Manifesto" FromRole="Cte_Manifesto" ToRole="Manifestos" />
         </EntityType>
@@ -362,6 +417,8 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
           <Property Name="skuNF" Type="Int32" Nullable="false" />
           <Property Name="CteNF" Type="Int32" />
           <Property Name="clienteNF" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CteNovoNF" Type="Int32" />
+          <NavigationProperty Name="Cte" Relationship="Self.FK_NotasFiscais_CteNovo" FromRole="NotasFiscais" ToRole="Cte" />
           <NavigationProperty Name="Ctes" Relationship="Self.FK_NotasFiscais_Ctes" FromRole="NotasFiscais" ToRole="Ctes" />
         </EntityType>
         <EntityType Name="Observacoes">
@@ -436,6 +493,30 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
           <Property Name="quantPaletizado" Type="Int32" />
           <Property Name="totalPaletes" Type="Int32" />
         </EntityType>
+        <Association Name="FK_Cte_Manifesto_NovoCte">
+          <End Role="Cte" Type="Self.Cte" Multiplicity="0..1" />
+          <End Role="Cte_Manifesto" Type="Self.Cte_Manifesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cte">
+              <PropertyRef Name="idCte" />
+            </Principal>
+            <Dependent Role="Cte_Manifesto">
+              <PropertyRef Name="CteNovo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotasFiscais_CteNovo">
+          <End Role="Cte" Type="Self.Cte" Multiplicity="0..1" />
+          <End Role="NotasFiscais" Type="Self.NotasFiscais" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cte">
+              <PropertyRef Name="idCte" />
+            </Principal>
+            <Dependent Role="NotasFiscais">
+              <PropertyRef Name="CteNovoNF" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Cte_Manifesto_Cte">
           <End Role="Ctes" Type="Self.Ctes" Multiplicity="1" />
           <End Role="Cte_Manifesto" Type="Self.Cte_Manifesto" Multiplicity="*" />
@@ -512,6 +593,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
         </Association>
         <EntityContainer Name="produsisBDEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CapacidadeMotoristas" EntityType="Self.CapacidadeMotoristas" />
+          <EntitySet Name="Cte" EntityType="Self.Cte" />
           <EntitySet Name="Cte_Manifesto" EntityType="Self.Cte_Manifesto" />
           <EntitySet Name="Ctes" EntityType="Self.Ctes" />
           <EntitySet Name="Func_Tarefa" EntityType="Self.Func_Tarefa" />
@@ -522,6 +604,14 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
           <EntitySet Name="Tarefas" EntityType="Self.Tarefas" />
           <EntitySet Name="RelatorioConferencias" EntityType="Self.RelatorioConferencias" />
           <EntitySet Name="RelatorioNaoConferencia" EntityType="Self.RelatorioNaoConferencia" />
+          <AssociationSet Name="FK_Cte_Manifesto_NovoCte" Association="Self.FK_Cte_Manifesto_NovoCte">
+            <End Role="Cte" EntitySet="Cte" />
+            <End Role="Cte_Manifesto" EntitySet="Cte_Manifesto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotasFiscais_CteNovo" Association="Self.FK_NotasFiscais_CteNovo">
+            <End Role="Cte" EntitySet="Cte" />
+            <End Role="NotasFiscais" EntitySet="NotasFiscais" />
+          </AssociationSet>
           <AssociationSet Name="FK_Cte_Manifesto_Cte" Association="Self.FK_Cte_Manifesto_Cte">
             <End Role="Ctes" EntitySet="Ctes" />
             <End Role="Cte_Manifesto" EntitySet="Cte_Manifesto" />
@@ -562,12 +652,22 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Cte">
+            <EntityTypeMapping TypeName="produsisBDModel.Cte">
+              <MappingFragment StoreEntitySet="Cte">
+                <ScalarProperty Name="idCte" ColumnName="idCte" />
+                <ScalarProperty Name="numeroCte" ColumnName="numeroCte" />
+                <ScalarProperty Name="notasCte" ColumnName="notasCte" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Cte_Manifesto">
             <EntityTypeMapping TypeName="produsisBDModel.Cte_Manifesto">
               <MappingFragment StoreEntitySet="Cte_Manifesto">
                 <ScalarProperty Name="idCteManifesto" ColumnName="idCteManifesto" />
                 <ScalarProperty Name="Cte" ColumnName="Cte" />
                 <ScalarProperty Name="Manifesto" ColumnName="Manifesto" />
+                <ScalarProperty Name="CteNovo" ColumnName="CteNovo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -622,6 +722,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
                 <ScalarProperty Name="skuNF" ColumnName="skuNF" />
                 <ScalarProperty Name="CteNF" ColumnName="CteNF" />
                 <ScalarProperty Name="clienteNF" ColumnName="clienteNF" />
+                <ScalarProperty Name="CteNovoNF" ColumnName="CteNovoNF" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

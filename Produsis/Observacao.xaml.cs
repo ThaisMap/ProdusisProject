@@ -62,5 +62,64 @@ namespace GUI
                 }
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    DAL.DocumentosBD doc = new DAL.DocumentosBD();
+                    var ctes = BancoDeDados.Ctes.ToList();
+                    for (int i = 48800; i < ctes.Count; i++)
+                    {
+                        string notas = doc.getNfsCte(ctes[i].numeroCte);
+                        if (notas.Length >= 100)
+                            notas = notas.Remove(99);
+                        var cadastrado = doc.verificarNovoCte(ctes[i].numeroCte, notas);
+                        if (notas != "" && cadastrado == 0)
+                        {
+                            BancoDeDados.Cte.Add(new Cte(ctes[i].numeroCte, notas));
+                            BancoDeDados.SaveChanges();
+                        }
+                    }
+
+                  /*  foreach (var item in ctes)
+                    {
+                        string notas = doc.getNfsCte(item.numeroCte);
+                        var cadastrado = doc.verificarNovoCte(item.numeroCte, notas);
+                        if (notas != "" && cadastrado == 0)
+                        {
+                            BancoDeDados.Cte.Add(new Cte(item.numeroCte, notas));
+                            BancoDeDados.SaveChanges();
+                        }
+                    }*/
+      
+                    var cteManif = BancoDeDados.Cte_Manifesto.ToList();
+
+                    for (int i = 0; i < cteManif.Count; i++)
+                    {
+                        var idNovoCte = doc.getNovoCtePorNum(cteManif[i].Cte);
+                        cteManif[i].CteNovo = idNovoCte[0].idCte;
+                        BancoDeDados.SaveChanges();
+
+                    }
+
+
+                    var Notas = BancoDeDados.NotasFiscais.Where(x=> x.CteNF != null).ToList();
+                    foreach (var item in Notas)
+                    {
+                        var idNovoCte = doc.getNovoCtePorNum((int)item.CteNF);
+                        item.CteNovoNF = idNovoCte[0].idCte;
+                    }
+                    BancoDeDados.SaveChanges();
+
+                }
+            }
+            catch (Exception erro)
+            {
+                var olho = erro;
+            }
+        }
     }
 }

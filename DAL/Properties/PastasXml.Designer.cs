@@ -25,7 +25,7 @@ namespace DAL.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\thais.maria\\Documents\\xml produsis\\NF")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\xml produsis\\NF")]
         public string PastaNFs {
             get {
                 return ((string)(this["PastaNFs"]));
@@ -37,7 +37,7 @@ namespace DAL.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\thais.maria\\Documents\\xml produsis\\Manifesto")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\xml produsis\\Manifesto")]
         public string PastaManifestos {
             get {
                 return ((string)(this["PastaManifestos"]));
@@ -49,7 +49,7 @@ namespace DAL.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\thais.maria\\Documents\\xml produsis\\Pre Manifesto")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\xml produsis\\Pre Manifesto")]
         public string PastaPreManifestos {
             get {
                 return ((string)(this["PastaPreManifestos"]));

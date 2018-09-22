@@ -111,25 +111,26 @@ namespace GUI
 
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
-            if (checarCampos() && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "2"))
-            {
-                if (t.inserirTarefa(montarTarefa(), funcionarios()))
+            if (checarCampos())
+                if (t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "2"))
                 {
-                    dgTarefas.ItemsSource = t.tarefasPendentes("2");
-                    MessageBox.Show("Conferência iniciada para o " + d.linhaDadosCte(int.Parse(Documento.Text.Replace("_", ""))), "Conferência iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-                    Documento.Text = "";
-                    CBFuncionario.SelectedIndex = -1;
-                    ListaDeFuncionarios.Items.Clear();
+                    if (t.inserirTarefa(montarTarefa(), funcionarios()))
+                    {
+                        dgTarefas.ItemsSource = t.tarefasPendentes("2");
+                        MessageBox.Show("Conferência iniciada para o " + d.linhaDadosCte(int.Parse(Documento.Text.Replace("_", ""))), "Conferência iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                        Documento.Text = "";
+                        CBFuncionario.SelectedIndex = -1;
+                        ListaDeFuncionarios.Items.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cte não importado.", "Conferência não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Não foi possível iniciar a conferência.", "Conferência não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Já existe uma conferência para esse cte.", "Conferência não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }
-            else
-            {
-                MessageBox.Show("Não foi possível iniciar a conferência.", "Conferência não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
             Documento.Focus();
         }
 

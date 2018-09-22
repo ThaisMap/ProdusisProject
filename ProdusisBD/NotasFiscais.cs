@@ -21,7 +21,9 @@ namespace ProdusisBD
         public int skuNF { get; set; }
         public Nullable<int> CteNF { get; set; }
         public string clienteNF { get; set; }
+        public Nullable<int> CteNovoNF { get; set; }
     
+        public virtual Cte Cte { get; set; }
         public virtual Ctes Ctes { get; set; }
     }
 }
