@@ -541,7 +541,9 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     NotasFiscais nfAtual = BancoDeDados.NotasFiscais.FirstOrDefault(nf => nf.numeroNF == numNF);
+                    var ctes = getNovoCtePorNum(numeroCte);
                     nfAtual.CteNF = numeroCte;
+                    nfAtual.CteNovoNF = ctes.Where(x => x.notasCte.Contains(numNF)).Select(x => x.idCte).FirstOrDefault();
                     BancoDeDados.SaveChanges();
                 }
                 return true;

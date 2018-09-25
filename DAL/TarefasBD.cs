@@ -491,11 +491,13 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    var cadastrado = BancoDeDados.Tarefas.FirstOrDefault(t => t.documentoTarefa == numDocumento && t.tipoTarefa == tipoTarefa);
-                    if (cadastrado == null)
-                        return true;
-                    else
-                        return false;
+                       var cadastrado = BancoDeDados.Tarefas.FirstOrDefault(t => t.documentoTarefa == numDocumento && t.tipoTarefa == tipoTarefa);
+                        if (cadastrado == null)
+                            return true;
+                        else
+                            return false;
+                  
+
                 }
             }
             catch

@@ -222,17 +222,9 @@ namespace DAL
                     List<string> conteudoNf;
                     foreach (string nf in notfis)
                     {   //Fornecedor
-                        if (nf.StartsWith("000"))
+                        if (nf.StartsWith("311"))
                         {
-                            conteudoNf = nf.Split(' ').ToList();
-                            conteudoNf.RemoveAll(l => l == "");
-
-                            Fornecedor = conteudoNf[0].Remove(0, 3);
-                            for (int i = 1; i < conteudoNf.Count - 2; i++)
-                            {
-                                Fornecedor += " ";
-                                Fornecedor += conteudoNf[i];
-                            }
+                            Fornecedor = nf.Remove(0, 133).TrimEnd(' ');                       
                         }
 
                         //Cliente e Zerar SKU
@@ -339,7 +331,8 @@ namespace DAL
         {
             DocumentosBD dbd = new DocumentosBD();
             //  alterado para novo cte
-            return (dbd.cadastrarCte(new Ctes(cte)) || dbd.cadastrarNovoCte(new Cte(cte, notas)));
+            dbd.cadastrarCte(new Ctes(cte));
+            return (dbd.cadastrarNovoCte(new Cte(cte, notas)));
         }
 
         private void criarCteManifesto(int cte, int manifesto) //  não alterado para novo cte

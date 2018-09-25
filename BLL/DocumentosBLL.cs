@@ -72,6 +72,23 @@ namespace BLL
             return d.get_ListaManifestosCte(cte);
         }
             
+        /// <summary>
+        /// Retorna o id do ultimo cte sem tarefa cadastrada com o número informado, ou -1 caso não haja disponível
+        /// </summary>
+        /// <param name="numCte"></param>
+        /// <returns></returns>
+        public int getIdCteDisponivel(int numCte)
+        {
+            TarefasBD t = new TarefasBD();
+            var lista = d.getNovoCtePorNum(numCte);
+            for (int i = lista.Count-1; i >= 0; i--)
+            {
+                if (t.verificaDocumentoTarefa(lista[i].idCte, "2"))
+                    return lista[i].idCte;
+            }
+            return -1;
+        }
+
         public string fornecedorCte(int num)
         {            
             return d.getFornecedorCte(num);

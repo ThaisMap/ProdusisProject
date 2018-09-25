@@ -112,7 +112,7 @@ namespace GUI
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
             if (checarCampos())
-                if (t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "2"))
+                if (d.getIdCteDisponivel(int.Parse(Documento.Text.Replace("_", "")))>-1)
                 {
                     if (t.inserirTarefa(montarTarefa(), funcionarios()))
                     {
@@ -156,8 +156,8 @@ namespace GUI
 
         private Tarefas montarTarefa()
         {
-            Tarefas novaTarefa = new Tarefas();
-            novaTarefa.documentoTarefa = int.Parse(Documento.Text.Replace("_", ""));
+            Tarefas novaTarefa = new Tarefas();            
+            novaTarefa.documentoTarefa = d.getIdCteDisponivel(int.Parse(Documento.Text.Replace("_", "")));
             novaTarefa.inicioTarefa = DateTime.Now;
             novaTarefa.tipoTarefa = "2";
             return novaTarefa;
