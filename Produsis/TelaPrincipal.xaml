@@ -33,88 +33,40 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid Width="auto" VerticalAlignment="Top">
-        <materialDesign:ColorZone
-            Width="auto"
-            Height="60"
-            materialDesign:ShadowAssist.ShadowDepth="Depth2"
-            Mode="PrimaryLight" />
-        <Grid
-            Margin="0,0,0,10"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="60" />
-                <RowDefinition />
-            </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Vertical">
             <!--  Botoes  -->
-            <StackPanel
-                Grid.Row="0"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                HorizontalAlignment="Center"
-                Orientation="Horizontal">
-                <Button
-                    x:Name="BtnAdministrativo"
-                    Width="auto"
-                    Height="auto"
-                    Margin="2,5"
-                    Click="BtnAdministrativo_Click"
-                    Content="Administrativo"
-                    IsTabStop="False" />
-                <Button
-                    x:Name="BtnDescarga"
-                    Width="auto"
-                    Height="auto"
-                    Margin="2,5"
-                    Click="BtnDescarga_Click"
-                    Content="Descarga"
-                    IsTabStop="False" />
-                <Button
-                    x:Name="BtnConferencia"
-                    Width="auto"
-                    Height="auto"
-                    Margin="2,5"
-                    Click="BtnConferencia_Click"
-                    Content="Conferência"
-                    IsTabStop="False" />
-                <Button
-                    x:Name="BtnSeparacaoCarga"
-                    Width="160"
-                    Height="auto"
-                    Margin="2,5"
-                    Click="BtnSeparacaoCarga_Click"
-                    IsTabStop="False">
-                    <TextBlock TextAlignment="Left" TextWrapping="Wrap"><Run Text="Separação de Rota" /></TextBlock>
-                </Button>
-                <Button
-                    x:Name="BtnCarregamento"
-                    Width="auto"
-                    Height="auto"
-                    Margin="2,5"
-                    Click="BtnCarregamento_Click"
-                    Content="Carregamento"
-                    IsTabStop="False" />
-                <Button
-                    x:Name="BtnDivergencia"
-                    Width="auto"
-                    Height="auto"
-                    Margin="2,5"
-                    Click="BtnDivergencia_Click"
-                    Content="Divergências"
-                    IsTabStop="False" />
-            </StackPanel>
+            <Menu HorizontalAlignment="Center" Height="auto" VerticalAlignment="Top" Width="auto">
+                <MenuItem Name="BtnAdministrativo" Header="Administrativo">
+                    <MenuItem Name="BtnPesquisaDocs" Header="Ver Documentos" Click="BtnPesquisaDocs_Click"/>
+                    <MenuItem Name="BtnRelatorios" Header="Relatórios" Click="BtnRelatorios_Click"/>
+                    <MenuItem Name="BtnProdutividade" Header="Produtividade" Click="BtnProdutividade_Click"/>
+                    <MenuItem Name="BtnFuncionarios" Header="Funcionários">
+                        <MenuItem Name="BtnCadFunc" Header="Cadastrar" Click="BtnCadFunc_Click"/>
+                        <MenuItem Name="BtnEditFunc" Header="Editar" Click="BtnEditFunc_Click"/>
+                        <MenuItem Name="BtnObserv" Header="Observações" Click="BtnObserv_Click"/>
+                        <MenuItem Name="BtnEquipe" Header="Equipes" Click="BtnEquipe_Click"/>
+                        <MenuItem Name="BtnMotorista" Header="Motoristas" Click="BtnMotorista_Click"/>
+                    </MenuItem>
+                    <MenuItem Name="BtnConfig" Header="Configurações">
+                         <MenuItem Name="BtnPastas" Header="Pastas" Click="BtnPastas_Click"/>
+                         <MenuItem Name="BtnTemas" Header="Temas" Click="BtnTemas_Click"/>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Name="BtnDescarga" Header="Descarga" Click="BtnDescarga_Click"/>
+                <MenuItem Name="BtnConferencia" Header="Conferência" Click="BtnConferencia_Click"/>
+                <MenuItem Name="BtnSeparacaoCarga" Header="Separação de rota" Click="BtnSeparacaoCarga_Click"/>
+                <MenuItem Name="BtnCarregamento" Header="Carregamento" Click="BtnCarregamento_Click"/>
+                <MenuItem Name="BtnDivergencia" Header="Divergências" Click="BtnDivergencia_Click"/>
+            </Menu>
+
             <Frame
                 Name="Navegador"
-                Grid.Row="1"
-                Grid.Column="0"
                 Margin="20,10"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 VerticalContentAlignment="Top"
                 NavigationUIVisibility="Hidden" />
-        </Grid>
+        </StackPanel>
     </Grid>
 </Window>

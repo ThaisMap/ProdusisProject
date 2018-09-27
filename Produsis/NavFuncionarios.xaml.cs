@@ -28,27 +28,27 @@ namespace GUI
 
         private void BtnCadFuncionarios_Click(object sender, RoutedEventArgs e)
         {
-            NavegadorInterno.Navigate(new CadastroFuncionarios());
+            Navegador.Navigate(new CadastroFuncionarios());
         }
 
         private void BtnEditarFuncionarios_Click(object sender, RoutedEventArgs e)
         {
-            NavegadorInterno.Navigate(new EdicaoFuncionarios());
+            Navegador.Navigate(new EdicaoFuncionarios());
         }
 
         private void BtnObservacoes_Click(object sender, RoutedEventArgs e)
         {
-            NavegadorInterno.Navigate(new Observacao());
+            Navegador.Navigate(new Observacao());
         }
 
         private void BtnMotorista_Click(object sender, RoutedEventArgs e)
         {
-            NavegadorInterno.Navigate(new CadastroMotorista());
+          
         }
 
         private void BtnEquipe_Click(object sender, RoutedEventArgs e)
         {
-            NavegadorInterno.Navigate(new Equipes());
+            Navegador.Navigate(new Equipes());
         }
     }
 }

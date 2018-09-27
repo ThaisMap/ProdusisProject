@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="produsisBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="produsisBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CapacidadeMotoristas">
           <Key>
             <PropertyRef Name="Id" />
@@ -154,6 +154,32 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
           <Property Name="quantPaletizado" Type="int" />
           <Property Name="totalPaletes" Type="int" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="RelatorioNovoConferencias">
+          <Key>
+            <PropertyRef Name="idTarefa" />
+            <PropertyRef Name="numeroCte" />
+            <PropertyRef Name="tipoTarefa" />
+            <PropertyRef Name="inicioTarefa" />
+            <PropertyRef Name="nomeFunc" />
+            <PropertyRef Name="volumesNF" />
+            <PropertyRef Name="skuNF" />
+            <PropertyRef Name="fornecedorNF" />
+            <PropertyRef Name="documentoTarefa" />
+          </Key>
+          <Property Name="idTarefa" Type="int" Nullable="false" />
+          <Property Name="numeroCte" Type="int" Nullable="false" />
+          <Property Name="tipoTarefa" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="inicioTarefa" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="fimTarefa" Type="datetime2" Precision="0" />
+          <Property Name="divergenciaTarefa" Type="nvarchar" MaxLength="120" />
+          <Property Name="nomeFunc" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="volumesNF" Type="int" Nullable="false" />
+          <Property Name="skuNF" Type="int" Nullable="false" />
+          <Property Name="fornecedorNF" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="documentoTarefa" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Cte_Manifesto_Cte">
           <End Role="Ctes" Type="Self.Ctes" Multiplicity="1" />
           <End Role="Cte_Manifesto" Type="Self.Cte_Manifesto" Multiplicity="*" />
@@ -294,6 +320,21 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
     [RelatorioNaoConferencia].[totalPaletes] AS [totalPaletes]
     FROM [dbo].[RelatorioNaoConferencia] AS [RelatorioNaoConferencia]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="RelatorioNovoConferencias" EntityType="Self.RelatorioNovoConferencias" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [RelatorioNovoConferencias].[idTarefa] AS [idTarefa], 
+    [RelatorioNovoConferencias].[numeroCte] AS [numeroCte], 
+    [RelatorioNovoConferencias].[tipoTarefa] AS [tipoTarefa], 
+    [RelatorioNovoConferencias].[inicioTarefa] AS [inicioTarefa], 
+    [RelatorioNovoConferencias].[fimTarefa] AS [fimTarefa], 
+    [RelatorioNovoConferencias].[divergenciaTarefa] AS [divergenciaTarefa], 
+    [RelatorioNovoConferencias].[nomeFunc] AS [nomeFunc], 
+    [RelatorioNovoConferencias].[volumesNF] AS [volumesNF], 
+    [RelatorioNovoConferencias].[skuNF] AS [skuNF], 
+    [RelatorioNovoConferencias].[fornecedorNF] AS [fornecedorNF], 
+    [RelatorioNovoConferencias].[documentoTarefa] AS [documentoTarefa]
+    FROM [dbo].[RelatorioNovoConferencias] AS [RelatorioNovoConferencias]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Cte_Manifesto_Cte" Association="Self.FK_Cte_Manifesto_Cte">
             <End Role="Ctes" EntitySet="Ctes" />
             <End Role="Cte_Manifesto" EntitySet="Cte_Manifesto" />
@@ -327,8 +368,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
             <End Role="Observacoes" EntitySet="Observacoes" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="produsisBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -636,7 +676,32 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
             <End Role="Funcionarios" EntitySet="Funcionarios" />
             <End Role="Observacoes" EntitySet="Observacoes" />
           </AssociationSet>
+          <EntitySet Name="RelatorioNovoConferencias" EntityType="produsisBDModel.RelatorioNovoConferencias" />
         </EntityContainer>
+        <EntityType Name="RelatorioNovoConferencias">
+          <Key>
+            <PropertyRef Name="idTarefa" />
+            <PropertyRef Name="numeroCte" />
+            <PropertyRef Name="tipoTarefa" />
+            <PropertyRef Name="inicioTarefa" />
+            <PropertyRef Name="nomeFunc" />
+            <PropertyRef Name="volumesNF" />
+            <PropertyRef Name="skuNF" />
+            <PropertyRef Name="fornecedorNF" />
+            <PropertyRef Name="documentoTarefa" />
+          </Key>
+          <Property Name="idTarefa" Type="Int32" Nullable="false" />
+          <Property Name="numeroCte" Type="Int32" Nullable="false" />
+          <Property Name="tipoTarefa" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="inicioTarefa" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fimTarefa" Type="DateTime" Precision="0" />
+          <Property Name="divergenciaTarefa" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="nomeFunc" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="volumesNF" Type="Int32" Nullable="false" />
+          <Property Name="skuNF" Type="Int32" Nullable="false" />
+          <Property Name="fornecedorNF" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="documentoTarefa" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -782,6 +847,23 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not h
                 <ScalarProperty Name="numeroManifesto" ColumnName="numeroManifesto" />
                 <ScalarProperty Name="quantPaletizado" ColumnName="quantPaletizado" />
                 <ScalarProperty Name="totalPaletes" ColumnName="totalPaletes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RelatorioNovoConferencias">
+            <EntityTypeMapping TypeName="produsisBDModel.RelatorioNovoConferencias">
+              <MappingFragment StoreEntitySet="RelatorioNovoConferencias">
+                <ScalarProperty Name="documentoTarefa" ColumnName="documentoTarefa" />
+                <ScalarProperty Name="fornecedorNF" ColumnName="fornecedorNF" />
+                <ScalarProperty Name="skuNF" ColumnName="skuNF" />
+                <ScalarProperty Name="volumesNF" ColumnName="volumesNF" />
+                <ScalarProperty Name="nomeFunc" ColumnName="nomeFunc" />
+                <ScalarProperty Name="divergenciaTarefa" ColumnName="divergenciaTarefa" />
+                <ScalarProperty Name="fimTarefa" ColumnName="fimTarefa" />
+                <ScalarProperty Name="inicioTarefa" ColumnName="inicioTarefa" />
+                <ScalarProperty Name="tipoTarefa" ColumnName="tipoTarefa" />
+                <ScalarProperty Name="numeroCte" ColumnName="numeroCte" />
+                <ScalarProperty Name="idTarefa" ColumnName="idTarefa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

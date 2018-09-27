@@ -37,5 +37,6 @@ namespace ProdusisBD
         public virtual DbSet<Tarefas> Tarefas { get; set; }
         public virtual DbSet<RelatorioConferencias> RelatorioConferencias { get; set; }
         public virtual DbSet<RelatorioNaoConferencia> RelatorioNaoConferencia { get; set; }
+        public virtual DbSet<RelatorioNovoConferencias> RelatorioNovoConferencias { get; set; }
     }
 }

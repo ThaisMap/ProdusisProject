@@ -23,7 +23,7 @@
             <TextBlock Margin="40,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Observações de horário</TextBlock>
             <Separator />
 
-            <Grid HorizontalAlignment="Left">
+            <Grid HorizontalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -94,13 +94,14 @@
             <DataGrid x:Name="dgObs" Height="250" 
                       AutoGenerateColumns="False" IsReadOnly="True" 
                       PreviewKeyDown="dgObs_PreviewKeyDown"
+                      HorizontalAlignment="Center"
                       VerticalScrollBarVisibility="Auto">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding DataObs, StringFormat=dd/MM/yyyy}" Header="Data" />
                     <DataGridTextColumn Binding="{Binding TextoObs}" Header="Observação" />
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Content="Banco" Click="Button_Click" d:LayoutOverrides="Height"/>
+            <Button Content="Banco" Click="Button_Click" Width="100"/>
 
         </StackPanel>
 

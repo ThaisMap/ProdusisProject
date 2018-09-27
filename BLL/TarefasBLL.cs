@@ -14,18 +14,11 @@ namespace BLL
 
         public bool inserirTarefa(Tarefas novaTarefa, string[] funcionarios)
         {
-            if (novaTarefa.tipoTarefa == "2")
-            {
-                if (!d.cteCadastrado(novaTarefa.documentoTarefa))
-                    return false;
-            }
-            else
-            {
-                if (!d.manifestoCadastrado(novaTarefa.documentoTarefa))
+            if (novaTarefa.tipoTarefa != "2" && !d.manifestoCadastrado(novaTarefa.documentoTarefa))
                 {
                     return false;
                 }
-            }
+            
 
             FuncionariosBD f = new FuncionariosBD();
             int[] idsFuncionarios = new int[funcionarios.Length];

@@ -69,38 +69,30 @@ namespace GUI
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    DAL.DocumentosBD doc = new DAL.DocumentosBD();
+                    DAL.DocumentosBD doc = new DAL.DocumentosBD();                 
 
-                    var Tarefas = BancoDeDados.Tarefas.Where(x => x.tipoTarefa == "2").ToList();
-                    for (int i = 0; i < Tarefas.Count; i++)
+                    var novosCtes = from novo in BancoDeDados.Cte
+                                    from antigo in BancoDeDados.Ctes
+                                    where novo.numeroCte == antigo.numeroCte
+                                    select antigo;
+
+                    var ctes = BancoDeDados.Ctes.Except(novosCtes).ToList();
+
+                    for (int i = 0; i < ctes.Count; i++)
                     {
-
-                    }
-                    /*var Notas = BancoDeDados.NotasFiscais.Where(x=> x.CteNF != null && x.CteNovoNF == null).ToList();
-                    for (int i = 0; i < Notas.Count; i++)
-                    {                    
-                        var idNovoCte = doc.getNovoCtePorNum((int)Notas[i].CteNF);
-                        if (idNovoCte.Count >= 1)
+                        string notas = doc.getNfsCte(ctes[i].numeroCte);
+                        if (notas != "")
                         {
-                            Notas[i].CteNovoNF = idNovoCte[0].idCte;
-                            BancoDeDados.SaveChanges();
+                            if (notas.Length >= 100)
+                                notas = notas.Remove(99);
+                            var cadastrado = doc.verificarNovoCte(ctes[i].numeroCte, notas);
+                            if (cadastrado == 0)
+                            {
+                                BancoDeDados.Cte.Add(new Cte(ctes[i].numeroCte, notas));
+                                BancoDeDados.SaveChanges();
+                            }
                         }
                     }
-                   
-
-                    var ctes = BancoDeDados.Ctes.ToList();
-                    /*   for (int i = 48900; i < ctes.Count; i++)
-                       {
-                           string notas = doc.getNfsCte(ctes[i].numeroCte);
-                           if (notas.Length >= 100)
-                               notas = notas.Remove(99);
-                           var cadastrado = doc.verificarNovoCte(ctes[i].numeroCte, notas);
-                           if (notas != "" && cadastrado == 0)
-                           {
-                               BancoDeDados.Cte.Add(new Cte(ctes[i].numeroCte, notas));
-                               BancoDeDados.SaveChanges();
-                           }
-                       }
                     
                         var cteManif = BancoDeDados.Cte_Manifesto.Where(X=>X.CteNovo == null).ToList();
 
@@ -112,9 +104,30 @@ namespace GUI
                                cteManif[i].CteNovo = idNovoCte[0].idCte;
                                BancoDeDados.SaveChanges();
                            }
-                       }   
+                       }
 
-                    * /**/
+                    var Notas = BancoDeDados.NotasFiscais.Where(x => x.CteNF != null && x.CteNovoNF == null).ToList();
+                    for (int i = 0; i < Notas.Count; i++)
+                    {
+                        var idNovoCte = doc.getNovoCtePorNum((int)Notas[i].CteNF);
+                        if (idNovoCte.Count >= 1)
+                        {
+                            Notas[i].CteNovoNF = idNovoCte[0].idCte;
+                            BancoDeDados.SaveChanges();
+                        }
+                    }
+
+                    var Tarefas = BancoDeDados.Tarefas.Where(x => x.tipoTarefa == "2" && x.documentoTarefa > 47135).ToList();
+                    for (int i = 0; i < Tarefas.Count; i++)
+                    {
+                        var idNovoCte = doc.getNovoCtePorNum((int)Tarefas[i].documentoTarefa);
+                        if (idNovoCte.Count >= 1)
+                        {
+                            Tarefas[i].documentoTarefa = idNovoCte[0].idCte;
+                            BancoDeDados.SaveChanges();
+                        }
+                    }
+
                 }
             }
             catch (Exception erro)

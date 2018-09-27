@@ -30,6 +30,23 @@ namespace DAL
                 return false;
             }
         }
+
+        public Cte getNovoCtePorID(int idCte)
+        {
+                Cte novo = new Cte();
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                   novo =  (from Cte in BancoDeDados.Cte where Cte.idCte == idCte select Cte).FirstOrDefault();
+                }
+                return novo;
+            }
+            catch
+            {
+                return novo;
+            }
+        }
           
         public string getNfsNovoCte(int idCte)
         {
@@ -339,7 +356,7 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    var nota = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == numCte select NotasFiscais).FirstOrDefault();
+                    var nota = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNovoNF == numCte select NotasFiscais).FirstOrDefault();
                     return nota.fornecedorNF;
                 }
             }
@@ -458,10 +475,9 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    List<NotasFiscais> ListaNFs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais).ToList();
+                    List<NotasFiscais> ListaNFs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNovoNF == idCte select NotasFiscais).ToList();
                     foreach (NotasFiscais n in ListaNFs)
                     {
-                        if (verificarDocumentoCadastrado(2, n.numeroNF) > 0)
                             sku += n.skuNF;
                     }
                 }
@@ -504,7 +520,7 @@ namespace DAL
         }
 
         /// <summary>
-        /// Retorna a soma dos volumes de cada nota componente do Cte
+        /// Retorna a soma dos volumes de cada nota componente do Cte, passar id do Cte
         /// </summary>
         /// <param name="numeroCte">Parâmetro de pesquisa</param>
         /// <returns>O múmero de skus ou 0, caso nao encontre alguma nota, -1 se ocorrer um erro</returns>
@@ -515,11 +531,10 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    List<NotasFiscais> ListaNFs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == numeroCte select NotasFiscais).ToList();
+                    List<NotasFiscais> ListaNFs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNovoNF == numeroCte select NotasFiscais).ToList();
                     foreach (NotasFiscais n in ListaNFs)
                     {
-                        if (verificarDocumentoCadastrado(2, n.numeroNF) > 0)
-                            volumes += n.volumesNF;
+                        volumes += n.volumesNF;
                     }
                 }
             }
@@ -544,6 +559,7 @@ namespace DAL
                     var ctes = getNovoCtePorNum(numeroCte);
                     nfAtual.CteNF = numeroCte;
                     nfAtual.CteNovoNF = ctes.Where(x => x.notasCte.Contains(numNF)).Select(x => x.idCte).FirstOrDefault();
+
                     BancoDeDados.SaveChanges();
                 }
                 return true;
@@ -578,7 +594,7 @@ namespace DAL
         }
 
         /// <summary>
-        /// Verifica se o documento indicado esta cadastrado no banco de dados
+        /// Verifica se o documento indicado esta cadastrado no banco de dados não usar com o novo cte
         /// </summary>
         /// <param name="tipodoc">Tipo de documento 0 - Manifesto, 1 - Cte, 2 - Nota fiscal</param>
         /// <param name="numDocumento">Parâmetro de busca</param>

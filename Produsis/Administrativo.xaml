@@ -111,7 +111,7 @@
                 </StackPanel>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <DockPanel>
-                        <Frame Name="NavegadorInterno" HorizontalAlignment="Center" />
+                        <Frame Name="Navegador" HorizontalAlignment="Center" />
                     </DockPanel>
                 </ScrollViewer>
             </StackPanel>

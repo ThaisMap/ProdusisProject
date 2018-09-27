@@ -20,6 +20,7 @@ namespace GUI
         private FuncionariosTag FuncionarioSelecionado;
         private List<string> ListaFunc;
         private TarefasBLL t = new TarefasBLL();
+        private int checagemDeCte = -1;
 
         public Conferencia(double actualHeight, double actualWidth)
         {
@@ -111,25 +112,29 @@ namespace GUI
 
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
+            checagemDeCte = d.getIdCteDisponivel(int.Parse(Documento.Text.Replace("_", "")));
             if (checarCampos())
-                if (d.getIdCteDisponivel(int.Parse(Documento.Text.Replace("_", "")))>-1)
+                if (checagemDeCte>-1)
                 {
-                    if (t.inserirTarefa(montarTarefa(), funcionarios()))
+                    if (checagemDeCte > 0)
                     {
-                        dgTarefas.ItemsSource = t.tarefasPendentes("2");
-                        MessageBox.Show("Conferência iniciada para o " + d.linhaDadosCte(int.Parse(Documento.Text.Replace("_", ""))), "Conferência iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-                        Documento.Text = "";
-                        CBFuncionario.SelectedIndex = -1;
-                        ListaDeFuncionarios.Items.Clear();
+                        if (t.inserirTarefa(montarTarefa(), funcionarios()))
+                        {
+                            dgTarefas.ItemsSource = t.tarefasPendentes("2");
+                            MessageBox.Show("Conferência iniciada para o " + d.linhaDadosCte(int.Parse(Documento.Text.Replace("_", ""))), "Conferência iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                            Documento.Text = "";
+                            CBFuncionario.SelectedIndex = -1;
+                            ListaDeFuncionarios.Items.Clear();
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("Cte não importado.", "Conferência não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Já existe conferencia pare este Cte.", "Conferência não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Já existe uma conferência para esse cte.", "Conferência não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Cte não importado.", "Conferência não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             Documento.Focus();
         }
@@ -157,7 +162,7 @@ namespace GUI
         private Tarefas montarTarefa()
         {
             Tarefas novaTarefa = new Tarefas();            
-            novaTarefa.documentoTarefa = d.getIdCteDisponivel(int.Parse(Documento.Text.Replace("_", "")));
+            novaTarefa.documentoTarefa = checagemDeCte;
             novaTarefa.inicioTarefa = DateTime.Now;
             novaTarefa.tipoTarefa = "2";
             return novaTarefa;

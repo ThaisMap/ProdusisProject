@@ -23,22 +23,15 @@ namespace ProdusisBD
         public virtual Ctes Ctes { get; set; }
         public virtual Manifestos Manifestos { get; set; }
 
-        public Cte_Manifesto(int nCte, int nManifesto, int idNovoCte)
+        public Cte_Manifesto(int nCte, int nManifesto, int idCte)
         {
             Cte = nCte;
             Manifesto = nManifesto;
-            CteNovo = idNovoCte;
         }
 
         public Cte_Manifesto()
         {
 
-        }
-
-        public Cte_Manifesto(int nCte, int nManifesto)
-        {
-            Cte = nCte;
-            Manifesto = nManifesto;
         }
 
     }

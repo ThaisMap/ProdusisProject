@@ -28,10 +28,10 @@ namespace ProdusisBD
         public double pontos { get; set; }
         public int ctesNoManifesto { get; set; }
 
-        public ItemRelatorio(RelatorioConferencias r)
+        public ItemRelatorio(RelatorioNovoConferencias r)
         {
             idTarefa = r.idTarefa;
-            documentoTarefa = r.documentoTarefa;
+            documentoTarefa = r.numeroCte;
             tipoTarefa = tipoExtenso(r.tipoTarefa);
             inicioTarefa = r.inicioTarefa;
             fimTarefa = r.fimTarefa;

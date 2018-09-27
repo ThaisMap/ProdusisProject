@@ -89,6 +89,18 @@
                         Style="{StaticResource MaterialDesignFlatButton}" Click="Button_Click" />
             </Grid>
             <Separator />
+            <ListView Name="ListaDados" Visibility="Hidden">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="120" Header="Número" />
+                        <GridViewColumn Width="120" Header="Volumes" />
+                        <GridViewColumn Width="120"  />
+                        <GridViewColumn Width="120"  />
+                        <GridViewColumn Width="120"  />
+                        <GridViewColumn Width="120"  />
+                    </GridView>
+                </ListView.View>
+            </ListView>
             <Grid Name="dgDados" HorizontalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />

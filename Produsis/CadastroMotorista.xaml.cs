@@ -27,14 +27,15 @@ namespace GUI
         public FuncionariosBD motoristaBD = new FuncionariosBD();
         public CapacidadeMotoristas emEdicao { get; set; }
 
-        public CadastroMotorista()
+        public CadastroMotorista(double Altura, double largura)
         {
             InitializeComponent();
+            dgMotoristas.Height = Altura - 250;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-           loadData();
+            loadData();
             emEdicao = new CapacidadeMotoristas();
         }
 

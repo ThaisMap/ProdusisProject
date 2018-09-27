@@ -22,7 +22,7 @@ namespace GUI
         public Produtividade(double Altura, double largura)
         {
             InitializeComponent();
-            dgRanking.Height = Altura - 280;
+            dgRanking.Height = Altura - 250;
         }
 
         private void geraRelatorioTabela(object sender, RoutedEventArgs e)

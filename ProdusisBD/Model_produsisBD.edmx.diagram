@@ -25,6 +25,7 @@
         <AssociationConnector Association="produsisBDModel.FK_Func_Tarefa_Funcionarios" ManuallyRouted="false" />
         <AssociationConnector Association="produsisBDModel.FK_Func_Tarefa_Tarefas" ManuallyRouted="false" />
         <AssociationConnector Association="produsisBDModel.FK_Observacoes_Funcionarios" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="produsisBDModel.RelatorioNovoConferencias" Width="1.5" PointX="7.375" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

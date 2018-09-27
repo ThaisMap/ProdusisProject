@@ -90,14 +90,19 @@ namespace DAL
                 {
                     if (tipo == 2)
                     {
+                        DocumentosBD d = new DocumentosBD();
+                        var listaCtes = d.getNovoCtePorNum(documento);
                         //Se o tipo desejado for Conferência, retorna todas as tarefas com ctes relacionados com o manifesto dp cte informado
-                        int manif = BancoDeDados.Cte_Manifesto.Where(c => c.Cte == documento).Select(m => m.Manifesto).FirstOrDefault();
-                        var ctes = BancoDeDados.Cte_Manifesto.Where(m => m.Manifesto == manif).Select(c => c.Cte).ToList();
-                        foreach (int cte in ctes)
+                        foreach (var item in listaCtes)
                         {
-                            lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == cte).FirstOrDefault());
-                        }                        
-                    } 
+                            int manif = BancoDeDados.Cte_Manifesto.Where(c => c.CteNovo == item.idCte).Select(m => m.Manifesto).FirstOrDefault();
+                            var ctes = BancoDeDados.Cte_Manifesto.Where(m => m.Manifesto == manif).Select(c => c.CteNovo).ToList(); //lista dos ids
+                            foreach (int cte in ctes)
+                            {
+                                lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == cte).FirstOrDefault());
+                            }
+                        }
+                    }
 
                     else
                     { //Se for outro tipo, retorna só aquele tipo e manifesto
@@ -193,7 +198,7 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    var listaConf = BancoDeDados.RelatorioConferencias.Where(i => i.tipoTarefa == f.TipoTarefa)
+                    var listaConf = BancoDeDados.RelatorioNovoConferencias.Where(i => i.tipoTarefa == f.TipoTarefa)
                         .Where(i => i.inicioTarefa >= f.dataInicio)
                         .Where(i => i.inicioTarefa <= f.dataFim)
                         .ToList();
@@ -240,7 +245,7 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     List<RelatorioNaoConferencia> relatorioNaoConferencia = new List<RelatorioNaoConferencia>();
-                    List<RelatorioConferencias> relatorioConferencia = new List<RelatorioConferencias>();
+                    List<RelatorioNovoConferencias> relatorioConferencia = new List<RelatorioNovoConferencias>();
      
                     #region filtrando Nao Conferencias
                     if (f.TipoTarefa !="2")
@@ -276,7 +281,7 @@ namespace DAL
                     #region filtrando Conferencias
                     if (f.TipoTarefa == "2" || f.TipoTarefa == "-1")
                     {
-                        var queryConf = BancoDeDados.RelatorioConferencias.AsQueryable();
+                        var queryConf = BancoDeDados.RelatorioNovoConferencias.AsQueryable();
 
                         if (f.TipoTarefa != "-1")
                             queryConf = queryConf.Where(t => t.tipoTarefa == f.TipoTarefa);
@@ -288,7 +293,7 @@ namespace DAL
                             queryConf = queryConf.Where(t => t.inicioTarefa >= f.dataInicio);
 
                         if (f.numDocumento > 0)
-                            queryConf = queryConf.Where(t => t.documentoTarefa == f.numDocumento);
+                            queryConf = queryConf.Where(t => t.numeroCte == f.numDocumento);
                   
                         if (f.nomeFuncionario != "" && f.nomeFuncionario != null)
 
@@ -322,7 +327,7 @@ namespace DAL
             return lista;
         }
 
-        private List<ItemRelatorio> consolidarRelatorio(List<RelatorioConferencias> conferencias, List<RelatorioNaoConferencia> outros, bool consolidarFuncionario)
+        private List<ItemRelatorio> consolidarRelatorio(List<RelatorioNovoConferencias> conferencias, List<RelatorioNaoConferencia> outros, bool consolidarFuncionario)
         {
             List<ItemRelatorio> lista = new List<ItemRelatorio>();
             DocumentosBD d = new DocumentosBD();
@@ -551,6 +556,7 @@ namespace DAL
 
             if (tarefas.tipoTarefa == "2")
             {
+                aux.documentoTarefa = d.getNovoCtePorID(aux.documentoTarefa).numeroCte;
                 aux.valores(d.getSkuCte(tarefas.documentoTarefa), d.getVolumesCte(tarefas.documentoTarefa));
                 aux.fornecedor = d.getFornecedorCte(tarefas.documentoTarefa);
             }

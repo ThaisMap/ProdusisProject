@@ -16,7 +16,7 @@ namespace BLL
 
         public string linhaDadosCte(int numero)
         {
-            return d.getDadosDocumentos(1, numero);
+            return d.getDadosDocumentos(3, numero);
         }
 
         public string linhaDadosNovoCte(int numero)
@@ -73,7 +73,8 @@ namespace BLL
         }
             
         /// <summary>
-        /// Retorna o id do ultimo cte sem tarefa cadastrada com o número informado, ou -1 caso não haja disponível
+        /// Retorna o id do ultimo cte sem tarefa cadastrada com o número informado, 
+        /// ou 0 caso não haja disponível, -1 caso nao tenha nada importado
         /// </summary>
         /// <param name="numCte"></param>
         /// <returns></returns>
@@ -81,12 +82,14 @@ namespace BLL
         {
             TarefasBD t = new TarefasBD();
             var lista = d.getNovoCtePorNum(numCte);
+            if (lista.Count == 0)
+                return -1;
             for (int i = lista.Count-1; i >= 0; i--)
             {
                 if (t.verificaDocumentoTarefa(lista[i].idCte, "2"))
                     return lista[i].idCte;
             }
-            return -1;
+            return 0;
         }
 
         public string fornecedorCte(int num)
@@ -96,7 +99,8 @@ namespace BLL
         
         public bool cteCadastrado(int num)
         {
-            if (d.verificarDocumentoCadastrado(1, num.ToString()) != 0)
+            var idCtes = d.getNovoCtePorNum(num);
+            if (idCtes.Count != 0)
             {
                 return true;
             }

@@ -18,7 +18,7 @@
         <StackPanel>
             <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}"><Run Text="Cadastro de Equipes"/></TextBlock>
             <Separator />
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <materialDesign:PackIcon
                         Width="24"
                         Height="24"
@@ -40,7 +40,7 @@
                     Click="Incluir"
                     Style="{StaticResource MaterialDesignFlatButton}" />
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <DataGrid Name="dgEquipe" Height="auto" AutoGenerateColumns="False" 
                           IsReadOnly="True" VerticalContentAlignment="Center"
                           ItemsSource="{Binding}">

@@ -20,8 +20,8 @@ namespace GUI
     {
         public Relatorios(double Altura, double largura)
         {
-            InitializeComponent();
-            Height = Altura - 160;
+            InitializeComponent();            
+            Height = Altura - 150;
             Width = largura - 50;
             dataFinal.SelectedDate = DateTime.Today;
         }

@@ -1,5 +1,7 @@
 ﻿using BLL;
+using DAL;
 using ProdusisBD;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,13 +35,37 @@ namespace Produsis
         {
             if (TipoDeDocumento.SelectedIndex > -1 && NumeroDocumento.Text != "")
             {
+                DocumentosBD dbd = new DocumentosBD();
                 DocumentosBLL d = new DocumentosBLL();
-                int numDoc = int.Parse(NumeroDocumento.Text);
 
+                string[] rotulosNF = { "Número", "Volumes", "SKU's", "CT-e", "Fornecedor", "Cliente" };
+                string[] rotulosCte = { "Número", "Volumes", "SKU's", "Fornecedor", "Notas Fiscais", "Manifesto" };
+                string[] rotulosManifesto = { "Número", "Volumes", "CT-es", "CT-es importados", "CT-es conferidos" };
+                int numDoc = int.Parse(NumeroDocumento.Text);
+                List<dadosPesquisa> listaDados = new List<dadosPesquisa>();
+                dadosPesquisa aux;
+                ListaDados.Items.Clear();
                 if (TipoDeDocumento.SelectedIndex == 0)
                 {
                     if (d.cteCadastrado(numDoc))
                     {
+                        var ctes = dbd.getNovoCtePorNum(numDoc);
+                        foreach (var item in ctes)
+                        {
+                            aux = new dadosPesquisa()
+                            {
+                                numero = NumeroDocumento.Text.Replace("_", ""),
+                                volumes = d.volumesCte(item.idCte).ToString(),
+                                dado3 = d.skuCte(item.idCte).ToString(),
+                                dado4 = d.fornecedorCte(item.idCte),
+                                dado5 = item.notasCte, 
+                                dado6 = d.getManifestosCte(item.idCte)
+                            };
+                            listaDados.Add(aux);
+                        }
+                        ListaDados.ItemsSource = listaDados;
+
+
                         Numero.Text = NumeroDocumento.Text.Replace("_", "");
                         NumeroDeVolumes.Text = d.volumesCte(numDoc).ToString();
                         NumeroDeSKUS.Text = d.skuCte(numDoc).ToString();
@@ -94,5 +120,15 @@ namespace Produsis
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
+    }
+
+    public class dadosPesquisa
+    {
+        public string numero { get; set; }
+        public string volumes { get; set; }
+        public string dado3 { get; set; }
+        public string dado4 { get; set; }
+        public string dado5 { get; set; }
+        public string dado6 { get; set; }
     }
 }

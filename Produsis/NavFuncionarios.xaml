@@ -21,7 +21,7 @@
             </StackPanel>
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <DockPanel>
-                    <Frame Name="NavegadorInterno"></Frame>
+                    <Frame Name="Navegador"></Frame>
                 </DockPanel>
             </ScrollViewer>
         </StackPanel>

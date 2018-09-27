@@ -105,6 +105,9 @@
     <Compile Include="RelatorioNaoConferencia.cs">
       <DependentUpon>Model_produsisBD.tt</DependentUpon>
     </Compile>
+    <Compile Include="RelatorioNovoConferencias.cs">
+      <DependentUpon>Model_produsisBD.tt</DependentUpon>
+    </Compile>
     <Compile Include="TarefaModelo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tarefas.cs">

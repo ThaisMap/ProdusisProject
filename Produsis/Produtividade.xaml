@@ -21,6 +21,7 @@
         <Grid
             Name="cabecalho"
             Height="130"
+            HorizontalAlignment="Center"
             VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="70" />

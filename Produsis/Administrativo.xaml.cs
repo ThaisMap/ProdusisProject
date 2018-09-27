@@ -12,13 +12,13 @@ namespace GUI
         public Administrativo()
         {
             InitializeComponent();
-            NavegadorInterno.Navigate(new IniciadasHoje());
+            Navegador.Navigate(new IniciadasHoje());
         }
 
         public Administrativo(double actualHeight, double actualWidth)
         {
             InitializeComponent();
-            NavegadorInterno.Navigate(new IniciadasHoje());
+            Navegador.Navigate(new IniciadasHoje());
             Height = actualHeight;
             Width = actualWidth;
         }
@@ -36,49 +36,44 @@ namespace GUI
 
         private void BtnFuncionarios_Click(object sender, RoutedEventArgs e)
         {
-            NavegadorInterno.Navigate(new NavFuncionarios());
+            Navegador.Navigate(new NavFuncionarios());
             ResetarOpacidade(sender as Button);
         }
 
         private void BtnDocumentos_Click(object sender, RoutedEventArgs e)
         {
-            NavegadorInterno.Navigate(new PesquisarDocumento());
+            Navegador.Navigate(new PesquisarDocumento());
             ResetarOpacidade(sender as Button);
         }
 
-        private void BtnEditarFuncionarios_Click(object sender, RoutedEventArgs e)
-        {
-            NavegadorInterno.Navigate(new EdicaoFuncionarios());
-            ResetarOpacidade(sender as Button);
-        }
-
+       
         private void BtnRelatorios_Click(object sender, RoutedEventArgs e)
         {
-            NavegadorInterno.Navigate(new Relatorios(ActualHeight, ActualWidth));
+            Navegador.Navigate(new Relatorios(ActualHeight, ActualWidth));
             ResetarOpacidade(sender as Button);
         }
 
         private void BtnConfiguracoes_Click(object sender, RoutedEventArgs e)
         {
-            NavegadorInterno.Navigate(new Configuracao());
+            Navegador.Navigate(new Configuracao());
             ResetarOpacidade(sender as Button);
         }
 
         private void BtnTarefasInitHoje_Click(object sender, RoutedEventArgs e)
         {
-            NavegadorInterno.Navigate(new IniciadasHoje());
+            Navegador.Navigate(new IniciadasHoje());
             ResetarOpacidade(sender as Button);
         }
 
         private void BtnProdutividade_Click(object sender, RoutedEventArgs e)
         {
-            NavegadorInterno.Navigate(new Produtividade(ActualHeight, ActualWidth));
+            Navegador.Navigate(new Produtividade(ActualHeight, ActualWidth));
             ResetarOpacidade(sender as Button);
         }
 
         private void Temas_Click(object sender, RoutedEventArgs e)
         {
-            NavegadorInterno.Navigate(new MudarTema(ActualHeight, ActualWidth));
+            Navegador.Navigate(new MudarTema(ActualHeight, ActualWidth));
             ResetarOpacidade(sender as Button);
         }
     }

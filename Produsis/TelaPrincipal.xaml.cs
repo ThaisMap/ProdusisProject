@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Produsis;
+using System.Windows;
 
 namespace GUI
 {
@@ -20,10 +21,8 @@ namespace GUI
             BtnConferencia.Opacity = 1;
             BtnDescarga.Opacity = 1;
             BtnSeparacaoCarga.Opacity = 1;
-          //  BtnSerapacao.Opacity = 1;
             BtnDivergencia.Opacity = 1;
         }
-        #region Botoes
 
         private void BtnDescarga_Click(object sender, RoutedEventArgs e)
         {
@@ -67,13 +66,61 @@ namespace GUI
             Navegador.Navigate(new Divergencia(ActualHeight, ActualWidth));
         }
 
-        #endregion Botoes
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Navegador.Height = ActualHeight - 60;
             Navegador.Width = ActualWidth - 60;
             Navegador.Navigate(new Conferencia(ActualHeight, ActualWidth));
+        }
+
+        private void BtnPesquisaDocs_Click(object sender, RoutedEventArgs e)
+        {
+            Navegador.Navigate(new PesquisarDocumento());
+        }
+
+        private void BtnRelatorios_Click(object sender, RoutedEventArgs e)
+        {
+            Navegador.Navigate(new Relatorios(ActualHeight, ActualWidth));
+        }
+
+        private void BtnPastas_Click(object sender, RoutedEventArgs e)
+        {
+            Navegador.Navigate(new Configuracao());
+        }
+
+        private void BtnProdutividade_Click(object sender, RoutedEventArgs e)
+        {
+            Navegador.Navigate(new Produtividade(ActualHeight, ActualWidth));
+        }
+
+        private void BtnTemas_Click(object sender, RoutedEventArgs e)
+        {
+            Navegador.Navigate(new MudarTema(ActualHeight, ActualWidth));
+        }
+
+        private void BtnCadFunc_Click(object sender, RoutedEventArgs e)
+        {
+            Navegador.Navigate(new CadastroFuncionarios());
+        }
+
+        private void BtnEditFunc_Click(object sender, RoutedEventArgs e)
+        {
+            Navegador.Navigate(new EdicaoFuncionarios());
+        }
+
+        private void BtnObserv_Click(object sender, RoutedEventArgs e)
+        {
+            Navegador.Navigate(new Observacao());
+        }
+
+        private void BtnEquipe_Click(object sender, RoutedEventArgs e)
+        {
+            Navegador.Navigate(new Equipes());
+        }
+
+        private void BtnMotorista_Click(object sender, RoutedEventArgs e)
+        {
+            Navegador.Navigate(new CadastroMotorista(ActualHeight, ActualWidth));
         }
     }
 }
