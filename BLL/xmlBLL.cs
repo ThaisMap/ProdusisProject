@@ -41,7 +41,7 @@ namespace BLL
                         var ext = extensao(f);
                         if (ext == "msg" || ext == "MSG")
                         {
-                            xml.extrairAnexosDeEmail(moverArquivo(f), Outlook);
+                            xml.ExtrairAnexosDeEmail(moverArquivo(f), Outlook);
                         }
                     }
                     Outlook.Quit();
@@ -56,13 +56,13 @@ namespace BLL
                     var ext = extensao(f);
                     if (ext == "xml" || ext == "XML")
                     {
-                        xml.lerXmlNotaFiscal(f);
+                        xml.LerXmlNotaFiscal(f);
                         moverArquivo(f);
                     }
                     else
                         if (ext == "txt" || ext == "TXT")
                     {
-                        xml.lerNotfisNotaFiscal(f);
+                        xml.LerNotfisNotaFiscal(f);
                         moverArquivo(f);
                     }
                     else
@@ -75,7 +75,7 @@ namespace BLL
                     var ext = extensao(f);
                     if (ext == "xml")
                     {
-                        xml.lerManifesto(f);
+                        xml.LerManifesto(f);
                         moverArquivo(f);
                     }
                     else
@@ -87,7 +87,7 @@ namespace BLL
                     var ext = extensao(f);
                     if (ext == "xml")
                     {
-                        xml.lerPreManifesto(f);
+                        xml.LerPreManifesto(f);
                         moverArquivo(f);
                     }
                     else

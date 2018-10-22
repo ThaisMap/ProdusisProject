@@ -21,8 +21,9 @@ namespace GUI
         public Relatorios(double Altura, double largura)
         {
             InitializeComponent();            
-            Height = Altura - 150;
+            Height = Altura - 80;
             Width = largura - 50;
+            dgTarefas.Height = Altura - 200;
             dataFinal.SelectedDate = DateTime.Today;
         }
 
@@ -54,7 +55,7 @@ namespace GUI
             Cursor _cursorAnterior = Mouse.OverrideCursor;
             Mouse.OverrideCursor = Cursors.Wait;
             TarefasBLL t = new TarefasBLL();
-            source = t.filtrar(montarObjeto());
+            source = t.Filtrar(montarObjeto());
             dgTarefas.ItemsSource = source;
             Mouse.OverrideCursor = _cursorAnterior;
         }
@@ -101,7 +102,7 @@ namespace GUI
                 if (dialogo.ShowDialog() == true)
                 {
                     TarefasBLL t = new TarefasBLL();
-                    t.exportarExcel(source, dialogo.FileName);
+                    t.ExportarExcel(source, dialogo.FileName);
                 }
             }
         }

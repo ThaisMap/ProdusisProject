@@ -27,11 +27,11 @@ namespace GUI
             InitializeComponent();
             ListaFunc = f.carregaConferentesLivres("2");
             CBFuncionario.ItemsSource = ListaFunc;
-            dgTarefas.ItemsSource = t.tarefasPendentes("2");
-            Height = actualHeight - 100;
+            dgTarefas.ItemsSource = t.TarefasPendentes("2");
+            Height = actualHeight - 60;
             Width = actualWidth - 60;
-            Scrooler.Height = actualHeight - (int.Parse(formSuperior.Height.ToString()) + 225);
-            lerXmls();
+            svTarefa.Height = actualHeight - 340;
+            LerXmls();
         }
 
         public static string CriaChipTag(string Nome)
@@ -42,28 +42,39 @@ namespace GUI
 
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
-            dgTarefas.ItemsSource = t.tarefasPendentes("2");
+            dgTarefas.ItemsSource = t.TarefasPendentes("2");
         }
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
         {
             TarefaModelo item = (TarefaModelo)dgTarefas.SelectedItem;
-            if (t.finalizarTarefa(item.idTarefa, 0, 0))
-                MessageBox.Show("Conferência finalizada após " + item.tempoGasto, "Conferência finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-            else
-                MessageBox.Show("Houve um erro e a conferência não pode ser finalizada.", "Conferência não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-            ListaFunc = f.carregaConferentesLivres("2");
-            CBFuncionario.ItemsSource = ListaFunc;
-
-            if (ListaFunc.Contains(item.nomesFuncionarios))
-                CBFuncionario.SelectedValue = item.nomesFuncionarios;
-            MessageBoxResult novaTarefa = MessageBox.Show("Deseja Abrir uma nova tarefa para o funcionário?", "Nova Tarefa", MessageBoxButton.YesNo,MessageBoxImage.Question);
-            if(novaTarefa.ToString().ToUpper() == "YES")
+            item.AtualizaTempoGasto();
+            if (MessageBox.Show("Confirma finalização da conferência de "+item.nomesFuncionarios+ " após " + item.tempoGasto +"? ", "Produsis", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
-                FuncionarioSelecionado = new FuncionariosTag(CBFuncionario.SelectedItem.ToString(), CriaChipTag(CBFuncionario.SelectedItem.ToString()));
-                if (!ListaDeFuncionarios.Items.Contains(FuncionarioSelecionado) && CBFuncionario.SelectedIndex > -1)
+                if (!t.FinalizarTarefa(item.idTarefa, 0, 0))
                 {
-                    ListaDeFuncionarios.Items.Add(FuncionarioSelecionado);
+                    MessageBox.Show("Houve um erro e a conferência não pode ser finalizada.", "Conferência não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    ListaFunc = f.carregaConferentesLivres("2");
+                    CBFuncionario.ItemsSource = ListaFunc;
+
+                    if (ListaFunc.Contains(item.nomesFuncionarios))
+                    {
+                        CBFuncionario.SelectedValue = item.nomesFuncionarios;
+
+                        MessageBoxResult novaTarefa = MessageBox.Show("Deseja Abrir uma nova tarefa para o funcionário?", "Nova Tarefa", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        if (novaTarefa.ToString().ToUpper() == "YES")
+                        {
+                            FuncionarioSelecionado = new FuncionariosTag(CBFuncionario.SelectedItem.ToString(), CriaChipTag(CBFuncionario.SelectedItem.ToString()));
+                            if (!ListaDeFuncionarios.Items.Contains(FuncionarioSelecionado) && CBFuncionario.SelectedIndex > -1)
+                            {
+                                ListaDeFuncionarios.Items.Add(FuncionarioSelecionado);
+                            }
+
+                        }
+                    }
                 }
                 Documento.Focus();
             }
@@ -78,7 +89,7 @@ namespace GUI
                 FuncionarioSelecionado = new FuncionariosTag(CBFuncionario.SelectedItem.ToString(), CriaChipTag(CBFuncionario.SelectedItem.ToString()));
         }
 
-        private bool checarCampos()
+        private bool ChecarCampos()
         {
             if (Documento.Text.Replace("_", "") == "" || ListaDeFuncionarios.Items.Count == 0)
             {
@@ -113,14 +124,14 @@ namespace GUI
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
             checagemDeCte = d.getIdCteDisponivel(int.Parse(Documento.Text.Replace("_", "")));
-            if (checarCampos())
+            if (ChecarCampos())
                 if (checagemDeCte>-1)
                 {
                     if (checagemDeCte > 0)
                     {
-                        if (t.inserirTarefa(montarTarefa(), funcionarios()))
+                        if (t.InserirTarefa(MontarTarefa(), funcionarios()))
                         {
-                            dgTarefas.ItemsSource = t.tarefasPendentes("2");
+                            dgTarefas.ItemsSource = t.TarefasPendentes("2");
                             MessageBox.Show("Conferência iniciada para o " + d.linhaDadosCte(int.Parse(Documento.Text.Replace("_", ""))), "Conferência iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                             Documento.Text = "";
                             CBFuncionario.SelectedIndex = -1;
@@ -147,19 +158,19 @@ namespace GUI
             }
         }
 
-        private void testarCaractere(object sender, TextCompositionEventArgs e)
+        private void TestarCaractere(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        private static void lerXmls()
+        private static void LerXmls()
         {
             xmlBLL x = new xmlBLL();
             x.triagemArquivos();
         }
 
-        private Tarefas montarTarefa()
+        private Tarefas MontarTarefa()
         {
             Tarefas novaTarefa = new Tarefas();            
             novaTarefa.documentoTarefa = checagemDeCte;
@@ -168,7 +179,7 @@ namespace GUI
             return novaTarefa;
         }
 
-        private void normalizarDocumento(object sender, RoutedEventArgs e)
+        private void NormalizarDocumento(object sender, RoutedEventArgs e)
         {
             if (Documento.Text.Length == 44)
             {

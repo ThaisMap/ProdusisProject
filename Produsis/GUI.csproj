@@ -108,8 +108,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Administrativo.xaml.cs">
-      <DependentUpon>Administrativo.xaml</DependentUpon>
+    <Compile Include="AddFuncionario.xaml.cs">
+      <DependentUpon>AddFuncionario.xaml</DependentUpon>
     </Compile>
     <Compile Include="AlterarTarefa.xaml.cs">
       <DependentUpon>AlterarTarefa.xaml</DependentUpon>
@@ -137,8 +137,11 @@
     <Compile Include="Divergencia.xaml.cs">
       <DependentUpon>Divergencia.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Divergencias.xaml.cs">
-      <DependentUpon>Divergencias.xaml</DependentUpon>
+    <Compile Include="DivergenciasNovo.xaml.cs">
+      <DependentUpon>DivergenciasNovo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Empilhadeira.xaml.cs">
+      <DependentUpon>Empilhadeira.xaml</DependentUpon>
     </Compile>
     <Compile Include="Equipes.xaml.cs">
       <DependentUpon>Equipes.xaml</DependentUpon>
@@ -146,9 +149,6 @@
     <Compile Include="MudarCores.cs" />
     <Compile Include="MudarTema.xaml.cs">
       <DependentUpon>MudarTema.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="NavFuncionarios.xaml.cs">
-      <DependentUpon>NavFuncionarios.xaml</DependentUpon>
     </Compile>
     <Compile Include="Observacao.xaml.cs">
       <DependentUpon>Observacao.xaml</DependentUpon>
@@ -167,9 +167,6 @@
       <DependentUpon>EdicaoFuncionarios.xaml</DependentUpon>
     </Compile>
     <Compile Include="FuncionariosTag.cs" />
-    <Compile Include="IniciadasHoje.xaml.cs">
-      <DependentUpon>IniciadasHoje.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Validacoes\NotifyPropertyChangedExtention.cs" />
     <Compile Include="PesquisarDocumento.xaml.cs">
       <DependentUpon>PesquisarDocumento.xaml</DependentUpon>
@@ -218,7 +215,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Administrativo.xaml">
+    <Page Include="AddFuncionario.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -254,7 +251,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Divergencias.xaml">
+    <Page Include="DivergenciasNovo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -262,19 +259,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Equipes.xaml">
+    <Page Include="Empilhadeira.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Equipes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MudarTema.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="NavFuncionarios.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="IniciadasHoje.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

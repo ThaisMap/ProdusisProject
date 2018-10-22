@@ -13,7 +13,7 @@ namespace DAL
         /// <summary>
         /// Abre o email e salva todos os anexos na pasta de notas fiscais
         /// </summary>
-        public void extrairAnexosDeEmail(string nomeArquivo, Application Outlook)
+        public void ExtrairAnexosDeEmail(string nomeArquivo, Application Outlook)
         {
             MailItem email = (MailItem)Outlook.Session.OpenSharedItem(nomeArquivo);
             try
@@ -40,7 +40,7 @@ namespace DAL
         /// <summary>
         /// Importa os dados de xml de manifestos na pasta padrão
         /// </summary>
-        public bool lerManifesto(string nomeArquivo)
+        public bool LerManifesto(string nomeArquivo)
         {
             try
             {
@@ -66,11 +66,11 @@ namespace DAL
                 for (int i = 0; i < result.Count - 4; i = i + 10)
                 {
                     cte = int.Parse(result[i].InnerText);
-                    criarCte(cte, result[i + 1].InnerText);     //  alterado para novo cte
+                    CriarCte(cte, result[i + 1].InnerText);     //  alterado para novo cte
 
-                    criarCteManifesto(cte, lido.numeroManifesto);
+                    CriarCteManifesto(cte, lido.numeroManifesto);
                     fornecedor = result[i + 2].InnerText;
-                    alterarNfs(result[i + 1].InnerText, cte);
+                    AlterarNfs(result[i + 1].InnerText, cte);
                 }
 
                 return true;
@@ -85,7 +85,7 @@ namespace DAL
         /// <summary>
         /// Importa os dados de xml de manifestos na pasta padrão
         /// </summary>
-        public bool lerPreManifesto(string nomeArquivo)
+        public bool LerPreManifesto(string nomeArquivo)
         {
             try
             {
@@ -132,10 +132,9 @@ namespace DAL
                 }
                 foreach (var item in ctesNoPreManifesto)
                 {
-                    criarCte(item.numeroCte, item.notasCte);    //  alterado para novo cte
-                    alterarNfs(item.notasCte, item.numeroCte);  //  alterado para novo cte  
-                    criarCteManifesto(item.numeroCte, lido.numeroManifesto);
-                 
+                    CriarCte(item.numeroCte, item.notasCte);    //  alterado para novo cte
+                    AlterarNfs(item.notasCte, item.numeroCte);  //  alterado para novo cte  
+                    CriarCteManifesto(item.numeroCte, lido.numeroManifesto);                 
                 }
 
                 return true;
@@ -149,7 +148,7 @@ namespace DAL
         /// <summary>
         /// Importa os dados de xml de notas fiscais na pasta padrão
         /// </summary>
-        public bool lerXmlNotaFiscal(string nomeArquivo)
+        public bool LerXmlNotaFiscal(string nomeArquivo)
         {
             try
             {
@@ -180,7 +179,7 @@ namespace DAL
                         nfLida.volumesNF += (int)double.Parse(item.InnerText.Replace('.', ','));
                     }
                 }
-                if (nfLida.volumesNF <= 1)
+                if (nfLida.volumesNF <= 1 && !nfLida.fornecedorNF.StartsWith("REGINA"))
                 {
                     var quantidade = nf.GetElementsByTagName("qCom");
                     nfLida.volumesNF = 0;
@@ -195,7 +194,10 @@ namespace DAL
                     cliente = cliente.Remove(49);
                 nfLida.clienteNF = cliente;
 
-                return inserirNotaFiscal(nfLida);
+                if(nfLida.skuNF > nfLida.volumesNF)
+                { nfLida.skuNF = 1; }
+
+                return InserirNotaFiscal(nfLida);
             }
             catch (System.Exception ex)
             {
@@ -207,7 +209,7 @@ namespace DAL
         /// <summary>
         /// Importa os dados de notfis de notas fiscais na pasta padrão
         /// </summary>
-        public bool lerNotfisNotaFiscal(string nomeArquivo)
+        public bool LerNotfisNotaFiscal(string nomeArquivo)
         {
             try
             {
@@ -278,7 +280,7 @@ namespace DAL
                         if (nf.StartsWith("317"))
                         {
                             nfLida.fornecedorNF = Fornecedor;
-                            retorno = inserirNotaFiscal(nfLida);
+                            retorno = InserirNotaFiscal(nfLida);
                         }
                     }
                 }
@@ -295,21 +297,27 @@ namespace DAL
                 return false;
             }
         }
-
-        private static bool inserirNotaFiscal(NotasFiscais nfLida)
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        private static bool InserirNotaFiscal(NotasFiscais nfLida)
         {
             DocumentosBD dbd = new DocumentosBD();
-            if (!dbd.cadastrarNF(nfLida))
-            { return false; }
-
-            return true;
+            if (dbd.verificarDocumentoCadastrado(2, nfLida.numeroNF) == 0)
+            {
+                if (!dbd.cadastrarNF(nfLida))
+                { return false; }
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
         /// Dispara a alteração das nfs de um manifesto para incluir o cte
         /// </summary>
         /// <param name="nfs">string contendo as notas fiscais separadas por uma '\'</param>
-        private bool alterarNfs(string nfs, int cte)
+        private bool AlterarNfs(string nfs, int cte)
         {
             bool retorno = true;
             DocumentosBD dbd = new DocumentosBD();
@@ -327,7 +335,7 @@ namespace DAL
             return retorno;
         }  
 
-        private bool criarCte(int cte, string notas)
+        private bool CriarCte(int cte, string notas)
         {
             DocumentosBD dbd = new DocumentosBD();
             //  alterado para novo cte
@@ -335,7 +343,7 @@ namespace DAL
             return (dbd.cadastrarNovoCte(new Cte(cte, notas)));
         }
 
-        private void criarCteManifesto(int cte, int manifesto) //  não alterado para novo cte
+        private void CriarCteManifesto(int cte, int manifesto) //  não alterado para novo cte
         {
             DocumentosBD dbd = new DocumentosBD();
             var ctes = dbd.getNovoCtePorNum(cte);

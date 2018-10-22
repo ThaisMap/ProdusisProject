@@ -13,7 +13,7 @@ namespace DAL
         /// </summary>
         /// <param name="novaTarefa">Dados do novo registro</param>
         /// <returns>True se o comando foi executado sem erros, False se houve algum erro</returns>
-        public bool cadastrar(Tarefas novaTarefa, int[] funcionarios)
+        public bool Cadastrar(Tarefas novaTarefa, int[] funcionarios)
         {
             try
             {
@@ -21,20 +21,40 @@ namespace DAL
                 {
                     BancoDeDados.Tarefas.Add(novaTarefa);
                     BancoDeDados.SaveChanges();
-                    Func_Tarefa ft;
-                    FuncionariosBD fBd = new FuncionariosBD();
+                   
                     foreach (int i in funcionarios)
                     {
+                        IncluirFunc_Tarefa(i, novaTarefa.idTarefa);
+                    }
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool IncluirFunc_Tarefa(int idFuncionario, int idTarefa)
+        {
+
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    Func_Tarefa ft;
+                    FuncionariosBD fBd = new FuncionariosBD();
+                   
                         ft = new Func_Tarefa()
                         {
-                            Tarefa = novaTarefa.idTarefa,
-                            Funcionario = i
+                            Tarefa = idTarefa,
+                            Funcionario = idFuncionario
                         };
 
                         BancoDeDados.Func_Tarefa.Add(ft);
                         BancoDeDados.SaveChanges();
-                        fBd.editarOcupacaoFuncionario(i, true);
-                    }
+                        fBd.editarOcupacaoFuncionario(idFuncionario, true);
+                   
                 }
                 return true;
             }
@@ -48,7 +68,7 @@ namespace DAL
         /// Grava a data/hora atuais como data/hora de fim da tarefa e desocupa os funcionários
         /// </summary>
         /// <returns>True se o comando foi executado sem erros, False se houve algum erro</returns>
-        public bool finalizarTarefa(int idTarefa, int quantPalet, int totalPalet)
+        public bool FinalizarTarefa(int idTarefa, int quantPalet, int totalPalet)
         {
             try
             {
@@ -70,7 +90,7 @@ namespace DAL
                 }
                 return true;
             }
-            catch { 
+            catch (Exception e)  { 
                 return false;
             }
         }
@@ -79,7 +99,7 @@ namespace DAL
         /// Retorna lista de tarefas referentes a um manifesto. Caso o tipo seja conferências.
         /// </summary>
         /// <param name="tipo">Tipo de tarefas desejadas</param>
-        public List<TarefaModelo> getTarefasDivergencia(int tipo, int documento)
+        public List<TarefaModelo> GetTarefasDivergencia(int tipo, int documento)
         {
             List<TarefaModelo> listaModelo = new List<TarefaModelo>();
             List<Tarefas> lista = new List<Tarefas>();
@@ -90,17 +110,24 @@ namespace DAL
                 {
                     if (tipo == 2)
                     {
-                        DocumentosBD d = new DocumentosBD();
-                        var listaCtes = d.getNovoCtePorNum(documento);
-                        //Se o tipo desejado for Conferência, retorna todas as tarefas com ctes relacionados com o manifesto dp cte informado
-                        foreach (var item in listaCtes)
+                        try
                         {
-                            int manif = BancoDeDados.Cte_Manifesto.Where(c => c.CteNovo == item.idCte).Select(m => m.Manifesto).FirstOrDefault();
-                            var ctes = BancoDeDados.Cte_Manifesto.Where(m => m.Manifesto == manif).Select(c => c.CteNovo).ToList(); //lista dos ids
-                            foreach (int cte in ctes)
+                            DocumentosBD d = new DocumentosBD();
+                            var listaCtes = d.getNovoCtePorNum(documento);
+                            //Se o tipo desejado for Conferência, retorna todas as tarefas com ctes relacionados com o manifesto do cte informado
+                            foreach (var item in listaCtes)
                             {
-                                lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == cte).FirstOrDefault());
+                                int manif = BancoDeDados.Cte_Manifesto.Where(c => c.CteNovo == item.idCte).Select(m => m.Manifesto).FirstOrDefault();
+                                var ctes = BancoDeDados.Cte_Manifesto.Where(m => m.Manifesto == manif).Where(c => c.CteNovo != null).Select(c => c.CteNovo).ToList(); //lista dos ids
+                                foreach (int cte in ctes)
+                                {
+                                    lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == cte).FirstOrDefault());
+                                }
                             }
+                        }
+                        catch (Exception e)
+                        {
+                            var teste = e;
                         }
                     }
 
@@ -108,7 +135,7 @@ namespace DAL
                     { //Se for outro tipo, retorna só aquele tipo e manifesto
                         lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == documento && c.tipoTarefa == tipo.ToString()).FirstOrDefault());
                     }
-                    listaModelo = tarefaModeloParse(lista);
+                    listaModelo = TarefaModeloParse(lista);
                 }
             }
             catch (Exception e)
@@ -126,7 +153,7 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     tarefa = BancoDeDados.Tarefas.Where(t => t.documentoTarefa == documento).FirstOrDefault();
-                    var tmodelo = tarefaModeloParse(tarefa);
+                    var tmodelo = TarefaModeloParse(tarefa);
                     return tmodelo;
                 }
             }
@@ -134,9 +161,9 @@ namespace DAL
             {
                 return new TarefaModelo(tarefa);
             }
-            }
+        }
 
-        public List<Observacoes> observacoesFunc(int id, DateTime? inicio, DateTime fim)
+        public List<Observacoes> ObservacoesFunc(int id, DateTime? inicio, DateTime fim)
         {
             List<Observacoes> lista = new List<Observacoes>();
             try
@@ -163,7 +190,7 @@ namespace DAL
             return lista;
         }
 
-        public List<ItemRanking> rankingFuncionarios(List<ItemRanking> tarefasPeriodo, double horas)
+        public List<ItemRanking> RankingFuncionarios(List<ItemRanking> tarefasPeriodo, double horas)
         {
             DocumentosBD d = new DocumentosBD();
             
@@ -175,15 +202,17 @@ namespace DAL
                         select new
                         {
                             Sum = g.Sum(p => p.mediaPorHora),
-                            g.Key.nomesFuncionarios
+                            g.Key.nomesFuncionarios, 
                         };
 
-            List<ItemRanking> Rank = new List<ItemRanking>();            
+            List<ItemRanking> Rank = new List<ItemRanking>();
+            int cont = 0;
 
+            // alterar aqui para dividir por horas
             foreach(var item in lista)
             {
-
-                Rank.Add(new ItemRanking(item.Sum/horas, item.nomesFuncionarios));
+                cont = tarefasPeriodo.Where(x => x.nomesFuncionarios == item.nomesFuncionarios).Count();
+                Rank.Add(new ItemRanking(item.Sum/*/horas*/, item.nomesFuncionarios, cont));
             }
 
             Rank=Rank.OrderByDescending(i => i.mediaPorHora).ToList();
@@ -191,7 +220,7 @@ namespace DAL
             return Rank;
         }
 
-        public List<ItemRanking> getRanking(Filtro f)
+        public List<ItemRanking> GetRanking(Filtro f)
         {
             List<ItemRanking> listaFinal = new List<ItemRanking>();
             try
@@ -205,23 +234,25 @@ namespace DAL
                     var listaNotConf = BancoDeDados.RelatorioNaoConferencia.Where(i => i.tipoTarefa == f.TipoTarefa)
                         .Where(i => i.inicioTarefa >= f.dataInicio)
                         .Where(i => i.inicioTarefa <= f.dataFim)
+                        .Where(i => i.fimTarefa != null)
                         .ToList();
 
-                    var listaItems = consolidarRelatorio(listaConf, listaNotConf, true);
+                    var listaItems = ConsolidarRelatorio(listaConf, listaNotConf, true);
                     var listaTarefas = listaItems.Select(i => i.idTarefa);
                     var resultado = BancoDeDados.Func_Tarefa.Where(t => listaTarefas.Contains(t.Tarefa)).ToList();
                     
                     string nome;
+                    int qtde = 0;
                     foreach (var item in listaItems)
                     {
                         item.atualizaPontuação();
-                        inserirPontuacao(item.idTarefa, (float)item.pontos);
+                        InserirPontuacao(item.idTarefa, (float)item.pontos);
                     }
 
                     foreach (var item in resultado)
                     {
                        nome = BancoDeDados.Funcionarios.Where(func => func.idFunc == item.Funcionario).Select(func => func.nomeFunc).FirstOrDefault();
-                        listaFinal.Add(new ItemRanking((double)item.Pontuacao, nome));
+                         listaFinal.Add(new ItemRanking((double)item.Pontuacao, nome, qtde));
                     }
                 }
                 return listaFinal;
@@ -237,7 +268,7 @@ namespace DAL
         /// Retorna uma lista com as tarefas que atendam os filtros informados
         /// </summary>
         /// <param name="f">Parâmetros de pesquisa</param>
-        public List<ItemRelatorio> getTarefasFiltradas(Filtro f, bool consolidarFuncionario)
+        public List<ItemRelatorio> GetTarefasFiltradas(Filtro f, bool consolidarFuncionario)
         {
             List<ItemRelatorio> lista = new List<ItemRelatorio>();
             try
@@ -316,7 +347,7 @@ namespace DAL
 
                     #endregion
                     
-                    lista = consolidarRelatorio(relatorioConferencia, relatorioNaoConferencia, consolidarFuncionario);
+                    lista = ConsolidarRelatorio(relatorioConferencia, relatorioNaoConferencia, consolidarFuncionario);
                     lista.OrderBy(o => o.idTarefa);
                 }
             }
@@ -327,7 +358,7 @@ namespace DAL
             return lista;
         }
 
-        private List<ItemRelatorio> consolidarRelatorio(List<RelatorioNovoConferencias> conferencias, List<RelatorioNaoConferencia> outros, bool consolidarFuncionario)
+        private List<ItemRelatorio> ConsolidarRelatorio(List<RelatorioNovoConferencias> conferencias, List<RelatorioNaoConferencia> outros, bool consolidarFuncionario)
         {
             List<ItemRelatorio> lista = new List<ItemRelatorio>();
             DocumentosBD d = new DocumentosBD();
@@ -385,7 +416,7 @@ namespace DAL
             return lista;
         }
 
-        public int getTarefasHojeFinalizadas(string tipoTarefa)
+        public int GetTarefasHojeFinalizadas(string tipoTarefa)
         {
             List<Tarefas> pendentes = new List<Tarefas>();
             try
@@ -402,7 +433,7 @@ namespace DAL
             }
         }
 
-        public int getTarefasHojePendentes(string tipoTarefa)
+        public int GetTarefasHojePendentes(string tipoTarefa)
         {
             List<Tarefas> pendentes = new List<Tarefas>();
             try
@@ -422,7 +453,7 @@ namespace DAL
         /// <summary>
         /// Retorna uma lista com as tarefas do tipo indicado sem hora de finalização
         /// </summary>
-        public List<TarefaModelo> getTarefasPendentes(string tipoTarefa)
+        public List<TarefaModelo> GetTarefasPendentes(string tipoTarefa)
         {
             List<Tarefas> pendentes = new List<Tarefas>();
             List<TarefaModelo> pendentesModelo = new List<TarefaModelo>();
@@ -433,18 +464,18 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     pendentes = (from Tarefas in BancoDeDados.Tarefas where Tarefas.fimTarefa == null where Tarefas.tipoTarefa == tipoTarefa select Tarefas).ToList();
-                    pendentesModelo = tarefaModeloParse(pendentes);
+                    pendentesModelo = TarefaModeloParse(pendentes);
                 }
                 return pendentesModelo;
             }
 
-            catch
+            catch (Exception )
             {
                 return new List<TarefaModelo>();
             }
         }
 
-        public bool inserirDivergencia(List<TarefaModelo> listaDivergencia)
+        public bool InserirDivergencia(List<TarefaModelo> listaDivergencia)
         {
             try
             {
@@ -465,7 +496,7 @@ namespace DAL
             }
         }
         
-        public string nomesFuncTarefa(int idTarefa)
+        public string NomesFuncTarefa(int idTarefa)
         {
             FuncionariosBD f = new FuncionariosBD();
             try
@@ -483,14 +514,14 @@ namespace DAL
                     }
                 }
                 return nomes;
-            }
+            } 
             catch
             {
                 return "";
             }
         }
 
-        public bool verificaDocumentoTarefa(int numDocumento, string tipoTarefa)
+        public bool VerificaDocumentoTarefa(int numDocumento, string tipoTarefa)
         {
             try
             {
@@ -511,7 +542,7 @@ namespace DAL
             }
         }
 
-        public bool inserirPontuacao(int idTarefa, float pontos)
+        public bool InserirPontuacao(int idTarefa, float pontos)
         {
             try
             {
@@ -532,7 +563,7 @@ namespace DAL
             }
         }
 
-        private List<TarefaModelo> tarefaModeloParse(List<Tarefas> tarefas)
+        private List<TarefaModelo> TarefaModeloParse(List<Tarefas> tarefas)
         {
             List<TarefaModelo> modelos = new List<TarefaModelo>();
             DocumentosBD d = new DocumentosBD();
@@ -540,13 +571,13 @@ namespace DAL
             {
                 if (tar != null)
                 {                   
-                    modelos.Add(tarefaModeloParse(tar));
+                    modelos.Add(TarefaModeloParse(tar));
                 }
             }
             return modelos;
         }
 
-        private TarefaModelo tarefaModeloParse(Tarefas tarefas)
+        private TarefaModelo TarefaModeloParse(Tarefas tarefas)
         {
             List<TarefaModelo> modelos = new List<TarefaModelo>();
             TarefaModelo aux;
@@ -559,13 +590,14 @@ namespace DAL
                 aux.documentoTarefa = d.getNovoCtePorID(aux.documentoTarefa).numeroCte;
                 aux.valores(d.getSkuCte(tarefas.documentoTarefa), d.getVolumesCte(tarefas.documentoTarefa));
                 aux.fornecedor = d.getFornecedorCte(tarefas.documentoTarefa);
+                aux.cliente = d.get_ListaManifestosCte(tarefas.documentoTarefa);
             }
             else
             {
                 m = d.getManifestoPorNumero(tarefas.documentoTarefa);
                 aux.valores(0, m.VolumesManifesto);
             }
-            aux.nomesFuncionarios = nomesFuncTarefa(tarefas.idTarefa);
+            aux.nomesFuncionarios = NomesFuncTarefa(tarefas.idTarefa);
 
             return aux;
         }           

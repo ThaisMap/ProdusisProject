@@ -18,7 +18,7 @@ namespace DAL
                     if (verificarNovoCte(novoCte.numeroCte, novoCte.notasCte) <= 0)
                     {
                         BancoDeDados.Cte.Add(novoCte);
-                        BancoDeDados.SaveChanges();
+                         BancoDeDados.SaveChanges();
                     }
                 }
                 return true;
@@ -81,7 +81,7 @@ namespace DAL
                 return -1;
             }
         }
-        
+   
         private string getDadosNovoCte(int numDoc)
         {
             string dados;
@@ -89,8 +89,8 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    Cte idCte = (from Cte in BancoDeDados.Cte where Cte.numeroCte == numDoc select Cte).FirstOrDefault();
-                    dados = "Cte n º " + idCte.numeroCte + " - " + getVolumesCte(numDoc) + " volumes - " + getSkuCte(numDoc) + " SKU's";
+                    Cte CteAtual = (from Cte in BancoDeDados.Cte where Cte.numeroCte == numDoc select Cte).FirstOrDefault();
+                    dados = "Cte n º " + CteAtual.numeroCte + " - " + getVolumesCte(CteAtual.idCte) + " volumes - " + getSkuCte(CteAtual.idCte) + " SKU's";
                 }
             }
             catch
@@ -223,6 +223,48 @@ namespace DAL
             }
         }
 
+        public int ctesImportadosNoManifesto(int numManifesto)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var novosCtes = from manifestados in BancoDeDados.Cte_Manifesto
+                                    from importados in BancoDeDados.NotasFiscais
+                                    where manifestados.Manifesto == numManifesto
+                                    where manifestados.CteNovo == importados.CteNovoNF
+                                   select manifestados;
+                    novosCtes = novosCtes.Distinct();
+                    return novosCtes.Count();
+                }
+            }
+            catch
+            {
+                return 1;
+            }
+        }
+
+        public int ctesConferidosNoManifesto(int numManifesto)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var novosCtes = from manifestados in BancoDeDados.Cte_Manifesto
+                                    from conferidos in BancoDeDados.Tarefas
+                                    where manifestados.Manifesto == numManifesto
+                                    where manifestados.CteNovo == conferidos.documentoTarefa
+                                    where conferidos.fimTarefa != null
+                                    select manifestados;
+                    return novosCtes.Count();
+                }
+            }
+            catch
+            {
+                return 1;
+            }
+        }
+
         public bool alterarPreManifesto(Manifestos novoManifesto)
         {
             try
@@ -273,7 +315,7 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    var manifestos = (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.Cte == numCte select Cte_Manifesto).ToList();
+                    var manifestos = (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.CteNovo == numCte select Cte_Manifesto).ToList();
                     if (manifestos != null)
                     {
                         string notas = "";
@@ -420,18 +462,22 @@ namespace DAL
         /// Retorna uma nota fiscal a partir do seu numero
         /// </summary>
         /// <param name="numNF">Parametros de busca (com série)</param>
-        public NotasFiscais getNFPorNumero(string numNF)
+        public List<NotasFiscais> getNFPorNumero(string numNF)
         {
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    return (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.numeroNF.StartsWith(numNF) select NotasFiscais).FirstOrDefault();
+                    return (
+                        from NotasFiscais in BancoDeDados.NotasFiscais
+                        where NotasFiscais.numeroNF.StartsWith(numNF)
+                        orderby NotasFiscais.numeroNF
+                        select NotasFiscais).ToList();
                 }
             }
             catch
             {
-                return new NotasFiscais();
+                return new List<NotasFiscais>();
             }
         }
 

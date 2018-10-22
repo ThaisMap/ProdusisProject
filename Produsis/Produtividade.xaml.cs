@@ -42,7 +42,7 @@ namespace GUI
 
                     TarefasBLL t = new TarefasBLL();
 
-                    Ranking = t.getRanking(filtros);
+                    Ranking = t.GetRanking(filtros);
 
                     dgRanking.ItemsSource = Ranking;
                     Mouse.OverrideCursor = _cursorAnterior;

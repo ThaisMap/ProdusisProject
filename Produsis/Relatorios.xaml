@@ -7,7 +7,7 @@
     HorizontalAlignment="Stretch"
     VerticalAlignment="Top"
     d:DesignHeight="500"
-    d:DesignWidth="1000"
+    d:DesignWidth="941.729"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
     Loaded="UserControl_Loaded"
@@ -21,7 +21,7 @@
         VerticalAlignment="Stretch"
         CanContentScroll="True"
         VerticalScrollBarVisibility="Auto">
-        <StackPanel>
+        <StackPanel HorizontalAlignment="Stretch">
             <TextBlock
                 Margin="20,10,0,0"
                 HorizontalAlignment="Left"
@@ -74,11 +74,15 @@
                     <ComboBoxItem
                         Width="158"
                         HorizontalAlignment="Left"
-                        Content="Separação de rota" />
+                        Content="Movimentação de paletes" />
                     <ComboBoxItem
                         Width="158"
                         HorizontalAlignment="Left"
                         Content="Carregamento" />
+                    <ComboBoxItem
+                        Width="158"
+                        HorizontalAlignment="Left"
+                        Content="Empilhadeira" />
                 </ComboBox>
 
                 <TextBlock
@@ -212,10 +216,9 @@
             <Separator />
             <DataGrid
                 Name="dgTarefas"
-                Height="200"
                 Margin="10"
                 HorizontalAlignment="Left"
-                VerticalAlignment="Stretch"
+                VerticalAlignment="Top"
                 AutoGenerateColumns="False"
                 ColumnWidth="auto"
                 IsReadOnly="True">
@@ -236,7 +239,7 @@
             <Button
                 x:Name="btnExportar"
                 Width="100"
-                Margin="55,0,5,5"
+                Margin="5,0,5,5"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
                 Click="btnExportar_Click"

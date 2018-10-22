@@ -75,11 +75,15 @@
                 <ComboBoxItem
                     Width="190"
                     HorizontalAlignment="Left"
-                    Content="Separação de rota" />
+                    Content="Movimentação de paletes" />
                 <ComboBoxItem
                     Width="190"
                     HorizontalAlignment="Left"
                     Content="Carregamento" />
+                <ComboBoxItem
+                    Width="190"
+                    HorizontalAlignment="Left"
+                    Content="Empilhadeira" />
             </ComboBox>
 
 
@@ -142,7 +146,8 @@
             VerticalScrollBarVisibility="Auto">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding nomesFuncionarios}" Header="Funcionário" />
-                <DataGridTextColumn Binding="{Binding mediaPorHora}" Header="Média no período" />
+                <DataGridTextColumn Binding="{Binding mediaPorHora}" Header="Pontuação no período" />
+                <DataGridTextColumn Binding="{Binding quantidadeTarefas}" Header=" Quantidade" />
 
             </DataGrid.Columns>
         </DataGrid>

@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:GUI"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="Menu"
+    Title="Produsis - Produtividade Rodominas"
     Width="1060"
     Height="680"
     MinWidth="800"
@@ -36,8 +36,8 @@
 
         <StackPanel Orientation="Vertical">
             <!--  Botoes  -->
-            <Menu HorizontalAlignment="Center" Height="auto" VerticalAlignment="Top" Width="auto">
-                <MenuItem Name="BtnAdministrativo" Header="Administrativo">
+            <Menu HorizontalAlignment="Center" Height="40" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="auto" Margin="0,0" >
+                <MenuItem Name="BtnAdministrativo" Header="Administrativo" Click="BtnAdministrativo_Click">
                     <MenuItem Name="BtnPesquisaDocs" Header="Ver Documentos" Click="BtnPesquisaDocs_Click"/>
                     <MenuItem Name="BtnRelatorios" Header="Relatórios" Click="BtnRelatorios_Click"/>
                     <MenuItem Name="BtnProdutividade" Header="Produtividade" Click="BtnProdutividade_Click"/>
@@ -49,14 +49,15 @@
                         <MenuItem Name="BtnMotorista" Header="Motoristas" Click="BtnMotorista_Click"/>
                     </MenuItem>
                     <MenuItem Name="BtnConfig" Header="Configurações">
-                         <MenuItem Name="BtnPastas" Header="Pastas" Click="BtnPastas_Click"/>
-                         <MenuItem Name="BtnTemas" Header="Temas" Click="BtnTemas_Click"/>
+                        <MenuItem Name="BtnPastas" Header="Pastas" Click="BtnPastas_Click"/>
+                        <MenuItem Name="BtnTemas" Header="Temas" Click="BtnTemas_Click"/>
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Name="BtnDescarga" Header="Descarga" Click="BtnDescarga_Click"/>
                 <MenuItem Name="BtnConferencia" Header="Conferência" Click="BtnConferencia_Click"/>
-                <MenuItem Name="BtnSeparacaoCarga" Header="Separação de rota" Click="BtnSeparacaoCarga_Click"/>
+                <MenuItem Name="BtnSeparacaoCarga" Header="Movimentação de paletes" Click="BtnSeparacaoCarga_Click"/>
                 <MenuItem Name="BtnCarregamento" Header="Carregamento" Click="BtnCarregamento_Click"/>
+                <MenuItem Name="BtnEmpilhadeira" Header="Empilhadeira" Click="BtnEmpilhadeira_Click"/>
                 <MenuItem Name="BtnDivergencia" Header="Divergências" Click="BtnDivergencia_Click"/>
             </Menu>
 

@@ -85,8 +85,7 @@ namespace GUI
                 }
             }
         }
-
-
+        
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -94,7 +93,8 @@ namespace GUI
 
         private void calcularPorcentagem(object sender, TextChangedEventArgs e)
         {
-            if (txtQtde.Text != "" && txtTotal.Text != "0" && txtTotal.Text != "")
+            txtQtde.Text = txtQtde.Text.Replace(" ", string.Empty);
+            if (txtQtde.Text != "" && txtQtde.Text != " " && txtTotal.Text != "0" && txtTotal.Text != "")
             {
                 var x = int.Parse(txtQtde.Text) / double.Parse(txtTotal.Text);
                 txtPorcentagem.Text = string.Format("{0:P2}", x);

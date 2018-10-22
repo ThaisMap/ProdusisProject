@@ -2,73 +2,72 @@
 using ProdusisBD;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
-using DAL;
-using System.Linq;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace GUI
 {
     /// <summary>
-    /// Interaction logic for Carregamento.xaml
+    /// Interação lógica para Empilhadeira.xam
     /// </summary>
-    public partial class Carregamento : UserControl
+    public partial class Empilhadeira : UserControl
     {
         private DocumentosBLL d = new DocumentosBLL();
         private FuncionarioBLL f = new FuncionarioBLL();
-        private FuncionariosBD funcionariosBD = new FuncionariosBD();
-        private List<CapacidadeMotoristas> ListaMotoristas;
         private List<FuncionariosTag> FuncionarioSelecionado = new List<FuncionariosTag>();
         private List<Funcionarios> ListaFunc;
         private TarefasBLL t = new TarefasBLL();
-        private int[] pallets = {0, 0};
+        private int[] pallets = { 0, 0 };
 
-        public Carregamento(double actualHeight, double actualWidth)
+        public Empilhadeira(double actualHeight, double actualWidth)
         {
             InitializeComponent();
-            ListaFunc = f.carregaFuncionariosLivres("4");
+            ListaFunc = f.carregaFuncionariosLivres("5"); // 5 = Empilhadeira
             CBFuncionario.ItemsSource = ListaFunc;
             CBFuncionario.DisplayMemberPath = "nomeFunc";
-            ListaMotoristas = funcionariosBD.getAllMotoristas();
-            CBmotorista.ItemsSource = ListaMotoristas;
-            CBmotorista.DisplayMemberPath = "Motorista";
-            CBmotorista.SelectedValuePath = "Capacidade";
-            dgTarefas.ItemsSource = t.TarefasPendentes("4");
-            Height = actualHeight - 150;
+            dgTarefas.ItemsSource = t.TarefasPendentes("5"); // 5 = Empilhadeira
+            Height = actualHeight - 60;
             Width = actualWidth - 60;
+            dgTarefas.Height = actualHeight - 250;
             lerXmls();
         }
-
         public static string CriaChipTag(string Nome)
         {
             string[] PrimeirosNomes = Nome.Split(' ');
             return PrimeirosNomes[0].Substring(0, 1).ToUpper() + PrimeirosNomes[1].Substring(0, 1).ToUpper();
         }
-        
+
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
-            dgTarefas.ItemsSource = t.TarefasPendentes("4");
+            dgTarefas.ItemsSource = t.TarefasPendentes("5"); // 5 = Empilhadeira
         }
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
         {
-            TarefaModelo item = (TarefaModelo)dgTarefas.SelectedItem;
-            pallets = paletes.Perguntar(item.totalPaletes.ToString());
-
+            pallets = paletes.Perguntar("0");
             if (pallets[1] > 0)
             {
-                if (t.FinalizarTarefa(item.idTarefa, pallets[0], pallets[1]))
-                    MessageBox.Show("Carregamento finalizado após " + item.tempoGasto, "Carregamento finalizado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                Tarefas item = (Tarefas)dgTarefas.SelectedItem;
+                // lançar apenas quantidade de paletes na separação
+                if (t.FinalizarTarefa(item.idTarefa, pallets[0], pallets[0]))
+                    MessageBox.Show("Movimentação de paletes finalizada após " + item.tempoGasto, "Movimentação finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
-                    MessageBox.Show("Houve um erro e o carregamento não pode ser finalizado.", "Carregamento não finalizado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-                ListaFunc = f.carregaFuncionariosLivres("4");
+                    MessageBox.Show("Houve um erro e a movimentação de paletes não pode ser finalizada.", "Movimentação não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                ListaFunc = f.carregaFuncionariosLivres("5"); // 5 = Empilhadeira
                 CBFuncionario.ItemsSource = ListaFunc;
                 AtualizarDg_Click(sender, e);
             }
-            Documento.Focus();
-
         }
 
         private void CBFuncionario_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -77,14 +76,13 @@ namespace GUI
             {
                 Funcionarios select = CBFuncionario.SelectedItem as Funcionarios;
                 FuncionarioSelecionado.Clear();
-
                 if (select.equipeFunc != null)
                     foreach (var item in ListaFunc.Where(x => x.equipeFunc == select.equipeFunc))
                     {
                         FuncionarioSelecionado.Add(new FuncionariosTag(item.nomeFunc, CriaChipTag(item.nomeFunc)));
                     }
                 else
-                FuncionarioSelecionado.Add(new FuncionariosTag(select.nomeFunc, CriaChipTag(select.nomeFunc)));
+                    FuncionarioSelecionado.Add(new FuncionariosTag(select.nomeFunc, CriaChipTag(select.nomeFunc)));
             }
         }
 
@@ -92,7 +90,7 @@ namespace GUI
         {
             if (Documento.Text.Replace("_", "") == "" || ListaDeFuncionarios.Items.Count == 0)
             {
-                MessageBox.Show("Digite o documento e inclua os funcionários.", "Descarga não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Digite o documento e inclua os funcionários.", "Movimentação não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             return true;
@@ -124,12 +122,12 @@ namespace GUI
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
             if (checarCampos())
-                if (t.TarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "4") && t.TarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "6"))
+                if (t.TarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "5"))
                 {
                     if (t.InserirTarefa(montarTarefa(), funcionarios()))
                     {
-                        dgTarefas.ItemsSource = t.TarefasPendentes("4");
-                        MessageBox.Show("Carregamento iniciado para o " + d.linhaDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Carregamento iniciado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("Movimentação de paletes iniciada. ", "Movimentação iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                        dgTarefas.ItemsSource = t.TarefasPendentes("5");
                         Documento.Text = "";
                         CBFuncionario.SelectedIndex = -1;
                         ListaDeFuncionarios.Items.Clear();
@@ -137,12 +135,12 @@ namespace GUI
                     }
                     else
                     {
-                        MessageBox.Show("Manifesto não importado.", "Carregamento não iniciado - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Pré-manifesto ou manifesto não importado.", "Movimentação não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Já existe um carregamento para esse manifesto.", "Carregamento não iniciado - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Esse pré-manifesto ou manifesto já foi movimetado", "Movimentação não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
         }
 
@@ -176,23 +174,15 @@ namespace GUI
             x.triagemArquivos();
         }
 
+
         private Tarefas montarTarefa()
         {
-            var paletes = 30;
-            if (CBmotorista.SelectedValue != null)
-                paletes = (int)CBmotorista.SelectedValue;
-            
-            Tarefas novaTarefa = new Tarefas()
-            {
-                documentoTarefa = int.Parse(Documento.Text.Replace("_", "")),
-                totalPaletes = paletes,
-                tipoTarefa = "4",
-                inicioTarefa = DateTime.Now
-            };
-            
+            Tarefas novaTarefa = new Tarefas();
+            novaTarefa.documentoTarefa = int.Parse(Documento.Text.Replace("_", ""));
+            novaTarefa.inicioTarefa = DateTime.Now;
+            novaTarefa.tipoTarefa = "5";
             return novaTarefa;
         }
-
         private void testarCaractere(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");

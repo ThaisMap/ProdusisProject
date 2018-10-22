@@ -45,6 +45,7 @@ namespace GUI
                 {
                     TarefasBD t = new TarefasBD();
                     var tarefa = t.GetTarefaDivergencia(cbTipoTarefa.SelectedIndex + 1, int.Parse(Documento.Text));
+                    //Dá erro quando é cte, pois nao busca pelo id
                 }
             }
             catch (Exception ex)

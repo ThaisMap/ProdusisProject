@@ -24,11 +24,11 @@ namespace GUI
 
         public Descarga()
         {
-            InitializeComponent();
+            InitializeComponent(); 
             ListaFunc = f.carregaFuncionariosLivres("1");
             CBFuncionario.ItemsSource = ListaFunc;
             CBFuncionario.DisplayMemberPath = "nomeFunc";
-            dgTarefas.ItemsSource = t.tarefasPendentes("1");
+            dgTarefas.ItemsSource = t.TarefasPendentes("1");
             lerXmls();
         }
 
@@ -40,16 +40,16 @@ namespace GUI
 
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
-            dgTarefas.ItemsSource = t.tarefasPendentes("1", "5");
+            dgTarefas.ItemsSource = t.TarefasPendentes("1");
         }
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
         {
-            pallets = paletes.Perguntar("30");
+            pallets = paletes.Perguntar("28");
             if (pallets[1] > 0)
             {
                 Tarefas item = (Tarefas)dgTarefas.SelectedItem;
-                if (t.finalizarTarefa(item.idTarefa, pallets[0], pallets[1]))
+                if (t.FinalizarTarefa(item.idTarefa, pallets[0], pallets[1]))
                     MessageBox.Show("Descarga finalizada após " + item.tempoGasto, "Descarga finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
                     MessageBox.Show("Houve um erro e a descarga não pode ser finalizada.", "Descarga não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -114,11 +114,11 @@ namespace GUI
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
             if (checarCampos())
-                if (t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "1") && t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "5"))
+                if (t.TarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "1") && t.TarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "5"))
                 {
-                    if (t.inserirTarefa(montarTarefa(), funcionarios()))
+                    if (t.InserirTarefa(montarTarefa(), funcionarios()))
                     {
-                        dgTarefas.ItemsSource = t.tarefasPendentes("1");
+                        dgTarefas.ItemsSource = t.TarefasPendentes("1");
                         MessageBox.Show("Descarga iniciada para o " + d.linhaDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Descarga iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                         Documento.Text = "";
                         CBFuncionario.SelectedIndex = -1;
@@ -182,6 +182,14 @@ namespace GUI
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void AdicionarFuncionario(object sender, RoutedEventArgs e)
+        {
+            Tarefas item = (Tarefas)dgTarefas.SelectedItem;
+            AddFuncionario add = new AddFuncionario(item.idTarefa);
+            add.ShowDialog();
+            AtualizarDg_Click(sender, e);
         }
     }
 }

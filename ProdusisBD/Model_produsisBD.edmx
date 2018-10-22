@@ -19,7 +19,7 @@
           </Key>
           <Property Name="idCte" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="numeroCte" Type="int" Nullable="false" />
-          <Property Name="notasCte" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="notasCte" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Cte_Manifesto">
           <Key>
@@ -386,7 +386,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
           </Key>
           <Property Name="idCte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="numeroCte" Type="Int32" Nullable="false" />
-          <Property Name="notasCte" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="notasCte" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Cte_Manifesto" Relationship="Self.FK_Cte_Manifesto_NovoCte" FromRole="Cte" ToRole="Cte_Manifesto" />
           <NavigationProperty Name="NotasFiscais" Relationship="Self.FK_NotasFiscais_CteNovo" FromRole="Cte" ToRole="NotasFiscais" />
         </EntityType>

@@ -13,7 +13,7 @@
     d:DesignWidth="800"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-    TextElement.FontSize="16"
+    TextElement.FontSize="14"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
@@ -32,23 +32,11 @@
                 <StackPanel Grid.RowSpan="2" Grid.Column="0">
                     <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Divergências</TextBlock>
                     <Separator />
-                    <Grid Height="116">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="71" />
-                            <RowDefinition Height="45" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="250" />
-                            <ColumnDefinition Width="250" />
-                            <ColumnDefinition Width="150" />
-                            <ColumnDefinition Width="79*" />
-                        </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal">
                         <ComboBox
                             x:Name="cbTipoTarefa"
-                            Grid.Column="0"
-                            Width="205"
-                            Height="42"
-                            Margin="10,18,0,11"
+                            Width="200"
+                            Margin="5, 15"
                             HorizontalAlignment="Left"
                             materialDesign:HintAssist.Hint="Tipo de Tarefa"
                             materialDesign:HintAssist.IsFloating="True"
@@ -56,58 +44,46 @@
                             SelectedIndex="1">
                             <ComboBoxItem HorizontalAlignment="Left" Content="Descarga" />
                             <ComboBoxItem HorizontalAlignment="Left" Content="Conferência" />
-                            <ComboBoxItem HorizontalAlignment="Left" Content="Separação de rota" />
+                            <ComboBoxItem HorizontalAlignment="Left" Content="Movimentação de paletes" />
                             <ComboBoxItem HorizontalAlignment="Left" Content="Carregamento" />
+                            <ComboBoxItem HorizontalAlignment="Left" Content="Empilhadeira" />
 
                         </ComboBox>
                         <materialDesign:PackIcon
-                            Grid.Column="1"
                             Width="22"
                             Height="22"
-                            Margin="0,0,0,10"
+                            Margin="20,0,0,20"
                             VerticalAlignment="Bottom"
                             Foreground="{Binding ElementName=Documento, Path=BorderBrush}"
                             Kind="FileDocument" />
                         <TextBox
                             Name="Documento"
-                            Grid.Column="1"
-                            Margin="27,10,10,5"
+                            Width="200"
+                            Margin="5, 15"
                             materialDesign:HintAssist.Hint="Documento"
                             materialDesign:HintAssist.IsFloating="True"
                             PreviewTextInput="testarCaractere"
                             Style="{StaticResource MaterialDesignTextBox}" />
                         <Button
                             x:Name="btnConsultar"
-                            Grid.Row="0"
-                            Grid.Column="2"
                             Width="100"
-                            Height="40"
-                            Margin="0,9"
-                            VerticalAlignment="Bottom"
+                            Margin="15,0"
+                            VerticalAlignment="Center"
                             Click="btnConsultar_Click"
                             Content="Consultar" />
                         <Button
                             x:Name="btnSalvar"
-                            Grid.Row="0"
-                            Grid.Column="3"
                             Width="100"
-                            Height="40"
-                            Margin="0,9"
+                            Margin="0"
                             HorizontalAlignment="Left"
-                            VerticalAlignment="Bottom"
+                            VerticalAlignment="Center"
                             Click="btnSalvar_Click"
                             Content="Salvar" />
-                        <TextBlock
-                            Grid.Row="1"
-                            Height="28"
-                            Margin="10,9,10,8"
-                            VerticalAlignment="Center"
-                            Style="{StaticResource MaterialDesignHeadlineTextBlock}">
-                            Ct-es no Manifesto
-                        </TextBlock>
 
-                    </Grid>
 
+                    </StackPanel>
+                    
+              
                     <DataGrid
                         Name="dgDivergencias"
                         Margin="10,0,0,10"

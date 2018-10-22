@@ -156,7 +156,8 @@
                         <CheckBox Name="CkDescarrega" Margin="5,0">Descarrega</CheckBox>
                         <CheckBox Name="CkSepara" Margin="5,0">Separa</CheckBox>
                         <CheckBox Name="CkCarrega" Margin="5,0">Carrega</CheckBox>
-                    </StackPanel>
+                        <CheckBox Name="CkEmpilha" Margin="5,0">Empilhadeira</CheckBox>
+                   </StackPanel>
 
                     <ToggleButton Name="Ativo"
                                   Grid.Row="6"

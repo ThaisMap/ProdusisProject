@@ -14,21 +14,15 @@ namespace Produsis
     /// </summary>
     public partial class PesquisarDocumento : UserControl
     {
-        public PesquisarDocumento()
+        public PesquisarDocumento(double Altura, double largura)
         {
             InitializeComponent();
+            ListaDados.Height = Altura - 250;
         }
 
         private void limpar()
         {
-            Numero.Text = "Não encontrado";
-            NumeroDeVolumes.Text = "";
-            NumeroDeSKUS.Text = "";
-            Fornecedor.Text = "";
-            texto1.Text = "";
-            valor1.Text = "";
-            texto2.Text = "";
-            valor2.Text = "";
+            ListaDados.ItemsSource = new List<dadosPesquisa>();           
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -38,18 +32,31 @@ namespace Produsis
                 DocumentosBD dbd = new DocumentosBD();
                 DocumentosBLL d = new DocumentosBLL();
 
-                string[] rotulosNF = { "Número", "Volumes", "SKU's", "CT-e", "Fornecedor", "Cliente" };
                 string[] rotulosCte = { "Número", "Volumes", "SKU's", "Fornecedor", "Notas Fiscais", "Manifesto" };
                 string[] rotulosManifesto = { "Número", "Volumes", "CT-es", "CT-es importados", "CT-es conferidos" };
+                string[] rotulosNF = { "Número", "Volumes", "SKU's", "CT-e", "Fornecedor", "Cliente" };
+
                 int numDoc = int.Parse(NumeroDocumento.Text);
                 List<dadosPesquisa> listaDados = new List<dadosPesquisa>();
                 dadosPesquisa aux;
-                ListaDados.Items.Clear();
-                if (TipoDeDocumento.SelectedIndex == 0)
+                listaDados.Clear();
+
+                // CT-e
+                if (TipoDeDocumento.SelectedIndex == 0) 
                 {
                     if (d.cteCadastrado(numDoc))
                     {
                         var ctes = dbd.getNovoCtePorNum(numDoc);
+                        aux = new dadosPesquisa()
+                        {
+                            numero = rotulosCte[0],
+                            volumes = rotulosCte[1],
+                            dado3 = rotulosCte[2],
+                            dado4 = rotulosCte[3],
+                            dado5 = rotulosCte[4],
+                            dado6 = rotulosCte[5]
+                        };
+                        listaDados.Add(aux);
                         foreach (var item in ctes)
                         {
                             aux = new dadosPesquisa()
@@ -58,57 +65,83 @@ namespace Produsis
                                 volumes = d.volumesCte(item.idCte).ToString(),
                                 dado3 = d.skuCte(item.idCte).ToString(),
                                 dado4 = d.fornecedorCte(item.idCte),
-                                dado5 = item.notasCte, 
+                                dado5 = item.notasCte,
                                 dado6 = d.getManifestosCte(item.idCte)
                             };
                             listaDados.Add(aux);
                         }
                         ListaDados.ItemsSource = listaDados;
-
-
-                        Numero.Text = NumeroDocumento.Text.Replace("_", "");
-                        NumeroDeVolumes.Text = d.volumesCte(numDoc).ToString();
-                        NumeroDeSKUS.Text = d.skuCte(numDoc).ToString();
-                        Fornecedor.Text = d.fornecedorCte(numDoc);
-                        texto1.Text = "Notas Fiscais:";
-                        valor1.Text = d.getNFsCte(numDoc);
-                        texto2.Text = "Manifesto(s):";
-                        valor2.Text = d.getManifestosCte(numDoc);
                     }
                     else limpar();
                 }
+
+                // MANIFESTO
                 else if (TipoDeDocumento.SelectedIndex == 1)
                 {
                     Manifestos documento = d.getDadosManifesto(numDoc);
 
                     if (documento != null)
                     {
-                        Numero.Text = documento.numeroManifesto.ToString();
-                        NumeroDeVolumes.Text = documento.VolumesManifesto.ToString();
-                        NumeroDeSKUS.Text = "Não se aplica";
-                        Fornecedor.Text = d.getFornecedorManifesto(numDoc);
-                        texto1.Text = "Total de CT-es:";
-                        valor1.Text = documento.quantCtesManifesto.ToString();
-                        texto2.Text = "Cte's com nota importada:";
-                        valor2.Text = d.NFsImportadasNoManifesto(numDoc).ToString();
+                        aux = new dadosPesquisa()
+                        {
+                            numero = rotulosManifesto[0],
+                            volumes = rotulosManifesto[1],
+                            dado3 = rotulosManifesto[2],
+                            dado4 = rotulosManifesto[3],
+                            dado5 = rotulosManifesto[4],
+                            dado6 = " "
+                        };
+                        listaDados.Add(aux);
+
+                        aux = new dadosPesquisa()
+                        {
+                            numero = documento.numeroManifesto.ToString(),
+                            volumes = documento.VolumesManifesto.ToString(),
+                            dado3 = documento.quantCtesManifesto.ToString(),
+                            dado4 = dbd.ctesImportadosNoManifesto(numDoc).ToString(),
+                            dado5 = dbd.ctesConferidosNoManifesto(numDoc).ToString(),
+                            dado6 = " "
+                        };
+                        listaDados.Add(aux);
+
+                        ListaDados.ItemsSource = listaDados;
                     }
                     else limpar();
                 }
 
+                // NOTA FISCAL
                 else if (TipoDeDocumento.SelectedIndex == 2) 
                 {
-                    NotasFiscais documento = d.getDadosNF(NumeroDocumento.Text);
-                    if (documento != null)
+                    var documentos = d.getDadosNF(NumeroDocumento.Text);
+                    if (documentos.Count >0)
                     {
-                        Numero.Text = documento.numeroNF;
-                        NumeroDeVolumes.Text = documento.volumesNF.ToString();
-                        NumeroDeSKUS.Text = documento.skuNF.ToString();
-                        Fornecedor.Text = documento.fornecedorNF;
-                        texto1.Text = "CT-e:";
-                        if (documento.CteNF != null)
-                            valor1.Text = documento.CteNF.ToString();
-                        else
-                            valor1.Text = "Não importado";
+                        aux = new dadosPesquisa()
+                        {
+                            numero = rotulosNF[0],
+                            volumes = rotulosNF[1],
+                            dado3 = rotulosNF[2],
+                            dado4 = rotulosNF[3],
+                            dado5 = rotulosNF[4],
+                            dado6 = rotulosNF[5]
+                        };
+                        listaDados.Add(aux);
+                        foreach (var documento in documentos)
+                        {
+                            string numCTE = "Não vinculado";
+                            if (documento.CteNovoNF != null)
+                                numCTE = dbd.getNovoCtePorID((int)documento.CteNovoNF).numeroCte.ToString();
+                            aux = new dadosPesquisa()
+                            {
+                                numero = documento.numeroNF.ToString(),
+                                volumes = documento.volumesNF.ToString(),
+                                dado3 = documento.skuNF.ToString(),
+                                dado4 = numCTE,
+                                dado5 = documento.fornecedorNF,
+                                dado6 = documento.clienteNF
+                            };
+                            listaDados.Add(aux);
+                        }
+                        ListaDados.ItemsSource = listaDados;
                     }
                     else limpar();
                 }

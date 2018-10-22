@@ -64,10 +64,13 @@ namespace GUI
 
                 if ((bool)CkCarrega.IsChecked)
                     func.tipoFunc += "4";
+
+                if ((bool)CkEmpilha.IsChecked)
+                    func.tipoFunc += "5";
             }
 
             if (func.tipoFunc == "")
-                func.tipoFunc = "1234";
+                func.tipoFunc = "12345";
             return func;
         }
          
@@ -95,6 +98,7 @@ namespace GUI
             CkConfere.IsChecked = false;
             CkDescarrega.IsChecked = false;
             CkSepara.IsChecked = false;
+            CkEmpilha.IsChecked = false;
             Ativo.IsChecked = true;
         }
 
@@ -112,6 +116,7 @@ namespace GUI
                 CkConfere.IsChecked = false;
                 CkDescarrega.IsChecked = false;
                 CkSepara.IsChecked = false;
+                CkEmpilha.IsChecked = false;
             }
         }
     }

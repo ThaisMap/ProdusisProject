@@ -142,13 +142,18 @@ namespace ProdusisBD
                 pontos = volumes * porcentagemPaletizado;
                 pontos += volumes * (1 - porcentagemPaletizado) * 3;
             }
-            else
+            else // regra para separação e movimentacao de empilhadeira
             {
-                pontos = (double)totalPaletes + (ctesNoManifesto * 2.0);
+                pontos = (double)totalPaletes;
             }
             if (divergenciaTarefa != "Nenhuma" && divergenciaTarefa != "-;0;-;0;-;0")
             {
                 pontos = 0;
+            }
+            if (nomesFunc.Contains("/"))
+            {
+                int div = nomesFunc.Count()-nomesFunc.Replace("/", string.Empty).Count()+1;
+                pontos = pontos / div;
             }
             
         }
@@ -167,7 +172,7 @@ namespace ProdusisBD
                 case "4":
                     return "Carregamento";
                 case "5":
-                    return "Descarga Paletizada";
+                    return "Empilhadeira";
                 default:
                     return "Carregamento Paletizado";
             }

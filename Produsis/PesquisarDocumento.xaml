@@ -12,7 +12,7 @@
              d:DesignWidth="700"
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-             TextElement.FontSize="16"
+             TextElement.FontSize="14"
              TextElement.FontWeight="Regular"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              mc:Ignorable="d">
@@ -30,7 +30,6 @@
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
@@ -89,92 +88,23 @@
                         Style="{StaticResource MaterialDesignFlatButton}" Click="Button_Click" />
             </Grid>
             <Separator />
-            <ListView Name="ListaDados" Visibility="Hidden">
+            <ListView Name="ListaDados" HorizontalAlignment="Center" Width="auto">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="120" Header="Número" />
-                        <GridViewColumn Width="120" Header="Volumes" />
-                        <GridViewColumn Width="120"  />
-                        <GridViewColumn Width="120"  />
-                        <GridViewColumn Width="120"  />
-                        <GridViewColumn Width="120"  />
+                        <GridView.ColumnHeaderContainerStyle>
+                            <Style TargetType="GridViewColumnHeader">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </Style>
+                        </GridView.ColumnHeaderContainerStyle>
+                        <GridViewColumn Width="auto" DisplayMemberBinding="{Binding numero}"/>
+                        <GridViewColumn Width="auto" DisplayMemberBinding="{Binding volumes}"/>
+                        <GridViewColumn Width="auto" DisplayMemberBinding="{Binding dado3}" />
+                        <GridViewColumn Width="auto" DisplayMemberBinding="{Binding dado4}" />
+                        <GridViewColumn Width="auto" DisplayMemberBinding="{Binding dado5}" />
+                        <GridViewColumn Width="auto" DisplayMemberBinding="{Binding dado6}" />
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Grid Name="dgDados" HorizontalAlignment="Center">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="auto" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0"
-                           Grid.Column="0"
-                           Margin="5"
-                           Text="Número:" />
-                <TextBlock Name="Numero"
-                           Grid.Row="0"
-                           Grid.Column="1"
-                           Margin="5"
-                           TextWrapping="Wrap" />
-                
-                <TextBlock Grid.Row="1"
-                           Grid.Column="0"
-                           Margin="5"
-                           Text="Número de Volumes:" />
-                <TextBlock Name="NumeroDeVolumes"
-                           Grid.Row="1"
-                           Grid.Column="1"
-                           Margin="5"
-                           TextWrapping="Wrap" />
-    
-                <TextBlock Grid.Row="2"
-                           Grid.Column="0"
-                           Margin="5"
-                           Text="Número de SKU's:" />
-                <TextBlock Name="NumeroDeSKUS"
-                           Grid.Row="2"
-                           Grid.Column="1"
-                           Margin="5"
-                           TextWrapping="Wrap" />
-                        
-                <TextBlock Grid.Row="3"
-                           Grid.Column="0"
-                           Margin="5"
-                           Text="Fornecedor:" />
-                <TextBlock Name="Fornecedor"
-                           Grid.Row="3"
-                           Grid.Column="1"
-                           Margin="5"
-                           TextWrapping="Wrap" />
-
-                <TextBlock Grid.Row="4"
-                           Name="texto1"
-                           Grid.Column="0"
-                           Margin="5" />
-                <TextBlock Name="valor1"
-                           Grid.Row="4"
-                           Grid.Column="1"
-                           Margin="5"
-                           TextWrapping="Wrap" />
-
-                <TextBlock Grid.Row="5"
-                           Name="texto2"
-                           Grid.Column="0"
-                           Margin="5"/>
-                <TextBlock Name="valor2"
-                           Grid.Row="5"
-                           Grid.Column="1"
-                           Margin="5"
-                           TextWrapping="Wrap" />
-
-            </Grid>
         </StackPanel>
     </Grid>
 </UserControl>

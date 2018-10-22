@@ -22,6 +22,7 @@ namespace GUI
             BtnDescarga.Opacity = 1;
             BtnSeparacaoCarga.Opacity = 1;
             BtnDivergencia.Opacity = 1;
+            BtnEmpilhadeira.Opacity = 1;
         }
 
         private void BtnDescarga_Click(object sender, RoutedEventArgs e)
@@ -35,7 +36,6 @@ namespace GUI
         {
             ResetarOpacidade();
             BtnAdministrativo.Opacity = 0.5;
-            Navegador.Navigate(new Administrativo());
         }
 
         private void BtnCarregamento_Click(object sender, RoutedEventArgs e)
@@ -75,7 +75,7 @@ namespace GUI
 
         private void BtnPesquisaDocs_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new PesquisarDocumento());
+            Navegador.Navigate(new PesquisarDocumento(ActualHeight, ActualWidth));
         }
 
         private void BtnRelatorios_Click(object sender, RoutedEventArgs e)
@@ -121,6 +121,18 @@ namespace GUI
         private void BtnMotorista_Click(object sender, RoutedEventArgs e)
         {
             Navegador.Navigate(new CadastroMotorista(ActualHeight, ActualWidth));
+        }
+
+        private void BtnDivergenciaN_Click(object sender, RoutedEventArgs e)
+        {
+            Navegador.Navigate(new Divergencias(ActualHeight, ActualWidth));
+        }
+
+        private void BtnEmpilhadeira_Click(object sender, RoutedEventArgs e)
+        {
+            ResetarOpacidade();
+            Navegador.Navigate(new Empilhadeira(ActualHeight, ActualWidth));
+            BtnEmpilhadeira.Opacity = 0.5;
         }
     }
 }

@@ -32,12 +32,13 @@ namespace Produsis
                 emEdicao = f.dadosFuncionario(Nome.SelectedItem.ToString());
                 Matricula.Text = emEdicao.matriculaFunc;
 
-               CkAdmin.IsChecked = emEdicao.tipoFunc.Contains("0");
+                CkAdmin.IsChecked = emEdicao.tipoFunc.Contains("0");
                 CkDescarrega.IsChecked = emEdicao.tipoFunc.Contains("1");
                 CkConfere.IsChecked = emEdicao.tipoFunc.Contains("2");
                 CkSepara.IsChecked = emEdicao.tipoFunc.Contains("3");
                 CkCarrega.IsChecked = emEdicao.tipoFunc.Contains("4");
-                
+                CkEmpilha.IsChecked = emEdicao.tipoFunc.Contains("5");
+
                 Ativo.IsChecked = emEdicao.ativoFunc;
                 Senha.Password = "";
                 Senha2.Password = "";
@@ -55,6 +56,7 @@ namespace Produsis
             CkConfere.IsChecked = false;
             CkDescarrega.IsChecked = false;
             CkSepara.IsChecked = false;
+            CkEmpilha.IsChecked = false;
             Ativo.IsChecked = true;
         }
 
@@ -106,6 +108,9 @@ namespace Produsis
 
                 if ((bool)CkCarrega.IsChecked)
                     func.tipoFunc += "4";
+
+                if ((bool)CkEmpilha.IsChecked)
+                    func.tipoFunc += "5";
             }
 
             if (func.tipoFunc == "")

@@ -28,7 +28,7 @@ namespace GUI
             InitializeComponent();
             Height = actualHeight - 100;
             Width = actualWidth - 60;
-            dgDivergencias.Height = actualHeight - 280;
+            dgDivergencias.Height = actualHeight - 270;
         }
 
         public List<ItemDivergencia> source { get; set; }
@@ -47,7 +47,7 @@ namespace GUI
                 if (cbTipoTarefa.SelectedIndex > -1 && Documento.Text != "")
                 {
                     TarefasBLL t = new TarefasBLL();
-                    tarefas = t.filtrarDivergencias((cbTipoTarefa.SelectedIndex + 1), int.Parse(Documento.Text));
+                    tarefas = t.FiltrarDivergencias((cbTipoTarefa.SelectedIndex + 1), int.Parse(Documento.Text));
                     source = new List<ItemDivergencia>();
                     foreach (TarefaModelo item in tarefas)
                     {
@@ -72,7 +72,7 @@ namespace GUI
                     tarefas[i].divergenciaTarefa = source[i].getDivergencia();
                 }
 
-                t.inserirDivergencias(tarefas);
+                t.InserirDivergencias(tarefas);
                 MessageBox.Show("As alterações foram salvas.", "Divergências - Produsis");
             }
         }

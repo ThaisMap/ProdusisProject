@@ -28,10 +28,10 @@ namespace GUI
             ListaFunc = f.carregaFuncionariosLivres("3");
             CBFuncionario.ItemsSource = ListaFunc;
             CBFuncionario.DisplayMemberPath = "nomeFunc";
-            dgTarefas.ItemsSource = t.tarefasPendentes("3");
-            Height = actualHeight - 150;
+            dgTarefas.ItemsSource = t.TarefasPendentes("3");
+            Height = actualHeight - 60;
             Width = actualWidth - 60;
-            dgTarefas.Height = actualHeight - 500;
+            dgTarefas.Height = actualHeight - 250;
             lerXmls();
         }
 
@@ -43,7 +43,7 @@ namespace GUI
 
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
-            dgTarefas.ItemsSource = t.tarefasPendentes("3");
+            dgTarefas.ItemsSource = t.TarefasPendentes("3");
         }
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
@@ -53,7 +53,7 @@ namespace GUI
             {
                 Tarefas item = (Tarefas)dgTarefas.SelectedItem;
                 // lançar apenas quantidade de paletes na separação
-                if (t.finalizarTarefa(item.idTarefa, pallets[0], pallets[0]))
+                if (t.FinalizarTarefa(item.idTarefa, pallets[0], pallets[0]))
                     MessageBox.Show("Separação para carregamento finalizada após " + item.tempoGasto, "Separação finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
                     MessageBox.Show("Houve um erro e a separação para carregamento não pode ser finalizada.", "Separação não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -83,7 +83,7 @@ namespace GUI
         {
             if (Documento.Text.Replace("_", "") == "" || ListaDeFuncionarios.Items.Count == 0)
             {
-                MessageBox.Show("Digite o documento e inclua os funcionários.", "Descarga não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Digite o documento e inclua os funcionários.", "Separação não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             return true;
@@ -115,12 +115,12 @@ namespace GUI
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
             if (checarCampos())
-                if (t.tarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "3"))
+                if (t.TarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "3"))
                 {
-                    if (t.inserirTarefa(montarTarefa(), funcionarios()))
+                    if (t.InserirTarefa(montarTarefa(), funcionarios()))
                     {
                         MessageBox.Show("Separação iniciada para carregar o " + d.linhaDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Separação iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-                        dgTarefas.ItemsSource = t.tarefasPendentes("3");
+                        dgTarefas.ItemsSource = t.TarefasPendentes("3");
                         Documento.Text = "";
                         CBFuncionario.SelectedIndex = -1;
                         ListaDeFuncionarios.Items.Clear();

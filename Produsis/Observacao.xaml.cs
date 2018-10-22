@@ -36,7 +36,7 @@ namespace GUI
         {
             string nome = Nome.SelectedItem.ToString(); // aqui pode ser selected item pq o itemsource é uma lista de strings
             DateTime data = (DateTime)dataObs.SelectedDate;
-            string texto = TextoObs.SelectionBoxItem.ToString(); //aqui já não pode pq é uma lista de combobox items
+            string texto = TextoObs.Text;
 
             if(f.cadastraObservacao(nome, data, texto))
             {
@@ -48,7 +48,12 @@ namespace GUI
 
         private void Buscar_Click(object sender, RoutedEventArgs e)
         {
-            dgObs.ItemsSource = f.getObservacoes(dataInicio.SelectedDate, dataFim.SelectedDate, Nome.SelectedItem.ToString());
+            if (Nome.SelectedIndex >= 0)
+            {
+                dgObs.ItemsSource = f.getObservacoes(dataInicio.SelectedDate, dataFim.SelectedDate, Nome.SelectedItem.ToString());
+            }
+            else
+                Nome.Focus();
         }
 
         private void dgObs_PreviewKeyDown(object sender, KeyEventArgs e)

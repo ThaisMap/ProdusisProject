@@ -13,7 +13,7 @@ namespace ProdusisBD
             documentoTarefa = tarefa.documentoTarefa;
             tipoTarefa = tipoExtenso(tarefa.tipoTarefa);
             preencheDatas();
-            atualizaTempoGasto();
+            AtualizaTempoGasto();
             divergenciaTarefa = tarefa.divergenciaTarefa;
             totalPaletes = tarefa.totalPaletes;
         }
@@ -28,11 +28,11 @@ namespace ProdusisBD
                 case "2":
                     return "Conferência";
                 case "3":
-                    return "Sep. para carregar";
+                    return "Mov. de paletes";
                 case "4":
                     return "Carregamento";
                 case "5":
-                    return "Descarga Paletizada";
+                    return "Empilhadeira";
                 default:
                     return "Carregamento Paletizado";
             }
@@ -87,7 +87,7 @@ namespace ProdusisBD
             return retorno;
         }
         
-        public void atualizaTempoGasto()
+        public void AtualizaTempoGasto()
         {
             TimeSpan tempo;
             if (fimTarefa == null)

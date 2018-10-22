@@ -41,15 +41,7 @@ namespace BLL
 
         public int NFsImportadasNoManifesto(int numeroManifesto)
         {
-            List<Cte_Manifesto> ctes = d.getCtesNoManifesto(numeroManifesto);
-            int cont = 0;
-            if(ctes != null)
-            foreach (var item in ctes)
-            {
-                if (d.getSkuCte(item.Cte) > 0)
-                    cont++;
-            }
-            return cont;
+            return d.ctesImportadosNoManifesto(numeroManifesto);
         }
 
         public string getFornecedorManifesto(int numManifesto)
@@ -86,7 +78,7 @@ namespace BLL
                 return -1;
             for (int i = lista.Count-1; i >= 0; i--)
             {
-                if (t.verificaDocumentoTarefa(lista[i].idCte, "2"))
+                if (t.VerificaDocumentoTarefa(lista[i].idCte, "2"))
                     return lista[i].idCte;
             }
             return 0;
@@ -125,7 +117,7 @@ namespace BLL
             else return false;
         }
 
-        public NotasFiscais getDadosNF(string numero)
+        public List<NotasFiscais> getDadosNF(string numero)
         {
             return d.getNFPorNumero(numero);
         }

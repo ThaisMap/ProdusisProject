@@ -12,12 +12,12 @@ namespace BLL
         private TarefasBD t = new TarefasBD();
         private DocumentosBLL d = new DocumentosBLL();
 
-        public bool inserirTarefa(Tarefas novaTarefa, string[] funcionarios)
+        public bool InserirTarefa(Tarefas novaTarefa, string[] funcionarios)
         {
             if (novaTarefa.tipoTarefa != "2" && !d.manifestoCadastrado(novaTarefa.documentoTarefa))
-                {
-                    return false;
-                }
+            {
+                return false;
+            } 
             
 
             FuncionariosBD f = new FuncionariosBD();
@@ -28,68 +28,68 @@ namespace BLL
             {
                 idsFuncionarios[i] = f.getFuncPorNome(funcionarios[i]).idFunc;
             }
-            return t.cadastrar(novaTarefa, idsFuncionarios);
+            return t.Cadastrar(novaTarefa, idsFuncionarios);
         }
 
-        public List<TarefaModelo> tarefasPendentes(string tipo1, string tipo2)
+    /*    public List<TarefaModelo> TarefasPendentes(string tipo1, string tipo2)
         {
-            var teste = t.getTarefasPendentes(tipo1);
-            teste.AddRange(t.getTarefasPendentes(tipo2));
+            var teste = t.GetTarefasPendentes(tipo1);
+            teste.AddRange(t.GetTarefasPendentes(tipo2));
             return teste;
-        }
+        }*/
 
-        public List<TarefaModelo> tarefasPendentes(string tipo)
+        public List<TarefaModelo> TarefasPendentes(string tipo)
         {
-            return t.getTarefasPendentes(tipo);
+            return t.GetTarefasPendentes(tipo);
         }
 
         /// <summary>
         /// Retorna true se não for repetido
         /// </summary>
-        public bool tarefaRepetida(int documento, string tipo)
+        public bool TarefaRepetida(int documento, string tipo)
         {
-            return t.verificaDocumentoTarefa(documento, tipo);
+            return t.VerificaDocumentoTarefa(documento, tipo);
         }
 
-        public bool inserirDivergencias(List<TarefaModelo> tarefasDivergencia)
+        public bool InserirDivergencias(List<TarefaModelo> tarefasDivergencia)
         {
-            return t.inserirDivergencia(tarefasDivergencia);
+            return t.InserirDivergencia(tarefasDivergencia);
         }
 
-        public bool finalizarTarefa(int idTarefa, int quantPalet, int totalPalet)
+        public bool FinalizarTarefa(int idTarefa, int quantPalet, int totalPalet)
         {
-            return t.finalizarTarefa(idTarefa, quantPalet, totalPalet);
+            return t.FinalizarTarefa(idTarefa, quantPalet, totalPalet);
         }
 
-        public int iniciadaHojePendente(string tipo)
+        public int IniciadaHojePendente(string tipo)
         {
-            return t.getTarefasHojePendentes(tipo);
+            return t.GetTarefasHojePendentes(tipo);
         }
 
-        public int iniciadaHojeFinalizada(string tipo)
+        public int IniciadaHojeFinalizada(string tipo)
         {
-            return t.getTarefasHojeFinalizadas(tipo);
+            return t.GetTarefasHojeFinalizadas(tipo);
         }
 
-        public List<TarefaModelo> filtrarDivergencias(int Tipo, int Manifesto)
+        public List<TarefaModelo> FiltrarDivergencias(int Tipo, int Manifesto)
         {
-            return t.getTarefasDivergencia(Tipo, Manifesto);
+            return t.GetTarefasDivergencia(Tipo, Manifesto);
         }
 
-        public List<ItemRelatorio> filtrar(Filtro f)
+        public List<ItemRelatorio> Filtrar(Filtro f)
         {
-            return t.getTarefasFiltradas(f, true);
+            return t.GetTarefasFiltradas(f, true);
         }
 
-        public List<ItemRanking> filtraRanking(Filtro f)
+        public List<ItemRanking> FiltraRanking(Filtro f)
         {
-            return t.getRanking(f);
+            return t.GetRanking(f);
         }
 
-        private double calculaHorasPeriodo(DateTime inicio, DateTime fim)
+        private double CalculaHorasPeriodo(DateTime inicio, DateTime fim)
         {
-            double horas = 0;
-            for (DateTime dt = inicio; dt < fim.AddDays(1); dt = dt.AddDays(1))
+            double horas = 1;
+            /* for (DateTime dt = inicio; dt < fim.AddDays(1); dt = dt.AddDays(1))
             {
                 if (dt.DayOfWeek != DayOfWeek.Sunday)
                 {
@@ -98,22 +98,22 @@ namespace BLL
                     else
                         horas+=7.5;
                 }
-            }
+            } */
             return horas;
         }
 
-        public List<ItemRanking> getRanking(Filtro f)
+        public List<ItemRanking> GetRanking(Filtro f)
         {
-            var rank = t.rankingFuncionarios(filtraRanking(f), calculaHorasPeriodo((DateTime)f.dataInicio, (DateTime)f.dataFim));
+            var rank = t.RankingFuncionarios(FiltraRanking(f), 1);// CalculaHorasPeriodo((DateTime)f.dataInicio, (DateTime)f.dataFim));
             foreach (var item in rank)
             {
                 if(!item.nomesFuncionarios.Contains("/"))
-                    item.observacoes = getLinhaObs(f.dataInicio, (DateTime)f.dataFim, item.nomesFuncionarios);
+                    item.observacoes = GetLinhaObs(f.dataInicio, (DateTime)f.dataFim, item.nomesFuncionarios);
             }
             return rank;
         }
 
-        public string getLinhaObs(DateTime? inicio, DateTime fim, string nomeFunc)
+        public string GetLinhaObs(DateTime? inicio, DateTime fim, string nomeFunc)
         {
             string linha = "";
             FuncionariosBD f = new FuncionariosBD();
@@ -128,7 +128,7 @@ namespace BLL
             return linha;
         }
 
-        public void exportarExcelProdut(List<ItemRanking> Tarefas, string nomeArquivo)
+        public void ExportarExcelProdut(List<ItemRanking> Tarefas, string nomeArquivo)
         {
             try
             {
@@ -162,9 +162,9 @@ namespace BLL
                 xlWorkBook.Close(true, misValue, misValue);
                 xlApp.Quit();
 
-                liberarObjetos(xlWorkSheet);
-                liberarObjetos(xlWorkBook);
-                liberarObjetos(xlApp);
+                LiberarObjetos(xlWorkSheet);
+                LiberarObjetos(xlWorkBook);
+                LiberarObjetos(xlApp);
             }
 
             catch (Exception ex)
@@ -173,7 +173,7 @@ namespace BLL
             }
         }
 
-        public void exportarExcel(List<ItemRelatorio> Tarefas, string nomeArquivo)
+        public void ExportarExcel(List<ItemRelatorio> Tarefas, string nomeArquivo)
         {
             var excel = new Excel.Application();
             excel.DisplayAlerts = false;
@@ -207,7 +207,7 @@ namespace BLL
                     if (Tarefas[linha].horaFim != null)
                     {                       
                         Tarefas[linha].atualizaPontuação();
-                        t.inserirPontuacao(Tarefas[linha].idTarefa, (float)Tarefas[linha].pontos);                        
+                        t.InserirPontuacao(Tarefas[linha].idTarefa, (float)Tarefas[linha].pontos);                        
                     }
 
                     array[linha + 1, 0] = Tarefas[linha].documentoTarefa.ToString("00");
@@ -238,9 +238,9 @@ Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, mi
                 workbook.Close(true, misValue, misValue);
                 excel.Quit();
 
-                liberarObjetos(worksheet);
-                liberarObjetos(workbook);
-                liberarObjetos(excel);
+                LiberarObjetos(worksheet);
+                LiberarObjetos(workbook);
+                LiberarObjetos(excel);
             }
 
             catch (Exception ex)
@@ -257,13 +257,13 @@ Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, mi
                 workbook.Close(true, misValue, misValue);
                 excel.Quit();
 
-                liberarObjetos(worksheet);
-                liberarObjetos(workbook);
-                liberarObjetos(excel);
+                LiberarObjetos(worksheet);
+                LiberarObjetos(workbook);
+                LiberarObjetos(excel);
             }
         }
 
-        private void liberarObjetos(object obj)
+        private void LiberarObjetos(object obj)
         {
             try
             {

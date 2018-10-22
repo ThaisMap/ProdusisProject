@@ -344,7 +344,7 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     var senhaBD = (from Funcionarios in BancoDeDados.Funcionarios
-                                   where Funcionarios.matriculaFunc == matricula
+                                   where Funcionarios.matriculaFunc == matricula 
                                    select Funcionarios.senhaFunc).FirstOrDefault();
 
                     if (senhaBD == senha)
