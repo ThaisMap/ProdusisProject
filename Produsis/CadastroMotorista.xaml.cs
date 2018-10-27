@@ -24,13 +24,13 @@ namespace GUI
     public partial class CadastroMotorista : UserControl
     {
         public bool isEditing { get; set; }
+        List<CapacidadeMotoristas> motoristas;
         public FuncionariosBD motoristaBD = new FuncionariosBD();
         public CapacidadeMotoristas emEdicao { get; set; }
 
         public CadastroMotorista(double Altura, double largura)
         {
             InitializeComponent();
-            dgMotoristas.Height = Altura - 250;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -39,28 +39,16 @@ namespace GUI
             emEdicao = new CapacidadeMotoristas();
         }
 
+        // ATUALIZADO
         private List<CapacidadeMotoristas> loadData()
         {
-            List<CapacidadeMotoristas> retorno = motoristaBD.getAllMotoristas();
-            dgMotoristas.ItemsSource = retorno;
-            return retorno;
+            motoristas = motoristaBD.getAllMotoristas();
+            cbNome.ItemsSource = motoristas;
+            cbNome.DisplayMemberPath = "Motorista";
+            cbNome.SelectedValuePath = "Motorista";
+            return motoristas;
         }
 
-        private void Apagar(object sender, RoutedEventArgs e)
-        {
-            var id = int.Parse(((Button)sender).CommandParameter.ToString());
-            if (MessageBox.Show("Apagar motorista da lista? ", "Confirmação", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-            {
-                motoristaBD.deletarMotorista(id); ;
-                loadData();
-            }
-        }
-
-        private void testarCaractere(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
 
         private void Editar(object sender, RoutedEventArgs e)
         {
@@ -72,62 +60,90 @@ namespace GUI
 
         private void BtnSalvar_Click(object sender, RoutedEventArgs e)
         {
-            if (emEdicao.Motorista != null && emEdicao.Motorista != "")
+            if (ChecarCampos())
             {
-                emEdicao.Motorista = txtNome.Text;
-                emEdicao.Capacidade = int.Parse(txtCapacidade.Text);
-                motoristaBD.editarMotorista(emEdicao);
+/* montar objeto
+           * salvar no bd veiculos
+           */
             }
-            else
-            {
-                if(txtNome.Text!="" && txtCapacidade.Text != "")
-                {
-                    emEdicao = new CapacidadeMotoristas();
-                    emEdicao.Motorista = txtNome.Text;
-                    emEdicao.Capacidade = int.Parse(txtCapacidade.Text);
-                    motoristaBD.cadastrarMotorista(emEdicao);
-                }
-            }
-            MessageBox.Show("Alteração salva.", "Produsis");
-            emEdicao = new CapacidadeMotoristas();
-            txtNome.Text = "";
-            txtCapacidade.Text = "";
-            loadData();
-            txtNome.Focus();
-        }
-               
-
-        private void dgMotoristas_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (Key.Delete == e.Key && dgMotoristas.SelectedItems.Count > 0 && !isEditing)
-            {
-                if (MessageBox.Show("Apagar motorista definitivamente? ", "Confirmação", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                {
-                    var linha = dgMotoristas.SelectedItem as CapacidadeMotoristas;
-                    Deletar(linha.Id);
-                }
-            }
+          
         }
 
-        private void Deletar(int id)
+        private Veiculos MontarObjeto()
         {
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    var atual = BancoDeDados.CapacidadeMotoristas.Where(x => x.Id == id).FirstOrDefault();
-                    BancoDeDados.CapacidadeMotoristas.Remove(atual);
-                    BancoDeDados.SaveChanges();
-                }
-            }
-            catch
-            {
-            }
+            Veiculos novo = new Veiculos();
+
+
+            return novo;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        // ATUALIZADO
+        private void testarCaractere(object sender, TextCompositionEventArgs e)
         {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
 
+        // ATUALIZADO
+        private bool validarPlacas(string placa)
+        {
+            Regex regex = new Regex(@"^[a-zA-Z]{3}d{4}$");
+
+            if (regex.IsMatch(placa))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        // ATUALIZADO
+        private bool ChecarCampos()
+        {
+            if (txtNome.Text == "")
+            {
+                txtNome.Focus();
+                return false;
+            }
+            if (txtCapacidade.Text == "")
+            {
+                txtCapacidade.Focus();
+                return false;
+            }
+            if (txtPlaca.Text == "" || !validarPlacas(txtPlaca.Text))
+            {
+                txtPlaca.Focus();
+                return false;
+            }
+            if (cbTipo.SelectedIndex == -1)
+            {
+                cbTipo.Focus();
+                return false;
+            }
+            if (cbTipo.SelectedIndex == 7 && txtPlaca2.Text == "") // cbTipo 7 = conjunto onde é preciso ter a placa da carreta
+            {
+                cbTipo.Focus();
+                return false;
+            }
+            if (txtPlaca2.Text == "" || !validarPlacas(txtPlaca2.Text))
+            {
+                txtPlaca2.Focus();
+                return false;
+            }
+
+            return true;
+
+        }
+
+        // ATUALIZADO
+        private void btnEditar_Click(object sender, RoutedEventArgs e)
+        {
+            if (cbNome.SelectedIndex > -1)
+            {
+                CapacidadeMotoristas atual = motoristas.Where(x => x.Motorista == cbNome.SelectedValue.ToString()).FirstOrDefault();
+                txtNome.Text = atual.Motorista;
+                txtCapacidade.Text = atual.Capacidade.ToString();
+            }
         }
     }
 }

@@ -134,5 +134,10 @@ namespace GUI
             Navegador.Navigate(new Empilhadeira(ActualHeight, ActualWidth));
             BtnEmpilhadeira.Opacity = 0.5;
         }
+
+        private void BtnPortaria_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

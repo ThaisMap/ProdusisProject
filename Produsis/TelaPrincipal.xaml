@@ -41,13 +41,19 @@
                     <MenuItem Name="BtnPesquisaDocs" Header="Ver Documentos" Click="BtnPesquisaDocs_Click"/>
                     <MenuItem Name="BtnRelatorios" Header="Relatórios" Click="BtnRelatorios_Click"/>
                     <MenuItem Name="BtnProdutividade" Header="Produtividade" Click="BtnProdutividade_Click"/>
+                    
+                    <MenuItem Name="BtnVeiculos" Header="Veículos">
+                        <MenuItem Name="BtnMotorista" Header="Cadastros" Click="BtnMotorista_Click"/>
+                        <MenuItem Name="BtnPortaria" Header="Relatório Portaria" Click="BtnPortaria_Click"/>
+                    </MenuItem>
+                    
                     <MenuItem Name="BtnFuncionarios" Header="Funcionários">
                         <MenuItem Name="BtnCadFunc" Header="Cadastrar" Click="BtnCadFunc_Click"/>
                         <MenuItem Name="BtnEditFunc" Header="Editar" Click="BtnEditFunc_Click"/>
                         <MenuItem Name="BtnObserv" Header="Observações" Click="BtnObserv_Click"/>
                         <MenuItem Name="BtnEquipe" Header="Equipes" Click="BtnEquipe_Click"/>
-                        <MenuItem Name="BtnMotorista" Header="Motoristas" Click="BtnMotorista_Click"/>
                     </MenuItem>
+                    
                     <MenuItem Name="BtnConfig" Header="Configurações">
                         <MenuItem Name="BtnPastas" Header="Pastas" Click="BtnPastas_Click"/>
                         <MenuItem Name="BtnTemas" Header="Temas" Click="BtnTemas_Click"/>
