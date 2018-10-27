@@ -10,7 +10,6 @@
              VerticalAlignment="Stretch"
              d:DesignHeight="520"
              d:DesignWidth="600"
-             xmlns:Validacoes ="clr-namespace:Produsis.Validacoes"
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
              TextElement.FontSize="16"

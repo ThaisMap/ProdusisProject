@@ -12,26 +12,22 @@ namespace ProdusisBD
     using System;
     using System.Collections.Generic;
     
-    public partial class Ctes
+    public partial class Veiculos
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Ctes()
+        public Veiculos()
         {
-            this.Cte_Manifesto = new HashSet<Cte_Manifesto>();
-            this.NotasFiscais = new HashSet<NotasFiscais>();
+            this.AcessosPortaria = new HashSet<AcessosPortaria>();
         }
-
-        public Ctes(int nCte)
-        {
-            numeroCte = nCte;
-        }
-
-
-        public int numeroCte { get; set; }
+    
+        public string PlacaVeiculo { get; set; }
+        public string MotoristaVeiculo { get; set; }
+        public string Placa2Veiculo { get; set; }
+        public string TipoVeiculo { get; set; }
+        public int CapacidadePaletes { get; set; }
+        public bool AtivoVeiculo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cte_Manifesto> Cte_Manifesto { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NotasFiscais> NotasFiscais { get; set; }
+        public virtual ICollection<AcessosPortaria> AcessosPortaria { get; set; }
     }
 }

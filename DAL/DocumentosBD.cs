@@ -118,30 +118,8 @@ namespace DAL
         }
 
         #endregion
-
-        /// <summary>
-        /// Insere um registro de cte no banco de dados
-        /// </summary>
-        /// <param name="novoCte">Dados do novo registro</param>
-        /// <returns>True se o comando foi executado sem erros, False se houve algum erro</returns>
-        public bool cadastrarCte(Ctes novoCte)
-        {
             try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    BancoDeDados.Ctes.Add(novoCte);
-                    BancoDeDados.SaveChanges();
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-
-                var olho = ex;
-                return false;
-            }
-        }
+              
 
         /// <summary>
         /// verifica se ja foi criada a relação cte_Manifesto 
@@ -155,7 +133,6 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     var quantos = (from Cte_Manifesto in BancoDeDados.Cte_Manifesto
-                                   where Cte_Manifesto.Cte == novo.Cte
                                    where Cte_Manifesto.Manifesto == novo.Manifesto
                                    where Cte_Manifesto.CteNovo == novo.CteNovo
                                    select Cte_Manifesto).FirstOrDefault();
@@ -415,7 +392,7 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     var result = (from a in BancoDeDados.NotasFiscais
-                                  join b in BancoDeDados.Cte_Manifesto on a.CteNF equals b.Cte
+                                  join b in BancoDeDados.Cte_Manifesto on a.CteNovoNF equals b.CteNovo
                                   where b.Manifesto == numManifesto
                                   select a.fornecedorNF).ToList();
                     if (result.Count == 0)
@@ -490,11 +467,11 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    var nfs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == idCte select NotasFiscais).ToList();
-                    string notas = "";
+                    var nfs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNovoNF == idCte select NotasFiscais).ToList();
+                    string notas = "Não atrelado a nenhuma NF";
                     foreach (var item in nfs)
                         {
-                            if (notas == "")
+                            if (notas == "Não atrelado a nenhuma NF")
 
                                 notas = item.numeroNF;
                             else
@@ -549,7 +526,7 @@ namespace DAL
                     List<Cte_Manifesto> ListaCte = (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.Manifesto == numManifesto select Cte_Manifesto).ToList();
                     foreach (Cte_Manifesto c in ListaCte)
                     {
-                        ListaNFs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNF == c.Cte select NotasFiscais).ToList();
+                        ListaNFs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNovoNF == c.CteNovo select NotasFiscais).ToList();
                         foreach (NotasFiscais n in ListaNFs)
                         {
                             sku += n.skuNF;
@@ -603,7 +580,6 @@ namespace DAL
                 {
                     NotasFiscais nfAtual = BancoDeDados.NotasFiscais.FirstOrDefault(nf => nf.numeroNF == numNF);
                     var ctes = getNovoCtePorNum(numeroCte);
-                    nfAtual.CteNF = numeroCte;
                     nfAtual.CteNovoNF = ctes.Where(x => x.notasCte.Contains(numNF)).Select(x => x.idCte).FirstOrDefault();
 
                     BancoDeDados.SaveChanges();
@@ -615,29 +591,7 @@ namespace DAL
                 var erro = ex;
                 return false;
             }
-        }
-
-        /// <summary>
-        /// Altera uma NF para constar o número do Cte
-        /// </summary>
-        public bool inserirCteNfPorId(int id, int numeroCte)    //  Funciona com o novo cte
-        {
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    NotasFiscais nfAtual = BancoDeDados.NotasFiscais.FirstOrDefault(nf => nf.idNF == id);
-                    nfAtual.CteNF = numeroCte;
-                    BancoDeDados.SaveChanges();
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                var erro = ex;
-                return false;
-            }
-        }
+        }     
 
         /// <summary>
         /// Verifica se o documento indicado esta cadastrado no banco de dados não usar com o novo cte
@@ -658,12 +612,7 @@ namespace DAL
                         doc = int.Parse(numDocumento);
                         documento = (from Manifestos in BancoDeDados.Manifestos where Manifestos.numeroManifesto == doc select Manifestos.numeroManifesto).FirstOrDefault();
                     }
-                    else if (tipodoc == 1)
-                    {
-                        doc = int.Parse(numDocumento);
-                        documento = (from Ctes in BancoDeDados.Ctes where Ctes.numeroCte == doc select Ctes.numeroCte).FirstOrDefault();
-                    }
-                    else
+                    else if (tipodoc != 1)
                     {
                         documento = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.numeroNF == numDocumento select NotasFiscais.idNF).FirstOrDefault();
                     }

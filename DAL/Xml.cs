@@ -160,7 +160,8 @@ namespace DAL
 
                 var result = nf.GetElementsByTagName("det");
                 nfLida.skuNF = result.Count;
-                nfLida.numeroNF = nf.GetElementsByTagName("nNF")[0].InnerText + '-' + nf.GetElementsByTagName("serie")[0].InnerText;
+                nfLida.numeroNF = nf.GetElementsByTagName("nNF")[0].InnerText;
+                nfLida.numeroNF +='-' + nf.GetElementsByTagName("serie")[0].InnerText;
 
                 var fornecedor = nf.GetElementsByTagName("xNome")[0].InnerText;
                 if (fornecedor.Length > 49)
@@ -339,17 +340,16 @@ namespace DAL
         {
             DocumentosBD dbd = new DocumentosBD();
             //  alterado para novo cte
-            dbd.cadastrarCte(new Ctes(cte));
             return (dbd.cadastrarNovoCte(new Cte(cte, notas)));
         }
 
-        private void CriarCteManifesto(int cte, int manifesto) //  não alterado para novo cte
+        private void CriarCteManifesto(int cte, int manifesto) // alterado para novo cte
         {
             DocumentosBD dbd = new DocumentosBD();
             var ctes = dbd.getNovoCtePorNum(cte);
 
-            if (dbd.checarCteManifesto(new Cte_Manifesto(cte, manifesto, ctes.Max(x => x.idCte))))
-                dbd.cadastrarCteManifesto(new Cte_Manifesto(cte, manifesto, ctes.Max(x=>x.idCte)));
+            if (dbd.checarCteManifesto(new Cte_Manifesto(manifesto, ctes.Max(x => x.idCte))))
+                dbd.cadastrarCteManifesto(new Cte_Manifesto(manifesto, ctes.Max(x=>x.idCte)));
         }
     }
 }

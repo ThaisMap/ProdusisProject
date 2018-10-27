@@ -36,7 +36,7 @@
 
         <StackPanel Orientation="Vertical">
             <!--  Botoes  -->
-            <Menu HorizontalAlignment="Center" Height="40" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="auto" Margin="0,0" >
+            <Menu HorizontalAlignment="Center"  VerticalContentAlignment="Center" VerticalAlignment="Top" Width="auto" Margin="0,0" >
                 <MenuItem Name="BtnAdministrativo" Header="Administrativo" Click="BtnAdministrativo_Click">
                     <MenuItem Name="BtnPesquisaDocs" Header="Ver Documentos" Click="BtnPesquisaDocs_Click"/>
                     <MenuItem Name="BtnRelatorios" Header="Relatórios" Click="BtnRelatorios_Click"/>

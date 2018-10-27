@@ -32,7 +32,7 @@
             <Grid
                 x:Name="GridFiltros"
                 Width="auto"
-                Margin="30,5"
+                Margin="30, 5, 0 , 0"
                 HorizontalAlignment="Left"
                 TextElement.FontSize="13">
                 <Grid.ColumnDefinitions>
@@ -46,41 +46,42 @@
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="45" />
-                    <RowDefinition Height="45" />
-                    <RowDefinition Height="45" />
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="35" />
                 </Grid.RowDefinitions>
 
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="0"
-                    Margin="5,10"
-                    VerticalAlignment="Center"><Run Text="Tipo de tarefa:" /></TextBlock>
+                    Margin="5"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center">Tipo de tarefa:</TextBlock>
                 <ComboBox
                     x:Name="cbTipoTarefa"
                     Grid.Row="0"
                     Grid.Column="1"
                     Width="180"
-                    Margin="5,10"
+                    Margin="5"
                     VerticalAlignment="Center">
                     <ComboBoxItem
-                        Width="158"
+                        Width="180"
                         HorizontalAlignment="Left"
                         Content="Descarga" />
                     <ComboBoxItem
-                        Width="158"
+                        Width="180"
                         HorizontalAlignment="Left"
                         Content="Conferência" />
                     <ComboBoxItem
-                        Width="158"
+                        Width="180"
                         HorizontalAlignment="Left"
                         Content="Movimentação de paletes" />
                     <ComboBoxItem
-                        Width="158"
+                        Width="180"
                         HorizontalAlignment="Left"
                         Content="Carregamento" />
                     <ComboBoxItem
-                        Width="158"
+                        Width="180"
                         HorizontalAlignment="Left"
                         Content="Empilhadeira" />
                 </ComboBox>
@@ -89,107 +90,113 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Margin="5"
+                    HorizontalAlignment="Right"
                     VerticalAlignment="Center"><Run Text="Documento:" /></TextBlock>
                 <TextBox
                     x:Name="tbDocumento"
                     Grid.Row="1"
                     Grid.Column="1"
                     Width="180"
-                    Margin="5,10"
+                    Margin="5"
                     VerticalAlignment="Center"
                     PreviewTextInput="testarCaractere" />
 
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="4"
-                    Margin="15,10"
+                    Margin="5"
+                    HorizontalAlignment="Right"
                     VerticalAlignment="Center"><Run Text="Volumes:" /></TextBlock>
                 <TextBox
                     x:Name="volumeInicial"
                     Grid.Row="0"
                     Grid.Column="5"
                     Width="40"
-                    Margin="5,10"
+                    Margin="5"
                     VerticalAlignment="Center"
                     PreviewTextInput="testarCaractere" />
 
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="6"
-                    Margin="5,10"
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"><Run Text="Até:" /></TextBlock>
                 <TextBox
                     x:Name="volumeFinal"
                     Grid.Row="0"
                     Grid.Column="7"
                     Width="40"
-                    Margin="5,10"
+                    Margin="5"
                     VerticalAlignment="Center"
                     PreviewTextInput="testarCaractere" />
 
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="2"
-                    Margin="15,10"
+                    Margin="5"
+                    HorizontalAlignment="Right"
                     VerticalAlignment="Center"><Run Text="Data Inicial:" /></TextBlock>
                 <DatePicker
                     x:Name="dataInicio"
                     Grid.Row="0"
                     Grid.Column="3"
                     Width="150"
-                    Margin="5,10"
+                    Margin="5"
                     VerticalAlignment="Center"
                     Language="pt-br" />
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="4"
-                    Margin="15,10"
+                    Margin="5"
+                    HorizontalAlignment="Right"
                     VerticalAlignment="Center"><Run Text="SKU's:" /></TextBlock>
                 <TextBox
                     x:Name="skuInicio"
                     Grid.Row="1"
                     Grid.Column="5"
                     Width="40"
-                    Margin="5,10"
+                    Margin="5"
                     VerticalAlignment="Center"
                     PreviewTextInput="testarCaractere" />
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="6"
-                    Margin="5,10"
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"><Run Text="Até:" /></TextBlock>
                 <TextBox
                     x:Name="skuFinal"
                     Grid.Row="1"
                     Grid.Column="7"
                     Width="40"
-                    Margin="5,10"
+                    Margin="5"
                     VerticalAlignment="Center"
                     PreviewTextInput="testarCaractere" />
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="2"
-                    Margin="15,10"
+                    Margin="5"
+                    HorizontalAlignment="Right"
                     VerticalAlignment="Center"><Run Text="Data Final:" /></TextBlock>
                 <DatePicker
                     x:Name="dataFinal"
                     Grid.Row="1"
                     Grid.Column="3"
                     Width="150"
-                    Margin="5,10"
+                    Margin="5"
                     VerticalAlignment="Center"
                     Language="pt-br" />
                 <TextBlock
                     Grid.Row="2"
                     Grid.Column="0"
-                    Margin="5,10"
+                    Margin="5"
+                    HorizontalAlignment="Right"
                     VerticalAlignment="Center"><Run Text="Funcionário:" /></TextBlock>
                 <ComboBox
                     x:Name="cbFuncionario"
                     Grid.Row="2"
                     Grid.Column="1"
                     Width="180"
-                    Margin="5,10"
+                    Margin="5"
                     VerticalAlignment="Center" />
                 <Button
                     x:Name="btnLimpar"
@@ -213,10 +220,10 @@
                     Click="btnConsultar_Click"
                     Content="Consultar" />
             </Grid>
-            <Separator />
+            <Separator Margin="0, 10" />
             <DataGrid
                 Name="dgTarefas"
-                Margin="10"
+                Margin="10, 0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 AutoGenerateColumns="False"

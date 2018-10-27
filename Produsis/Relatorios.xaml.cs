@@ -21,9 +21,9 @@ namespace GUI
         public Relatorios(double Altura, double largura)
         {
             InitializeComponent();            
-            Height = Altura - 80;
+            Height = Altura - 50;
             Width = largura - 50;
-            dgTarefas.Height = Altura - 200;
+            dgTarefas.Height = Altura - 180;
             dataFinal.SelectedDate = DateTime.Today;
         }
 

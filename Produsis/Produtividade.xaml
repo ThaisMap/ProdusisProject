@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:GUI"
-    xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     HorizontalAlignment="Stretch"
     VerticalAlignment="Stretch"
@@ -13,14 +12,14 @@
     d:DesignWidth="800"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-    TextElement.FontSize="16"
+    TextElement.FontSize="14"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
     <StackPanel Orientation="Vertical">
         <Grid
             Name="cabecalho"
-            Height="130"
+            Height="120"
             HorizontalAlignment="Center"
             VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
@@ -65,23 +64,23 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
                 <ComboBoxItem
-                    Width="190"
+                    Width="200"
                     HorizontalAlignment="Left"
                     Content="Descarga" />
                 <ComboBoxItem
-                    Width="190"
+                    Width="200"
                     HorizontalAlignment="Left"
                     Content="Conferência" />
                 <ComboBoxItem
-                    Width="190"
+                    Width="200"
                     HorizontalAlignment="Left"
                     Content="Movimentação de paletes" />
                 <ComboBoxItem
-                    Width="190"
+                    Width="200"
                     HorizontalAlignment="Left"
                     Content="Carregamento" />
                 <ComboBoxItem
-                    Width="190"
+                    Width="200"
                     HorizontalAlignment="Left"
                     Content="Empilhadeira" />
             </ComboBox>
@@ -91,7 +90,7 @@
                 Grid.Row="2"
                 Width="41"
                 Height="20"
-                Margin="0,7,0,21"
+                Margin="5,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center">
                 Início:
@@ -102,7 +101,7 @@
                 Grid.Column="1"
                 Width="150"
                 Height="28"
-                Margin="5,0,0,20"
+                Margin="5,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Language="pt-br" />
@@ -111,7 +110,7 @@
                 Grid.Column="2"
                 Width="29"
                 Height="20"
-                Margin="0,8,0,20"
+                Margin="5,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center">
                 Fim:
@@ -122,7 +121,7 @@
                 Grid.Column="3"
                 Width="150"
                 Height="28"
-                Margin="5,0,0,20"
+                Margin="5,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Language="pt-br" />
@@ -131,7 +130,7 @@
                 Grid.Row="2"
                 Grid.Column="4"
                 Width="75"
-                Margin="0,0,0,16"
+                Margin="5,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Click="geraRelatorioTabela"
