@@ -9,15 +9,19 @@
           <Key>
             <PropertyRef Name="idAcesso" />
           </Key>
-          <Property Name="idAcesso" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="MotoristaAcesso" Type="nchar" MaxLength="7" Nullable="false" />
+          <Property Name="idAcesso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlacaAcesso" Type="nchar" MaxLength="7" Nullable="false" />
+          <Property Name="Placa2Acesso" Type="nchar" MaxLength="7" />
+          <Property Name="NomeMotoristaAcesso" Type="nchar" MaxLength="50" />
           <Property Name="EntradaAcesso" Type="datetime" Nullable="false" />
-          <Property Name="SaidaAcesso" Type="datetime" Nullable="false" />
-          <Property Name="ObservacaoAcesso" Type="nchar" MaxLength="30" Nullable="false" />
-          <Property Name="LacreAcesso" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="SaidaAcesso" Type="datetime" />
+          <Property Name="ObservacaoAcesso" Type="nchar" MaxLength="30" />
+          <Property Name="LacreAcesso" Type="nchar" MaxLength="30" />
           <Property Name="KmAcesso" Type="int" Nullable="false" />
-          <Property Name="EstadoGeral" Type="nchar" MaxLength="100" Nullable="false" />
-          <Property Name="DocaAcesso" Type="int" Nullable="false" />
+          <Property Name="EstadoGeral" Type="nchar" MaxLength="100" />
+          <Property Name="DocaAcesso" Type="int" />
+          <Property Name="PorteiroEntrada" Type="int" />
+          <Property Name="PorteiroSaida" Type="int" />
         </EntityType>
         <EntityType Name="CapacidadeMotoristas">
           <Key>
@@ -41,7 +45,7 @@
           </Key>
           <Property Name="idCteManifesto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Manifesto" Type="int" Nullable="false" />
-          <Property Name="CteNovo" Type="int" />
+          <Property Name="CteNovo" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Func_Tarefa">
           <Key>
@@ -113,37 +117,11 @@
             <PropertyRef Name="PlacaVeiculo" />
           </Key>
           <Property Name="PlacaVeiculo" Type="nchar" MaxLength="7" Nullable="false" />
-          <Property Name="MotoristaVeiculo" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="MotoristaVeiculo" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Placa2Veiculo" Type="nchar" MaxLength="7" />
           <Property Name="TipoVeiculo" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="CapacidadePaletes" Type="int" Nullable="false" />
           <Property Name="AtivoVeiculo" Type="bit" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'produsisBD.dbo.RelatorioConferencias' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="RelatorioConferencias">
-          <Key>
-            <PropertyRef Name="idTarefa" />
-            <PropertyRef Name="documentoTarefa" />
-            <PropertyRef Name="tipoTarefa" />
-            <PropertyRef Name="inicioTarefa" />
-            <PropertyRef Name="nomeFunc" />
-            <PropertyRef Name="volumesNF" />
-            <PropertyRef Name="skuNF" />
-            <PropertyRef Name="fornecedorNF" />
-            <PropertyRef Name="numeroCte" />
-          </Key>
-          <Property Name="idTarefa" Type="int" Nullable="false" />
-          <Property Name="documentoTarefa" Type="int" Nullable="false" />
-          <Property Name="tipoTarefa" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="inicioTarefa" Type="datetime2" Precision="0" Nullable="false" />
-          <Property Name="fimTarefa" Type="datetime2" Precision="0" />
-          <Property Name="divergenciaTarefa" Type="nvarchar" MaxLength="120" />
-          <Property Name="nomeFunc" Type="nvarchar" MaxLength="45" Nullable="false" />
-          <Property Name="volumesNF" Type="int" Nullable="false" />
-          <Property Name="skuNF" Type="int" Nullable="false" />
-          <Property Name="fornecedorNF" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="numeroCte" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -210,7 +188,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Cte_Manifesto_NovoCte">
-          <End Role="Cte" Type="Self.Cte" Multiplicity="0..1" />
+          <End Role="Cte" Type="Self.Cte" Multiplicity="1" />
           <End Role="Cte_Manifesto" Type="Self.Cte_Manifesto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cte">
@@ -271,6 +249,30 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PorteiroEntrada_AcessosPortaria">
+          <End Role="Funcionarios" Type="Self.Funcionarios" Multiplicity="0..1" />
+          <End Role="AcessosPortaria" Type="Self.AcessosPortaria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funcionarios">
+              <PropertyRef Name="idFunc" />
+            </Principal>
+            <Dependent Role="AcessosPortaria">
+              <PropertyRef Name="PorteiroEntrada" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PorteiroSaida_AcessosPortaria">
+          <End Role="Funcionarios" Type="Self.Funcionarios" Multiplicity="0..1" />
+          <End Role="AcessosPortaria" Type="Self.AcessosPortaria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funcionarios">
+              <PropertyRef Name="idFunc" />
+            </Principal>
+            <Dependent Role="AcessosPortaria">
+              <PropertyRef Name="PorteiroSaida" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Veiculos_AcessosPortaria">
           <End Role="Veiculos" Type="Self.Veiculos" Multiplicity="1" />
           <End Role="AcessosPortaria" Type="Self.AcessosPortaria" Multiplicity="*" />
@@ -279,7 +281,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
               <PropertyRef Name="PlacaVeiculo" />
             </Principal>
             <Dependent Role="AcessosPortaria">
-              <PropertyRef Name="MotoristaAcesso" />
+              <PropertyRef Name="PlacaAcesso" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -295,21 +297,6 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
           <EntitySet Name="Observacoes" EntityType="Self.Observacoes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tarefas" EntityType="Self.Tarefas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Veiculos" EntityType="Self.Veiculos" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RelatorioConferencias" EntityType="Self.RelatorioConferencias" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [RelatorioConferencias].[idTarefa] AS [idTarefa], 
-    [RelatorioConferencias].[documentoTarefa] AS [documentoTarefa], 
-    [RelatorioConferencias].[tipoTarefa] AS [tipoTarefa], 
-    [RelatorioConferencias].[inicioTarefa] AS [inicioTarefa], 
-    [RelatorioConferencias].[fimTarefa] AS [fimTarefa], 
-    [RelatorioConferencias].[divergenciaTarefa] AS [divergenciaTarefa], 
-    [RelatorioConferencias].[nomeFunc] AS [nomeFunc], 
-    [RelatorioConferencias].[volumesNF] AS [volumesNF], 
-    [RelatorioConferencias].[skuNF] AS [skuNF], 
-    [RelatorioConferencias].[fornecedorNF] AS [fornecedorNF], 
-    [RelatorioConferencias].[numeroCte] AS [numeroCte]
-    FROM [dbo].[RelatorioConferencias] AS [RelatorioConferencias]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="RelatorioNaoConferencia" EntityType="Self.RelatorioNaoConferencia" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [RelatorioNaoConferencia].[idTarefa] AS [idTarefa], 
@@ -365,6 +352,14 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
             <End Role="Funcionarios" EntitySet="Funcionarios" />
             <End Role="Observacoes" EntitySet="Observacoes" />
           </AssociationSet>
+          <AssociationSet Name="FK_PorteiroEntrada_AcessosPortaria" Association="Self.FK_PorteiroEntrada_AcessosPortaria">
+            <End Role="Funcionarios" EntitySet="Funcionarios" />
+            <End Role="AcessosPortaria" EntitySet="AcessosPortaria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PorteiroSaida_AcessosPortaria" Association="Self.FK_PorteiroSaida_AcessosPortaria">
+            <End Role="Funcionarios" EntitySet="Funcionarios" />
+            <End Role="AcessosPortaria" EntitySet="AcessosPortaria" />
+          </AssociationSet>
           <AssociationSet Name="FK_Veiculos_AcessosPortaria" Association="Self.FK_Veiculos_AcessosPortaria">
             <End Role="Veiculos" EntitySet="Veiculos" />
             <End Role="AcessosPortaria" EntitySet="AcessosPortaria" />
@@ -374,6 +369,27 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="produsisBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AcessosPortaria">
+          <Key>
+            <PropertyRef Name="idAcesso" />
+          </Key>
+          <Property Name="idAcesso" Type="Int32" Nullable="false" />
+          <Property Name="PlacaAcesso" Type="String" MaxLength="7" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Placa2Acesso" Type="String" MaxLength="7" FixedLength="true" Unicode="true" />
+          <Property Name="NomeMotoristaAcesso" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="EntradaAcesso" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SaidaAcesso" Type="DateTime" Precision="3" />
+          <Property Name="ObservacaoAcesso" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="LacreAcesso" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="KmAcesso" Type="Int32" Nullable="false" />
+          <Property Name="EstadoGeral" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="DocaAcesso" Type="Int32" />
+          <NavigationProperty Name="Veiculos" Relationship="Self.FK_Veiculos_AcessosPortaria" FromRole="AcessosPortaria" ToRole="Veiculos" />
+          <Property Name="PorteiroEntrada" Type="Int32" />
+          <Property Name="PorteiroSaida" Type="Int32" />
+          <NavigationProperty Name="Funcionarios" Relationship="produsisBDModel.FK_PorteiroEntrada_AcessosPortaria" FromRole="AcessosPortaria" ToRole="Funcionarios" />
+          <NavigationProperty Name="Funcionarios1" Relationship="produsisBDModel.FK_PorteiroSaida_AcessosPortaria" FromRole="AcessosPortaria" ToRole="Funcionarios" />
+        </EntityType>
         <EntityType Name="CapacidadeMotoristas">
           <Key>
             <PropertyRef Name="Id" />
@@ -398,8 +414,8 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
           </Key>
           <Property Name="idCteManifesto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Manifesto" Type="Int32" Nullable="false" />
-          <Property Name="CteNovo" Type="Int32" />
-          <NavigationProperty Name="Cte1" Relationship="Self.FK_Cte_Manifesto_NovoCte" FromRole="Cte_Manifesto" ToRole="Cte" />
+          <Property Name="CteNovo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cte" Relationship="Self.FK_Cte_Manifesto_NovoCte" FromRole="Cte_Manifesto" ToRole="Cte" />
           <NavigationProperty Name="Manifestos" Relationship="Self.FK_Cte_Manifesto_Manifesto" FromRole="Cte_Manifesto" ToRole="Manifestos" />
         </EntityType>
         <EntityType Name="Func_Tarefa">
@@ -427,6 +443,8 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
           <Property Name="equipeFunc" Type="Int32" />
           <NavigationProperty Name="Func_Tarefa" Relationship="Self.FK_Func_Tarefa_Funcionarios" FromRole="Funcionarios" ToRole="Func_Tarefa" />
           <NavigationProperty Name="Observacoes" Relationship="Self.FK_Observacoes_Funcionarios" FromRole="Funcionarios" ToRole="Observacoes" />
+          <NavigationProperty Name="AcessosPortaria" Relationship="produsisBDModel.FK_PorteiroEntrada_AcessosPortaria" FromRole="Funcionarios" ToRole="AcessosPortaria" />
+          <NavigationProperty Name="AcessosPortaria1" Relationship="produsisBDModel.FK_PorteiroSaida_AcessosPortaria" FromRole="Funcionarios" ToRole="AcessosPortaria" />
         </EntityType>
         <EntityType Name="Manifestos">
           <Key>
@@ -475,29 +493,17 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
           <Property Name="totalPaletes" Type="Int32" />
           <NavigationProperty Name="Func_Tarefa" Relationship="Self.FK_Func_Tarefa_Tarefas" FromRole="Tarefas" ToRole="Func_Tarefa" />
         </EntityType>
-        <EntityType Name="RelatorioConferencias">
+        <EntityType Name="Veiculos">
           <Key>
-            <PropertyRef Name="idTarefa" />
-            <PropertyRef Name="documentoTarefa" />
-            <PropertyRef Name="tipoTarefa" />
-            <PropertyRef Name="inicioTarefa" />
-            <PropertyRef Name="nomeFunc" />
-            <PropertyRef Name="volumesNF" />
-            <PropertyRef Name="skuNF" />
-            <PropertyRef Name="fornecedorNF" />
-            <PropertyRef Name="numeroCte" />
+            <PropertyRef Name="PlacaVeiculo" />
           </Key>
-          <Property Name="idTarefa" Type="Int32" Nullable="false" />
-          <Property Name="documentoTarefa" Type="Int32" Nullable="false" />
-          <Property Name="tipoTarefa" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="inicioTarefa" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="fimTarefa" Type="DateTime" Precision="0" />
-          <Property Name="divergenciaTarefa" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
-          <Property Name="nomeFunc" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="volumesNF" Type="Int32" Nullable="false" />
-          <Property Name="skuNF" Type="Int32" Nullable="false" />
-          <Property Name="fornecedorNF" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="numeroCte" Type="Int32" Nullable="false" />
+          <Property Name="PlacaVeiculo" Type="String" MaxLength="7" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="MotoristaVeiculo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Placa2Veiculo" Type="String" MaxLength="7" FixedLength="true" Unicode="true" />
+          <Property Name="TipoVeiculo" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="CapacidadePaletes" Type="Int32" Nullable="false" />
+          <Property Name="AtivoVeiculo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AcessosPortaria" Relationship="Self.FK_Veiculos_AcessosPortaria" FromRole="Veiculos" ToRole="AcessosPortaria" />
         </EntityType>
         <EntityType Name="RelatorioNaoConferencia">
           <Key>
@@ -523,8 +529,44 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
           <Property Name="quantPaletizado" Type="Int32" />
           <Property Name="totalPaletes" Type="Int32" />
         </EntityType>
+        <EntityType Name="RelatorioNovoConferencias">
+          <Key>
+            <PropertyRef Name="idTarefa" />
+            <PropertyRef Name="numeroCte" />
+            <PropertyRef Name="tipoTarefa" />
+            <PropertyRef Name="inicioTarefa" />
+            <PropertyRef Name="nomeFunc" />
+            <PropertyRef Name="volumesNF" />
+            <PropertyRef Name="skuNF" />
+            <PropertyRef Name="fornecedorNF" />
+            <PropertyRef Name="documentoTarefa" />
+          </Key>
+          <Property Name="idTarefa" Type="Int32" Nullable="false" />
+          <Property Name="numeroCte" Type="Int32" Nullable="false" />
+          <Property Name="tipoTarefa" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="inicioTarefa" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fimTarefa" Type="DateTime" Precision="0" />
+          <Property Name="divergenciaTarefa" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="nomeFunc" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="volumesNF" Type="Int32" Nullable="false" />
+          <Property Name="skuNF" Type="Int32" Nullable="false" />
+          <Property Name="fornecedorNF" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="documentoTarefa" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Veiculos_AcessosPortaria">
+          <End Role="Veiculos" Type="Self.Veiculos" Multiplicity="1" />
+          <End Role="AcessosPortaria" Type="Self.AcessosPortaria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Veiculos">
+              <PropertyRef Name="PlacaVeiculo" />
+            </Principal>
+            <Dependent Role="AcessosPortaria">
+              <PropertyRef Name="PlacaAcesso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Cte_Manifesto_NovoCte">
-          <End Role="Cte" Type="Self.Cte" Multiplicity="0..1" />
+          <End Role="Cte" Type="Self.Cte" Multiplicity="1" />
           <End Role="Cte_Manifesto" Type="Self.Cte_Manifesto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cte">
@@ -598,6 +640,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="produsisBDEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AcessosPortaria" EntityType="Self.AcessosPortaria" />
           <EntitySet Name="CapacidadeMotoristas" EntityType="Self.CapacidadeMotoristas" />
           <EntitySet Name="Cte" EntityType="Self.Cte" />
           <EntitySet Name="Cte_Manifesto" EntityType="Self.Cte_Manifesto" />
@@ -607,8 +650,13 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
           <EntitySet Name="NotasFiscais" EntityType="Self.NotasFiscais" />
           <EntitySet Name="Observacoes" EntityType="Self.Observacoes" />
           <EntitySet Name="Tarefas" EntityType="Self.Tarefas" />
-          <EntitySet Name="RelatorioConferencias" EntityType="Self.RelatorioConferencias" />
+          <EntitySet Name="Veiculos" EntityType="Self.Veiculos" />
           <EntitySet Name="RelatorioNaoConferencia" EntityType="Self.RelatorioNaoConferencia" />
+          <EntitySet Name="RelatorioNovoConferencias" EntityType="Self.RelatorioNovoConferencias" />
+          <AssociationSet Name="FK_Veiculos_AcessosPortaria" Association="Self.FK_Veiculos_AcessosPortaria">
+            <End Role="Veiculos" EntitySet="Veiculos" />
+            <End Role="AcessosPortaria" EntitySet="AcessosPortaria" />
+          </AssociationSet>
           <AssociationSet Name="FK_Cte_Manifesto_NovoCte" Association="Self.FK_Cte_Manifesto_NovoCte">
             <End Role="Cte" EntitySet="Cte" />
             <End Role="Cte_Manifesto" EntitySet="Cte_Manifesto" />
@@ -633,74 +681,36 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
             <End Role="Funcionarios" EntitySet="Funcionarios" />
             <End Role="Observacoes" EntitySet="Observacoes" />
           </AssociationSet>
-          <EntitySet Name="RelatorioNovoConferencias" EntityType="produsisBDModel.RelatorioNovoConferencias" />
-          <EntitySet Name="AcessosPortaria" EntityType="produsisBDModel.AcessosPortaria" />
-          <EntitySet Name="Veiculos" EntityType="produsisBDModel.Veiculos" />
-          <AssociationSet Name="FK_Veiculos_AcessosPortaria" Association="produsisBDModel.FK_Veiculos_AcessosPortaria">
-            <End Role="Veiculos" EntitySet="Veiculos" />
+          <AssociationSet Name="FK_PorteiroEntrada_AcessosPortaria" Association="produsisBDModel.FK_PorteiroEntrada_AcessosPortaria">
+            <End Role="Funcionarios" EntitySet="Funcionarios" />
+            <End Role="AcessosPortaria" EntitySet="AcessosPortaria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PorteiroSaida_AcessosPortaria" Association="produsisBDModel.FK_PorteiroSaida_AcessosPortaria">
+            <End Role="Funcionarios" EntitySet="Funcionarios" />
             <End Role="AcessosPortaria" EntitySet="AcessosPortaria" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="RelatorioNovoConferencias">
-          <Key>
-            <PropertyRef Name="idTarefa" />
-            <PropertyRef Name="numeroCte" />
-            <PropertyRef Name="tipoTarefa" />
-            <PropertyRef Name="inicioTarefa" />
-            <PropertyRef Name="nomeFunc" />
-            <PropertyRef Name="volumesNF" />
-            <PropertyRef Name="skuNF" />
-            <PropertyRef Name="fornecedorNF" />
-            <PropertyRef Name="documentoTarefa" />
-          </Key>
-          <Property Name="idTarefa" Type="Int32" Nullable="false" />
-          <Property Name="numeroCte" Type="Int32" Nullable="false" />
-          <Property Name="tipoTarefa" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="inicioTarefa" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="fimTarefa" Type="DateTime" Precision="0" />
-          <Property Name="divergenciaTarefa" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
-          <Property Name="nomeFunc" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="true" />
-          <Property Name="volumesNF" Type="Int32" Nullable="false" />
-          <Property Name="skuNF" Type="Int32" Nullable="false" />
-          <Property Name="fornecedorNF" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="documentoTarefa" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AcessosPortaria">
-          <Key>
-            <PropertyRef Name="idAcesso" />
-          </Key>
-          <Property Name="idAcesso" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="MotoristaAcesso" Type="String" Nullable="false" MaxLength="7" FixedLength="true" Unicode="true" />
-          <Property Name="EntradaAcesso" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="SaidaAcesso" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ObservacaoAcesso" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
-          <Property Name="LacreAcesso" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
-          <Property Name="KmAcesso" Type="Int32" Nullable="false" />
-          <Property Name="EstadoGeral" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
-          <Property Name="DocaAcesso" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Veiculos" Relationship="produsisBDModel.FK_Veiculos_AcessosPortaria" FromRole="AcessosPortaria" ToRole="Veiculos" />
-        </EntityType>
-        <EntityType Name="Veiculos">
-          <Key>
-            <PropertyRef Name="PlacaVeiculo" />
-          </Key>
-          <Property Name="PlacaVeiculo" Type="String" Nullable="false" MaxLength="7" FixedLength="true" Unicode="true" />
-          <Property Name="MotoristaVeiculo" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="Placa2Veiculo" Type="String" MaxLength="7" FixedLength="true" Unicode="true" />
-          <Property Name="TipoVeiculo" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="CapacidadePaletes" Type="Int32" Nullable="false" />
-          <Property Name="AtivoVeiculo" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="AcessosPortaria" Relationship="produsisBDModel.FK_Veiculos_AcessosPortaria" FromRole="Veiculos" ToRole="AcessosPortaria" />
-        </EntityType>
-        <Association Name="FK_Veiculos_AcessosPortaria">
-          <End Type="produsisBDModel.Veiculos" Role="Veiculos" Multiplicity="1" />
+        <Association Name="FK_PorteiroEntrada_AcessosPortaria">
+          <End Type="produsisBDModel.Funcionarios" Role="Funcionarios" Multiplicity="0..1" />
           <End Type="produsisBDModel.AcessosPortaria" Role="AcessosPortaria" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Veiculos">
-              <PropertyRef Name="PlacaVeiculo" />
+            <Principal Role="Funcionarios">
+              <PropertyRef Name="idFunc" />
             </Principal>
             <Dependent Role="AcessosPortaria">
-              <PropertyRef Name="MotoristaAcesso" />
+              <PropertyRef Name="PorteiroEntrada" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PorteiroSaida_AcessosPortaria">
+          <End Type="produsisBDModel.Funcionarios" Role="Funcionarios" Multiplicity="0..1" />
+          <End Type="produsisBDModel.AcessosPortaria" Role="AcessosPortaria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funcionarios">
+              <PropertyRef Name="idFunc" />
+            </Principal>
+            <Dependent Role="AcessosPortaria">
+              <PropertyRef Name="PorteiroSaida" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -710,6 +720,25 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="produsisBDModelStoreContainer" CdmEntityContainer="produsisBDEntities">
+          <EntitySetMapping Name="AcessosPortaria">
+            <EntityTypeMapping TypeName="produsisBDModel.AcessosPortaria">
+              <MappingFragment StoreEntitySet="AcessosPortaria">
+                <ScalarProperty Name="PorteiroSaida" ColumnName="PorteiroSaida" />
+                <ScalarProperty Name="PorteiroEntrada" ColumnName="PorteiroEntrada" />
+                <ScalarProperty Name="idAcesso" ColumnName="idAcesso" />
+                <ScalarProperty Name="PlacaAcesso" ColumnName="PlacaAcesso" />
+                <ScalarProperty Name="Placa2Acesso" ColumnName="Placa2Acesso" />
+                <ScalarProperty Name="NomeMotoristaAcesso" ColumnName="NomeMotoristaAcesso" />
+                <ScalarProperty Name="EntradaAcesso" ColumnName="EntradaAcesso" />
+                <ScalarProperty Name="SaidaAcesso" ColumnName="SaidaAcesso" />
+                <ScalarProperty Name="ObservacaoAcesso" ColumnName="ObservacaoAcesso" />
+                <ScalarProperty Name="LacreAcesso" ColumnName="LacreAcesso" />
+                <ScalarProperty Name="KmAcesso" ColumnName="KmAcesso" />
+                <ScalarProperty Name="EstadoGeral" ColumnName="EstadoGeral" />
+                <ScalarProperty Name="DocaAcesso" ColumnName="DocaAcesso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="CapacidadeMotoristas">
             <EntityTypeMapping TypeName="produsisBDModel.CapacidadeMotoristas">
               <MappingFragment StoreEntitySet="CapacidadeMotoristas">
@@ -808,20 +837,15 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="RelatorioConferencias">
-            <EntityTypeMapping TypeName="produsisBDModel.RelatorioConferencias">
-              <MappingFragment StoreEntitySet="RelatorioConferencias">
-                <ScalarProperty Name="idTarefa" ColumnName="idTarefa" />
-                <ScalarProperty Name="documentoTarefa" ColumnName="documentoTarefa" />
-                <ScalarProperty Name="tipoTarefa" ColumnName="tipoTarefa" />
-                <ScalarProperty Name="inicioTarefa" ColumnName="inicioTarefa" />
-                <ScalarProperty Name="fimTarefa" ColumnName="fimTarefa" />
-                <ScalarProperty Name="divergenciaTarefa" ColumnName="divergenciaTarefa" />
-                <ScalarProperty Name="nomeFunc" ColumnName="nomeFunc" />
-                <ScalarProperty Name="volumesNF" ColumnName="volumesNF" />
-                <ScalarProperty Name="skuNF" ColumnName="skuNF" />
-                <ScalarProperty Name="fornecedorNF" ColumnName="fornecedorNF" />
-                <ScalarProperty Name="numeroCte" ColumnName="numeroCte" />
+          <EntitySetMapping Name="Veiculos">
+            <EntityTypeMapping TypeName="produsisBDModel.Veiculos">
+              <MappingFragment StoreEntitySet="Veiculos">
+                <ScalarProperty Name="PlacaVeiculo" ColumnName="PlacaVeiculo" />
+                <ScalarProperty Name="MotoristaVeiculo" ColumnName="MotoristaVeiculo" />
+                <ScalarProperty Name="Placa2Veiculo" ColumnName="Placa2Veiculo" />
+                <ScalarProperty Name="TipoVeiculo" ColumnName="TipoVeiculo" />
+                <ScalarProperty Name="CapacidadePaletes" ColumnName="CapacidadePaletes" />
+                <ScalarProperty Name="AtivoVeiculo" ColumnName="AtivoVeiculo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -846,44 +870,17 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
           <EntitySetMapping Name="RelatorioNovoConferencias">
             <EntityTypeMapping TypeName="produsisBDModel.RelatorioNovoConferencias">
               <MappingFragment StoreEntitySet="RelatorioNovoConferencias">
-                <ScalarProperty Name="documentoTarefa" ColumnName="documentoTarefa" />
-                <ScalarProperty Name="fornecedorNF" ColumnName="fornecedorNF" />
-                <ScalarProperty Name="skuNF" ColumnName="skuNF" />
-                <ScalarProperty Name="volumesNF" ColumnName="volumesNF" />
-                <ScalarProperty Name="nomeFunc" ColumnName="nomeFunc" />
-                <ScalarProperty Name="divergenciaTarefa" ColumnName="divergenciaTarefa" />
-                <ScalarProperty Name="fimTarefa" ColumnName="fimTarefa" />
-                <ScalarProperty Name="inicioTarefa" ColumnName="inicioTarefa" />
-                <ScalarProperty Name="tipoTarefa" ColumnName="tipoTarefa" />
-                <ScalarProperty Name="numeroCte" ColumnName="numeroCte" />
                 <ScalarProperty Name="idTarefa" ColumnName="idTarefa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AcessosPortaria">
-            <EntityTypeMapping TypeName="produsisBDModel.AcessosPortaria">
-              <MappingFragment StoreEntitySet="AcessosPortaria">
-                <ScalarProperty Name="DocaAcesso" ColumnName="DocaAcesso" />
-                <ScalarProperty Name="EstadoGeral" ColumnName="EstadoGeral" />
-                <ScalarProperty Name="KmAcesso" ColumnName="KmAcesso" />
-                <ScalarProperty Name="LacreAcesso" ColumnName="LacreAcesso" />
-                <ScalarProperty Name="ObservacaoAcesso" ColumnName="ObservacaoAcesso" />
-                <ScalarProperty Name="SaidaAcesso" ColumnName="SaidaAcesso" />
-                <ScalarProperty Name="EntradaAcesso" ColumnName="EntradaAcesso" />
-                <ScalarProperty Name="MotoristaAcesso" ColumnName="MotoristaAcesso" />
-                <ScalarProperty Name="idAcesso" ColumnName="idAcesso" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Veiculos">
-            <EntityTypeMapping TypeName="produsisBDModel.Veiculos">
-              <MappingFragment StoreEntitySet="Veiculos">
-                <ScalarProperty Name="AtivoVeiculo" ColumnName="AtivoVeiculo" />
-                <ScalarProperty Name="CapacidadePaletes" ColumnName="CapacidadePaletes" />
-                <ScalarProperty Name="TipoVeiculo" ColumnName="TipoVeiculo" />
-                <ScalarProperty Name="Placa2Veiculo" ColumnName="Placa2Veiculo" />
-                <ScalarProperty Name="MotoristaVeiculo" ColumnName="MotoristaVeiculo" />
-                <ScalarProperty Name="PlacaVeiculo" ColumnName="PlacaVeiculo" />
+                <ScalarProperty Name="numeroCte" ColumnName="numeroCte" />
+                <ScalarProperty Name="tipoTarefa" ColumnName="tipoTarefa" />
+                <ScalarProperty Name="inicioTarefa" ColumnName="inicioTarefa" />
+                <ScalarProperty Name="fimTarefa" ColumnName="fimTarefa" />
+                <ScalarProperty Name="divergenciaTarefa" ColumnName="divergenciaTarefa" />
+                <ScalarProperty Name="nomeFunc" ColumnName="nomeFunc" />
+                <ScalarProperty Name="volumesNF" ColumnName="volumesNF" />
+                <ScalarProperty Name="skuNF" ColumnName="skuNF" />
+                <ScalarProperty Name="fornecedorNF" ColumnName="fornecedorNF" />
+                <ScalarProperty Name="documentoTarefa" ColumnName="documentoTarefa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

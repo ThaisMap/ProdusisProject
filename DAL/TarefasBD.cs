@@ -90,7 +90,7 @@ namespace DAL
                 }
                 return true;
             }
-            catch (Exception e)  { 
+            catch (Exception erro)  { 
                 return false;
             }
         }
@@ -118,7 +118,7 @@ namespace DAL
                             foreach (var item in listaCtes)
                             {
                                 int manif = BancoDeDados.Cte_Manifesto.Where(c => c.CteNovo == item.idCte).Select(m => m.Manifesto).FirstOrDefault();
-                                var ctes = BancoDeDados.Cte_Manifesto.Where(m => m.Manifesto == manif).Where(c => c.CteNovo != null).Select(c => c.CteNovo).ToList(); //lista dos ids
+                                var ctes = BancoDeDados.Cte_Manifesto.Where(m => m.Manifesto == manif).Select(c => c.CteNovo).ToList(); //lista dos ids
                                 foreach (int cte in ctes)
                                 {
                                     lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == cte).FirstOrDefault());

@@ -137,7 +137,7 @@ namespace GUI
 
         private void BtnPortaria_Click(object sender, RoutedEventArgs e)
         {
-
+            Navegador.Navigate(new RelatorioPortaria(ActualHeight, ActualWidth));
         }
     }
 }

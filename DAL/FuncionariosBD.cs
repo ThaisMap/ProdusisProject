@@ -30,76 +30,6 @@ namespace DAL
             }
         }
 
-
-        public bool cadastrarMotorista(CapacidadeMotoristas novoMot)
-        {
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    BancoDeDados.CapacidadeMotoristas.Add(novoMot);
-                    BancoDeDados.SaveChanges();
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                var qualErro = ex;
-                return false;
-            }
-        }
-
-        public void deletarMotorista(int idMot)
-        {
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    CapacidadeMotoristas apagar = BancoDeDados.CapacidadeMotoristas.Where(i => i.Id == idMot).FirstOrDefault();
-                    BancoDeDados.CapacidadeMotoristas.Remove(apagar);
-                    BancoDeDados.SaveChanges();
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        public bool editarMotorista(CapacidadeMotoristas novoMot)
-        {
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    CapacidadeMotoristas motAtual = BancoDeDados.CapacidadeMotoristas.Single(f => f.Id == novoMot.Id);
-                    motAtual.Motorista = novoMot.Motorista;
-                    motAtual.Capacidade = novoMot.Capacidade;
-                    BancoDeDados.SaveChanges();
-                }
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        public List<CapacidadeMotoristas> getAllMotoristas()
-        {
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    var lista = BancoDeDados.CapacidadeMotoristas.OrderBy(x => x.Motorista).ToList();
-                    return lista;
-                }
-            }
-            catch
-            {
-                return new List<CapacidadeMotoristas>();
-            }
-        }
-
         public bool cadastrarObservacao(Observacoes novaObs)
         {
             try
@@ -249,6 +179,21 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     return BancoDeDados.Funcionarios.Where(f => f.idFunc == id).FirstOrDefault();
+                }
+            }
+            catch
+            {
+                return new Funcionarios();
+            }
+        }
+
+        public Funcionarios getFuncPorMatricula(string Matricula)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    return BancoDeDados.Funcionarios.Where(f => f.matriculaFunc == Matricula).FirstOrDefault();
                 }
             }
             catch

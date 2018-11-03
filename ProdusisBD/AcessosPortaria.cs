@@ -14,16 +14,22 @@ namespace ProdusisBD
     
     public partial class AcessosPortaria
     {
-        public string idAcesso { get; set; }
-        public string MotoristaAcesso { get; set; }
+        public int idAcesso { get; set; }
+        public string PlacaAcesso { get; set; }
+        public string Placa2Acesso { get; set; }
+        public string NomeMotoristaAcesso { get; set; }
         public System.DateTime EntradaAcesso { get; set; }
-        public System.DateTime SaidaAcesso { get; set; }
+        public Nullable<System.DateTime> SaidaAcesso { get; set; }
         public string ObservacaoAcesso { get; set; }
         public string LacreAcesso { get; set; }
         public int KmAcesso { get; set; }
         public string EstadoGeral { get; set; }
-        public int DocaAcesso { get; set; }
+        public Nullable<int> DocaAcesso { get; set; }
+        public Nullable<int> PorteiroEntrada { get; set; }
+        public Nullable<int> PorteiroSaida { get; set; }
     
         public virtual Veiculos Veiculos { get; set; }
+        public virtual Funcionarios Funcionarios { get; set; }
+        public virtual Funcionarios Funcionarios1 { get; set; }
     }
 }

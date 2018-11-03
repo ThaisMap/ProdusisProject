@@ -1,0 +1,33 @@
+﻿<Window x:Class="Portaria.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Portaria"
+        mc:Ignorable="d"
+   TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+          Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+    Icon="C:\Users\thais.maria.RODOMINAS\Documents\GitHub\ProdusisProject\Portaria\icone_2_produsis.ico"
+        WindowState="Maximized" 
+        Loaded="Window_Loaded"
+        Title="Portaria - Expresso Rodominas" Height="450" Width="800">
+    <StackPanel>
+        <DockPanel>
+            <TextBlock Name="txtUsuario" DockPanel.Dock="Right" Text="usuario logado"/>
+
+            <Menu DockPanel.Dock="Left" HorizontalAlignment="Center"  VerticalContentAlignment="Center" VerticalAlignment="Top" Width="auto" Margin="0,0" >
+            <MenuItem Name="BtnEntrada" Header="Entrada" Click="BtnEntrada_Click"/>
+            <MenuItem Name="BtnPendentes" Header="Pendentes" Click="BtnPendentes_Click"/>
+            
+        </Menu>
+        </DockPanel>
+        <Frame
+                Name="Navegador"
+                Margin="20,10"
+                HorizontalAlignment="Left"            
+                VerticalAlignment="Top"
+                VerticalContentAlignment="Top"
+                NavigationUIVisibility="Hidden" />
+    </StackPanel>
+</Window>

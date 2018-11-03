@@ -18,10 +18,12 @@ namespace DAL
                     if (verificarNovoCte(novoCte.numeroCte, novoCte.notasCte) <= 0)
                     {
                         BancoDeDados.Cte.Add(novoCte);
-                         BancoDeDados.SaveChanges();
+                        BancoDeDados.SaveChanges();
+                        return true;
                     }
+                    else return false;
                 }
-                return true;
+                
             }
             catch (Exception ex)
             {
@@ -378,7 +380,7 @@ namespace DAL
                     return nota.fornecedorNF;
                 }
             }
-            catch (Exception e)
+            catch (Exception erro)
             {
                 return "Fornecedor não encontrado";
             }
@@ -579,7 +581,7 @@ namespace DAL
                 {
                     NotasFiscais nfAtual = BancoDeDados.NotasFiscais.FirstOrDefault(nf => nf.numeroNF == numNF);
                     var ctes = getNovoCtePorNum(numeroCte);
-                    nfAtual.CteNovoNF = ctes.Where(x => x.notasCte.Contains(numNF)).Select(x => x.idCte).FirstOrDefault();
+                    nfAtual.CteNovoNF = ctes.Where(x => x.notasCte.Contains(numNF)).Select(x => x.idCte).LastOrDefault();
 
                     BancoDeDados.SaveChanges();
                 }

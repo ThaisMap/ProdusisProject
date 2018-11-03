@@ -130,32 +130,38 @@ namespace ProdusisBD
         /// </summary>
          public void atualizaPontuação()
         {
-            if (tipoTarefa == "Conferência")
+            try
             {
-                pontos = sku * 7 + volumes * 0.4;
+                if (tipoTarefa == "Conferência")
+                {
+                    pontos = sku * 7 + volumes * 0.4;
+                }
+                else if (tipoTarefa.Contains("Descarga") || tipoTarefa.Contains("Carregamento"))
+                {
+                    if (quantPaletizado > totalPaletes)
+                        quantPaletizado = totalPaletes;
+                    double porcentagemPaletizado = (double)quantPaletizado / (double)totalPaletes;
+                    pontos = volumes * porcentagemPaletizado;
+                    pontos += volumes * (1 - porcentagemPaletizado) * 3;
+                }
+                else // regra para separação e movimentacao de empilhadeira
+                {
+                    pontos = (double)totalPaletes;
+                }
+                if (divergenciaTarefa != "Nenhuma" && divergenciaTarefa != "-;0;-;0;-;0")
+                {
+                    pontos = 0;
+                }
+                if (nomesFunc.Contains("/"))
+                {
+                    int div = nomesFunc.Count() - nomesFunc.Replace("/", string.Empty).Count() + 1;
+                    pontos = pontos / div;
+                }
             }
-            else if (tipoTarefa.Contains("Descarga") || tipoTarefa.Contains("Carregamento"))
+            catch (Exception erro)
             {
-                if (quantPaletizado > totalPaletes)
-                    quantPaletizado = totalPaletes;
-                double porcentagemPaletizado = (double)quantPaletizado / (double)totalPaletes;
-                pontos = volumes * porcentagemPaletizado;
-                pontos += volumes * (1 - porcentagemPaletizado) * 3;
+                // pq da null?
             }
-            else // regra para separação e movimentacao de empilhadeira
-            {
-                pontos = (double)totalPaletes;
-            }
-            if (divergenciaTarefa != "Nenhuma" && divergenciaTarefa != "-;0;-;0;-;0")
-            {
-                pontos = 0;
-            }
-            if (nomesFunc.Contains("/"))
-            {
-                int div = nomesFunc.Count()-nomesFunc.Replace("/", string.Empty).Count()+1;
-                pontos = pontos / div;
-            }
-            
         }
 
         private string tipoExtenso(string tipo)

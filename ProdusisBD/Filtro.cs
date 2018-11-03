@@ -13,5 +13,7 @@ namespace ProdusisBD
         public int volumeFim;
         public int skuInicio;
         public int skuFim;
+        public string placa;
+        public bool? acessoPendente;
     }
 }

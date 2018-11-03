@@ -1,0 +1,37 @@
+﻿<Window x:Class="Portaria.Saida"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Portaria"
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             HorizontalAlignment="Stretch"
+             mc:Ignorable="d" Loaded="Window_Loaded"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontSize="16" Height="300" Width="600">
+    <StackPanel>
+        <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}"><Run Text="Saída de Veículos"/></TextBlock>
+        <Separator />
+        <StackPanel HorizontalAlignment="Center" >
+            <StackPanel Orientation="Horizontal">
+                <TextBox Width="150" Margin="0 10 15 10" Name="txtPlaca" IsReadOnly="True"
+                     materialDesign:HintAssist.Hint="Placa" materialDesign:HintAssist.IsFloating="True"/>
+                <TextBox Width="325" Margin="10" Name="txtNome" IsReadOnly="True"
+                     materialDesign:HintAssist.Hint="Motorista" materialDesign:HintAssist.IsFloating="True"/>
+
+            </StackPanel>
+          
+            <StackPanel Orientation="Horizontal">
+                <TextBox Width="240" Margin="0 10 15 10" Name="txtPlaca2"
+                     materialDesign:HintAssist.Hint="Placa Carreta" materialDesign:HintAssist.IsFloating="True"/>
+                <TextBox Width="240" Margin="10" Name="txtKm"
+                     materialDesign:HintAssist.Hint="Kilometragem" materialDesign:HintAssist.IsFloating="True"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Name="BtnCancela" Width="150" Margin="10, 20" Click="BtnCancela_Click" Content="Cancelar"/>
+                <Button Name="BtnRegistra" Width="150" Margin="10, 20" Click="BtnRegistra_Click" Content=" Registrar Saída"/>
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</Window>

@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="Portaria.Entrada"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             HorizontalAlignment="Stretch"
+             xmlns:local="clr-namespace:Portaria"
+             mc:Ignorable="d" 
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontSize="16" Loaded="UserControl_Loaded"
+             d:DesignHeight="450" d:DesignWidth="550">
+    <StackPanel>  
+        <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}"><Run Text="Entrada de Veículos"/></TextBlock>
+        <Separator />
+
+    <StackPanel HorizontalAlignment="Center" >
+      
+        <StackPanel Orientation="Horizontal">
+            <ComboBox Width="150" IsReadOnly="False" Margin="0 10 15 10" Name="cbPlaca" SelectionChanged="cbPlaca_SelectionChanged"
+                     materialDesign:HintAssist.Hint="Placa" materialDesign:HintAssist.IsFloating="True"/>
+            <ComboBox Width="325" Margin="10" Name="cbNome" SelectionChanged="cbNome_SelectionChanged"
+                     materialDesign:HintAssist.Hint="Motorista" materialDesign:HintAssist.IsFloating="True"/>
+
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <CheckBox Name="checkPalete" Content="Tem paletes" Margin="10 10"/>
+            <CheckBox Name="checkDevolucao" Content="Devolução" Margin="10 0"/>
+            <CheckBox Name="checkColeta" Content="Coleta" Margin="10 0"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBox Width="240" Margin="0 10 15 10" Name="txtPlaca2"
+                     materialDesign:HintAssist.Hint="Placa Carreta" materialDesign:HintAssist.IsFloating="True"/>
+                <TextBox Width="240" Margin="10" Name="txtKm" PreviewTextInput="testarCaractere"
+                     materialDesign:HintAssist.Hint="Kilometragem" materialDesign:HintAssist.IsFloating="True"/>
+        </StackPanel>
+        <TextBox Width="240" Margin="0 10" Name="txtLacre" HorizontalAlignment="Left"
+                     materialDesign:HintAssist.Hint="Lacre" materialDesign:HintAssist.IsFloating="True"/>
+            <TextBox Width="500" Margin="0 10" Name="txtEstado" HorizontalAlignment="Left"
+                     materialDesign:HintAssist.Hint="Estado geral do veículo" materialDesign:HintAssist.IsFloating="True"/>
+            <Button Name="BtnRegistra" Margin="10, 20" Content="Registrar Entrada" Click="BtnRegistra_Click"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>
