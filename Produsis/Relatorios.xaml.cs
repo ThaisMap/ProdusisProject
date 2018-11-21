@@ -3,9 +3,6 @@ using Microsoft.Win32;
 using ProdusisBD;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,7 +17,7 @@ namespace GUI
     {
         public Relatorios(double Altura, double largura)
         {
-            InitializeComponent();            
+            InitializeComponent();
             Height = Altura - 50;
             Width = largura - 50;
             dgTarefas.Height = Altura - 180;
@@ -37,7 +34,7 @@ namespace GUI
             }
             Filtro filtros = new Filtro()
             {
-                TipoTarefa = cbTipoTarefa.SelectedIndex == -1? cbTipoTarefa.SelectedIndex.ToString(): (cbTipoTarefa.SelectedIndex +1).ToString(),
+                TipoTarefa = cbTipoTarefa.SelectedIndex == -1 ? cbTipoTarefa.SelectedIndex.ToString() : (cbTipoTarefa.SelectedIndex + 1).ToString(),
                 dataInicio = dataInicio.SelectedDate,
                 dataFim = dataFinal.SelectedDate.Value.AddDays(1).AddSeconds(-1)
             };
@@ -106,12 +103,5 @@ namespace GUI
                 }
             }
         }
-
-        private string extensao(string nomeArquivo)
-        {
-            nomeArquivo += ".csv";
-            return nomeArquivo;
-        }
-
     }
 }

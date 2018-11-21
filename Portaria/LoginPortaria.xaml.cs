@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using BLL;
+﻿using BLL;
 using DAL;
 using Portaria.Properties;
-using Portaria;
+using System.Windows;
 
 namespace Portaria
 {
@@ -37,12 +24,11 @@ namespace Portaria
                 {
                     if (l.validarSenha(TxbLogin.Text, TxbSenha.Password))
                     {
+                        //FuncionariosBD fBD = new FuncionariosBD();
+                        //var usuario = fBD.getFuncPorMatricula(TxbLogin.Text);
+                        //Login.Default.idUsuario = usuario.idFunc;
+                        //Login.Default.NomeUsuario = usuario.nomeFunc;
 
-                             FuncionariosBD fBD = new FuncionariosBD();
-                        var usuario = fBD.getFuncPorMatricula(TxbLogin.Text);
-                        Login.Default.idUsuario = usuario.idFunc;
-                        Login.Default.NomeUsuario = usuario.nomeFunc;
-                       
                         MainWindow view = new MainWindow();
                         this.Close();
                         view.Show();
@@ -53,11 +39,9 @@ namespace Portaria
                         TxbSenha.Focus();
                     }
                 }
-
                 else
                     TxbLogin.Focus();
             }
-
         }
 
         private bool verificaCampos()

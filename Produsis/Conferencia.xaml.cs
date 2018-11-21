@@ -6,7 +6,6 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Threading;
 
 namespace GUI
 {
@@ -43,13 +42,14 @@ namespace GUI
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
             dgTarefas.ItemsSource = t.TarefasPendentes("2");
+            LerXmls();
         }
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
         {
             TarefaModelo item = (TarefaModelo)dgTarefas.SelectedItem;
             item.AtualizaTempoGasto();
-            if (MessageBox.Show("Confirma finalização da conferência de "+item.nomesFuncionarios+ " após " + item.tempoGasto +"? ", "Produsis", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            if (MessageBox.Show("Confirma finalização da conferência de " + item.nomesFuncionarios + " após " + item.tempoGasto + "? ", "Produsis", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
                 if (!t.FinalizarTarefa(item.idTarefa, 0, 0))
                 {
@@ -72,7 +72,6 @@ namespace GUI
                             {
                                 ListaDeFuncionarios.Items.Add(FuncionarioSelecionado);
                             }
-
                         }
                     }
                 }
@@ -125,7 +124,7 @@ namespace GUI
         {
             checagemDeCte = d.getIdCteDisponivel(int.Parse(Documento.Text.Replace("_", "")));
             if (ChecarCampos())
-                if (checagemDeCte>-1)
+                if (checagemDeCte > -1)
                 {
                     if (checagemDeCte > 0)
                     {
@@ -172,7 +171,7 @@ namespace GUI
 
         private Tarefas MontarTarefa()
         {
-            Tarefas novaTarefa = new Tarefas();            
+            Tarefas novaTarefa = new Tarefas();
             novaTarefa.documentoTarefa = checagemDeCte;
             novaTarefa.inicioTarefa = DateTime.Now;
             novaTarefa.tipoTarefa = "2";
@@ -188,7 +187,5 @@ namespace GUI
                 Documento.Text = int.Parse(Documento.Text).ToString();
             }
         }
-
-       
     }
 }

@@ -1,8 +1,8 @@
 ﻿using BLL;
 using ProdusisBD;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Text.RegularExpressions;
 using System.Windows.Input;
 
 namespace Produsis
@@ -61,7 +61,7 @@ namespace Produsis
         }
 
         private void Salvar_Click(object sender, RoutedEventArgs e)
-        {            
+        {
             if (f.validarSenha(emEdicao.matriculaFunc, Senha.Password) && checarCampos())
             {
                 Funcionarios novosDados = montarObjeto();
@@ -123,7 +123,7 @@ namespace Produsis
         {
             if (Nome.Text != "" && Matricula.Text != "_____")
             {
-                if (CkAdmin.IsChecked==true && Senha2.Password == "")
+                if (CkAdmin.IsChecked == true && Senha2.Password == "")
                     return false;
                 return true;
             }
@@ -138,7 +138,7 @@ namespace Produsis
 
         private void CkAdmin_Checked(object sender, RoutedEventArgs e)
         {
-            if(CkAdmin.IsChecked == true)
+            if (CkAdmin.IsChecked == true)
             {
                 CkCarrega.IsChecked = false;
                 CkConfere.IsChecked = false;

@@ -1,13 +1,10 @@
 ﻿using BLL;
+using ProdusisBD;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Globalization;
-using LiveCharts;
-using LiveCharts.Wpf;
-using ProdusisBD;
 using System.Windows.Input;
 
 namespace GUI
@@ -49,17 +46,6 @@ namespace GUI
                 }
             }
         }
-
-     
-        public static DateTime comecoDaSemana(DateTime dt)
-        {
-            while (dt.DayOfWeek != CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek)
-                dt = dt.AddDays(-1);
-            return dt;
-        }
-
-       
-
 
     }
 }

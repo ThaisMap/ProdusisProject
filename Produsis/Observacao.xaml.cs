@@ -1,19 +1,9 @@
 ﻿using BLL;
-using System;
 using ProdusisBD;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GUI
 {
@@ -24,9 +14,12 @@ namespace GUI
     {
         private FuncionarioBLL f = new FuncionarioBLL();
 
-        public Observacao()
+        public Observacao(double actualHeight, double actualWidth)
         {
             InitializeComponent();
+            Height = actualHeight - 60;
+            Width = actualWidth - 60;
+            Dock.Height = Height - 80;
             Nome.ItemsSource = f.carregaFuncionarios();
             dataObs.SelectedDate = DateTime.Today;
             dataFim.SelectedDate = DateTime.Today;
@@ -36,9 +29,9 @@ namespace GUI
         {
             string nome = Nome.SelectedItem.ToString(); // aqui pode ser selected item pq o itemsource é uma lista de strings
             DateTime data = (DateTime)dataObs.SelectedDate;
-            string texto = TextoObs.Text;
+            string texto = SelectTime.Text + " - " + TextoObs.Text;
 
-            if(f.cadastraObservacao(nome, data, texto))
+            if (f.cadastraObservacao(nome, data, texto))
             {
                 MessageBox.Show("Observação cadastrada");
             }
@@ -48,12 +41,7 @@ namespace GUI
 
         private void Buscar_Click(object sender, RoutedEventArgs e)
         {
-            if (Nome.SelectedIndex >= 0)
-            {
-                dgObs.ItemsSource = f.getObservacoes(dataInicio.SelectedDate, dataFim.SelectedDate, Nome.SelectedItem.ToString());
-            }
-            else
-                Nome.Focus();
+            dgObs.ItemsSource = f.getObservacoes(dataInicio.SelectedDate, dataFim.SelectedDate);           
         }
 
         private void dgObs_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -66,10 +54,6 @@ namespace GUI
                     f.deletaObservacao(linha.idObs);
                 }
             }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-        }
+        }      
     }
 }

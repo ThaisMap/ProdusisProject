@@ -4,7 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:ProdusisBD="clr-namespace:ProdusisBD;assembly=ProdusisBD" 
+             xmlns:ProdusisBD="clr-namespace:ProdusisBD;assembly=ProdusisBD"
              x:Class="GUI.CadastroMotorista"
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch"
@@ -16,25 +16,23 @@
              TextElement.FontWeight="Regular"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              mc:Ignorable="d" Loaded="UserControl_Loaded">
-    <UserControl.Resources>
-        <CollectionViewSource x:Key="veiculosViewSource" d:DesignSource="{d:DesignInstance {x:Type ProdusisBD:Veiculos}, CreateList=True}"/>
-    </UserControl.Resources>
+
     <Grid>
-        <StackPanel DataContext="{StaticResource veiculosViewSource}">
-            <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}"><Run Text="Cadastro de Veículos"/></TextBlock>
+        <StackPanel>
+            <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}"><Run Text="Cadastro de Veículos" /></TextBlock>
             <Separator />
             <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" Width="350" Margin="0 0 0 25">
                 <ComboBox Name="cbNome"
                              Width="250"
                              Margin="0 0 20 0"
                              materialDesign:HintAssist.Hint="Motoristas cadastrados"
-                             materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Left"/>
+                             materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Left" />
                 <Button Name="btnEditar" Width="80"
                         Click="btnEditar_Click" Content="Editar" />
-            </StackPanel>            
-            
+            </StackPanel>
+
             <TextBox Width="350" Margin="10" Name="txtNome" MaxLength="50"
-                     materialDesign:HintAssist.Hint="Motorista" materialDesign:HintAssist.IsFloating="True"/>
+                     materialDesign:HintAssist.Hint="Motorista" materialDesign:HintAssist.IsFloating="True" />
             <ComboBox Width="350" Margin="5" Name="cbTipo"
                       materialDesign:HintAssist.Hint="Tipo do veículo" materialDesign:HintAssist.IsFloating="True">
                 <ComboBoxItem>VAN</ComboBoxItem>
@@ -45,25 +43,26 @@
                 <ComboBoxItem>TRUCK</ComboBoxItem>
                 <ComboBoxItem>CAVALO</ComboBoxItem>
                 <ComboBoxItem>CONJUNTO</ComboBoxItem>
+                <ComboBoxItem>CARRO</ComboBoxItem>
+                <ComboBoxItem>PREST SERVIÇO</ComboBoxItem>
             </ComboBox>
             <StackPanel Orientation="Horizontal" Width="350">
                 <TextBox Width="160" Margin="0 10 15 10" Name="txtPlaca"
-                     materialDesign:HintAssist.Hint="Placa" materialDesign:HintAssist.IsFloating="True"/>
-            <TextBox Width="160" Margin="15 10 0 10" Name="txtPlaca2" 
-                     materialDesign:HintAssist.Hint="Placa Carreta" materialDesign:HintAssist.IsFloating="True"/>
+                     materialDesign:HintAssist.Hint="Placa" materialDesign:HintAssist.IsFloating="True" />
+            <TextBox Width="160" Margin="15 10 0 10" Name="txtPlaca2"
+                     materialDesign:HintAssist.Hint="Placa Carreta" materialDesign:HintAssist.IsFloating="True" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="350">
                 <TextBox Width="150" Margin="0 5 0 5" Name="txtCapacidade"
                      materialDesign:HintAssist.Hint="Capacidade de paletes" materialDesign:HintAssist.IsFloating="True"
-                     PreviewTextInput="testarCaractere"/>
+                     PreviewTextInput="testarCaractere" />
                 <TextBlock Text="Ativo:" Margin="120 0 0 0"  VerticalAlignment="Center" />
                 <ToggleButton Name="Ativo" Margin="10,0,0,0"
                               HorizontalAlignment="Left" IsChecked="True"
                               VerticalAlignment="Center" />
-            </StackPanel>      
-            <Button Width="100" Margin="20" Name="BtnSalvar" 
-                    Click="BtnSalvar_Click" Content="Salvar"/>
-         
+            </StackPanel>
+            <Button Width="100" Margin="20" Name="BtnSalvar"
+                    Click="BtnSalvar_Click" Content="Salvar" />
         </StackPanel>
     </Grid>
 </UserControl>

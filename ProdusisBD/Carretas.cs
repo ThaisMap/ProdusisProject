@@ -12,15 +12,9 @@ namespace ProdusisBD
     using System;
     using System.Collections.Generic;
     
-    public partial class Observacoes
+    public partial class Carretas
     {
-        public int idObs { get; set; }
-        public int FuncObs { get; set; }
-        public System.DateTime DataObs { get; set; }
-        public string TextoObs { get; set; }
-        public string NomeFunc { get; set; }
-
-
-        public virtual Funcionarios Funcionarios { get; set; }
+        public string PlacaCarreta { get; set; }
+        public bool Ativo { get; set; }
     }
 }

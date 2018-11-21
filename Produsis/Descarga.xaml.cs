@@ -20,11 +20,11 @@ namespace GUI
         private List<FuncionariosTag> FuncionarioSelecionado = new List<FuncionariosTag>();
         private List<Funcionarios> ListaFunc;
         private TarefasBLL t = new TarefasBLL();
-        private int[] pallets = {0, 0};
+        private int[] pallets = { 0, 0 };
 
         public Descarga()
         {
-            InitializeComponent(); 
+            InitializeComponent();
             ListaFunc = f.carregaFuncionariosLivres("1");
             CBFuncionario.ItemsSource = ListaFunc;
             CBFuncionario.DisplayMemberPath = "nomeFunc";
@@ -41,6 +41,7 @@ namespace GUI
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
             dgTarefas.ItemsSource = t.TarefasPendentes("1");
+            lerXmls();
         }
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
@@ -114,7 +115,7 @@ namespace GUI
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
             if (checarCampos())
-                if (t.TarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "1") && t.TarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "5"))
+                if (t.TarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "1"))
                 {
                     if (t.InserirTarefa(montarTarefa(), funcionarios()))
                     {
@@ -149,7 +150,7 @@ namespace GUI
                         {
                             adicionar = false;
                             break;
-                        }                        
+                        }
                     }
                     if (adicionar)
                     {
@@ -160,14 +161,14 @@ namespace GUI
             }
         }
 
-        static void lerXmls()
+        private static void lerXmls()
         {
             xmlBLL x = new xmlBLL();
             x.triagemArquivos();
         }
 
         private Tarefas montarTarefa()
-        {            
+        {
             Tarefas novaTarefa = new Tarefas()
             {
                 documentoTarefa = int.Parse(Documento.Text.Replace("_", "")),
@@ -177,7 +178,7 @@ namespace GUI
 
             return novaTarefa;
         }
-        
+
         private void testarCaractere(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");

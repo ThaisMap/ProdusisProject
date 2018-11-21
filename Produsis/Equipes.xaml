@@ -16,7 +16,7 @@
              mc:Ignorable="d" Loaded="UserControl_Loaded">
     <Grid>
         <StackPanel>
-            <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}"><Run Text="Cadastro de Equipes"/></TextBlock>
+            <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}"><Run Text="Cadastro de Equipes" /></TextBlock>
             <Separator />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <materialDesign:PackIcon
@@ -33,7 +33,7 @@
                         Width="300"
                         materialDesign:HintAssist.Hint="Nome"
                         materialDesign:HintAssist.IsFloating="True"
-                        IsEditable="True"/>
+                        IsEditable="True" />
                 <Button
                     VerticalAlignment="Bottom"
                     Content="Incluir na equipe"
@@ -41,7 +41,7 @@
                     Style="{StaticResource MaterialDesignFlatButton}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <DataGrid Name="dgEquipe" Height="auto" AutoGenerateColumns="False" 
+                <DataGrid Name="dgEquipe" Height="auto" AutoGenerateColumns="False"
                           IsReadOnly="True" VerticalContentAlignment="Center"
                           ItemsSource="{Binding}">
                     <DataGrid.Columns>
@@ -54,24 +54,20 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="Funcionário" IsReadOnly="True" 
+                        <DataGridTextColumn Header="Funcionário" IsReadOnly="True"
                                             MinWidth="200"
-                                            Binding="{Binding Path=.}"/>
+                                            Binding="{Binding Path=.}" />
                     </DataGrid.Columns>
                 </DataGrid>
                 <StackPanel>
-                <Button Width="150" Name="BtnSalvar" 
+                <Button Width="150" Name="BtnSalvar"
                     Margin="10"
-                    Click="BtnSalvar_Click" Content="Salvar equipe"/>
-                <Button Width="150" Name="BtnDesfazer" 
+                    Click="BtnSalvar_Click" Content="Salvar equipe" />
+                <Button Width="150" Name="BtnDesfazer"
                     Margin="10"
-                    Click="BtnDesfazer_Click" Content="Desfazer equipe"/>
+                    Click="BtnDesfazer_Click" Content="Desfazer equipe" />
                 </StackPanel>
             </StackPanel>
-
-
-
-
         </StackPanel>
     </Grid>
 </UserControl>

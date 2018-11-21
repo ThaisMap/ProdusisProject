@@ -75,7 +75,7 @@
                                     VerticalAlignment="Center"
                                     materialDesign:HintAssist.Hint="Número do Documento"
                                     materialDesign:HintAssist.IsFloating="True"
-                                        PreviewTextInput="testarCaractere"                                                        
+                                        PreviewTextInput="testarCaractere"
                                     Style="{StaticResource MaterialDesignTextBox}" />
                 <Button Grid.Row="1"
                         Grid.Column="2"
@@ -96,8 +96,8 @@
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </Style>
                         </GridView.ColumnHeaderContainerStyle>
-                        <GridViewColumn Width="auto" DisplayMemberBinding="{Binding numero}"/>
-                        <GridViewColumn Width="auto" DisplayMemberBinding="{Binding volumes}"/>
+                        <GridViewColumn Width="auto" DisplayMemberBinding="{Binding numero}" />
+                        <GridViewColumn Width="auto" DisplayMemberBinding="{Binding volumes}" />
                         <GridViewColumn Width="auto" DisplayMemberBinding="{Binding dado3}" />
                         <GridViewColumn Width="auto" DisplayMemberBinding="{Binding dado4}" />
                         <GridViewColumn Width="auto" DisplayMemberBinding="{Binding dado5}" />

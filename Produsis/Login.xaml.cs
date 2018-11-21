@@ -1,6 +1,5 @@
 ﻿using BLL;
 using System.Windows;
-using System.Threading;
 
 namespace GUI
 {
@@ -26,13 +25,7 @@ namespace GUI
                 {
                     if (l.validarSenha(TxbLogin.Text, TxbSenha.Password))
                     {
-
-                      TelaPrincipal view = new TelaPrincipal();
-                        if (l.tipoFuncionario(TxbLogin.Text) == "1")
-                        {
-                            view.BtnAdministrativo.Visibility = Visibility.Collapsed;
-                            view.BtnDivergencia.Visibility = Visibility.Collapsed;
-                        }
+                        TelaPrincipal view = new TelaPrincipal();
                         this.Close();
                         view.Show();
                     }
@@ -42,11 +35,9 @@ namespace GUI
                         TxbSenha.Focus();
                     }
                 }
-
                 else
                     TxbLogin.Focus();
             }
-
         }
 
         private bool verificaCampos()
@@ -67,7 +58,7 @@ namespace GUI
             return true;
         }
 
-        static void importarArquivos()
+        private static void importarArquivos()
         {
             xmlBLL x = new xmlBLL();
             x.triagemArquivos();

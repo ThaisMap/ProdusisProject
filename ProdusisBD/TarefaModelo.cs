@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace ProdusisBD
 {
     public class TarefaModelo : Tarefas
@@ -17,7 +16,7 @@ namespace ProdusisBD
             divergenciaTarefa = tarefa.divergenciaTarefa;
             totalPaletes = tarefa.totalPaletes;
         }
-        
+
         private string tipoExtenso(string tipo)
         {
             switch (tipo)
@@ -25,14 +24,19 @@ namespace ProdusisBD
                 case "0":
                 case "1":
                     return "Descarga";
+
                 case "2":
                     return "Conferência";
+
                 case "3":
                     return "Mov. de paletes";
+
                 case "4":
                     return "Carregamento";
+
                 case "5":
                     return "Empilhadeira";
+
                 default:
                     return "Carregamento Paletizado";
             }
@@ -48,7 +52,6 @@ namespace ProdusisBD
         public string fornecedor { get; set; }
         public string cliente { get; set; }
         public double pontos { get; set; }
-        
 
         public void valores(int sku, int volume)
         {
@@ -86,7 +89,7 @@ namespace ProdusisBD
 
             return retorno;
         }
-        
+
         public void AtualizaTempoGasto()
         {
             TimeSpan tempo;
@@ -100,7 +103,7 @@ namespace ProdusisBD
             }
             tempoGasto = (tempo.Days * 24 + tempo.Hours).ToString("00") + ":" + tempo.Minutes.ToString("00") + ":" + tempo.Seconds.ToString("00");
         }
-       
+
         public void preencheDatas()
         {
             dataInicio = inicioTarefa.Date.ToString("dd\\/MM\\/yyyy");
@@ -111,6 +114,6 @@ namespace ProdusisBD
                 dataFim = ((DateTime)fimTarefa).ToString("dd-MM-yyyy");
                 horaFim = ((DateTime)fimTarefa).ToString("HH\\:mm\\:ss");
             }
-        }        
+        }
     }
 }

@@ -110,7 +110,7 @@ namespace GUI
 
         private void BtnObserv_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new Observacao());
+            Navegador.Navigate(new Observacao(ActualHeight, ActualWidth));
         }
 
         private void BtnEquipe_Click(object sender, RoutedEventArgs e)
@@ -138,6 +138,11 @@ namespace GUI
         private void BtnPortaria_Click(object sender, RoutedEventArgs e)
         {
             Navegador.Navigate(new RelatorioPortaria(ActualHeight, ActualWidth));
+        }
+
+        private void BtnCarretas_Click(object sender, RoutedEventArgs e)
+        {
+            Navegador.Navigate(new CadastroCarretas());
         }
     }
 }

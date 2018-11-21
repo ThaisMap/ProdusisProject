@@ -11,16 +11,16 @@
           </Key>
           <Property Name="idAcesso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PlacaAcesso" Type="nchar" MaxLength="7" Nullable="false" />
-          <Property Name="Placa2Acesso" Type="nchar" MaxLength="7" />
-          <Property Name="NomeMotoristaAcesso" Type="nchar" MaxLength="50" />
+          <Property Name="Placa2Acesso" Type="nvarchar" MaxLength="50" />
+          <Property Name="NomeMotoristaAcesso" Type="nvarchar" MaxLength="50" />
           <Property Name="EntradaAcesso" Type="datetime" Nullable="false" />
           <Property Name="SaidaAcesso" Type="datetime" />
-          <Property Name="ObservacaoAcesso" Type="nchar" MaxLength="30" />
-          <Property Name="LacreAcesso" Type="nchar" MaxLength="30" />
+          <Property Name="ObservacaoAcesso" Type="nvarchar" MaxLength="50" />
+          <Property Name="LacreAcesso" Type="nvarchar" MaxLength="50" />
           <Property Name="KmAcesso" Type="int" Nullable="false" />
-          <Property Name="EstadoGeral" Type="nchar" MaxLength="100" />
+          <Property Name="EstadoGeral" Type="nvarchar" MaxLength="100" />
           <Property Name="DocaAcesso" Type="int" />
-          <Property Name="PorteiroEntrada" Type="int" />
+          <Property Name="PorteiroEntrada" Type="int" Nullable="false" />
           <Property Name="PorteiroSaida" Type="int" />
         </EntityType>
         <EntityType Name="CapacidadeMotoristas">
@@ -30,6 +30,13 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Motorista" Type="nvarchar" MaxLength="40" Nullable="false" />
           <Property Name="Capacidade" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Carretas">
+          <Key>
+            <PropertyRef Name="PlacaCarreta" />
+          </Key>
+          <Property Name="PlacaCarreta" Type="nchar" MaxLength="7" Nullable="false" />
+          <Property Name="Ativo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Cte">
           <Key>
@@ -250,7 +257,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PorteiroEntrada_AcessosPortaria">
-          <End Role="Funcionarios" Type="Self.Funcionarios" Multiplicity="0..1" />
+          <End Role="Funcionarios" Type="Self.Funcionarios" Multiplicity="1" />
           <End Role="AcessosPortaria" Type="Self.AcessosPortaria" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Funcionarios">
@@ -288,6 +295,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
         <EntityContainer Name="produsisBDModelStoreContainer">
           <EntitySet Name="AcessosPortaria" EntityType="Self.AcessosPortaria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CapacidadeMotoristas" EntityType="Self.CapacidadeMotoristas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Carretas" EntityType="Self.Carretas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cte" EntityType="Self.Cte" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cte_Manifesto" EntityType="Self.Cte_Manifesto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Func_Tarefa" EntityType="Self.Func_Tarefa" Schema="dbo" store:Type="Tables" />
@@ -375,17 +383,17 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
           </Key>
           <Property Name="idAcesso" Type="Int32" Nullable="false" />
           <Property Name="PlacaAcesso" Type="String" MaxLength="7" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Placa2Acesso" Type="String" MaxLength="7" FixedLength="true" Unicode="true" />
-          <Property Name="NomeMotoristaAcesso" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Placa2Acesso" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NomeMotoristaAcesso" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="EntradaAcesso" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="SaidaAcesso" Type="DateTime" Precision="3" />
-          <Property Name="ObservacaoAcesso" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
-          <Property Name="LacreAcesso" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="ObservacaoAcesso" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LacreAcesso" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="KmAcesso" Type="Int32" Nullable="false" />
-          <Property Name="EstadoGeral" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="EstadoGeral" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="DocaAcesso" Type="Int32" />
           <NavigationProperty Name="Veiculos" Relationship="Self.FK_Veiculos_AcessosPortaria" FromRole="AcessosPortaria" ToRole="Veiculos" />
-          <Property Name="PorteiroEntrada" Type="Int32" />
+          <Property Name="PorteiroEntrada" Type="Int32" Nullable="false" />
           <Property Name="PorteiroSaida" Type="Int32" />
           <NavigationProperty Name="Funcionarios" Relationship="produsisBDModel.FK_PorteiroEntrada_AcessosPortaria" FromRole="AcessosPortaria" ToRole="Funcionarios" />
           <NavigationProperty Name="Funcionarios1" Relationship="produsisBDModel.FK_PorteiroSaida_AcessosPortaria" FromRole="AcessosPortaria" ToRole="Funcionarios" />
@@ -689,9 +697,10 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
             <End Role="Funcionarios" EntitySet="Funcionarios" />
             <End Role="AcessosPortaria" EntitySet="AcessosPortaria" />
           </AssociationSet>
+          <EntitySet Name="Carretas" EntityType="produsisBDModel.Carretas" />
         </EntityContainer>
         <Association Name="FK_PorteiroEntrada_AcessosPortaria">
-          <End Type="produsisBDModel.Funcionarios" Role="Funcionarios" Multiplicity="0..1" />
+          <End Type="produsisBDModel.Funcionarios" Role="Funcionarios" Multiplicity="1" />
           <End Type="produsisBDModel.AcessosPortaria" Role="AcessosPortaria" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Funcionarios">
@@ -714,6 +723,13 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Carretas">
+          <Key>
+            <PropertyRef Name="PlacaCarreta" />
+          </Key>
+          <Property Name="PlacaCarreta" Type="String" Nullable="false" MaxLength="7" FixedLength="true" Unicode="true" />
+          <Property Name="Ativo" Type="Boolean" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -881,6 +897,14 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
                 <ScalarProperty Name="skuNF" ColumnName="skuNF" />
                 <ScalarProperty Name="fornecedorNF" ColumnName="fornecedorNF" />
                 <ScalarProperty Name="documentoTarefa" ColumnName="documentoTarefa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Carretas">
+            <EntityTypeMapping TypeName="produsisBDModel.Carretas">
+              <MappingFragment StoreEntitySet="Carretas">
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+                <ScalarProperty Name="PlacaCarreta" ColumnName="PlacaCarreta" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

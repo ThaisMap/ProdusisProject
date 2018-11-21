@@ -1,7 +1,7 @@
 ﻿using ProdusisBD;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 
 namespace DAL
 {
@@ -23,11 +23,9 @@ namespace DAL
                     }
                     else return false;
                 }
-                
             }
             catch (Exception ex)
             {
-
                 var olho = ex;
                 return false;
             }
@@ -35,12 +33,12 @@ namespace DAL
 
         public Cte getNovoCtePorID(int idCte)
         {
-                Cte novo = new Cte();
+            Cte novo = new Cte();
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                   novo =  (from Cte in BancoDeDados.Cte where Cte.idCte == idCte select Cte).FirstOrDefault();
+                    novo = (from Cte in BancoDeDados.Cte where Cte.idCte == idCte select Cte).FirstOrDefault();
                 }
                 return novo;
             }
@@ -49,7 +47,7 @@ namespace DAL
                 return novo;
             }
         }
-          
+
         public string getNfsNovoCte(int idCte)
         {
             try
@@ -64,7 +62,7 @@ namespace DAL
                 return "Não atrelado a nenhuma NF";
             }
         }
-        
+
         /// <summary>
         /// Verifica se está cadastrado um cte com o numero e notas fiscais fornecidos
         /// </summary>
@@ -83,7 +81,7 @@ namespace DAL
                 return -1;
             }
         }
-   
+
         private string getDadosNovoCte(int numDoc)
         {
             string dados;
@@ -114,16 +112,14 @@ namespace DAL
             }
             catch
             {
-               
             }
             return lista;
         }
 
-        #endregion
-              
+        #endregion Novo Cte
 
         /// <summary>
-        /// verifica se ja foi criada a relação cte_Manifesto 
+        /// verifica se ja foi criada a relação cte_Manifesto
         /// </summary>
         /// <param name="novo"></param>
         /// <returns></returns>
@@ -190,11 +186,11 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    var manifestoAlterado = BancoDeDados.Manifestos.Where(x=> x.numeroManifesto == novoManifesto.numeroManifesto).First();
+                    var manifestoAlterado = BancoDeDados.Manifestos.Where(x => x.numeroManifesto == novoManifesto.numeroManifesto).First();
                     manifestoAlterado.pesoManifesto = novoManifesto.pesoManifesto;
                     manifestoAlterado.quantCtesManifesto = novoManifesto.quantCtesManifesto;
                     manifestoAlterado.VolumesManifesto = novoManifesto.VolumesManifesto;
-                    
+
                     BancoDeDados.SaveChanges();
                 }
                 return false;
@@ -211,7 +207,7 @@ namespace DAL
                                     from importados in BancoDeDados.NotasFiscais
                                     where manifestados.Manifesto == numManifesto
                                     where manifestados.CteNovo == importados.CteNovoNF
-                                   select manifestados;
+                                    select manifestados;
                     novosCtes = novosCtes.Distinct();
                     return novosCtes.Count();
                 }
@@ -249,7 +245,7 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    Manifestos atual = BancoDeDados.Manifestos.Where(x=> x.numeroManifesto == novoManifesto.numeroManifesto).FirstOrDefault();
+                    Manifestos atual = BancoDeDados.Manifestos.Where(x => x.numeroManifesto == novoManifesto.numeroManifesto).FirstOrDefault();
                     atual.quantCtesManifesto = novoManifesto.quantCtesManifesto;
                     BancoDeDados.SaveChanges();
                 }
@@ -407,10 +403,10 @@ namespace DAL
                     if (result.Any(o => o != result[0]))
                         return "VARIOS FORNECEDORES";
                     else
-                        return result[0];                                       
+                        return result[0];
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 var olho = e;
                 return "Fornecedor não encontrado";
@@ -463,7 +459,7 @@ namespace DAL
         /// Retorna uma string com as NFs atreladas ao Cte informado
         /// </summary>
         public string getNfsCte(int idCte)
-        {            
+        {
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
@@ -471,14 +467,14 @@ namespace DAL
                     var nfs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNovoNF == idCte select NotasFiscais).ToList();
                     string notas = "Não atrelado a nenhuma NF";
                     foreach (var item in nfs)
-                        {
-                            if (notas == "Não atrelado a nenhuma NF")
+                    {
+                        if (notas == "Não atrelado a nenhuma NF")
 
-                                notas = item.numeroNF;
-                            else
-                                notas += "\\" + item.numeroNF;
-                        }
-                        return notas;
+                            notas = item.numeroNF;
+                        else
+                            notas += "\\" + item.numeroNF;
+                    }
+                    return notas;
                 }
             }
             catch
@@ -502,7 +498,7 @@ namespace DAL
                     List<NotasFiscais> ListaNFs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNovoNF == idCte select NotasFiscais).ToList();
                     foreach (NotasFiscais n in ListaNFs)
                     {
-                            sku += n.skuNF;
+                        sku += n.skuNF;
                     }
                 }
             }
@@ -587,12 +583,12 @@ namespace DAL
                 }
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var erro = ex;
                 return false;
             }
-        }     
+        }
 
         /// <summary>
         /// Verifica se o documento indicado esta cadastrado no banco de dados não usar com o novo cte
@@ -642,7 +638,7 @@ namespace DAL
             }
             return dados;
         }
-  
+
         /// <summary>
         /// Retorna uma string com os dados do manifesto indicado
         /// </summary>

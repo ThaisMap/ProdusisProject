@@ -103,7 +103,7 @@
                                     <ComboBox
                                         x:Name="CBFuncionario"
                                         Width="240"
-                                        Margin="10,0" 
+                                        Margin="10,0"
                                         materialDesign:HintAssist.Hint="Funcionário"
                                         materialDesign:HintAssist.IsFloating="True"
                                         IsEditable="True"
@@ -133,7 +133,6 @@
                                         materialDesign:HintAssist.IsFloating="True"
                                         IsEditable="True"
                                         SelectionChanged="CBFuncionario_SelectionChanged" />
-                                   
                                 </StackPanel>
 
                                 <Button
@@ -170,7 +169,7 @@
                                     Click="AtualizarDg_Click"
                                     Content="Atualizar"
                                     Style="{StaticResource MaterialDesignFlatButton}" />
-                               
+
                                 <TextBlock
                                     x:Name="TextoExecucao"
                                     Grid.Row="0"
@@ -209,7 +208,7 @@
                                         <DataGridTextColumn
                                             Width="Auto"
                                             Binding="{Binding documentoTarefa}"
-                                            Header="Manifesto"/>
+                                            Header="Manifesto" />
                                         <DataGridTextColumn Binding="{Binding nomesFuncionarios}" Header="Funcionários" />
                                         <DataGridTextColumn
                                             Width="Auto"

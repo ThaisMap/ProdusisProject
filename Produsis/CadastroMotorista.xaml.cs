@@ -1,20 +1,11 @@
-﻿using ProdusisBD;
-using System;
+﻿using DAL;
+using ProdusisBD;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using DAL;
-using System.Text.RegularExpressions;
 
 namespace GUI
 {
@@ -24,7 +15,7 @@ namespace GUI
     public partial class CadastroMotorista : UserControl
     {
         public bool isEditing { get; set; }
-        List<Veiculos> motoristas;
+        private List<Veiculos> motoristas;
         public VeiculosBD veiculoaBD = new VeiculosBD();
         public CapacidadeMotoristas emEdicao { get; set; }
 
@@ -43,12 +34,11 @@ namespace GUI
         private List<Veiculos> loadData()
         {
             motoristas = veiculoaBD.getVeiculos();
-            cbNome.ItemsSource = motoristas.OrderBy(x=> x.MotoristaVeiculo);
+            cbNome.ItemsSource = motoristas.OrderBy(x => x.MotoristaVeiculo);
             cbNome.DisplayMemberPath = "MotoristaVeiculo";
             cbNome.SelectedValuePath = "MotoristaVeiculo";
             return motoristas;
         }
-               
 
         private void BtnSalvar_Click(object sender, RoutedEventArgs e)
         {
@@ -66,7 +56,7 @@ namespace GUI
                     limpar();
                     loadData();
                 }
-            }          
+            }
         }
 
         private void limpar()
@@ -152,7 +142,6 @@ namespace GUI
             }
 
             return true;
-
         }
 
         // ATUALIZADO
@@ -164,7 +153,7 @@ namespace GUI
                 txtNome.Text = atual.MotoristaVeiculo.TrimEnd(' ');
                 txtCapacidade.Text = atual.CapacidadePaletes.ToString();
                 txtPlaca.Text = atual.PlacaVeiculo.TrimEnd(' ');
-                txtPlaca2.Text = atual.Placa2Veiculo == null? "" : atual.Placa2Veiculo.TrimEnd(' ');
+                txtPlaca2.Text = atual.Placa2Veiculo == null ? "" : atual.Placa2Veiculo.TrimEnd(' ');
                 cbTipo.Text = atual.TipoVeiculo.TrimEnd(' ');
                 Ativo.IsChecked = atual.AtivoVeiculo;
             }

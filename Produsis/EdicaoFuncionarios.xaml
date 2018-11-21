@@ -174,7 +174,7 @@
                         Grid.ColumnSpan="3"
                                 Margin="5"
                         HorizontalAlignment="Left"
-                        Orientation="Horizontal">                        
+                        Orientation="Horizontal">
                         <CheckBox Name="CkConfere" Margin="5,0">Confere</CheckBox>
                         <CheckBox Name="CkDescarrega" Margin="5,0">Descarrega</CheckBox>
                         <CheckBox Name="CkSepara" Margin="5,0">Separa</CheckBox>

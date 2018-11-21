@@ -57,6 +57,9 @@
     <Compile Include="CapacidadeMotoristas.cs">
       <DependentUpon>ModelProdusisBD.tt</DependentUpon>
     </Compile>
+    <Compile Include="Carretas.cs">
+      <DependentUpon>ModelProdusisBD.tt</DependentUpon>
+    </Compile>
     <Compile Include="Cte.cs">
       <DependentUpon>ModelProdusisBD.tt</DependentUpon>
     </Compile>

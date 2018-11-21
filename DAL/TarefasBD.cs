@@ -21,7 +21,7 @@ namespace DAL
                 {
                     BancoDeDados.Tarefas.Add(novaTarefa);
                     BancoDeDados.SaveChanges();
-                   
+
                     foreach (int i in funcionarios)
                     {
                         IncluirFunc_Tarefa(i, novaTarefa.idTarefa);
@@ -37,24 +37,22 @@ namespace DAL
 
         public bool IncluirFunc_Tarefa(int idFuncionario, int idTarefa)
         {
-
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     Func_Tarefa ft;
                     FuncionariosBD fBd = new FuncionariosBD();
-                   
-                        ft = new Func_Tarefa()
-                        {
-                            Tarefa = idTarefa,
-                            Funcionario = idFuncionario
-                        };
 
-                        BancoDeDados.Func_Tarefa.Add(ft);
-                        BancoDeDados.SaveChanges();
-                        fBd.editarOcupacaoFuncionario(idFuncionario, true);
-                   
+                    ft = new Func_Tarefa()
+                    {
+                        Tarefa = idTarefa,
+                        Funcionario = idFuncionario
+                    };
+
+                    BancoDeDados.Func_Tarefa.Add(ft);
+                    BancoDeDados.SaveChanges();
+                    fBd.editarOcupacaoFuncionario(idFuncionario, true);
                 }
                 return true;
             }
@@ -85,15 +83,32 @@ namespace DAL
 
                     foreach (Func_Tarefa f in tarefaAtual.Func_Tarefa)
                     {
-                        func.editarOcupacaoFuncionario(f.Funcionario, false);                       
-                    }                    
+                        func.editarOcupacaoFuncionario(f.Funcionario, false);
+                    }
                 }
                 return true;
             }
-            catch (Exception erro)  { 
+            catch (Exception erro)
+            {
                 return false;
             }
         }
+
+        public int? GetPaletesSeparacao(int Premanifesto)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    return BancoDeDados.Tarefas.Where(x => x.documentoTarefa == Premanifesto && x.tipoTarefa == "3").Select(x => x.totalPaletes).FirstOrDefault();
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            }
+
 
         /// <summary>
         /// Retorna lista de tarefas referentes a um manifesto. Caso o tipo seja conferências.
@@ -130,7 +145,6 @@ namespace DAL
                             var teste = e;
                         }
                     }
-
                     else
                     { //Se for outro tipo, retorna só aquele tipo e manifesto
                         lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == documento && c.tipoTarefa == tipo.ToString()).FirstOrDefault());
@@ -152,9 +166,15 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    tarefa = BancoDeDados.Tarefas.Where(t => t.documentoTarefa == documento).FirstOrDefault();
+                    if (tipo != 2) { 
+                    tarefa = BancoDeDados.Tarefas.Where(t => t.documentoTarefa == documento).FirstOrDefault(); }
+                    else
+                    {
+                        var idCte = BancoDeDados.Cte.Where(c => c.numeroCte == documento).Select(c=>c.idCte).LastOrDefault();
+                        tarefa = BancoDeDados.Tarefas.Where(t => t.documentoTarefa == idCte).FirstOrDefault();
+                    }
                     var tmodelo = TarefaModeloParse(tarefa);
-                    return tmodelo;
+                    return tmodelo; 
                 }
             }
             catch
@@ -193,7 +213,7 @@ namespace DAL
         public List<ItemRanking> RankingFuncionarios(List<ItemRanking> tarefasPeriodo, double horas)
         {
             DocumentosBD d = new DocumentosBD();
-            
+
             var lista = from t in tarefasPeriodo
                         group t by new
                         {
@@ -202,20 +222,20 @@ namespace DAL
                         select new
                         {
                             Sum = g.Sum(p => p.mediaPorHora),
-                            g.Key.nomesFuncionarios, 
+                            g.Key.nomesFuncionarios,
                         };
 
             List<ItemRanking> Rank = new List<ItemRanking>();
             int cont = 0;
 
             // alterar aqui para dividir por horas
-            foreach(var item in lista)
+            foreach (var item in lista)
             {
                 cont = tarefasPeriodo.Where(x => x.nomesFuncionarios == item.nomesFuncionarios).Count();
                 Rank.Add(new ItemRanking(item.Sum/*/horas*/, item.nomesFuncionarios, cont));
             }
 
-            Rank=Rank.OrderByDescending(i => i.mediaPorHora).ToList();
+            Rank = Rank.OrderByDescending(i => i.mediaPorHora).ToList();
 
             return Rank;
         }
@@ -240,7 +260,7 @@ namespace DAL
                     var listaItems = ConsolidarRelatorio(listaConf, listaNotConf, true);
                     var listaTarefas = listaItems.Select(i => i.idTarefa);
                     var resultado = BancoDeDados.Func_Tarefa.Where(t => listaTarefas.Contains(t.Tarefa)).ToList();
-                    
+
                     string nome;
                     int qtde = 0;
                     foreach (var item in listaItems)
@@ -251,8 +271,8 @@ namespace DAL
 
                     foreach (var item in resultado)
                     {
-                       nome = BancoDeDados.Funcionarios.Where(func => func.idFunc == item.Funcionario).Select(func => func.nomeFunc).FirstOrDefault();
-                         listaFinal.Add(new ItemRanking((double)item.Pontuacao, nome, qtde));
+                        nome = BancoDeDados.Funcionarios.Where(func => func.idFunc == item.Funcionario).Select(func => func.nomeFunc).FirstOrDefault();
+                        listaFinal.Add(new ItemRanking((double)item.Pontuacao, nome, qtde));
                     }
                 }
                 return listaFinal;
@@ -277,9 +297,10 @@ namespace DAL
                 {
                     List<RelatorioNaoConferencia> relatorioNaoConferencia = new List<RelatorioNaoConferencia>();
                     List<RelatorioNovoConferencias> relatorioConferencia = new List<RelatorioNovoConferencias>();
-     
+
                     #region filtrando Nao Conferencias
-                    if (f.TipoTarefa !="2")
+
+                    if (f.TipoTarefa != "2")
                     {
                         var query = BancoDeDados.RelatorioNaoConferencia.AsQueryable();
 
@@ -294,7 +315,7 @@ namespace DAL
 
                         if (f.numDocumento > 0)
                             query = query.Where(t => t.documentoTarefa == f.numDocumento);
-                       
+
                         if (f.nomeFuncionario != "" && f.nomeFuncionario != null)
 
                             query = query.Where(l => l.nomeFunc == f.nomeFuncionario);
@@ -307,9 +328,11 @@ namespace DAL
 
                         relatorioNaoConferencia = query.ToList();
                     }
-                    #endregion
-             
+
+                    #endregion filtrando Nao Conferencias
+
                     #region filtrando Conferencias
+
                     if (f.TipoTarefa == "2" || f.TipoTarefa == "-1")
                     {
                         var queryConf = BancoDeDados.RelatorioNovoConferencias.AsQueryable();
@@ -325,7 +348,7 @@ namespace DAL
 
                         if (f.numDocumento > 0)
                             queryConf = queryConf.Where(t => t.numeroCte == f.numDocumento);
-                  
+
                         if (f.nomeFuncionario != "" && f.nomeFuncionario != null)
 
                             queryConf = queryConf.Where(l => l.nomeFunc == f.nomeFuncionario);
@@ -345,8 +368,8 @@ namespace DAL
                         relatorioConferencia = queryConf.ToList();
                     }
 
-                    #endregion
-                    
+                    #endregion filtrando Conferencias
+
                     lista = ConsolidarRelatorio(relatorioConferencia, relatorioNaoConferencia, consolidarFuncionario);
                     lista.OrderBy(o => o.idTarefa);
                 }
@@ -377,7 +400,7 @@ namespace DAL
                         lista[index].nomesFunc = lista[index].nomesFunc + "/" + tarefa.nomeFunc;
                     }
                 }
-                
+
                 foreach (var tarefa in outros)
                 {
                     var x = lista.Where(id => id.idTarefa == tarefa.idTarefa).FirstOrDefault();
@@ -468,8 +491,7 @@ namespace DAL
                 }
                 return pendentesModelo;
             }
-
-            catch (Exception )
+            catch (Exception)
             {
                 return new List<TarefaModelo>();
             }
@@ -495,7 +517,7 @@ namespace DAL
                 return false;
             }
         }
-        
+
         public string NomesFuncTarefa(int idTarefa)
         {
             FuncionariosBD f = new FuncionariosBD();
@@ -514,7 +536,7 @@ namespace DAL
                     }
                 }
                 return nomes;
-            } 
+            }
             catch
             {
                 return "";
@@ -527,13 +549,11 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                       var cadastrado = BancoDeDados.Tarefas.FirstOrDefault(t => t.documentoTarefa == numDocumento && t.tipoTarefa == tipoTarefa);
-                        if (cadastrado == null)
-                            return true;
-                        else
-                            return false;
-                  
-
+                    var cadastrado = BancoDeDados.Tarefas.FirstOrDefault(t => t.documentoTarefa == numDocumento && t.tipoTarefa == tipoTarefa);
+                    if (cadastrado == null)
+                        return true;
+                    else
+                        return false;
                 }
             }
             catch
@@ -570,7 +590,7 @@ namespace DAL
             foreach (Tarefas tar in tarefas)
             {
                 if (tar != null)
-                {                   
+                {
                     modelos.Add(TarefaModeloParse(tar));
                 }
             }
@@ -600,6 +620,6 @@ namespace DAL
             aux.nomesFuncionarios = NomesFuncTarefa(tarefas.idTarefa);
 
             return aux;
-        }           
+        }
     }
 }

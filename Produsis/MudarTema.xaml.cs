@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GUI
 {
@@ -20,9 +10,10 @@ namespace GUI
     /// </summary>
     public partial class MudarTema : UserControl
     {
-        List<Cores> TemasGlobais = new List<Cores>();
-        List<Cores> CoresDeTema = new List<Cores>();
-        List<Cores> CoresDestaques = new List<Cores>();
+        private List<Cores> TemasGlobais = new List<Cores>();
+        private List<Cores> CoresDeTema = new List<Cores>();
+        private List<Cores> CoresDestaques = new List<Cores>();
+
         public MudarTema(double actualHeight, double actualWidth)
         {
             InitializeComponent();
@@ -52,11 +43,14 @@ namespace GUI
         private void GerarListas()
         {
             #region Tema
+
             TemasGlobais.Add(new Cores { CorNome = "Claro", CorXaml = "Light" });
             TemasGlobais.Add(new Cores { CorNome = "Escuro", CorXaml = "Dark" });
-            #endregion
+
+            #endregion Tema
 
             #region Destaques
+
             CoresDestaques.Add(new Cores { CorNome = "Vermelho", CorXaml = "Red" });
             CoresDestaques.Add(new Cores { CorNome = "Azul", CorXaml = "Blue" });
             CoresDestaques.Add(new Cores { CorNome = "Indigo", CorXaml = "Indigo" });
@@ -73,9 +67,11 @@ namespace GUI
             CoresDestaques.Add(new Cores { CorNome = "Ciano", CorXaml = "Cyan" });
             CoresDestaques.Add(new Cores { CorNome = "Roxo Escuro", CorXaml = "DeepPurple" });
             CoresDestaques.Add(new Cores { CorNome = "Verde Claro", CorXaml = "LightGreen" });
-            #endregion
+
+            #endregion Destaques
 
             #region Cores
+
             CoresDeTema.Add(new Cores { CorNome = "Vermelho", CorXaml = "Red" });
             CoresDeTema.Add(new Cores { CorNome = "Azul", CorXaml = "Blue" });
             CoresDeTema.Add(new Cores { CorNome = "Indigo", CorXaml = "Indigo" });
@@ -95,15 +91,15 @@ namespace GUI
             CoresDeTema.Add(new Cores { CorNome = "Cinza Azulado", CorXaml = "BlueGrey" });
             CoresDeTema.Add(new Cores { CorNome = "Marron", CorXaml = "Brown" });
             CoresDeTema.Add(new Cores { CorNome = "Cinza", CorXaml = "Grey" });
-            #endregion
 
+            #endregion Cores
         }
 
         private void cbxTema_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var Fundo = (Cores)cbxTema.SelectedItem;
             if (Fundo != null)
-            MudarCores.Fundo = Fundo.CorXaml;
+                MudarCores.Fundo = Fundo.CorXaml;
         }
 
         private void cbxCor_SelectionChanged(object sender, SelectionChangedEventArgs e)

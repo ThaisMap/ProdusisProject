@@ -1,20 +1,12 @@
-﻿using System;
+﻿using DAL;
+using ProdusisBD;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using ProdusisBD;
-using DAL;
-using System.Text.RegularExpressions;
 
 namespace Portaria
 {
@@ -24,6 +16,7 @@ namespace Portaria
     public partial class Entrada : UserControl
     {
         public List<Veiculos> veiculos { get; set; }
+        public List<Carretas> carretas { get; set; }
         private VeiculosBD veiculosBD = new VeiculosBD();
 
         public Entrada(double WindowHeight, double WindowsWidth)
@@ -31,16 +24,18 @@ namespace Portaria
             InitializeComponent();
             Height = WindowHeight - 60;
             Width = WindowsWidth - 60;
-           
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             veiculos = veiculosBD.getVeiculos();
-            cbNome.ItemsSource = veiculos;
+            carretas = veiculosBD.GetPlaca2();
+            cbPlaca2.ItemsSource = carretas;
+            cbPlaca2.DisplayMemberPath = "PlacaCarreta";
+            cbNome.ItemsSource = veiculos.OrderBy(x => x.MotoristaVeiculo);
             cbPlaca.ItemsSource = veiculos;
             cbPlaca.DisplayMemberPath = "PlacaVeiculo";
-            cbNome.DisplayMemberPath = "MotoristaVeiculo";           
+            cbNome.DisplayMemberPath = "MotoristaVeiculo";
         }
 
         private void cbNome_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -51,14 +46,14 @@ namespace Portaria
         private void cbPlaca_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             cbNome.Text = (cbPlaca.SelectedItem as Veiculos).MotoristaVeiculo;
-            txtPlaca2.Text = (cbPlaca.SelectedItem as Veiculos).Placa2Veiculo;
+            cbPlaca2.Text = (cbPlaca.SelectedItem as Veiculos).Placa2Veiculo;
         }
 
         private void BtnRegistra_Click(object sender, RoutedEventArgs e)
         {
             if (ChecarCampos())
             {
-               if( veiculosBD.cadastrarAcessoPortaria(montarObjeto()))
+                if (veiculosBD.cadastrarAcessoPortaria(montarObjeto()))
                 {
                     MessageBox.Show("Entrada de veículo registrada.");
                 }
@@ -71,12 +66,12 @@ namespace Portaria
             cbPlaca.SelectedIndex = -1;
             txtKm.Text = "";
             txtLacre.Text = "";
-            txtPlaca2.Text = "";
+            cbPlaca2.SelectedIndex = -1;
             checkColeta.IsChecked = false;
             checkDevolucao.IsChecked = false;
             checkPalete.IsChecked = false;
         }
-        
+
         private void testarCaractere(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
@@ -85,13 +80,13 @@ namespace Portaria
 
         private bool ChecarCampos()
         {
-            if(cbPlaca.SelectedIndex <= -1)
+            if (cbPlaca.SelectedIndex <= -1)
             {
                 cbPlaca.Focus();
                 return false;
             }
 
-            if(txtKm.Text == "")
+            if (txtKm.Text == "")
             {
                 txtKm.Focus();
                 return false;
@@ -105,7 +100,7 @@ namespace Portaria
             string obs = "";
             if ((bool)checkPalete.IsChecked)
             {
-                obs = checkPalete.Content.ToString()+"/";
+                obs = checkPalete.Content.ToString() + "/";
             }
 
             if ((bool)checkDevolucao.IsChecked)
@@ -125,7 +120,7 @@ namespace Portaria
                 LacreAcesso = txtLacre.Text,
                 ObservacaoAcesso = obs,
                 NomeMotoristaAcesso = cbNome.Text,
-                Placa2Acesso = txtPlaca2.Text,
+                Placa2Acesso = cbPlaca2.Text,
                 PlacaAcesso = cbPlaca.Text,
                 EstadoGeral = txtEstado.Text,
                 PorteiroEntrada = Properties.Login.Default.idUsuario

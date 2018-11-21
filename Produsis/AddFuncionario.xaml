@@ -44,7 +44,7 @@
                                     Margin="10,0"
                                     materialDesign:HintAssist.Hint="Funcionário"
                                     materialDesign:HintAssist.IsFloating="True"
-                                    IsEditable="True"/>
+                                    IsEditable="True" />
             </StackPanel>
             <StackPanel HorizontalAlignment="Right"
                                 Grid.Row="1"
@@ -56,13 +56,13 @@
                         Click="BtnIncluir_Click"
                         Margin="10,0"
                         Content="Incluir"
-                     
+
                      Style="{StaticResource MaterialDesignFlatButton}" />
-                <Button  
+                <Button
                 VerticalAlignment="Bottom"
                      Click="Button_Click"
                         Margin="10,0"
-                     Content="Cancelar"                     
+                     Content="Cancelar"
                      Style="{StaticResource MaterialDesignFlatButton}" />
             </StackPanel>
         </StackPanel>

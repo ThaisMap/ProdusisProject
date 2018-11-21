@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GUI
 {
@@ -31,7 +27,7 @@ namespace GUI
 
         public static void MudarCor()
         {
-            if(Cor is null || Cor.ToString() == "")
+            if (Cor is null || Cor.ToString() == "")
             {
                 Cor = "Indigo";
             }
@@ -55,6 +51,7 @@ namespace GUI
         private static void ComporTema()
         {
             #region Material Theme
+
             Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary()
             {
                 Source = new Uri("pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme." + Fundo + ".xaml", UriKind.RelativeOrAbsolute)
@@ -72,8 +69,7 @@ namespace GUI
                 Source = new Uri("pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor." + Destaque + ".xaml", UriKind.RelativeOrAbsolute)
             });
 
-
-#endregion
+            #endregion Material Theme
         }
     }
 }

@@ -3,18 +3,10 @@ using ProdusisBD;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GUI
 {
@@ -42,6 +34,7 @@ namespace GUI
             dgTarefas.Height = actualHeight - 250;
             lerXmls();
         }
+
         public static string CriaChipTag(string Nome)
         {
             string[] PrimeirosNomes = Nome.Split(' ');
@@ -51,6 +44,7 @@ namespace GUI
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
             dgTarefas.ItemsSource = t.TarefasPendentes("5"); // 5 = Empilhadeira
+            lerXmls();
         }
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
@@ -168,12 +162,11 @@ namespace GUI
             }
         }
 
-        static void lerXmls()
+        private static void lerXmls()
         {
             xmlBLL x = new xmlBLL();
             x.triagemArquivos();
         }
-
 
         private Tarefas montarTarefa()
         {
@@ -183,6 +176,7 @@ namespace GUI
             novaTarefa.tipoTarefa = "5";
             return novaTarefa;
         }
+
         private void testarCaractere(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");

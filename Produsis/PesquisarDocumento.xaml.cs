@@ -22,7 +22,7 @@ namespace Produsis
 
         private void limpar()
         {
-            ListaDados.ItemsSource = new List<dadosPesquisa>();           
+            ListaDados.ItemsSource = new List<dadosPesquisa>();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -42,7 +42,7 @@ namespace Produsis
                 listaDados.Clear();
 
                 // CT-e
-                if (TipoDeDocumento.SelectedIndex == 0) 
+                if (TipoDeDocumento.SelectedIndex == 0)
                 {
                     if (d.cteCadastrado(numDoc))
                     {
@@ -110,10 +110,10 @@ namespace Produsis
                 }
 
                 // NOTA FISCAL
-                else if (TipoDeDocumento.SelectedIndex == 2) 
+                else if (TipoDeDocumento.SelectedIndex == 2)
                 {
                     var documentos = d.getDadosNF(NumeroDocumento.Text);
-                    if (documentos.Count >0)
+                    if (documentos.Count > 0)
                     {
                         aux = new dadosPesquisa()
                         {

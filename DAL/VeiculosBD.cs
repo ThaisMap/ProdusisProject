@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-
 namespace DAL
 {
     public class VeiculosBD
@@ -35,6 +34,47 @@ namespace DAL
                     BancoDeDados.SaveChanges();
                 }
                 return false;
+            }
+        }
+
+        public bool cadastrarCarretas(Carretas novaCarreta)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    BancoDeDados.Carretas.Add(novaCarreta);
+                    BancoDeDados.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                var qualErro = ex;
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var VeiculoAlterado = BancoDeDados.Carretas.Where(x => x.PlacaCarreta == novaCarreta.PlacaCarreta).First();
+                    VeiculoAlterado.Ativo = novaCarreta.Ativo;
+
+                    BancoDeDados.SaveChanges();
+                }
+                return false;
+            }
+        }
+
+           public List<Carretas> getCarretas()
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var lista = BancoDeDados.Carretas.OrderBy(x => x.PlacaCarreta).ToList();
+                    return lista;
+                }
+            }
+            catch (Exception erro)
+            {
+                return new List<Carretas>();
             }
         }
 
@@ -99,10 +139,26 @@ namespace DAL
                 }
                 return acessosPendentes;
             }
-
             catch (Exception)
             {
                 return new List<AcessosPortaria>();
+            }
+        }
+
+        public List<Carretas> GetPlaca2()
+        {
+            List<Carretas> lista;
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    lista = BancoDeDados.Carretas.Where(x => x.Ativo == true).ToList();
+                }
+                return lista;
+            }
+            catch (Exception)
+            {
+                return new List<Carretas>();
             }
         }
 
@@ -128,9 +184,7 @@ namespace DAL
                 }
 
                 return acessosFiltrados;
-
             }
-           
             catch (Exception)
             {
                 return new List<AcessosPortaria>();
@@ -148,7 +202,6 @@ namespace DAL
                 }
                 return acessosPendentes;
             }
-
             catch (Exception)
             {
                 return new List<AcessosPortaria>();
@@ -164,7 +217,6 @@ namespace DAL
                     return (from AcessosPortaria in BancoDeDados.AcessosPortaria where AcessosPortaria.idAcesso == idAcesso select AcessosPortaria).FirstOrDefault();
                 }
             }
-
             catch (Exception)
             {
                 return new AcessosPortaria();
@@ -177,7 +229,7 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    var antigo =  (from AcessosPortaria in BancoDeDados.AcessosPortaria where AcessosPortaria.idAcesso == acesso.idAcesso select AcessosPortaria).FirstOrDefault();
+                    var antigo = (from AcessosPortaria in BancoDeDados.AcessosPortaria where AcessosPortaria.idAcesso == acesso.idAcesso select AcessosPortaria).FirstOrDefault();
                     antigo.SaidaAcesso = DateTime.Now;
                     antigo.KmAcesso = acesso.KmAcesso;
                     antigo.Placa2Acesso = acesso.Placa2Acesso;
@@ -185,10 +237,8 @@ namespace DAL
                     BancoDeDados.SaveChanges();
                 }
             }
-
             catch (Exception erro)
             {
-               
             }
         }
 
@@ -203,12 +253,9 @@ namespace DAL
                     BancoDeDados.SaveChanges();
                 }
             }
-
             catch (Exception erro)
             {
-
             }
         }
     }
 }
-

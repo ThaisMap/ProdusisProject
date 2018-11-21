@@ -25,7 +25,7 @@ namespace ProdusisBD
         public int KmAcesso { get; set; }
         public string EstadoGeral { get; set; }
         public Nullable<int> DocaAcesso { get; set; }
-        public Nullable<int> PorteiroEntrada { get; set; }
+        public int PorteiroEntrada { get; set; }
         public Nullable<int> PorteiroSaida { get; set; }
     
         public virtual Veiculos Veiculos { get; set; }

@@ -1,13 +1,13 @@
 ﻿using BLL;
+using DAL;
 using ProdusisBD;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using DAL;
-using System.Linq;
 
 namespace GUI
 {
@@ -23,7 +23,7 @@ namespace GUI
         private List<FuncionariosTag> FuncionarioSelecionado = new List<FuncionariosTag>();
         private List<Funcionarios> ListaFunc;
         private TarefasBLL t = new TarefasBLL();
-        private int[] pallets = {0, 0};
+        private int[] pallets = { 0, 0 };
 
         public Carregamento(double actualHeight, double actualWidth)
         {
@@ -32,9 +32,10 @@ namespace GUI
             CBFuncionario.ItemsSource = ListaFunc;
             CBFuncionario.DisplayMemberPath = "nomeFunc";
             ListaMotoristas = funcionariosBD.getVeiculos();
+            ListaMotoristas = ListaMotoristas.OrderBy(x => x.MotoristaVeiculo).ToList();
             CBmotorista.ItemsSource = ListaMotoristas;
             CBmotorista.DisplayMemberPath = "MotoristaVeiculo";
-            CBmotorista.SelectedValuePath = "CapacidadeVeiculo";
+            CBmotorista.SelectedValuePath = "CapacidadePaletes";
             dgTarefas.ItemsSource = t.TarefasPendentes("4");
             Height = actualHeight - 150;
             Width = actualWidth - 60;
@@ -46,10 +47,11 @@ namespace GUI
             string[] PrimeirosNomes = Nome.Split(' ');
             return PrimeirosNomes[0].Substring(0, 1).ToUpper() + PrimeirosNomes[1].Substring(0, 1).ToUpper();
         }
-        
+
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
             dgTarefas.ItemsSource = t.TarefasPendentes("4");
+            lerXmls();
         }
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
@@ -68,7 +70,6 @@ namespace GUI
                 AtualizarDg_Click(sender, e);
             }
             Documento.Focus();
-
         }
 
         private void CBFuncionario_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -84,7 +85,7 @@ namespace GUI
                         FuncionarioSelecionado.Add(new FuncionariosTag(item.nomeFunc, CriaChipTag(item.nomeFunc)));
                     }
                 else
-                FuncionarioSelecionado.Add(new FuncionariosTag(select.nomeFunc, CriaChipTag(select.nomeFunc)));
+                    FuncionarioSelecionado.Add(new FuncionariosTag(select.nomeFunc, CriaChipTag(select.nomeFunc)));
             }
         }
 
@@ -124,7 +125,7 @@ namespace GUI
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
             if (checarCampos())
-                if (t.TarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "4") && t.TarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "6"))
+                if (t.TarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "4"))
                 {
                     if (t.InserirTarefa(montarTarefa(), funcionarios()))
                     {
@@ -170,7 +171,7 @@ namespace GUI
             }
         }
 
-        static void lerXmls()
+        private static void lerXmls()
         {
             xmlBLL x = new xmlBLL();
             x.triagemArquivos();
@@ -178,10 +179,19 @@ namespace GUI
 
         private Tarefas montarTarefa()
         {
+            TarefasBD tBD = new TarefasBD();
             var paletes = 30;
+
             if (CBmotorista.SelectedValue != null)
                 paletes = (int)CBmotorista.SelectedValue;
-            
+            else
+            {
+                int? paleteSeparacao = tBD.GetPaletesSeparacao(int.Parse(Documento.Text.Replace("_", "")));
+
+                if (paleteSeparacao != null)
+                    paletes = (int)paleteSeparacao;
+            }                  
+
             Tarefas novaTarefa = new Tarefas()
             {
                 documentoTarefa = int.Parse(Documento.Text.Replace("_", "")),
@@ -189,7 +199,6 @@ namespace GUI
                 tipoTarefa = "4",
                 inicioTarefa = DateTime.Now
             };
-            
             return novaTarefa;
         }
 

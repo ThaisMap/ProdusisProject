@@ -8,7 +8,8 @@ namespace BLL
 {
     public class xmlBLL
     {
-        Application Outlook;
+        private Application Outlook;
+
         /// <summary>
         /// Processa arquivos nas pastas de nf e manifesto
         /// </summary>
@@ -18,8 +19,8 @@ namespace BLL
             {
                 Xml xml = new Xml();
                 List<string> arquivosPastaNF = new List<string>();
-                
-               var listaDeArquivos = Directory.GetFiles(PastasXml.Default.PastaNFs);
+
+                var listaDeArquivos = Directory.GetFiles(PastasXml.Default.PastaNFs);
                 bool temMSG = false;
                 foreach (string f in listaDeArquivos)
                 {
@@ -46,7 +47,6 @@ namespace BLL
                     }
                     Outlook.Quit();
                 }
-                
 
                 //Percorre pasta de NFs pela segunda vez
                 //Ao encontrar xml ou txt, procede com importação dos dados e move o arquivo para pasta old

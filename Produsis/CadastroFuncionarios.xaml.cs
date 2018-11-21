@@ -1,8 +1,8 @@
 ﻿using BLL;
 using ProdusisBD;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Text.RegularExpressions;
 using System.Windows.Input;
 
 namespace GUI
@@ -50,7 +50,6 @@ namespace GUI
 
             if ((bool)CkAdmin.IsChecked)
                 func.tipoFunc = "0";
-
             else
             {
                 if ((bool)CkDescarrega.IsChecked)
@@ -73,7 +72,7 @@ namespace GUI
                 func.tipoFunc = "12345";
             return func;
         }
-         
+
         private bool checarCampos()
         {
             if (Nome.Text != "" && Matricula.Text != "_____" && Senha.Password == Senha2.Password)

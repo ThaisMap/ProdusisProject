@@ -3,18 +3,10 @@ using ProdusisBD;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GUI
 {
@@ -42,7 +34,7 @@ namespace GUI
 
         private void btnConsultar_Click(object sender, RoutedEventArgs e)
         {
-             try
+            try
             {
                 if (cbTipoTarefa.SelectedIndex > -1 && Documento.Text != "")
                 {
@@ -56,7 +48,7 @@ namespace GUI
                     dgDivergencias.ItemsSource = source.OrderBy(o => o.cte);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -77,5 +69,4 @@ namespace GUI
             }
         }
     }
-    
 }

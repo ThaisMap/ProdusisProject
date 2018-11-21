@@ -27,6 +27,7 @@
         <AssociationConnector Association="produsisBDModel.FK_Observacoes_Funcionarios" ManuallyRouted="false" />
         <AssociationConnector Association="produsisBDModel.FK_PorteiroEntrada_AcessosPortaria" />
         <AssociationConnector Association="produsisBDModel.FK_PorteiroSaida_AcessosPortaria" />
+        <EntityTypeShape EntityType="produsisBDModel.Carretas" Width="1.5" PointX="9.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

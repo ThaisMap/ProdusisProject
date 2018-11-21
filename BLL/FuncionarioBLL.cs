@@ -31,13 +31,12 @@ namespace BLL
             f.deletarObservacao(id);
         }
 
-        public List<Observacoes> getObservacoes(DateTime? inicio, DateTime? fim, string nomeFunc)
+        public List<Observacoes> getObservacoes(DateTime? inicio, DateTime? fim)
         {
             if (fim == null)
                 fim = DateTime.Today;
 
-            int idFuncionario = f.getFuncPorNome(nomeFunc).idFunc;
-            return f.getObservacoes(inicio, (DateTime)fim, idFuncionario);
+            return f.getObservacoes(inicio, (DateTime)fim);
         }
 
         public List<Funcionarios> carregaFuncionariosLivres(string tipo)
@@ -88,6 +87,5 @@ namespace BLL
         {
             return f.verificaUsuarioCadastrado(matricula);
         }
-      
     }
 }

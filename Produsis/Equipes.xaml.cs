@@ -17,11 +17,10 @@ namespace GUI
             InitializeComponent();
         }
 
-        List<Funcionarios> funcionariosAtivos = new List<Funcionarios>();
-        List<string> funcionariosEquipe = new List<string>();
+        private List<Funcionarios> funcionariosAtivos = new List<Funcionarios>();
+        private List<string> funcionariosEquipe = new List<string>();
 
         private FuncionariosBD f = new FuncionariosBD();
-
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -55,10 +54,10 @@ namespace GUI
         private void Incluir(object sender, RoutedEventArgs e)
         {
             Funcionarios selecionado;
-            if(Nome.SelectedIndex > -1)
+            if (Nome.SelectedIndex > -1)
             {
                 selecionado = Nome.SelectedItem as Funcionarios;
-                if(selecionado.equipeFunc != null)
+                if (selecionado.equipeFunc != null)
                 {
                     foreach (var item in funcionariosAtivos)
                     {
@@ -67,7 +66,7 @@ namespace GUI
                     }
                 }
                 else
-                funcionariosEquipe.Add((Nome.SelectedItem as Funcionarios).nomeFunc);
+                    funcionariosEquipe.Add((Nome.SelectedItem as Funcionarios).nomeFunc);
             }
             dgEquipe.ItemsSource = funcionariosEquipe;
             dgEquipe.Items.Refresh();

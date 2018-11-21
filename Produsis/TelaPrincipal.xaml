@@ -36,35 +36,36 @@
 
         <StackPanel Orientation="Vertical">
             <!--  Botoes  -->
-            <Menu HorizontalAlignment="Center"  VerticalContentAlignment="Center" VerticalAlignment="Top" Width="auto" Margin="0,0" >
+            <Menu HorizontalAlignment="Center"  VerticalContentAlignment="Center" VerticalAlignment="Top" Width="auto" Margin="0,0">
                 <MenuItem Name="BtnAdministrativo" Header="Administrativo" Click="BtnAdministrativo_Click">
-                    <MenuItem Name="BtnPesquisaDocs" Header="Ver Documentos" Click="BtnPesquisaDocs_Click"/>
-                    <MenuItem Name="BtnRelatorios" Header="Relatórios" Click="BtnRelatorios_Click"/>
-                    <MenuItem Name="BtnProdutividade" Header="Produtividade" Click="BtnProdutividade_Click"/>
-                    
+                    <MenuItem Name="BtnPesquisaDocs" Header="Ver Documentos" Click="BtnPesquisaDocs_Click" />
+                    <MenuItem Name="BtnRelatorios" Header="Relatórios" Click="BtnRelatorios_Click" />
+                    <MenuItem Name="BtnProdutividade" Header="Produtividade" Click="BtnProdutividade_Click" />
+
                     <MenuItem Name="BtnVeiculos" Header="Veículos">
-                        <MenuItem Name="BtnMotorista" Header="Cadastros" Click="BtnMotorista_Click"/>
-                        <MenuItem Name="BtnPortaria" Header="Relatório Portaria" Click="BtnPortaria_Click"/>
+                        <MenuItem Name="BtnMotorista" Header="Cadastro Motoristas" Click="BtnMotorista_Click" />
+                        <MenuItem Name="BtnCarretas" Header="Cadastro Carretas" Click="BtnCarretas_Click" />
+                        <MenuItem Name="BtnPortaria" Header="Relatório Portaria" Click="BtnPortaria_Click" />
                     </MenuItem>
-                    
+
                     <MenuItem Name="BtnFuncionarios" Header="Funcionários">
-                        <MenuItem Name="BtnCadFunc" Header="Cadastrar" Click="BtnCadFunc_Click"/>
-                        <MenuItem Name="BtnEditFunc" Header="Editar" Click="BtnEditFunc_Click"/>
-                        <MenuItem Name="BtnObserv" Header="Observações" Click="BtnObserv_Click"/>
-                        <MenuItem Name="BtnEquipe" Header="Equipes" Click="BtnEquipe_Click"/>
+                        <MenuItem Name="BtnCadFunc" Header="Cadastrar" Click="BtnCadFunc_Click" />
+                        <MenuItem Name="BtnEditFunc" Header="Editar" Click="BtnEditFunc_Click" />
+                        <MenuItem Name="BtnObserv" Header="Observações" Click="BtnObserv_Click" />
+                        <MenuItem Name="BtnEquipe" Header="Equipes" Click="BtnEquipe_Click" />
                     </MenuItem>
-                    
+
                     <MenuItem Name="BtnConfig" Header="Configurações">
-                        <MenuItem Name="BtnPastas" Header="Pastas" Click="BtnPastas_Click"/>
-                        <MenuItem Name="BtnTemas" Header="Temas" Click="BtnTemas_Click"/>
+                        <MenuItem Name="BtnPastas" Header="Pastas" Click="BtnPastas_Click" />
+                        <MenuItem Name="BtnTemas" Header="Temas" Click="BtnTemas_Click" />
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Name="BtnDescarga" Header="Descarga" Click="BtnDescarga_Click"/>
-                <MenuItem Name="BtnConferencia" Header="Conferência" Click="BtnConferencia_Click"/>
-                <MenuItem Name="BtnSeparacaoCarga" Header="Movimentação de paletes" Click="BtnSeparacaoCarga_Click"/>
-                <MenuItem Name="BtnCarregamento" Header="Carregamento" Click="BtnCarregamento_Click"/>
-                <MenuItem Name="BtnEmpilhadeira" Header="Empilhadeira" Click="BtnEmpilhadeira_Click"/>
-                <MenuItem Name="BtnDivergencia" Header="Divergências" Click="BtnDivergencia_Click"/>
+                <MenuItem Name="BtnDescarga" Header="Descarga" Click="BtnDescarga_Click" />
+                <MenuItem Name="BtnConferencia" Header="Conferência" Click="BtnConferencia_Click" />
+                <MenuItem Name="BtnSeparacaoCarga" Header="Movimentação de paletes" Click="BtnSeparacaoCarga_Click" />
+                <MenuItem Name="BtnCarregamento" Header="Carregamento" Click="BtnCarregamento_Click" />
+                <MenuItem Name="BtnEmpilhadeira" Header="Empilhadeira" Click="BtnEmpilhadeira_Click" />
+                <MenuItem Name="BtnDivergencia" Header="Divergências" Click="BtnDivergencia_Click" />
             </Menu>
 
             <Frame

@@ -251,7 +251,6 @@
                 VerticalAlignment="Bottom"
                 Click="btnExportar_Click"
                 Content="Exportar" />
-
         </StackPanel>
     </ScrollViewer>
 </UserControl>

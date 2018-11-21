@@ -42,7 +42,7 @@
                             Margin="10,5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="55" />
-                                <ColumnDefinition Width="308"/>
+                                <ColumnDefinition Width="308" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -165,9 +165,9 @@
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Left"
                                     Text="Tarefas em execução" />
-                            <ScrollViewer Name="svTarefa" Margin="5,5,5,-277" 
+                            <ScrollViewer Name="svTarefa" Margin="5,5,5,-277"
                                           Grid.Row="1"
-                                          Grid.ColumnSpan="2" >
+                                          Grid.ColumnSpan="2">
                                 <DataGrid
                                     x:Name="dgTarefas"
                                     Grid.Row="1"
@@ -188,7 +188,6 @@
                                                         <Border Padding="2">
                                                             <ContentPresenter VerticalAlignment="Center" />
                                                         </Border>
-
                                                     </ControlTemplate>
                                                 </Setter.Value>
                                             </Setter>
@@ -207,19 +206,19 @@
                                         <DataGridTextColumn
                                             Binding="{Binding nomesFuncionarios}"
                                             Header="Funcionários" />
-                                        <DataGridTextColumn 
+                                        <DataGridTextColumn
                                         Width="Auto"
-                                        Binding="{Binding horaInicio}" 
+                                        Binding="{Binding horaInicio}"
                                         Header="Hora Início" />
-                                        <DataGridTextColumn 
+                                        <DataGridTextColumn
                                         Width="Auto"
-                                        Binding="{Binding skus}" 
+                                        Binding="{Binding skus}"
                                         Header="SKU's" />
-                                        <DataGridTextColumn 
+                                        <DataGridTextColumn
                                         Width="Auto"
-                                        Binding="{Binding volumes}" 
+                                        Binding="{Binding volumes}"
                                         Header="Volumes" />
-                                        <DataGridTextColumn 
+                                        <DataGridTextColumn
                                         Width="Auto"
                                         Binding="{Binding tempoGasto}"
                                         Header="Tempo Gasto" />
@@ -234,12 +233,9 @@
                                 </DataGrid>
                             </ScrollViewer>
                         </Grid>
-
                     </StackPanel>
-
                 </Grid>
             </StackPanel>
         </Grid>
     </Grid>
-
 </UserControl>

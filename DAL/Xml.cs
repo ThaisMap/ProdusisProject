@@ -44,7 +44,6 @@ namespace DAL
         {
             try
             {
-              
                 XmlDocument manifesto = new XmlDocument();
                 manifesto.Load(nomeArquivo);
 
@@ -110,7 +109,7 @@ namespace DAL
                 };
 
                 docBD.cadastrarManifesto(lido);
-                
+
                 int cte;
                 int indexNF = 0;
                 string fornecedor;
@@ -125,7 +124,7 @@ namespace DAL
                         ctesNoPreManifesto.Add(new Cte(cte, TextResult[indexNF].InnerText.TrimStart('0')));
                     }
                     else
-                        cteDaVez.notasCte += "\\" + TextResult[indexNF].InnerText.TrimStart('0');                   
+                        cteDaVez.notasCte += "\\" + TextResult[indexNF].InnerText.TrimStart('0');
 
                     fornecedor = ValueResult[i - 5].InnerText;
                     indexNF++;
@@ -133,8 +132,8 @@ namespace DAL
                 foreach (var item in ctesNoPreManifesto)
                 {
                     CriarCte(item.numeroCte, item.notasCte);    //  alterado para novo cte
-                    AlterarNfs(item.notasCte, item.numeroCte);  //  alterado para novo cte  
-                    CriarCteManifesto(item.numeroCte, lido.numeroManifesto);                 
+                    AlterarNfs(item.notasCte, item.numeroCte);  //  alterado para novo cte
+                    CriarCteManifesto(item.numeroCte, lido.numeroManifesto);
                 }
 
                 return true;
@@ -161,7 +160,7 @@ namespace DAL
                 var result = nf.GetElementsByTagName("det");
                 nfLida.skuNF = result.Count;
                 nfLida.numeroNF = nf.GetElementsByTagName("nNF")[0].InnerText;
-                nfLida.numeroNF +='-' + nf.GetElementsByTagName("serie")[0].InnerText;
+                nfLida.numeroNF += '-' + nf.GetElementsByTagName("serie")[0].InnerText;
 
                 var fornecedor = nf.GetElementsByTagName("xNome")[0].InnerText;
                 if (fornecedor.Length > 49)
@@ -180,7 +179,7 @@ namespace DAL
                         nfLida.volumesNF += (int)double.Parse(item.InnerText.Replace('.', ','));
                     }
                 }
-                if (nfLida.volumesNF <= 1 && !nfLida.fornecedorNF.StartsWith("REGINA"))
+                if (nfLida.volumesNF <= 1 && !nfLida.fornecedorNF.StartsWith("REGINA") && !nfLida.fornecedorNF.StartsWith("IMPROCROP"))
                 {
                     var quantidade = nf.GetElementsByTagName("qCom");
                     nfLida.volumesNF = 0;
@@ -195,7 +194,7 @@ namespace DAL
                     cliente = cliente.Remove(49);
                 nfLida.clienteNF = cliente;
 
-                if(nfLida.skuNF > nfLida.volumesNF)
+                if (nfLida.skuNF > nfLida.volumesNF)
                 { nfLida.skuNF = 1; }
 
                 return InserirNotaFiscal(nfLida);
@@ -227,7 +226,7 @@ namespace DAL
                     {   //Fornecedor
                         if (nf.StartsWith("311"))
                         {
-                            Fornecedor = nf.Remove(0, 133).TrimEnd(' ');                       
+                            Fornecedor = nf.Remove(0, 133).TrimEnd(' ');
                         }
 
                         //Cliente e Zerar SKU
@@ -298,9 +297,9 @@ namespace DAL
                 return false;
             }
         }
-        
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private static bool InserirNotaFiscal(NotasFiscais nfLida)
         {
@@ -334,7 +333,7 @@ namespace DAL
                     retorno = false; //false se alguma nota não estiver cadastrada
             }
             return retorno;
-        }  
+        }
 
         private bool CriarCte(int cte, string notas)
         {
@@ -349,7 +348,7 @@ namespace DAL
             var ctes = dbd.getNovoCtePorNum(cte);
 
             if (dbd.checarCteManifesto(new Cte_Manifesto(manifesto, ctes.Max(x => x.idCte))))
-                dbd.cadastrarCteManifesto(new Cte_Manifesto(manifesto, ctes.Max(x=>x.idCte)));
+                dbd.cadastrarCteManifesto(new Cte_Manifesto(manifesto, ctes.Max(x => x.idCte)));
         }
     }
 }

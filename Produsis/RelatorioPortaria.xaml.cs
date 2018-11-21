@@ -1,19 +1,10 @@
-﻿using System;
+﻿using DAL;
+using ProdusisBD;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using DAL;
-using ProdusisBD;
 
 namespace GUI
 {
@@ -22,8 +13,7 @@ namespace GUI
     /// </summary>
     public partial class RelatorioPortaria : UserControl
     {
-        VeiculosBD vBD = new VeiculosBD();
-
+        private VeiculosBD vBD = new VeiculosBD();
 
         public RelatorioPortaria(double Altura, double largura)
         {
@@ -33,14 +23,14 @@ namespace GUI
             dgAcessos.Height = Altura - 180;
         }
 
-        List<AcessosPortaria> source;
+        private List<AcessosPortaria> source;
 
         public List<Veiculos> veiculos { get; private set; }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             veiculos = vBD.getVeiculos();
-            cbNome.ItemsSource = veiculos;
+            cbNome.ItemsSource = veiculos.OrderBy(x => x.MotoristaVeiculo);
             cbPlaca.ItemsSource = veiculos;
             cbPlaca.DisplayMemberPath = "PlacaVeiculo";
             cbNome.DisplayMemberPath = "MotoristaVeiculo";

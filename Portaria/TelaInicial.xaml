@@ -9,23 +9,22 @@
           Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
     Icon="C:\Users\thais.maria.RODOMINAS\Documents\GitHub\ProdusisProject\Portaria\icone_2_produsis.ico"
-        WindowState="Maximized" 
+        WindowState="Maximized"
         Loaded="Window_Loaded"
         Title="Portaria - Expresso Rodominas" Height="450" Width="800">
     <StackPanel>
         <DockPanel>
-            <TextBlock Name="txtUsuario" DockPanel.Dock="Right" Text="usuario logado"/>
+            <TextBlock Name="txtUsuario" DockPanel.Dock="Right" Text="usuario logado" />
 
-            <Menu DockPanel.Dock="Left" HorizontalAlignment="Center"  VerticalContentAlignment="Center" VerticalAlignment="Top" Width="auto" Margin="0,0" >
-            <MenuItem Name="BtnEntrada" Header="Entrada" Click="BtnEntrada_Click"/>
-            <MenuItem Name="BtnPendentes" Header="Pendentes" Click="BtnPendentes_Click"/>
-            
+            <Menu DockPanel.Dock="Left" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="auto" Margin="20,0">
+                <MenuItem Name="BtnEntrada" Header="Entrada" Click="BtnEntrada_Click" Margin="5 0" />
+                <MenuItem Name="BtnPendentes" Header="Saída" Click="BtnPendentes_Click" Margin="5 0" />
         </Menu>
         </DockPanel>
         <Frame
                 Name="Navegador"
                 Margin="20,10"
-                HorizontalAlignment="Left"            
+                HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 VerticalContentAlignment="Top"
                 NavigationUIVisibility="Hidden" />

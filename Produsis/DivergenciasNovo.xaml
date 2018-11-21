@@ -45,8 +45,9 @@
                         SelectedIndex="1">
                         <ComboBoxItem HorizontalAlignment="Left" Content="Descarga" />
                         <ComboBoxItem HorizontalAlignment="Left" Content="Conferência" />
-                        <ComboBoxItem HorizontalAlignment="Left" Content="Separação de rota" />
+                        <ComboBoxItem HorizontalAlignment="Left" Content="Movimentação" />
                         <ComboBoxItem HorizontalAlignment="Left" Content="Carregamento" />
+                        <ComboBoxItem HorizontalAlignment="Left" Content="Empilhadeira" />
                     </ComboBox>
 
                     <materialDesign:PackIcon
@@ -94,8 +95,8 @@
                         SelectedIndex="0" VerticalAlignment="Top">
                         <ComboBoxItem HorizontalAlignment="Left" Content="Falta" />
                         <ComboBoxItem HorizontalAlignment="Left" Content="Sobra" />
-                        <ComboBoxItem HorizontalAlignment="Left" Content="Avaria"/>
-                        <ComboBoxItem HorizontalAlignment="Left" Content="Outro"/>
+                        <ComboBoxItem HorizontalAlignment="Left" Content="Avaria" />
+                        <ComboBoxItem HorizontalAlignment="Left" Content="Outro" />
                     </ComboBox>
                     <TextBox
                         Name="Codigo"
@@ -133,10 +134,7 @@
                         <DataGridTextColumn Binding="{Binding QuantOcorr}" Header="Quantidade" />
                     </DataGrid.Columns>
                 </DataGrid>
-
-
             </StackPanel>
         </Grid>
-
     </Grid>
 </UserControl>

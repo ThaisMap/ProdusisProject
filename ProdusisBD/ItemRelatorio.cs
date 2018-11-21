@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProdusisBD
 {
@@ -124,11 +121,11 @@ namespace ProdusisBD
 
             return retorno;
         }
-        
+
         /// <summary>
-        /// Calcula pontuação para ranking.  
+        /// Calcula pontuação para ranking.
         /// </summary>
-         public void atualizaPontuação()
+        public void atualizaPontuação()
         {
             try
             {
@@ -168,17 +165,22 @@ namespace ProdusisBD
         {
             switch (tipo)
             {
-                case "0":                    
+                case "0":
                 case "1":
                     return "Descarga";
+
                 case "2":
                     return "Conferência";
+
                 case "3":
-                    return "Sep. para carregar";
+                    return "Movim. de Paletes";
+
                 case "4":
                     return "Carregamento";
+
                 case "5":
                     return "Empilhadeira";
+
                 default:
                     return "Carregamento Paletizado";
             }

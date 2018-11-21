@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProdusisBD
+﻿namespace ProdusisBD
 {
     public class ItemDivergencia
     {
@@ -17,7 +11,7 @@ namespace ProdusisBD
         public string qtdSobra { get; set; }
         public string codAvaria { get; set; }
         public string qtdAvaria { get; set; }
-        private string[] valores = { "-","0","-","0","-","0" };
+        private string[] valores = { "-", "0", "-", "0", "-", "0" };
 
         public ItemDivergencia(TarefaModelo tarefa)
         {
@@ -39,8 +33,8 @@ namespace ProdusisBD
 
         public string getDivergencia()
         {
-            string linha = codFalta + ";" + qtdFalta + ";" + codSobra + ";" + qtdSobra + ";" + codAvaria + ";" + qtdAvaria+" ";
-            if (linha.Length> 120)
+            string linha = codFalta + ";" + qtdFalta + ";" + codSobra + ";" + qtdSobra + ";" + codAvaria + ";" + qtdAvaria + " ";
+            if (linha.Length > 120)
                 linha = linha.Remove(120);
             return linha;
         }

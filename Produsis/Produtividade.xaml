@@ -2,6 +2,7 @@
     x:Class="GUI.Produtividade"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:GUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -35,15 +36,11 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-
-
             <TextBlock
                 Grid.ColumnSpan="4"
                 Margin="40,0"
-                Style="{StaticResource MaterialDesignHeadlineTextBlock}">
-                Indicador de produtividade
-            </TextBlock>
-
+                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                Text="Indicador de produtividade"/>
 
             <TextBlock
                 Grid.Row="1"
@@ -52,7 +49,8 @@
                 Height="18"
                 Margin="5,15"
                 HorizontalAlignment="Right"
-                VerticalAlignment="Center"><Run Text="Tipo de tarefa:" /></TextBlock>
+                VerticalAlignment="Center"
+                Text="Tipo de tarefa: " />
             <ComboBox
                 x:Name="cbTipoTarefa"
                 Grid.Row="1"
@@ -84,7 +82,6 @@
                     HorizontalAlignment="Left"
                     Content="Empilhadeira" />
             </ComboBox>
-
 
             <TextBlock
                 Grid.Row="2"
@@ -136,20 +133,19 @@
                 Click="geraRelatorioTabela"
                 Content="Gerar" />
         </Grid>
-
         <DataGrid
-            Name="dgRanking"
+            x:Name="dgRanking"
             Height="220"
             HorizontalAlignment="Center"
+            materialDesign:DataGridAssist.CellPadding="4 2"
             AutoGenerateColumns="False"
-            VerticalScrollBarVisibility="Auto">
+            VerticalScrollBarVisibility="Auto" Margin="226,0">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding nomesFuncionarios}" Header="Funcionário" />
                 <DataGridTextColumn Binding="{Binding mediaPorHora}" Header="Pontuação no período" />
                 <DataGridTextColumn Binding="{Binding quantidadeTarefas}" Header=" Quantidade" />
-
+                <DataGridTextColumn Binding="{Binding observacoes}" Header="Observações" />
             </DataGrid.Columns>
         </DataGrid>
     </StackPanel>
-
 </UserControl>

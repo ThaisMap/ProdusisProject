@@ -41,7 +41,7 @@ namespace DAL
                 }
                 return true;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 var olho = e;
                 return false;
@@ -53,31 +53,36 @@ namespace DAL
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
-                {   Observacoes apagar = BancoDeDados.Observacoes.Where(i => i.idObs == idObservacao).FirstOrDefault();
+                {
+                    Observacoes apagar = BancoDeDados.Observacoes.Where(i => i.idObs == idObservacao).FirstOrDefault();
                     BancoDeDados.Observacoes.Remove(apagar);
                     BancoDeDados.SaveChanges();
                 }
             }
             catch
             {
-
             }
         }
 
-        public List<Observacoes> getObservacoes(DateTime? inicio, DateTime fim, int idF)
+        public List<Observacoes> getObservacoes(DateTime? inicio, DateTime fim)
         {
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    var lista = (from Observacoes in BancoDeDados.Observacoes where Observacoes.FuncObs == idF select Observacoes).ToList();
-                    lista = lista.Where(d => d.DataObs.Date <= fim.Date).ToList();
+                    var lista = (from Observacoes in BancoDeDados.Observacoes where Observacoes.DataObs <= fim.Date select Observacoes);
                     if (inicio != null)
-                        lista = lista.Where(d => d.DataObs.Date >= inicio).ToList();
-                    return lista;
-                }
+                        lista = lista.Where(d => d.DataObs >= inicio);
+
+                    foreach (var item in lista)
+                    {
+                        item.NomeFunc = item.Funcionarios.nomeFunc;
+                    }
+
+                    return lista.ToList();
+                };
             }
-            catch
+            catch (Exception e)
             {
                 return new List<Observacoes>();
             }
@@ -212,7 +217,7 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    return BancoDeDados.Funcionarios.Where(f => f.matriculaFunc == matricula).Select(f=>f.tipoFunc).FirstOrDefault();
+                    return BancoDeDados.Funcionarios.Where(f => f.matriculaFunc == matricula).Select(f => f.tipoFunc).FirstOrDefault();
                 }
             }
             catch
@@ -272,7 +277,7 @@ namespace DAL
             }
             catch
             {
-                return new List<Funcionarios> ();
+                return new List<Funcionarios>();
             }
         }
 
@@ -289,7 +294,7 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     var senhaBD = (from Funcionarios in BancoDeDados.Funcionarios
-                                   where Funcionarios.matriculaFunc == matricula 
+                                   where Funcionarios.matriculaFunc == matricula
                                    select Funcionarios.senhaFunc).FirstOrDefault();
 
                     if (senhaBD == senha)
@@ -308,7 +313,7 @@ namespace DAL
         /// <summary>
         /// Verifica se o Funcionário indicado está cadastrado no banco de dados
         /// </summary>
-        /// 
+        ///
         /// <param name="matricula">Martricula do Funcionário</param>
         /// <returns>True se estiver cadastrado, False se não estiver ou se ocorrer um erro</returns>
         public bool verificaUsuarioCadastrado(string matricula)
@@ -355,6 +360,5 @@ namespace DAL
                 return false;
             }
         }
-
     }
 }

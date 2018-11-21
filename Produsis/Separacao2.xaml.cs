@@ -21,7 +21,7 @@ namespace GUI
         private List<Funcionarios> ListaFunc;
         private TarefasBLL t = new TarefasBLL();
         private int[] pallets = { 0, 0 };
-        
+
         public Separacao2(double actualHeight, double actualWidth)
         {
             InitializeComponent();
@@ -44,6 +44,7 @@ namespace GUI
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
             dgTarefas.ItemsSource = t.TarefasPendentes("3");
+            lerXmls();
         }
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
@@ -61,6 +62,7 @@ namespace GUI
                 CBFuncionario.ItemsSource = ListaFunc;
                 AtualizarDg_Click(sender, e);
             }
+            Documento.Focus();
         }
 
         private void CBFuncionario_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -161,12 +163,11 @@ namespace GUI
             }
         }
 
-        static void lerXmls()
+        private static void lerXmls()
         {
             xmlBLL x = new xmlBLL();
             x.triagemArquivos();
         }
-
 
         private Tarefas montarTarefa()
         {
@@ -176,6 +177,7 @@ namespace GUI
             novaTarefa.tipoTarefa = "3";
             return novaTarefa;
         }
+
         private void testarCaractere(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");

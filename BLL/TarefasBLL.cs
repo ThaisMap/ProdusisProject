@@ -3,7 +3,6 @@ using ProdusisBD;
 using System;
 using System.Collections.Generic;
 using Excel = Microsoft.Office.Interop.Excel;
-using System.Globalization;
 
 namespace BLL
 {
@@ -17,8 +16,7 @@ namespace BLL
             if (novaTarefa.tipoTarefa != "2" && !d.manifestoCadastrado(novaTarefa.documentoTarefa))
             {
                 return false;
-            } 
-            
+            }
 
             FuncionariosBD f = new FuncionariosBD();
             int[] idsFuncionarios = new int[funcionarios.Length];
@@ -31,12 +29,12 @@ namespace BLL
             return t.Cadastrar(novaTarefa, idsFuncionarios);
         }
 
-    /*    public List<TarefaModelo> TarefasPendentes(string tipo1, string tipo2)
-        {
-            var teste = t.GetTarefasPendentes(tipo1);
-            teste.AddRange(t.GetTarefasPendentes(tipo2));
-            return teste;
-        }*/
+        /*    public List<TarefaModelo> TarefasPendentes(string tipo1, string tipo2)
+            {
+                var teste = t.GetTarefasPendentes(tipo1);
+                teste.AddRange(t.GetTarefasPendentes(tipo2));
+                return teste;
+            }*/
 
         public List<TarefaModelo> TarefasPendentes(string tipo)
         {
@@ -107,7 +105,7 @@ namespace BLL
             var rank = t.RankingFuncionarios(FiltraRanking(f), 1);// CalculaHorasPeriodo((DateTime)f.dataInicio, (DateTime)f.dataFim));
             foreach (var item in rank)
             {
-                if(!item.nomesFuncionarios.Contains("/"))
+                if (!item.nomesFuncionarios.Contains("/"))
                     item.observacoes = GetLinhaObs(f.dataInicio, (DateTime)f.dataFim, item.nomesFuncionarios);
             }
             return rank;
@@ -117,10 +115,10 @@ namespace BLL
         {
             string linha = "";
             FuncionariosBD f = new FuncionariosBD();
-            var obs = f.getObservacoes(inicio, fim, f.getFuncPorNome(nomeFunc).idFunc);
+            var obs = f.getObservacoes(inicio, fim);
             foreach (var item in obs)
             {
-                linha += item.DataObs.ToShortDateString() +" "+ item.TextoObs + " * ";
+                linha += item.DataObs.ToShortDateString() + " " + item.TextoObs + " * ";
             }
             if (linha.Length > 3)
                 linha = linha.Remove(linha.Length - 3);
@@ -137,7 +135,6 @@ namespace BLL
                 Excel.Worksheet xlWorkSheet;
                 object misValue = System.Reflection.Missing.Value;
 
-
                 xlApp = new Excel.Application();
                 xlWorkBook = xlApp.Workbooks.Add(misValue);
 
@@ -153,7 +150,7 @@ namespace BLL
                     xlWorkSheet.Cells[linha, 1] = i.nomesFuncionarios;
                     xlWorkSheet.Cells[linha, 2] = i.mediaPorHora;
                     xlWorkSheet.Cells[linha, 3] = i.observacoes;
-                  
+
                     linha++;
                 }
 
@@ -166,7 +163,6 @@ namespace BLL
                 LiberarObjetos(xlWorkBook);
                 LiberarObjetos(xlApp);
             }
-
             catch (Exception ex)
             {
                 var erro = ex;
@@ -182,7 +178,7 @@ namespace BLL
             var worksheets = workbook.Sheets;
             var worksheet = (Excel.Worksheet)worksheets[1];
             object misValue = System.Reflection.Missing.Value;
-                string[,] array = new string[Tarefas.Count + 1, 15];
+            string[,] array = new string[Tarefas.Count + 1, 15];
 
             try
             {
@@ -205,9 +201,9 @@ namespace BLL
                 for (int linha = 0; linha < Tarefas.Count; linha++)
                 {
                     if (Tarefas[linha].horaFim != null)
-                    {                       
+                    {
                         Tarefas[linha].atualizaPontuação();
-                        t.InserirPontuacao(Tarefas[linha].idTarefa, (float)Tarefas[linha].pontos);                        
+                        t.InserirPontuacao(Tarefas[linha].idTarefa, (float)Tarefas[linha].pontos);
                     }
 
                     array[linha + 1, 0] = Tarefas[linha].documentoTarefa.ToString("00");
@@ -242,7 +238,6 @@ Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, mi
                 LiberarObjetos(workbook);
                 LiberarObjetos(excel);
             }
-
             catch (Exception ex)
             {
                 var erro = ex;
@@ -274,7 +269,6 @@ Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, mi
             {
                 var erro = ex;
             }
-
             finally
             {
                 GC.Collect();

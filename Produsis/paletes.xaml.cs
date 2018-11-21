@@ -1,26 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace GUI
-{  
+{
     /// <summary>
     /// Lógica interna para paletes.xaml
     /// </summary>
     public partial class paletes : Window
     {
-        string total;
+        private string total;
 
         public paletes(string capacidade)
         {
@@ -50,7 +40,7 @@ namespace GUI
                 }
                 catch
                 {
-                    int [] retornoErro = { -1, 1 };
+                    int[] retornoErro = { -1, 1 };
                     return retornoErro;
                 }
             int[] retorno = { -1, -1 };
@@ -60,7 +50,7 @@ namespace GUI
         private void testarCaractere(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);            
+            e.Handled = regex.IsMatch(e.Text);
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
@@ -85,7 +75,7 @@ namespace GUI
                 }
             }
         }
-        
+
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             Close();

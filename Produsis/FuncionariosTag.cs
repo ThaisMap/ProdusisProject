@@ -1,7 +1,7 @@
 ﻿namespace GUI
 {
     public class FuncionariosTag
-    {       
+    {
         public FuncionariosTag(string funcNome, string funcTag)
         {
             Nome = funcNome;

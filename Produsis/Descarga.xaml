@@ -114,7 +114,7 @@
                                         Content="Incluir"
                                         Style="{StaticResource MaterialDesignFlatButton}" />
                                 </StackPanel>
-                                <!--<CheckBox Name="cbPaletizado" Content="Carga paletizada" HorizontalAlignment="Left" Margin="15,0" Grid.Row="2" VerticalAlignment="Center"/>-->
+                                <!--<CheckBox Name="cbPaletizado" Content="Carga paletizada" HorizontalAlignment="Left" Margin="15,0" Grid.Row="2" VerticalAlignment="Center" />-->
 
                                 <Button
                                     Name="Iniciar"
@@ -200,7 +200,7 @@
                                         <DataGridTextColumn
                                             Width="Auto"
                                             Binding="{Binding horaInicio}"
-                                            Header="Hora Início" />                                      
+                                            Header="Hora Início" />
                                         <DataGridTextColumn
                                             Width="Auto"
                                             Binding="{Binding volumes}"
