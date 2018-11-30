@@ -12,14 +12,14 @@ namespace ProdusisBD
     using System;
     using System.Collections.Generic;
     
-    public partial class Observacoes
+    public partial class Divergencias
     {
-        public int idObs { get; set; }
-        public int FuncObs { get; set; }
-        public System.DateTime DataObs { get; set; }
-        public string TextoObs { get; set; }
-        public string NomeFunc { get; set; }
-
-        public virtual Funcionarios Funcionarios { get; set; }
+        public int idDivergencia { get; set; }
+        public int TarefaDivergencia { get; set; }
+        public string TipoDivergencia { get; set; }
+        public string QtdeDivergencia { get; set; }
+        public string TextoDivergencia { get; set; }
+    
+        public virtual Tarefas Tarefas { get; set; }
     }
 }

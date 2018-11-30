@@ -11,7 +11,6 @@ namespace Portaria
     /// </summary>
     public partial class Pendentes : UserControl
     {
-        private VeiculosBD vBD = new VeiculosBD();
 
         public Pendentes(double WindowHeight, double WindowsWidth)
         {
@@ -29,7 +28,8 @@ namespace Portaria
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            List<AcessosPortaria> lista = vBD.GetAcessosPendentes();
+            AcessoBD abd = new AcessoBD();
+            List<AcessosPortaria> lista = abd.GetAcessosPendentes();
             dgPendentes.ItemsSource = lista;
         }
     }

@@ -7,85 +7,19 @@ namespace BLL
 {
     public class FuncionarioBLL
     {
-        private FuncionariosBD f = new FuncionariosBD();
-
-        public List<string> carregaFuncionarios()
-        {
-            return f.getListaNomes();
-        }
+        private AcessoBD abd = new AcessoBD();
 
         public bool cadastraObservacao(string nomeFunc, DateTime data, string texto)
         {
-            int idFuncionario = f.getFuncPorNome(nomeFunc).idFunc;
+            int idFuncionario = abd.GetFuncPorNome(nomeFunc).idFunc;
             Observacoes obs = new Observacoes
             {
                 FuncObs = idFuncionario,
                 DataObs = data,
                 TextoObs = texto
             };
-            return f.cadastrarObservacao(obs);
-        }
+            return abd.CadastrarObservacao(obs);
+        }       
 
-        public void deletaObservacao(int id)
-        {
-            f.deletarObservacao(id);
-        }
-
-        public List<Observacoes> getObservacoes(DateTime? inicio, DateTime? fim)
-        {
-            if (fim == null)
-                fim = DateTime.Today;
-
-            return f.getObservacoes(inicio, (DateTime)fim);
-        }
-
-        public List<Funcionarios> carregaFuncionariosLivres(string tipo)
-        {
-            return f.funcionariosLivres(tipo);
-        }
-
-        public List<string> carregaConferentesLivres(string tipo)
-        {
-            return f.conferentesLivres(tipo);
-        }
-
-        public bool validarSenha(string matricula, string senha)
-        {
-            return f.verificaSenha(matricula, senha);
-        }
-
-        public bool salvarNovo(Funcionarios novoFunc)
-        {
-            return f.cadastrar(novoFunc);
-        }
-
-        public bool editar(Funcionarios novosDados)
-        {
-            return f.editar(novosDados);
-        }
-
-        public bool nomeCadastrado(string nome)
-        {
-            if (f.getFuncPorNome(nome) == null)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        public Funcionarios dadosFuncionario(string nome)
-        {
-            return f.getFuncPorNome(nome);
-        }
-
-        public string tipoFuncionario(string matricula)
-        {
-            return f.getTipoFuncionario(matricula);
-        }
-
-        public bool validarUsuario(string matricula)
-        {
-            return f.verificaUsuarioCadastrado(matricula);
-        }
     }
 }

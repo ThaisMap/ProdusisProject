@@ -66,6 +66,9 @@
     <Compile Include="Cte_Manifesto.cs">
       <DependentUpon>ModelProdusisBD.tt</DependentUpon>
     </Compile>
+    <Compile Include="Divergencias.cs">
+      <DependentUpon>ModelProdusisBD.tt</DependentUpon>
+    </Compile>
     <Compile Include="Filtro.cs" />
     <Compile Include="Funcionarios.cs">
       <DependentUpon>ModelProdusisBD.tt</DependentUpon>

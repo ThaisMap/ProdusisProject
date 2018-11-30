@@ -17,17 +17,16 @@ namespace Portaria
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
-            if (verificaCampos())
+            if (VerificaCampos())
             {
-                FuncionarioBLL l = new FuncionarioBLL();
-                if (l.validarUsuario(TxbLogin.Text))
+                AcessoBD abd = new AcessoBD();
+                if (abd.UsuarioExiste(TxbLogin.Text))
                 {
-                    if (l.validarSenha(TxbLogin.Text, TxbSenha.Password))
+                    if (abd.SenhaCorreta(TxbLogin.Text, TxbSenha.Password))
                     {
-                        //FuncionariosBD fBD = new FuncionariosBD();
-                        //var usuario = fBD.getFuncPorMatricula(TxbLogin.Text);
-                        //Login.Default.idUsuario = usuario.idFunc;
-                        //Login.Default.NomeUsuario = usuario.nomeFunc;
+                        var usuario = abd.GetFuncPorMatricula(TxbLogin.Text);
+                        Login.Default.idUsuario = usuario.idFunc;
+                        Login.Default.NomeUsuario = usuario.nomeFunc;
 
                         MainWindow view = new MainWindow();
                         this.Close();
@@ -44,7 +43,7 @@ namespace Portaria
             }
         }
 
-        private bool verificaCampos()
+        private bool VerificaCampos()
         {
             //verificar se tem coisas digitadas nos dois campos
             if (TxbLogin.Text == "" || TxbLogin.Text.Length < 4)

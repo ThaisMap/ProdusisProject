@@ -129,30 +129,35 @@ namespace ProdusisBD
         {
             try
             {
-                if (tipoTarefa == "Conferência")
-                {
-                    pontos = sku * 7 + volumes * 0.4;
-                }
-                else if (tipoTarefa.Contains("Descarga") || tipoTarefa.Contains("Carregamento"))
-                {
-                    if (quantPaletizado > totalPaletes)
-                        quantPaletizado = totalPaletes;
-                    double porcentagemPaletizado = (double)quantPaletizado / (double)totalPaletes;
-                    pontos = volumes * porcentagemPaletizado;
-                    pontos += volumes * (1 - porcentagemPaletizado) * 3;
-                }
-                else // regra para separação e movimentacao de empilhadeira
-                {
-                    pontos = (double)totalPaletes;
-                }
+
                 if (divergenciaTarefa != "Nenhuma" && divergenciaTarefa != "-;0;-;0;-;0")
                 {
                     pontos = 0;
                 }
-                if (nomesFunc.Contains("/"))
+                else
                 {
-                    int div = nomesFunc.Count() - nomesFunc.Replace("/", string.Empty).Count() + 1;
-                    pontos = pontos / div;
+                    if (tipoTarefa == "Conferência")
+                    {
+                        pontos = sku * 7 + volumes * 0.4;
+                    }
+                    else if (tipoTarefa.Contains("Descarga") || tipoTarefa.Contains("Carregamento"))
+                    {
+                        if (quantPaletizado > totalPaletes)
+                            quantPaletizado = totalPaletes;
+                        double porcentagemPaletizado = (double)quantPaletizado / (double)totalPaletes;
+                        pontos = volumes * porcentagemPaletizado;
+                        pontos += volumes * (1 - porcentagemPaletizado) * 3;
+                    }
+                    else // regra para separação e movimentacao de empilhadeira
+                    {
+                        pontos = (double)totalPaletes;
+                    }
+
+                    if (nomesFunc.Contains("/"))
+                    {
+                        int div = nomesFunc.Count() - nomesFunc.Replace("/", string.Empty).Count() + 1;
+                        pontos = pontos / div;
+                    }
                 }
             }
             catch (Exception erro)

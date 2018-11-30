@@ -54,6 +54,16 @@
           <Property Name="Manifesto" Type="int" Nullable="false" />
           <Property Name="CteNovo" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Divergencias">
+          <Key>
+            <PropertyRef Name="idDivergencia" />
+          </Key>
+          <Property Name="idDivergencia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TarefaDivergencia" Type="int" Nullable="false" />
+          <Property Name="TipoDivergencia" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="QtdeDivergencia" Type="nvarchar" MaxLength="50" />
+          <Property Name="TextoDivergencia" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
         <EntityType Name="Func_Tarefa">
           <Key>
             <PropertyRef Name="idFuncTarefa" />
@@ -125,8 +135,8 @@
           </Key>
           <Property Name="PlacaVeiculo" Type="nchar" MaxLength="7" Nullable="false" />
           <Property Name="MotoristaVeiculo" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Placa2Veiculo" Type="nchar" MaxLength="7" />
-          <Property Name="TipoVeiculo" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Placa2Veiculo" Type="nvarchar" MaxLength="50" />
+          <Property Name="TipoVeiculo" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="CapacidadePaletes" Type="int" Nullable="false" />
           <Property Name="AtivoVeiculo" Type="bit" Nullable="false" />
         </EntityType>
@@ -203,6 +213,18 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
             </Principal>
             <Dependent Role="Cte_Manifesto">
               <PropertyRef Name="CteNovo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Divergencias_Tarefas">
+          <End Role="Tarefas" Type="Self.Tarefas" Multiplicity="1" />
+          <End Role="Divergencias" Type="Self.Divergencias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tarefas">
+              <PropertyRef Name="idTarefa" />
+            </Principal>
+            <Dependent Role="Divergencias">
+              <PropertyRef Name="TarefaDivergencia" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -298,6 +320,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
           <EntitySet Name="Carretas" EntityType="Self.Carretas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cte" EntityType="Self.Cte" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cte_Manifesto" EntityType="Self.Cte_Manifesto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Divergencias" EntityType="Self.Divergencias" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Func_Tarefa" EntityType="Self.Func_Tarefa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Funcionarios" EntityType="Self.Funcionarios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Manifestos" EntityType="Self.Manifestos" Schema="dbo" store:Type="Tables" />
@@ -343,6 +366,10 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
           <AssociationSet Name="FK_Cte_Manifesto_NovoCte" Association="Self.FK_Cte_Manifesto_NovoCte">
             <End Role="Cte" EntitySet="Cte" />
             <End Role="Cte_Manifesto" EntitySet="Cte_Manifesto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Divergencias_Tarefas" Association="Self.FK_Divergencias_Tarefas">
+            <End Role="Tarefas" EntitySet="Tarefas" />
+            <End Role="Divergencias" EntitySet="Divergencias" />
           </AssociationSet>
           <AssociationSet Name="FK_Func_Tarefa_Funcionarios" Association="Self.FK_Func_Tarefa_Funcionarios">
             <End Role="Funcionarios" EntitySet="Funcionarios" />
@@ -500,6 +527,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
           <Property Name="quantPaletizado" Type="Int32" />
           <Property Name="totalPaletes" Type="Int32" />
           <NavigationProperty Name="Func_Tarefa" Relationship="Self.FK_Func_Tarefa_Tarefas" FromRole="Tarefas" ToRole="Func_Tarefa" />
+          <NavigationProperty Name="Divergencias" Relationship="produsisBDModel.FK_Divergencias_Tarefas" FromRole="Tarefas" ToRole="Divergencias" />
         </EntityType>
         <EntityType Name="Veiculos">
           <Key>
@@ -507,8 +535,8 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
           </Key>
           <Property Name="PlacaVeiculo" Type="String" MaxLength="7" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="MotoristaVeiculo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Placa2Veiculo" Type="String" MaxLength="7" FixedLength="true" Unicode="true" />
-          <Property Name="TipoVeiculo" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Placa2Veiculo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TipoVeiculo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CapacidadePaletes" Type="Int32" Nullable="false" />
           <Property Name="AtivoVeiculo" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="AcessosPortaria" Relationship="Self.FK_Veiculos_AcessosPortaria" FromRole="Veiculos" ToRole="AcessosPortaria" />
@@ -698,6 +726,11 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
             <End Role="AcessosPortaria" EntitySet="AcessosPortaria" />
           </AssociationSet>
           <EntitySet Name="Carretas" EntityType="produsisBDModel.Carretas" />
+          <EntitySet Name="Divergencias" EntityType="produsisBDModel.Divergencias" />
+          <AssociationSet Name="FK_Divergencias_Tarefas" Association="produsisBDModel.FK_Divergencias_Tarefas">
+            <End Role="Tarefas" EntitySet="Tarefas" />
+            <End Role="Divergencias" EntitySet="Divergencias" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_PorteiroEntrada_AcessosPortaria">
           <End Type="produsisBDModel.Funcionarios" Role="Funcionarios" Multiplicity="1" />
@@ -730,6 +763,29 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
           <Property Name="PlacaCarreta" Type="String" Nullable="false" MaxLength="7" FixedLength="true" Unicode="true" />
           <Property Name="Ativo" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="Divergencias">
+          <Key>
+            <PropertyRef Name="idDivergencia" />
+          </Key>
+          <Property Name="idDivergencia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TarefaDivergencia" Type="Int32" Nullable="false" />
+          <Property Name="TipoDivergencia" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="QtdeDivergencia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TextoDivergencia" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tarefas" Relationship="produsisBDModel.FK_Divergencias_Tarefas" FromRole="Divergencias" ToRole="Tarefas" />
+        </EntityType>
+        <Association Name="FK_Divergencias_Tarefas">
+          <End Type="produsisBDModel.Tarefas" Role="Tarefas" Multiplicity="1" />
+          <End Type="produsisBDModel.Divergencias" Role="Divergencias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tarefas">
+              <PropertyRef Name="idTarefa" />
+            </Principal>
+            <Dependent Role="Divergencias">
+              <PropertyRef Name="TarefaDivergencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -905,6 +961,17 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
               <MappingFragment StoreEntitySet="Carretas">
                 <ScalarProperty Name="Ativo" ColumnName="Ativo" />
                 <ScalarProperty Name="PlacaCarreta" ColumnName="PlacaCarreta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Divergencias">
+            <EntityTypeMapping TypeName="produsisBDModel.Divergencias">
+              <MappingFragment StoreEntitySet="Divergencias">
+                <ScalarProperty Name="TextoDivergencia" ColumnName="TextoDivergencia" />
+                <ScalarProperty Name="QtdeDivergencia" ColumnName="QtdeDivergencia" />
+                <ScalarProperty Name="TipoDivergencia" ColumnName="TipoDivergencia" />
+                <ScalarProperty Name="TarefaDivergencia" ColumnName="TarefaDivergencia" />
+                <ScalarProperty Name="idDivergencia" ColumnName="idDivergencia" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

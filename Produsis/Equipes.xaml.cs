@@ -20,11 +20,11 @@ namespace GUI
         private List<Funcionarios> funcionariosAtivos = new List<Funcionarios>();
         private List<string> funcionariosEquipe = new List<string>();
 
-        private FuncionariosBD f = new FuncionariosBD();
+        private AcessoBD abd = new AcessoBD();
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            funcionariosAtivos = f.getListaFuncionariosAtivos();
+            funcionariosAtivos = abd.GetFuncionariosAtivos();
             Nome.ItemsSource = funcionariosAtivos;
             Nome.DisplayMemberPath = "nomeFunc";
         }
@@ -43,10 +43,10 @@ namespace GUI
                 var maxEquipe = funcionariosAtivos.Select(x => x.equipeFunc).DefaultIfEmpty(-1).Max();
                 if (maxEquipe == null)
                     maxEquipe = -1;
-                if (f.salvaEquipe(funcionariosEquipe, maxEquipe + 1))
+                if (abd.SalvaEquipe(funcionariosEquipe, maxEquipe + 1))
                 {
                     MessageBox.Show("Equipe salva com sucesso.", "Aviso");
-                    funcionariosAtivos = f.getListaFuncionariosAtivos();
+                    funcionariosAtivos = abd.GetFuncionariosAtivos();
                 }
             }
         }
@@ -76,10 +76,10 @@ namespace GUI
         {
             if (funcionariosEquipe.Count > 0)
             {
-                f.salvaEquipe(funcionariosEquipe, null);
+                abd.SalvaEquipe(funcionariosEquipe, null);
                 funcionariosEquipe.Clear();
                 dgEquipe.ItemsSource = funcionariosEquipe;
-                funcionariosAtivos = f.getListaFuncionariosAtivos();
+                funcionariosAtivos = abd.GetFuncionariosAtivos();
                 dgEquipe.Items.Refresh();
             }
         }

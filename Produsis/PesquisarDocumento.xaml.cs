@@ -29,7 +29,7 @@ namespace Produsis
         {
             if (TipoDeDocumento.SelectedIndex > -1 && NumeroDocumento.Text != "")
             {
-                DocumentosBD dbd = new DocumentosBD();
+                AcessoBD abd = new AcessoBD();
                 DocumentosBLL d = new DocumentosBLL();
 
                 string[] rotulosCte = { "Número", "Volumes", "SKU's", "Fornecedor", "Notas Fiscais", "Manifesto" };
@@ -46,7 +46,7 @@ namespace Produsis
                 {
                     if (d.cteCadastrado(numDoc))
                     {
-                        var ctes = dbd.getNovoCtePorNum(numDoc);
+                        var ctes = abd.GetNovoCtePorNum(numDoc);
                         aux = new dadosPesquisa()
                         {
                             numero = rotulosCte[0],
@@ -62,11 +62,11 @@ namespace Produsis
                             aux = new dadosPesquisa()
                             {
                                 numero = NumeroDocumento.Text.Replace("_", ""),
-                                volumes = d.volumesCte(item.idCte).ToString(),
-                                dado3 = d.skuCte(item.idCte).ToString(),
-                                dado4 = d.fornecedorCte(item.idCte),
+                                volumes = abd.GetVolumesCte(item.idCte).ToString(),
+                                dado3 = abd.GetSkuCte(item.idCte).ToString(),
+                                dado4 = abd.GetFornecedorCte(item.idCte),
                                 dado5 = item.notasCte,
-                                dado6 = d.getManifestosCte(item.idCte)
+                                dado6 = abd.GetListaManifestosCte(item.idCte)
                             };
                             listaDados.Add(aux);
                         }
@@ -78,7 +78,7 @@ namespace Produsis
                 // MANIFESTO
                 else if (TipoDeDocumento.SelectedIndex == 1)
                 {
-                    Manifestos documento = d.getDadosManifesto(numDoc);
+                    Manifestos documento = abd.GetManifestoPorNumero(numDoc);
 
                     if (documento != null)
                     {
@@ -98,8 +98,8 @@ namespace Produsis
                             numero = documento.numeroManifesto.ToString(),
                             volumes = documento.VolumesManifesto.ToString(),
                             dado3 = documento.quantCtesManifesto.ToString(),
-                            dado4 = dbd.ctesImportadosNoManifesto(numDoc).ToString(),
-                            dado5 = dbd.ctesConferidosNoManifesto(numDoc).ToString(),
+                            dado4 = abd.CtesImportadosNoManifesto(numDoc).ToString(),
+                            dado5 = abd.CtesConferidosNoManifesto(numDoc).ToString(),
                             dado6 = " "
                         };
                         listaDados.Add(aux);
@@ -112,7 +112,7 @@ namespace Produsis
                 // NOTA FISCAL
                 else if (TipoDeDocumento.SelectedIndex == 2)
                 {
-                    var documentos = d.getDadosNF(NumeroDocumento.Text);
+                    var documentos = abd.GetNFPorNumero(NumeroDocumento.Text);
                     if (documentos.Count > 0)
                     {
                         aux = new dadosPesquisa()
@@ -129,7 +129,7 @@ namespace Produsis
                         {
                             string numCTE = "Não vinculado";
                             if (documento.CteNovoNF != null)
-                                numCTE = dbd.getNovoCtePorID((int)documento.CteNovoNF).numeroCte.ToString();
+                                numCTE = abd.GetCtePorID((int)documento.CteNovoNF).numeroCte.ToString();
                             aux = new dadosPesquisa()
                             {
                                 numero = documento.numeroNF.ToString(),

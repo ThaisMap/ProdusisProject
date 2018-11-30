@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DAL;
 using ProdusisBD;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace GUI
     /// </summary>
     public partial class Descarga : UserControl
     {
+        private AcessoBD abd = new AcessoBD();
+
         private DocumentosBLL d = new DocumentosBLL();
         private FuncionarioBLL f = new FuncionarioBLL();
         private List<FuncionariosTag> FuncionarioSelecionado = new List<FuncionariosTag>();
@@ -25,10 +28,10 @@ namespace GUI
         public Descarga()
         {
             InitializeComponent();
-            ListaFunc = f.carregaFuncionariosLivres("1");
+            ListaFunc = abd.GetFuncionariosLivres("1");
             CBFuncionario.ItemsSource = ListaFunc;
             CBFuncionario.DisplayMemberPath = "nomeFunc";
-            dgTarefas.ItemsSource = t.TarefasPendentes("1");
+            dgTarefas.ItemsSource = abd.GetTarefasPendentes("1");
             lerXmls();
         }
 
@@ -40,7 +43,7 @@ namespace GUI
 
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
-            dgTarefas.ItemsSource = t.TarefasPendentes("1");
+            dgTarefas.ItemsSource = abd.GetTarefasPendentes("1");
             lerXmls();
         }
 
@@ -54,7 +57,7 @@ namespace GUI
                     MessageBox.Show("Descarga finalizada após " + item.tempoGasto, "Descarga finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
                     MessageBox.Show("Houve um erro e a descarga não pode ser finalizada.", "Descarga não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-                ListaFunc = f.carregaFuncionariosLivres("1");
+                ListaFunc = abd.GetFuncionariosLivres("1");
                 CBFuncionario.ItemsSource = ListaFunc;
                 AtualizarDg_Click(sender, e);
             }
@@ -115,12 +118,12 @@ namespace GUI
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
             if (checarCampos())
-                if (t.TarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "1"))
+                if (abd.VerificaDocumentoTarefa(int.Parse(Documento.Text.Replace("_", "")), "1"))
                 {
                     if (t.InserirTarefa(montarTarefa(), funcionarios()))
                     {
-                        dgTarefas.ItemsSource = t.TarefasPendentes("1");
-                        MessageBox.Show("Descarga iniciada para o " + d.linhaDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Descarga iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                        dgTarefas.ItemsSource = abd.GetTarefasPendentes("1");
+                        MessageBox.Show("Descarga iniciada para o " + abd.GetDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Descarga iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                         Documento.Text = "";
                         CBFuncionario.SelectedIndex = -1;
                         ListaDeFuncionarios.Items.Clear();

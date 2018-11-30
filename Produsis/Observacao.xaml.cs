@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DAL;
 using ProdusisBD;
 using System;
 using System.Windows;
@@ -12,6 +13,7 @@ namespace GUI
     /// </summary>
     public partial class Observacao : UserControl
     {
+        private AcessoBD abd = new AcessoBD();
         private FuncionarioBLL f = new FuncionarioBLL();
 
         public Observacao(double actualHeight, double actualWidth)
@@ -20,7 +22,7 @@ namespace GUI
             Height = actualHeight - 60;
             Width = actualWidth - 60;
             Dock.Height = Height - 80;
-            Nome.ItemsSource = f.carregaFuncionarios();
+            Nome.ItemsSource = abd.GetListaNomesFunc();
             dataObs.SelectedDate = DateTime.Today;
             dataFim.SelectedDate = DateTime.Today;
         }
@@ -41,7 +43,8 @@ namespace GUI
 
         private void Buscar_Click(object sender, RoutedEventArgs e)
         {
-            dgObs.ItemsSource = f.getObservacoes(dataInicio.SelectedDate, dataFim.SelectedDate);           
+
+            dgObs.ItemsSource = abd.GetObservacoes(dataInicio.SelectedDate, dataFim.SelectedDate);           
         }
 
         private void dgObs_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -51,7 +54,7 @@ namespace GUI
                 if (MessageBox.Show("Apagar observação definitivamente? ", "Confirmação", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                 {
                     var linha = dgObs.SelectedItem as Observacoes;
-                    f.deletaObservacao(linha.idObs);
+                    abd.DeletarObservacao(linha.idObs);
                 }
             }
         }      

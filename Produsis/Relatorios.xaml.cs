@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DAL;
 using Microsoft.Win32;
 using ProdusisBD;
 using System;
@@ -78,10 +79,10 @@ namespace GUI
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            FuncionarioBLL f = new FuncionarioBLL();
+            AcessoBD abd = new AcessoBD();
             dataInicio.SelectedDate = null;
             dataFinal.SelectedDate = DateTime.Today;
-            cbFuncionario.ItemsSource = f.carregaFuncionarios();
+            cbFuncionario.ItemsSource = abd.GetListaNomesFunc();
             dgTarefas.Height = ActualHeight - 270;
         }
 

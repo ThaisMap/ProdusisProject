@@ -3,6 +3,7 @@ using DAL.Properties;
 using Microsoft.Office.Interop.Outlook;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace BLL
 {
@@ -21,17 +22,8 @@ namespace BLL
                 List<string> arquivosPastaNF = new List<string>();
 
                 var listaDeArquivos = Directory.GetFiles(PastasXml.Default.PastaNFs);
-                bool temMSG = false;
-                foreach (string f in listaDeArquivos)
-                {
-                    var ext = extensao(f);
-                    if (ext == "msg" || ext == "MSG")
-                    {
-                        temMSG = true;
-
-                        break;
-                    }
-                }
+                bool temMSG = listaDeArquivos.Where(f => f.EndsWith("msg") || f.EndsWith("MSG")).Any();
+                
 
                 //Percorre pasta de NFs pela primeira vez, ao encontrar um email , extrai os anexos e mover o email para pasta old
                 if (temMSG)
@@ -39,8 +31,7 @@ namespace BLL
                     Outlook = new Application();
                     foreach (string f in listaDeArquivos)
                     {
-                        var ext = extensao(f);
-                        if (ext == "msg" || ext == "MSG")
+                        if (f.EndsWith("msg") || f.EndsWith("MSG"))
                         {
                             xml.ExtrairAnexosDeEmail(moverArquivo(f), Outlook);
                         }
@@ -53,14 +44,13 @@ namespace BLL
                 //Qualquer outro tipo de arquivo é excluido
                 foreach (string f in Directory.GetFiles(PastasXml.Default.PastaNFs))
                 {
-                    var ext = extensao(f);
-                    if (ext == "xml" || ext == "XML")
+                    if (f.EndsWith("xml") || f.EndsWith("XML"))
                     {
                         xml.LerXmlNotaFiscal(f);
                         moverArquivo(f);
                     }
                     else
-                        if (ext == "txt" || ext == "TXT")
+                    if (f.EndsWith("txt") || f.EndsWith("TXT"))
                     {
                         xml.LerNotfisNotaFiscal(f);
                         moverArquivo(f);
@@ -72,9 +62,8 @@ namespace BLL
                 //Percorre pasta de manifestos, importa os dados do xml e apaga o restante
                 foreach (string f in Directory.GetFiles(PastasXml.Default.PastaManifestos))
                 {
-                    var ext = extensao(f);
-                    if (ext == "xml")
-                    {
+                    if (f.EndsWith("xml") || f.EndsWith("XML"))
+                    {                        
                         xml.LerManifesto(f);
                         moverArquivo(f);
                     }
@@ -84,8 +73,7 @@ namespace BLL
                 //Percorre pasta de manifestos, importa os dados do xml e apaga o restante
                 foreach (string f in Directory.GetFiles(PastasXml.Default.PastaPreManifestos))
                 {
-                    var ext = extensao(f);
-                    if (ext == "xml")
+                    if (f.EndsWith("xml") || f.EndsWith("XML"))
                     {
                         xml.LerPreManifesto(f);
                         moverArquivo(f);
@@ -98,15 +86,7 @@ namespace BLL
             {
                 var erro = ex;
             }
-        }
-
-        /// <summary>
-        /// Retorna ultimas 3 letras do arquivo informado
-        /// </summary>
-        private string extensao(string caminho)
-        {
-            return string.Concat(caminho[caminho.Length - 3], caminho[caminho.Length - 2], caminho[caminho.Length - 1]);
-        }
+        }       
 
         /// <summary>
         /// Move o arquivo da pasta padrão para a pasta old respectiva

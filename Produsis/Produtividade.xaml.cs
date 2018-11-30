@@ -22,7 +22,7 @@ namespace GUI
             dgRanking.Height = Altura - 250;
         }
 
-        private void geraRelatorioTabela(object sender, RoutedEventArgs e)
+        private void GeraRelatorioTabela(object sender, RoutedEventArgs e)
         {
             if (cbTipoTarefa.SelectedIndex >= 0 && (dataInicio.SelectedDate != null || dataFim.SelectedDate != null))
             {

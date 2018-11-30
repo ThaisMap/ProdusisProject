@@ -17,7 +17,7 @@ namespace Portaria
     {
         public List<Veiculos> veiculos { get; set; }
         public List<Carretas> carretas { get; set; }
-        private VeiculosBD veiculosBD = new VeiculosBD();
+        private AcessoBD abd = new AcessoBD();
 
         public Entrada(double WindowHeight, double WindowsWidth)
         {
@@ -28,8 +28,8 @@ namespace Portaria
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            veiculos = veiculosBD.getVeiculos();
-            carretas = veiculosBD.GetPlaca2();
+            veiculos = abd.GetVeiculos();
+            carretas = abd.GetPlaca2();
             cbPlaca2.ItemsSource = carretas;
             cbPlaca2.DisplayMemberPath = "PlacaCarreta";
             cbNome.ItemsSource = veiculos.OrderBy(x => x.MotoristaVeiculo);
@@ -53,7 +53,7 @@ namespace Portaria
         {
             if (ChecarCampos())
             {
-                if (veiculosBD.cadastrarAcessoPortaria(montarObjeto()))
+                if (abd.CadastrarAcessoPortaria(montarObjeto()))
                 {
                     MessageBox.Show("Entrada de veículo registrada.");
                 }

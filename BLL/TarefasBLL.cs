@@ -8,124 +8,55 @@ namespace BLL
 {
     public class TarefasBLL
     {
-        private TarefasBD t = new TarefasBD();
         private DocumentosBLL d = new DocumentosBLL();
+        private AcessoBD abd = new AcessoBD();
 
         public bool InserirTarefa(Tarefas novaTarefa, string[] funcionarios)
         {
-            if (novaTarefa.tipoTarefa != "2" && !d.manifestoCadastrado(novaTarefa.documentoTarefa))
+            if (novaTarefa.tipoTarefa != "2" && !abd.ManifestoExiste(novaTarefa.documentoTarefa))
             {
                 return false;
             }
 
-            FuncionariosBD f = new FuncionariosBD();
             int[] idsFuncionarios = new int[funcionarios.Length];
 
             novaTarefa.divergenciaTarefa = "-;0;-;0;-;0";
             for (int i = 0; i < funcionarios.Length; i++)
             {
-                idsFuncionarios[i] = f.getFuncPorNome(funcionarios[i]).idFunc;
+                idsFuncionarios[i] = abd.GetFuncPorNome(funcionarios[i]).idFunc;
             }
-            return t.Cadastrar(novaTarefa, idsFuncionarios);
+            return abd.CadastrarTarefa(novaTarefa, idsFuncionarios);
         }
-
-        /*    public List<TarefaModelo> TarefasPendentes(string tipo1, string tipo2)
-            {
-                var teste = t.GetTarefasPendentes(tipo1);
-                teste.AddRange(t.GetTarefasPendentes(tipo2));
-                return teste;
-            }*/
-
-        public List<TarefaModelo> TarefasPendentes(string tipo)
-        {
-            return t.GetTarefasPendentes(tipo);
-        }
-
-        /// <summary>
-        /// Retorna true se não for repetido
-        /// </summary>
-        public bool TarefaRepetida(int documento, string tipo)
-        {
-            return t.VerificaDocumentoTarefa(documento, tipo);
-        }
-
-        public bool InserirDivergencias(List<TarefaModelo> tarefasDivergencia)
-        {
-            return t.InserirDivergencia(tarefasDivergencia);
-        }
-
+               
+     
         public bool FinalizarTarefa(int idTarefa, int quantPalet, int totalPalet)
         {
-            return t.FinalizarTarefa(idTarefa, quantPalet, totalPalet);
+            return abd.FinalizarTarefa(idTarefa, quantPalet, totalPalet);
         }
-
-        public int IniciadaHojePendente(string tipo)
-        {
-            return t.GetTarefasHojePendentes(tipo);
-        }
-
-        public int IniciadaHojeFinalizada(string tipo)
-        {
-            return t.GetTarefasHojeFinalizadas(tipo);
-        }
-
+       
         public List<TarefaModelo> FiltrarDivergencias(int Tipo, int Manifesto)
         {
-            return t.GetTarefasDivergencia(Tipo, Manifesto);
+            return abd.GetTarefasDivergencia(Tipo, Manifesto);
         }
 
         public List<ItemRelatorio> Filtrar(Filtro f)
         {
-            return t.GetTarefasFiltradas(f, true);
+            return abd.GetTarefasFiltradas(f, true);
         }
 
         public List<ItemRanking> FiltraRanking(Filtro f)
         {
-            return t.GetRanking(f);
+            return abd.GetRanking(f);
         }
-
-        private double CalculaHorasPeriodo(DateTime inicio, DateTime fim)
-        {
-            double horas = 1;
-            /* for (DateTime dt = inicio; dt < fim.AddDays(1); dt = dt.AddDays(1))
-            {
-                if (dt.DayOfWeek != DayOfWeek.Sunday)
-                {
-                    if (dt.DayOfWeek == DayOfWeek.Saturday)
-                        horas += 4;
-                    else
-                        horas+=7.5;
-                }
-            } */
-            return horas;
-        }
-
+       
         public List<ItemRanking> GetRanking(Filtro f)
         {
-            var rank = t.RankingFuncionarios(FiltraRanking(f), 1);// CalculaHorasPeriodo((DateTime)f.dataInicio, (DateTime)f.dataFim));
-            foreach (var item in rank)
-            {
-                if (!item.nomesFuncionarios.Contains("/"))
-                    item.observacoes = GetLinhaObs(f.dataInicio, (DateTime)f.dataFim, item.nomesFuncionarios);
-            }
+            var rank = abd.RankingFuncionarios(abd.GetRanking(f));
+           
             return rank;
         }
 
-        public string GetLinhaObs(DateTime? inicio, DateTime fim, string nomeFunc)
-        {
-            string linha = "";
-            FuncionariosBD f = new FuncionariosBD();
-            var obs = f.getObservacoes(inicio, fim);
-            foreach (var item in obs)
-            {
-                linha += item.DataObs.ToShortDateString() + " " + item.TextoObs + " * ";
-            }
-            if (linha.Length > 3)
-                linha = linha.Remove(linha.Length - 3);
-
-            return linha;
-        }
-
+       
         public void ExportarExcelProdut(List<ItemRanking> Tarefas, string nomeArquivo)
         {
             try
@@ -140,16 +71,18 @@ namespace BLL
 
                 xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
                 xlWorkSheet.Cells[1, 1] = "Nome";
-                xlWorkSheet.Cells[1, 2] = "Media de pontos";
-                xlWorkSheet.Cells[1, 3] = "Observações";
+                xlWorkSheet.Cells[1, 2] = "Pontuação";
+                xlWorkSheet.Cells[1, 3] = "Quantidade";
+                xlWorkSheet.Cells[1, 4] = "Erros";
 
                 int linha = 2;
 
                 foreach (ItemRanking i in Tarefas)
                 {
-                    xlWorkSheet.Cells[linha, 1] = i.nomesFuncionarios;
-                    xlWorkSheet.Cells[linha, 2] = i.mediaPorHora;
-                    xlWorkSheet.Cells[linha, 3] = i.observacoes;
+                    xlWorkSheet.Cells[linha, 1] = i.NomesFuncionarios;
+                    xlWorkSheet.Cells[linha, 2] = i.Pontuacao;
+                    xlWorkSheet.Cells[linha, 3] = i.QuantidadeTarefas;
+                    xlWorkSheet.Cells[linha, 4] = i.Erros;
 
                     linha++;
                 }
@@ -203,7 +136,7 @@ namespace BLL
                     if (Tarefas[linha].horaFim != null)
                     {
                         Tarefas[linha].atualizaPontuação();
-                        t.InserirPontuacao(Tarefas[linha].idTarefa, (float)Tarefas[linha].pontos);
+                        abd.InserirPontuacao(Tarefas[linha].idTarefa, (float)Tarefas[linha].pontos);
                     }
 
                     array[linha + 1, 0] = Tarefas[linha].documentoTarefa.ToString("00");

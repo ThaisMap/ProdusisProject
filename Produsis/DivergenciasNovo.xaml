@@ -13,7 +13,7 @@
     d:DesignWidth="800"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-    TextElement.FontSize="12"
+    TextElement.FontSize="13"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
@@ -33,10 +33,10 @@
                 Orientation="Vertical">
                 <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Divergências</TextBlock>
                 <Separator />
-                <StackPanel Name="Pesquisa" Orientation="Horizontal">
+                <StackPanel Name="Pesquisa" Orientation="Horizontal" HorizontalAlignment="Center">
                     <ComboBox
                         x:Name="cbTipoTarefa"
-                        Width="205"
+                        Width="150"
                         Margin="10,10"
                         HorizontalAlignment="Left"
                         materialDesign:HintAssist.Hint="Tipo de Tarefa"
@@ -49,17 +49,9 @@
                         <ComboBoxItem HorizontalAlignment="Left" Content="Carregamento" />
                         <ComboBoxItem HorizontalAlignment="Left" Content="Empilhadeira" />
                     </ComboBox>
-
-                    <materialDesign:PackIcon
-                        Width="22"
-                        Height="22"
-                        Margin="30,0,0,10"
-                        VerticalAlignment="Bottom"
-                        Foreground="{Binding ElementName=Documento, Path=BorderBrush}"
-                        Kind="FileDocument" />
                     <TextBox
                         Name="Documento"
-                        Width="205"
+                        Width="150"
                         Margin="10,10"
                         materialDesign:HintAssist.Hint="Documento"
                         materialDesign:HintAssist.IsFloating="True"
@@ -68,18 +60,17 @@
                         x:Name="btnConsultar"
                         Grid.Column="2"
                         Width="100"
-                        Margin="0,10"
+                        Margin="10,10"
                         VerticalAlignment="Bottom"
                         Click="btnConsultar_Click"
                         Content="Consultar" />
                 </StackPanel>
 
-                <TextBlock
+                <TextBlock 
+                    Name="txtFuncionario"
                     Margin="0,10,0,0"
                     HorizontalAlignment="Center"
-                    Style="{StaticResource MaterialDesignHeadlineTextBlock}">
-                    Funcionário
-                </TextBlock>
+                    FontSize="14"/>
                 <StackPanel
                     Name="informacoes"
                     HorizontalAlignment="Center"
@@ -111,28 +102,45 @@
                         Margin="10,10"
                         materialDesign:HintAssist.Hint="Quantidade"
                         materialDesign:HintAssist.IsFloating="True"
-                        PreviewTextInput="testarCaractere"
+                        PreviewTextInput="TestarCaractere"
                         Style="{StaticResource MaterialDesignTextBox}" />
                     <Button
                         x:Name="btnIncluir"
                         Grid.Column="2"
                         Width="100"
                         Margin="10,5"
-                        VerticalAlignment="Bottom"
+                        Click="btnIncluir_Click"
+                        VerticalAlignment="Center"
                         Content="Incluir" />
                 </StackPanel>
                 <DataGrid
                     Name="dgOcorrencias"
-                    Width="auto"
-                    Height="165"
+                    Width="auto" Height="165"
+                    IsReadOnly="false"
+                    CanUserAddRows="False"
                     HorizontalAlignment="Center"
                     AutoGenerateColumns="False"
+                    PreviewKeyDown="dgOcorrencias_PreviewKeyDown"
+                    BeginningEdit="dgOcorrencias_BeginningEdit"
+                    CellEditEnding="Registrar_Alteracao"
                     VerticalScrollBarVisibility="Auto">
+                    
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding tipoOcorr}" Header="Ocorrência" />
-                        <DataGridTextColumn Binding="{Binding CodigoOcorr}" Header="Código" />
-                        <DataGridTextColumn Binding="{Binding QuantOcorr}" Header="Quantidade" />
+                        <DataGridComboBoxColumn 
+                            x:Name="ColunaTipo" Header="Tipo"
+                            
+                            SelectedValueBinding="{Binding TipoDivergencia}"  
+                            DisplayMemberPath="{Binding itensCombo}" >
+                            <DataGridComboBoxColumn.EditingElementStyle>
+                                <Style TargetType="{x:Type ComboBox}">
+                                    <EventSetter Event="SelectionChanged" Handler="SomeSelectionChanged" />
+                                </Style>
+                            </DataGridComboBoxColumn.EditingElementStyle>
+                        </DataGridComboBoxColumn>
+                        <DataGridTextColumn Binding="{Binding TextoDivergencia}" Header="Código" />
+                        <DataGridTextColumn Binding="{Binding QtdeDivergencia}" Header="Quantidade" />
                     </DataGrid.Columns>
+                    
                 </DataGrid>
             </StackPanel>
         </Grid>

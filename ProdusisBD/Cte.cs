@@ -15,13 +15,11 @@ namespace ProdusisBD
     public partial class Cte
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-
         public Cte()
         {
             this.Cte_Manifesto = new HashSet<Cte_Manifesto>();
             this.NotasFiscais = new HashSet<NotasFiscais>();
         }
-
 
         public Cte(int nCte, string nfs)
         {

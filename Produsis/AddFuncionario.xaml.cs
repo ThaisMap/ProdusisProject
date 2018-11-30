@@ -11,9 +11,9 @@ namespace GUI
     /// </summary>
     public partial class AddFuncionario : Window
     {
+        private AcessoBD abd = new AcessoBD();
         private List<Funcionarios> ListaFunc;
         private FuncionarioBLL f = new FuncionarioBLL();
-        private TarefasBD tbd = new TarefasBD();
         private int idDescarga;
 
         public AddFuncionario(int idTarefa)
@@ -22,7 +22,7 @@ namespace GUI
             idDescarga = idTarefa;
             CBFuncionario.DisplayMemberPath = "nomeFunc";
             CBFuncionario.SelectedValuePath = "idFunc";
-            ListaFunc = f.carregaFuncionariosLivres("1"); // 1 = Descarga
+            ListaFunc = abd.GetFuncionariosLivres("1");
             CBFuncionario.ItemsSource = ListaFunc;
         }
 
@@ -30,7 +30,7 @@ namespace GUI
         {
             if (CBFuncionario.SelectedIndex > -1)
             {
-                tbd.IncluirFunc_Tarefa((int)CBFuncionario.SelectedValue, idDescarga);
+                abd.CadastrarFunc_Tarefa((int)CBFuncionario.SelectedValue, idDescarga);
                 this.Close();
             }
             else

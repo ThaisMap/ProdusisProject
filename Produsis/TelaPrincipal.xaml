@@ -65,7 +65,10 @@
                 <MenuItem Name="BtnSeparacaoCarga" Header="Movimentação de paletes" Click="BtnSeparacaoCarga_Click" />
                 <MenuItem Name="BtnCarregamento" Header="Carregamento" Click="BtnCarregamento_Click" />
                 <MenuItem Name="BtnEmpilhadeira" Header="Empilhadeira" Click="BtnEmpilhadeira_Click" />
-                <MenuItem Name="BtnDivergencia" Header="Divergências" Click="BtnDivergencia_Click" />
+                <MenuItem Name="menudiv" Header="Divergências">
+                    <MenuItem Name="BtnDivergencia" Header="Divergências" Click="BtnDivergencia_Click" />
+                    <MenuItem Name="BtnDivergenciaN" Header="Novo Divergências" Click="BtnDivergenciaN_Click" />
+                </MenuItem>
             </Menu>
 
             <Frame

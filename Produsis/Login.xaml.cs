@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DAL;
 using System.Windows;
 
 namespace GUI
@@ -18,12 +19,13 @@ namespace GUI
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
-            if (verificaCampos())
+            if (VerificaCampos())
             {
-                FuncionarioBLL l = new FuncionarioBLL();
-                if (l.validarUsuario(TxbLogin.Text))
+         AcessoBD abd = new AcessoBD();
+
+                if (abd.UsuarioExiste(TxbLogin.Text))
                 {
-                    if (l.validarSenha(TxbLogin.Text, TxbSenha.Password))
+                    if (abd.SenhaCorreta(TxbLogin.Text, TxbSenha.Password))
                     {
                         TelaPrincipal view = new TelaPrincipal();
                         this.Close();
@@ -40,7 +42,7 @@ namespace GUI
             }
         }
 
-        private bool verificaCampos()
+        private bool VerificaCampos()
         {
             //verificar se tem coisas digitadas nos dois campos
             if (TxbLogin.Text == "" || TxbLogin.Text.Length < 4)
@@ -58,7 +60,7 @@ namespace GUI
             return true;
         }
 
-        private static void importarArquivos()
+        private static void ImportarArquivos()
         {
             xmlBLL x = new xmlBLL();
             x.triagemArquivos();

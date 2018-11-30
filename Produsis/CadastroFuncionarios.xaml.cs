@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DAL;
 using ProdusisBD;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -12,7 +13,7 @@ namespace GUI
     /// </summary>
     public partial class CadastroFuncionarios : UserControl
     {
-        private FuncionarioBLL f = new FuncionarioBLL();
+        private AcessoBD bd = new AcessoBD();
 
         public CadastroFuncionarios()
         {
@@ -23,7 +24,7 @@ namespace GUI
         {
             if (checarCampos())
             {
-                if (f.salvarNovo(montarObjeto()))
+                if (bd.CadastrarFuncionario(montarObjeto()))
                 {
                     MessageBox.Show("Funcionário cadastrado com sucesso.", "Funcionário cadastrado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                     limpar(sender, e);

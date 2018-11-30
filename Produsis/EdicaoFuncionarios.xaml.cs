@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DAL;
 using ProdusisBD;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -12,6 +13,7 @@ namespace Produsis
     /// </summary>
     public partial class EdicaoFuncionarios : UserControl
     {
+        private AcessoBD abd = new AcessoBD();
         private FuncionarioBLL f = new FuncionarioBLL();
         private Funcionarios emEdicao;
 
@@ -22,14 +24,14 @@ namespace Produsis
 
         private void ScrollViewer_Loaded(object sender, RoutedEventArgs e)
         {
-            Nome.ItemsSource = f.carregaFuncionarios();
+            Nome.ItemsSource = abd.GetListaNomesFunc();
         }
 
         private void Nome_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (Nome.SelectedIndex > -1)
             {
-                emEdicao = f.dadosFuncionario(Nome.SelectedItem.ToString());
+                emEdicao = abd.GetFuncPorNome(Nome.SelectedItem.ToString());
                 Matricula.Text = emEdicao.matriculaFunc;
 
                 CkAdmin.IsChecked = emEdicao.tipoFunc.Contains("0");
@@ -62,10 +64,10 @@ namespace Produsis
 
         private void Salvar_Click(object sender, RoutedEventArgs e)
         {
-            if (f.validarSenha(emEdicao.matriculaFunc, Senha.Password) && checarCampos())
+            if (abd.SenhaCorreta(emEdicao.matriculaFunc, Senha.Password) && checarCampos())
             {
                 Funcionarios novosDados = montarObjeto();
-                if (f.editar(novosDados))
+                if (abd.EditarFuncionario(novosDados))
                     MessageBox.Show("Funcionário editado com sucesso.", "Funcionário editado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 limpar(sender, e);

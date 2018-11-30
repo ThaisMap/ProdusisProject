@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DAL;
 using ProdusisBD;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace GUI
     /// </summary>
     public partial class Empilhadeira : UserControl
     {
+        private AcessoBD abd = new AcessoBD();
+
         private DocumentosBLL d = new DocumentosBLL();
         private FuncionarioBLL f = new FuncionarioBLL();
         private List<FuncionariosTag> FuncionarioSelecionado = new List<FuncionariosTag>();
@@ -25,10 +28,10 @@ namespace GUI
         public Empilhadeira(double actualHeight, double actualWidth)
         {
             InitializeComponent();
-            ListaFunc = f.carregaFuncionariosLivres("5"); // 5 = Empilhadeira
+            ListaFunc = abd.GetFuncionariosLivres("5"); // 5 = Empilhadeira
             CBFuncionario.ItemsSource = ListaFunc;
             CBFuncionario.DisplayMemberPath = "nomeFunc";
-            dgTarefas.ItemsSource = t.TarefasPendentes("5"); // 5 = Empilhadeira
+            dgTarefas.ItemsSource = abd.GetTarefasPendentes("5"); // 5 = Empilhadeira
             Height = actualHeight - 60;
             Width = actualWidth - 60;
             dgTarefas.Height = actualHeight - 250;
@@ -43,7 +46,7 @@ namespace GUI
 
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
-            dgTarefas.ItemsSource = t.TarefasPendentes("5"); // 5 = Empilhadeira
+            dgTarefas.ItemsSource = abd.GetTarefasPendentes("5"); // 5 = Empilhadeira
             lerXmls();
         }
 
@@ -58,7 +61,7 @@ namespace GUI
                     MessageBox.Show("Movimentação de paletes finalizada após " + item.tempoGasto, "Movimentação finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
                     MessageBox.Show("Houve um erro e a movimentação de paletes não pode ser finalizada.", "Movimentação não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-                ListaFunc = f.carregaFuncionariosLivres("5"); // 5 = Empilhadeira
+                ListaFunc = abd.GetFuncionariosLivres("5"); // 5 = Empilhadeira
                 CBFuncionario.ItemsSource = ListaFunc;
                 AtualizarDg_Click(sender, e);
             }
@@ -116,12 +119,12 @@ namespace GUI
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
             if (checarCampos())
-                if (t.TarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "5"))
+                if (abd.VerificaDocumentoTarefa(int.Parse(Documento.Text.Replace("_", "")), "5"))
                 {
                     if (t.InserirTarefa(montarTarefa(), funcionarios()))
                     {
                         MessageBox.Show("Movimentação de paletes iniciada. ", "Movimentação iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-                        dgTarefas.ItemsSource = t.TarefasPendentes("5");
+                        dgTarefas.ItemsSource = abd.GetTarefasPendentes("5");
                         Documento.Text = "";
                         CBFuncionario.SelectedIndex = -1;
                         ListaDeFuncionarios.Items.Clear();

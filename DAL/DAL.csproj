@@ -52,8 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DocumentosBD.cs" />
-    <Compile Include="FuncionariosBD.cs" />
+    <Compile Include="AcessoBD.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\PastasXml.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -66,8 +65,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Perfumaria.settings</DependentUpon>
     </Compile>
-    <Compile Include="TarefasBD.cs" />
-    <Compile Include="VeiculosBD.cs" />
     <Compile Include="Xml.cs" />
   </ItemGroup>
   <ItemGroup>

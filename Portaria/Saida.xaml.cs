@@ -9,7 +9,7 @@ namespace Portaria
     /// </summary>
     public partial class Saida : Window
     {
-        private VeiculosBD vBD = new VeiculosBD();
+        private AcessoBD abd = new AcessoBD();
         private AcessosPortaria AcessoAtual;
 
         public Saida()
@@ -28,7 +28,7 @@ namespace Portaria
                 AcessoAtual.KmAcesso = int.Parse(txtKm.Text);
                 AcessoAtual.Placa2Acesso = txtPlaca2.Text == "" ? null : txtPlaca2.Text;
                 AcessoAtual.PorteiroSaida = Properties.Login.Default.idUsuario;
-                vBD.RegistrarSaída(AcessoAtual);
+                abd.RegistrarSaída(AcessoAtual);
                 this.Close();
             }
             else
@@ -37,7 +37,7 @@ namespace Portaria
 
         public void registrar(int IdAcesso)
         {
-            AcessoAtual = vBD.getAcessoPorID(IdAcesso);
+            AcessoAtual = abd.GetAcessoPorID(IdAcesso);
             txtPlaca.Text = AcessoAtual.PlacaAcesso;
             txtNome.Text = AcessoAtual.NomeMotoristaAcesso;
             txtPlaca2.Text = AcessoAtual.Placa2Acesso;

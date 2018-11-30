@@ -11,12 +11,12 @@ namespace GUI
     public partial class CadastroCarretas : UserControl
     {
         List<Carretas> lista;
-        VeiculosBD vBD = new VeiculosBD();
+        private AcessoBD abd = new AcessoBD();
+
         public CadastroCarretas()
         {
             InitializeComponent();
-            VeiculosBD vBD = new VeiculosBD();
-            lista = vBD.getCarretas();
+            lista = abd.GetCarretas();
             dgLista.ItemsSource = lista;
         }
 
@@ -35,12 +35,12 @@ namespace GUI
         {
             Carretas atual = dgLista.SelectedItem as Carretas;
             atual.Ativo = !atual.Ativo;
-            vBD.cadastrarCarretas(atual);
+            abd.CadastrarCarretas(atual);
         }
 
         private void btAddPlaca_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            vBD.cadastrarCarretas(MontarObjeto());
+            abd.CadastrarCarretas(MontarObjeto());
         }
     }
 }

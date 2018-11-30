@@ -13,7 +13,7 @@ namespace GUI
     /// </summary>
     public partial class RelatorioPortaria : UserControl
     {
-        private VeiculosBD vBD = new VeiculosBD();
+        private AcessoBD abd = new AcessoBD();
 
         public RelatorioPortaria(double Altura, double largura)
         {
@@ -24,12 +24,11 @@ namespace GUI
         }
 
         private List<AcessosPortaria> source;
-
         public List<Veiculos> veiculos { get; private set; }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            veiculos = vBD.getVeiculos();
+            veiculos = abd.GetVeiculos();
             cbNome.ItemsSource = veiculos.OrderBy(x => x.MotoristaVeiculo);
             cbPlaca.ItemsSource = veiculos;
             cbPlaca.DisplayMemberPath = "PlacaVeiculo";
@@ -46,7 +45,7 @@ namespace GUI
 
         private void BtnPesquisa_Click(object sender, RoutedEventArgs e)
         {
-            source = vBD.FiltrarAcessos(montarObjeto());
+            source = abd.FiltrarAcessos(montarObjeto());
             dgAcessos.ItemsSource = source;
         }
 

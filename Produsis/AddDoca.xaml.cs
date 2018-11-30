@@ -27,8 +27,8 @@ namespace GUI
         {
             if (cbDoca.SelectedIndex > -1)
             {
-                VeiculosBD vBD = new VeiculosBD();
-                vBD.RegistrarDoca(idAcesso, cbDoca.SelectedIndex + 1);
+                AcessoBD abd = new AcessoBD();
+                abd.RegistrarDoca(idAcesso, cbDoca.SelectedIndex + 1);
                 this.Close();
             }
             else

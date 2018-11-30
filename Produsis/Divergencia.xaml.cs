@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DAL;
 using ProdusisBD;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,8 @@ namespace GUI
 
         public List<ItemDivergencia> source { get; set; }
         public List<TarefaModelo> tarefas = new List<TarefaModelo>();
+        TarefasBLL t = new TarefasBLL();
+        AcessoBD abd = new AcessoBD();
 
         private void testarCaractere(object sender, TextCompositionEventArgs e)
         {
@@ -38,7 +41,6 @@ namespace GUI
             {
                 if (cbTipoTarefa.SelectedIndex > -1 && Documento.Text != "")
                 {
-                    TarefasBLL t = new TarefasBLL();
                     tarefas = t.FiltrarDivergencias((cbTipoTarefa.SelectedIndex + 1), int.Parse(Documento.Text));
                     source = new List<ItemDivergencia>();
                     foreach (TarefaModelo item in tarefas)
@@ -58,13 +60,12 @@ namespace GUI
         {
             if (source != null)
             {
-                TarefasBLL t = new TarefasBLL();
                 for (int i = 0; i < source.Count; i++)
                 {
                     tarefas[i].divergenciaTarefa = source[i].getDivergencia();
                 }
 
-                t.InserirDivergencias(tarefas);
+                abd.CadastrarDivergencia(tarefas);
                 MessageBox.Show("As alterações foram salvas.", "Divergências - Produsis");
             }
         }

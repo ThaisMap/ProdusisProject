@@ -47,7 +47,7 @@ namespace DAL
                 XmlDocument manifesto = new XmlDocument();
                 manifesto.Load(nomeArquivo);
 
-                DocumentosBD docBD = new DocumentosBD();
+                AcessoBD docBD = new AcessoBD();
                 var result = manifesto.GetElementsByTagName("Value");
                 Manifestos lido = new Manifestos
                 {
@@ -57,7 +57,7 @@ namespace DAL
                     quantCtesManifesto = (int)double.Parse(result[result.Count - 4].InnerText.Replace('.', ','))
                 };
 
-                bool cadCte = docBD.cadastrarManifesto(lido);
+                docBD.CadastrarManifesto(lido);
 
                 int cte;
                 string fornecedor;
@@ -93,7 +93,7 @@ namespace DAL
 
                 var ValueResult = manifesto.GetElementsByTagName("Value");
                 var TextResult = manifesto.GetElementsByTagName("TextValue");
-                DocumentosBD docBD = new DocumentosBD();
+                AcessoBD docBD = new AcessoBD();
 
                 var ctesNoXml = new List<string>();
                 for (int i = 5; i < ValueResult.Count - 4; i = i + 6)
@@ -108,7 +108,7 @@ namespace DAL
                     quantCtesManifesto = quantCtes
                 };
 
-                docBD.cadastrarManifesto(lido);
+                docBD.CadastrarManifesto(lido);
 
                 int cte;
                 int indexNF = 0;
@@ -147,7 +147,7 @@ namespace DAL
         /// <summary>
         /// Importa os dados de xml de notas fiscais na pasta padrão
         /// </summary>
-        public bool LerXmlNotaFiscal(string nomeArquivo)
+        public void LerXmlNotaFiscal(string nomeArquivo)
         {
             try
             {
@@ -197,25 +197,23 @@ namespace DAL
                 if (nfLida.skuNF > nfLida.volumesNF)
                 { nfLida.skuNF = 1; }
 
-                return InserirNotaFiscal(nfLida);
+                InserirNotaFiscal(nfLida);
             }
             catch (System.Exception ex)
             {
                 var erro = ex;
-                return false;
             }
         }
 
         /// <summary>
         /// Importa os dados de notfis de notas fiscais na pasta padrão
         /// </summary>
-        public bool LerNotfisNotaFiscal(string nomeArquivo)
+        public void LerNotfisNotaFiscal(string nomeArquivo)
         {
             try
             {
                 NotasFiscais nfLida = new NotasFiscais();
 
-                bool retorno = true;
                 string[] notfis = File.ReadAllLines(nomeArquivo);
                 string Fornecedor = "";
 
@@ -280,75 +278,59 @@ namespace DAL
                         if (nf.StartsWith("317"))
                         {
                             nfLida.fornecedorNF = Fornecedor;
-                            retorno = InserirNotaFiscal(nfLida);
+                            InserirNotaFiscal(nfLida);
                         }
                     }
-                }
-                else
-                {
-                    retorno = false;
-                }
-
-                return retorno;
+                }              
             }
             catch (System.Exception ex)
             {
-                var erro = ex;
-                return false;
+                throw ex;
             }
         }
 
         /// <summary>
         ///
         /// </summary>
-        private static bool InserirNotaFiscal(NotasFiscais nfLida)
+        private static void InserirNotaFiscal(NotasFiscais nfLida)
         {
-            DocumentosBD dbd = new DocumentosBD();
-            if (dbd.verificarDocumentoCadastrado(2, nfLida.numeroNF) == 0)
-            {
-                if (!dbd.cadastrarNF(nfLida))
-                { return false; }
-                return true;
-            }
-            return false;
+            AcessoBD dbd = new AcessoBD();
+            if (dbd.NfExiste(nfLida.numeroNF))
+                dbd.CadastrarNF(nfLida);
+
+            else
+                dbd.AlterarNF(nfLida);
+
         }
 
         /// <summary>
         /// Dispara a alteração das nfs de um manifesto para incluir o cte
         /// </summary>
         /// <param name="nfs">string contendo as notas fiscais separadas por uma '\'</param>
-        private bool AlterarNfs(string nfs, int cte)
+        private void AlterarNfs(string nfs, int cte)
         {
-            bool retorno = true;
-            DocumentosBD dbd = new DocumentosBD();
+            AcessoBD dbd = new AcessoBD();
             var listNfs = nfs.Split('\\');
             foreach (string nf in listNfs)
             {
-                if (dbd.verificarDocumentoCadastrado(2, nf) >= 0)
-                {
-                    if (!dbd.inserirCteNf(nf, cte))
-                        retorno = false; //false se não for possivel alterar alguma nota
-                }
-                else
-                    retorno = false; //false se alguma nota não estiver cadastrada
+                if (dbd.NfExiste(nf))                
+                    dbd.InserirCteNaNf(nf, cte);                 
             }
-            return retorno;
         }
 
-        private bool CriarCte(int cte, string notas)
+        private void CriarCte(int cte, string notas)
         {
-            DocumentosBD dbd = new DocumentosBD();
-            //  alterado para novo cte
-            return (dbd.cadastrarNovoCte(new Cte(cte, notas)));
+            AcessoBD dbd = new AcessoBD();
+            dbd.CadastrarCte(new Cte(cte, notas));
         }
 
         private void CriarCteManifesto(int cte, int manifesto) // alterado para novo cte
         {
-            DocumentosBD dbd = new DocumentosBD();
-            var ctes = dbd.getNovoCtePorNum(cte);
+            AcessoBD dbd = new AcessoBD();
+            var ctes = dbd.GetNovoCtePorNum(cte);
 
-            if (dbd.checarCteManifesto(new Cte_Manifesto(manifesto, ctes.Max(x => x.idCte))))
-                dbd.cadastrarCteManifesto(new Cte_Manifesto(manifesto, ctes.Max(x => x.idCte)));
+            if (!dbd.CteManifestoExiste(new Cte_Manifesto(manifesto, ctes.Max(x => x.idCte))))
+                dbd.CadastrarCteManifesto(new Cte_Manifesto(manifesto, ctes.Max(x => x.idCte)));
         }
     }
 }

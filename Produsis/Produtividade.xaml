@@ -122,29 +122,27 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Language="pt-br" />
-            <Button
-                x:Name="btGerar"
+            <Button x:Name="btGerar"
                 Grid.Row="2"
                 Grid.Column="4"
                 Width="75"
                 Margin="5,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Click="geraRelatorioTabela"
+                Click="GeraRelatorioTabela"
                 Content="Gerar" />
         </Grid>
-        <DataGrid
-            x:Name="dgRanking"
+        <DataGrid x:Name="dgRanking"
             Height="220"
             HorizontalAlignment="Center"
             materialDesign:DataGridAssist.CellPadding="4 2"
-            AutoGenerateColumns="False"
-            VerticalScrollBarVisibility="Auto" Margin="226,0">
+            AutoGenerateColumns="False"           
+            VerticalScrollBarVisibility="Auto" Width="auto">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding nomesFuncionarios}" Header="Funcionário" />
-                <DataGridTextColumn Binding="{Binding mediaPorHora}" Header="Pontuação no período" />
-                <DataGridTextColumn Binding="{Binding quantidadeTarefas}" Header=" Quantidade" />
-                <DataGridTextColumn Binding="{Binding observacoes}" Header="Observações" />
+                <DataGridTextColumn Binding="{Binding NomesFuncionarios}" Header="Funcionário" />
+                <DataGridTextColumn Binding="{Binding Pontuacao}" Header="Pontuação no período" />
+                <DataGridTextColumn Binding="{Binding QuantidadeTarefas}" Header="Quantidade" />
+                <DataGridTextColumn Binding="{Binding Erros}" Header="Erros" />
             </DataGrid.Columns>
         </DataGrid>
     </StackPanel>

@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DAL;
 using ProdusisBD;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace GUI
     /// </summary>
     public partial class Conferencia : UserControl
     {
+        private AcessoBD abd = new AcessoBD();
+
         private DocumentosBLL d = new DocumentosBLL();
         private FuncionarioBLL f = new FuncionarioBLL();
         private FuncionariosTag FuncionarioSelecionado;
@@ -24,9 +27,9 @@ namespace GUI
         public Conferencia(double actualHeight, double actualWidth)
         {
             InitializeComponent();
-            ListaFunc = f.carregaConferentesLivres("2");
+            ListaFunc = abd.GetConferentesLivres("2");
             CBFuncionario.ItemsSource = ListaFunc;
-            dgTarefas.ItemsSource = t.TarefasPendentes("2");
+            dgTarefas.ItemsSource = abd.GetTarefasPendentes("2");
             Height = actualHeight - 60;
             Width = actualWidth - 60;
             svTarefa.Height = actualHeight - 340;
@@ -41,7 +44,7 @@ namespace GUI
 
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
-            dgTarefas.ItemsSource = t.TarefasPendentes("2");
+            dgTarefas.ItemsSource = abd.GetTarefasPendentes("2");
             LerXmls();
         }
 
@@ -57,7 +60,7 @@ namespace GUI
                 }
                 else
                 {
-                    ListaFunc = f.carregaConferentesLivres("2");
+                    ListaFunc = abd.GetConferentesLivres("2");
                     CBFuncionario.ItemsSource = ListaFunc;
 
                     if (ListaFunc.Contains(item.nomesFuncionarios))
@@ -81,7 +84,7 @@ namespace GUI
             this.TabIndex = 1;
             AtualizarDg_Click(sender, e);
         }
-
+         
         private void CBFuncionario_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (CBFuncionario.SelectedIndex > -1)
@@ -130,8 +133,8 @@ namespace GUI
                     {
                         if (t.InserirTarefa(MontarTarefa(), funcionarios()))
                         {
-                            dgTarefas.ItemsSource = t.TarefasPendentes("2");
-                            MessageBox.Show("Conferência iniciada para o " + d.linhaDadosCte(int.Parse(Documento.Text.Replace("_", ""))), "Conferência iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                            dgTarefas.ItemsSource = abd.GetTarefasPendentes("2");
+                            MessageBox.Show("Conferência iniciada para o " + abd.GetDadosCte(int.Parse(Documento.Text.Replace("_", ""))), "Conferência iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                             Documento.Text = "";
                             CBFuncionario.SelectedIndex = -1;
                             ListaDeFuncionarios.Items.Clear();

@@ -8,7 +8,7 @@
    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
           Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-    Icon="C:\Users\thais.maria.RODOMINAS\Documents\GitHub\ProdusisProject\Portaria\icone_2_produsis.ico"
+    Icon="icone_2_produsis.ico"
         WindowState="Maximized"
         Loaded="Window_Loaded"
         Title="Portaria - Expresso Rodominas" Height="450" Width="800">

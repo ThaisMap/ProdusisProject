@@ -16,9 +16,10 @@ namespace GUI
     /// </summary>
     public partial class Carregamento : UserControl
     {
+        private AcessoBD abd = new AcessoBD();
+
         private DocumentosBLL d = new DocumentosBLL();
         private FuncionarioBLL f = new FuncionarioBLL();
-        private VeiculosBD funcionariosBD = new VeiculosBD();
         private List<Veiculos> ListaMotoristas;
         private List<FuncionariosTag> FuncionarioSelecionado = new List<FuncionariosTag>();
         private List<Funcionarios> ListaFunc;
@@ -28,15 +29,15 @@ namespace GUI
         public Carregamento(double actualHeight, double actualWidth)
         {
             InitializeComponent();
-            ListaFunc = f.carregaFuncionariosLivres("4");
+            ListaFunc = abd.GetFuncionariosLivres("4");
             CBFuncionario.ItemsSource = ListaFunc;
             CBFuncionario.DisplayMemberPath = "nomeFunc";
-            ListaMotoristas = funcionariosBD.getVeiculos();
+            ListaMotoristas = abd.GetVeiculos();
             ListaMotoristas = ListaMotoristas.OrderBy(x => x.MotoristaVeiculo).ToList();
             CBmotorista.ItemsSource = ListaMotoristas;
             CBmotorista.DisplayMemberPath = "MotoristaVeiculo";
             CBmotorista.SelectedValuePath = "CapacidadePaletes";
-            dgTarefas.ItemsSource = t.TarefasPendentes("4");
+            dgTarefas.ItemsSource = abd.GetTarefasPendentes("4");
             Height = actualHeight - 150;
             Width = actualWidth - 60;
             lerXmls();
@@ -50,7 +51,7 @@ namespace GUI
 
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
-            dgTarefas.ItemsSource = t.TarefasPendentes("4");
+            dgTarefas.ItemsSource = abd.GetTarefasPendentes("4");
             lerXmls();
         }
 
@@ -65,7 +66,7 @@ namespace GUI
                     MessageBox.Show("Carregamento finalizado após " + item.tempoGasto, "Carregamento finalizado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
                     MessageBox.Show("Houve um erro e o carregamento não pode ser finalizado.", "Carregamento não finalizado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-                ListaFunc = f.carregaFuncionariosLivres("4");
+                ListaFunc = abd.GetFuncionariosLivres("4");
                 CBFuncionario.ItemsSource = ListaFunc;
                 AtualizarDg_Click(sender, e);
             }
@@ -125,12 +126,12 @@ namespace GUI
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
             if (checarCampos())
-                if (t.TarefaRepetida(int.Parse(Documento.Text.Replace("_", "")), "4"))
+                if (abd.VerificaDocumentoTarefa(int.Parse(Documento.Text.Replace("_", "")), "4"))
                 {
                     if (t.InserirTarefa(montarTarefa(), funcionarios()))
                     {
-                        dgTarefas.ItemsSource = t.TarefasPendentes("4");
-                        MessageBox.Show("Carregamento iniciado para o " + d.linhaDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Carregamento iniciado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                        dgTarefas.ItemsSource = abd.GetTarefasPendentes("4");
+                        MessageBox.Show("Carregamento iniciado para o " + abd.GetDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Carregamento iniciado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                         Documento.Text = "";
                         CBFuncionario.SelectedIndex = -1;
                         ListaDeFuncionarios.Items.Clear();
@@ -179,14 +180,13 @@ namespace GUI
 
         private Tarefas montarTarefa()
         {
-            TarefasBD tBD = new TarefasBD();
             var paletes = 30;
 
             if (CBmotorista.SelectedValue != null)
                 paletes = (int)CBmotorista.SelectedValue;
             else
             {
-                int? paleteSeparacao = tBD.GetPaletesSeparacao(int.Parse(Documento.Text.Replace("_", "")));
+                int? paleteSeparacao = abd.GetPaletesSeparacao(int.Parse(Documento.Text.Replace("_", "")));
 
                 if (paleteSeparacao != null)
                     paletes = (int)paleteSeparacao;

@@ -16,9 +16,8 @@ namespace GUI
     {
         public bool isEditing { get; set; }
         private List<Veiculos> motoristas;
-        public VeiculosBD veiculoaBD = new VeiculosBD();
-        public CapacidadeMotoristas emEdicao { get; set; }
-
+        private AcessoBD abd = new AcessoBD();
+     
         public CadastroMotorista(double Altura, double largura)
         {
             InitializeComponent();
@@ -27,13 +26,12 @@ namespace GUI
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             loadData();
-            emEdicao = new CapacidadeMotoristas();
         }
 
         // ATUALIZADO
         private List<Veiculos> loadData()
         {
-            motoristas = veiculoaBD.getVeiculos();
+            motoristas = abd.GetVeiculos();
             cbNome.ItemsSource = motoristas.OrderBy(x => x.MotoristaVeiculo);
             cbNome.DisplayMemberPath = "MotoristaVeiculo";
             cbNome.SelectedValuePath = "MotoristaVeiculo";
@@ -44,7 +42,7 @@ namespace GUI
         {
             if (ChecarCampos())
             {
-                if (veiculoaBD.cadastrarVeiculo(MontarObjeto()))
+                if (abd.CadastrarVeiculo(MontarObjeto()))
                 {
                     MessageBox.Show("Veículo cadastrado");
                     limpar();
