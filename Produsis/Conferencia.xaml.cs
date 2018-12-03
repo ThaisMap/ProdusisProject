@@ -17,11 +17,9 @@ namespace GUI
     {
         private AcessoBD abd = new AcessoBD();
 
-        private DocumentosBLL d = new DocumentosBLL();
-        private FuncionarioBLL f = new FuncionarioBLL();
+        private Logica bll = new Logica();
         private FuncionariosTag FuncionarioSelecionado;
         private List<string> ListaFunc;
-        private TarefasBLL t = new TarefasBLL();
         private int checagemDeCte = -1;
 
         public Conferencia(double actualHeight, double actualWidth)
@@ -54,7 +52,7 @@ namespace GUI
             item.AtualizaTempoGasto();
             if (MessageBox.Show("Confirma finalização da conferência de " + item.nomesFuncionarios + " após " + item.tempoGasto + "? ", "Produsis", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
-                if (!t.FinalizarTarefa(item.idTarefa, 0, 0))
+                if (!abd.FinalizarTarefa(item.idTarefa, 0, 0))
                 {
                     MessageBox.Show("Houve um erro e a conferência não pode ser finalizada.", "Conferência não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
@@ -125,13 +123,13 @@ namespace GUI
 
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
-            checagemDeCte = d.getIdCteDisponivel(int.Parse(Documento.Text.Replace("_", "")));
+            checagemDeCte = bll.IdCteDisponivelMaisRecente(int.Parse(Documento.Text.Replace("_", "")));
             if (ChecarCampos())
                 if (checagemDeCte > -1)
                 {
                     if (checagemDeCte > 0)
                     {
-                        if (t.InserirTarefa(MontarTarefa(), funcionarios()))
+                        if (bll.InserirTarefa(MontarTarefa(), funcionarios()))
                         {
                             dgTarefas.ItemsSource = abd.GetTarefasPendentes("2");
                             MessageBox.Show("Conferência iniciada para o " + abd.GetDadosCte(int.Parse(Documento.Text.Replace("_", ""))), "Conferência iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -169,7 +167,7 @@ namespace GUI
         private static void LerXmls()
         {
             xmlBLL x = new xmlBLL();
-            x.triagemArquivos();
+            x.TriagemArquivos();
         }
 
         private Tarefas MontarTarefa()

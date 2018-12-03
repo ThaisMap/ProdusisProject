@@ -18,11 +18,8 @@ namespace GUI
     {
         private AcessoBD abd = new AcessoBD();
 
-        private DocumentosBLL d = new DocumentosBLL();
-        private FuncionarioBLL f = new FuncionarioBLL();
         private List<FuncionariosTag> FuncionarioSelecionado = new List<FuncionariosTag>();
         private List<Funcionarios> ListaFunc;
-        private TarefasBLL t = new TarefasBLL();
         private int[] pallets = { 0, 0 };
 
         public Separacao2(double actualHeight, double actualWidth)
@@ -57,7 +54,7 @@ namespace GUI
             {
                 Tarefas item = (Tarefas)dgTarefas.SelectedItem;
                 // lançar apenas quantidade de paletes na separação
-                if (t.FinalizarTarefa(item.idTarefa, pallets[0], pallets[0]))
+                if (abd.FinalizarTarefa(item.idTarefa, pallets[0], pallets[0]))
                     MessageBox.Show("Separação para carregamento finalizada após " + item.tempoGasto, "Separação finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
                     MessageBox.Show("Houve um erro e a separação para carregamento não pode ser finalizada.", "Separação não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -119,10 +116,12 @@ namespace GUI
 
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
+            Logica bll = new Logica();
+
             if (checarCampos())
-                if (abd.VerificaDocumentoTarefa(int.Parse(Documento.Text.Replace("_", "")), "3"))
+                if (!abd.VerificaDocumentoTarefa(int.Parse(Documento.Text.Replace("_", "")), "3"))
                 {
-                    if (t.InserirTarefa(montarTarefa(), funcionarios()))
+                    if (bll.InserirTarefa(montarTarefa(), funcionarios()))
                     {
                         MessageBox.Show("Separação iniciada para carregar o " + abd.GetDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Separação iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                         dgTarefas.ItemsSource = abd.GetTarefasPendentes("3");
@@ -169,7 +168,7 @@ namespace GUI
         private static void lerXmls()
         {
             xmlBLL x = new xmlBLL();
-            x.triagemArquivos();
+            x.TriagemArquivos();
         }
 
         private Tarefas montarTarefa()

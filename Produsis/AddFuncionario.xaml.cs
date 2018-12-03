@@ -13,7 +13,6 @@ namespace GUI
     {
         private AcessoBD abd = new AcessoBD();
         private List<Funcionarios> ListaFunc;
-        private FuncionarioBLL f = new FuncionarioBLL();
         private int idDescarga;
 
         public AddFuncionario(int idTarefa)

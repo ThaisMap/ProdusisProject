@@ -14,7 +14,6 @@ namespace Produsis
     public partial class EdicaoFuncionarios : UserControl
     {
         private AcessoBD abd = new AcessoBD();
-        private FuncionarioBLL f = new FuncionarioBLL();
         private Funcionarios emEdicao;
 
         public EdicaoFuncionarios()

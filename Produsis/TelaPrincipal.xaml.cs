@@ -21,7 +21,7 @@ namespace GUI
             BtnConferencia.Opacity = 1;
             BtnDescarga.Opacity = 1;
             BtnSeparacaoCarga.Opacity = 1;
-            BtnDivergencia.Opacity = 1;
+            BtnDivergenciaN.Opacity = 1;
             BtnEmpilhadeira.Opacity = 1;
         }
 
@@ -57,14 +57,7 @@ namespace GUI
             ResetarOpacidade();
             BtnConferencia.Opacity = 0.5;
             Navegador.Navigate(new Conferencia(ActualHeight, ActualWidth));
-        }
-
-        private void BtnDivergencia_Click(object sender, RoutedEventArgs e)
-        {
-            ResetarOpacidade();
-            BtnDivergencia.Opacity = 0.5;
-            Navegador.Navigate(new Divergencia(ActualHeight, ActualWidth));
-        }
+        }       
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -125,7 +118,9 @@ namespace GUI
 
         private void BtnDivergenciaN_Click(object sender, RoutedEventArgs e)
         {
+            ResetarOpacidade();
             Navegador.Navigate(new Divergencias(ActualHeight, ActualWidth));
+            BtnDivergenciaN.Opacity = 0.5;
         }
 
         private void BtnEmpilhadeira_Click(object sender, RoutedEventArgs e)

@@ -133,7 +133,8 @@
                 Content="Gerar" />
         </Grid>
         <DataGrid x:Name="dgRanking"
-            Height="220"
+            Height="220" 
+            IsReadOnly="True" 
             HorizontalAlignment="Center"
             materialDesign:DataGridAssist.CellPadding="4 2"
             AutoGenerateColumns="False"           

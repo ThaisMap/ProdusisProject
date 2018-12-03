@@ -1,4 +1,5 @@
-﻿using ProdusisBD;
+﻿using DAL.Properties;
+using ProdusisBD;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace DAL
                 }
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    if (CteExiste(novoCte.numeroCte, novoCte.notasCte))
+                    if (!CteExiste(novoCte.numeroCte, novoCte.notasCte))
                     {
                         BancoDeDados.Cte.Add(novoCte);
                         BancoDeDados.SaveChanges();
@@ -36,7 +37,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                var olho = ex;
+
             }
         }
 
@@ -70,16 +71,26 @@ namespace DAL
             {
                 try
                 {
-                    BancoDeDados.Manifestos.Add(novoManifesto);
+                    if (ManifestoExiste(novoManifesto.numeroManifesto))
+                    {
+                        var manifestoAlterado = BancoDeDados.Manifestos.Where(x => x.numeroManifesto == novoManifesto.numeroManifesto).First();
+                        manifestoAlterado.pesoManifesto = novoManifesto.pesoManifesto;
+                        manifestoAlterado.quantCtesManifesto = novoManifesto.quantCtesManifesto;
+                        manifestoAlterado.VolumesManifesto = novoManifesto.VolumesManifesto;
+
+                        BancoDeDados.SaveChanges();
+                    }
+                    else
+                    {
+                        BancoDeDados.Manifestos.Add(novoManifesto);
+
+                        BancoDeDados.SaveChanges();
+                    }
                 }
                 catch
                 {
-                    var manifestoAlterado = BancoDeDados.Manifestos.Where(x => x.numeroManifesto == novoManifesto.numeroManifesto).First();
-                    manifestoAlterado.pesoManifesto = novoManifesto.pesoManifesto;
-                    manifestoAlterado.quantCtesManifesto = novoManifesto.quantCtesManifesto;
-                    manifestoAlterado.VolumesManifesto = novoManifesto.VolumesManifesto;
+
                 }
-                BancoDeDados.SaveChanges();
             }
         }
 
@@ -313,26 +324,7 @@ namespace DAL
             }
         }
 
-        public bool CadastrarDivergencia(List<TarefaModelo> listaDivergencia)
-        {
-            try
-            {
-                foreach (TarefaModelo tar in listaDivergencia)
-                {
-                    using (var BancoDeDados = new produsisBDEntities())
-                    {
-                        Tarefas tarefaAtual = BancoDeDados.Tarefas.Single(t => t.idTarefa == tar.idTarefa);
-                        tarefaAtual.divergenciaTarefa = tar.divergenciaTarefa;
-                        BancoDeDados.SaveChanges();
-                    }
-                }
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
+      
 
         #endregion Tarefas
 
@@ -912,50 +904,7 @@ namespace DAL
                 return "";
             }
         }
-
-        public List<TarefaModelo> GetTarefasDivergencia(int tipo, int documento)
-        {
-            List<TarefaModelo> listaModelo = new List<TarefaModelo>();
-            List<Tarefas> lista = new List<Tarefas>();
-
-            try
-            {
-                using (var BancoDeDados = new produsisBDEntities())
-                {
-                    if (tipo == 2)
-                    {
-                        try
-                        {
-                            var listaCtes = GetNovoCtePorNum(documento);
-                            //Se o tipo desejado for Conferência, retorna todas as tarefas com ctes relacionados com o manifesto do cte informado
-                            foreach (var item in listaCtes)
-                            {
-                                int manif = BancoDeDados.Cte_Manifesto.Where(c => c.CteNovo == item.idCte).Select(m => m.Manifesto).FirstOrDefault();
-                                var ctes = BancoDeDados.Cte_Manifesto.Where(m => m.Manifesto == manif).Select(c => c.CteNovo).ToList(); //lista dos ids
-                                foreach (int cte in ctes)
-                                {
-                                    lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == cte).FirstOrDefault());
-                                }
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                        }
-                    }
-                    else
-                    { //Se for outro tipo, retorna só aquele tipo e manifesto
-                        lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == documento && c.tipoTarefa == tipo.ToString()).FirstOrDefault());
-                    }
-                    listaModelo = TarefaModeloParse(lista);
-                }
-            }
-            catch (Exception e)
-            {
-                var whatHapened = e;
-            }
-            return listaModelo;
-        }
-
+        
         public List<Divergencias> GetNovaDivergencia(int documento, int tipo)
         {
             try
@@ -965,7 +914,7 @@ namespace DAL
                     Tarefas tarefa;
                     if (tipo != 2)
                     {
-                        tarefa = BancoDeDados.Tarefas.Where(t => t.documentoTarefa == documento).FirstOrDefault();
+                        tarefa = BancoDeDados.Tarefas.Where(t => t.documentoTarefa == documento && t.tipoTarefa == tipo.ToString()).FirstOrDefault();
                     }
                     else
                     {
@@ -1060,7 +1009,7 @@ namespace DAL
                         .Where(i => i.fimTarefa != null)
                         .ToList();
 
-                    var listaItems = ConsolidarRelatorio(listaConf, listaNotConf, true);
+                    var listaItems = ConsolidarRelatorio(listaConf, listaNotConf);
                     var listaTarefas = listaItems.Select(i => i.idTarefa);
                     var resultado = BancoDeDados.Func_Tarefa.Where(t => listaTarefas.Contains(t.Tarefa)).ToList();
 
@@ -1090,9 +1039,8 @@ namespace DAL
                 return listaFinal;
             }
         }
-
-
-        public List<ItemRelatorio> GetTarefasFiltradas(Filtro f, bool consolidarFuncionario)
+        
+        public List<ItemRelatorio> GetTarefasFiltradas(Filtro f)
         {
             List<ItemRelatorio> lista = new List<ItemRelatorio>();
             try
@@ -1158,23 +1106,23 @@ namespace DAL
                             queryConf = queryConf.Where(l => l.nomeFunc == f.nomeFuncionario);
 
                         if (f.volumeInicio > 0)
-                            queryConf = queryConf.Where(l => l.volumesNF >= f.volumeInicio);
+                            queryConf = queryConf.Where(l => l.Volumes >= f.volumeInicio);
 
                         if (f.volumeFim > 0)
-                            queryConf = queryConf.Where(l => l.volumesNF <= f.volumeFim);
+                            queryConf = queryConf.Where(l => l.Volumes <= f.volumeFim);
 
                         if (f.skuInicio > 0)
-                            queryConf = queryConf.Where(l => l.skuNF >= f.skuInicio);
+                            queryConf = queryConf.Where(l => l.SKU >= f.skuInicio);
 
                         if (f.skuFim > 0)
-                            queryConf = queryConf.Where(l => l.skuNF <= f.skuFim);
+                            queryConf = queryConf.Where(l => l.SKU <= f.skuFim);
 
                         relatorioConferencia = queryConf.ToList();
                     }
 
                     #endregion filtrando Conferencias
 
-                    lista = ConsolidarRelatorio(relatorioConferencia, relatorioNaoConferencia, consolidarFuncionario);
+                    lista = ConsolidarRelatorio(relatorioConferencia, relatorioNaoConferencia);
                     lista.OrderBy(o => o.idTarefa);
                 }
             }
@@ -1183,8 +1131,7 @@ namespace DAL
             }
             return lista;
         }
-
-
+        
         #endregion Tarefas
 
         #endregion Gets
@@ -1549,18 +1496,16 @@ namespace DAL
             {
             }
         }
-
-
-
-
+        
         #endregion Tarefas
 
         #endregion Alteracoes
 
+        #region NotDatabase
+
         private List<TarefaModelo> TarefaModeloParse(List<Tarefas> tarefas)
         {
             List<TarefaModelo> modelos = new List<TarefaModelo>();
-            AcessoBD d = new AcessoBD();
             foreach (Tarefas tar in tarefas)
             {
                 if (tar != null)
@@ -1573,7 +1518,6 @@ namespace DAL
 
         private TarefaModelo TarefaModeloParse(Tarefas tarefas)
         {
-            List<TarefaModelo> modelos = new List<TarefaModelo>();
             TarefaModelo aux;
             Manifestos m;
             aux = new TarefaModelo(tarefas);
@@ -1630,63 +1574,143 @@ namespace DAL
             return Rank;
         }
 
-        private List<ItemRelatorio> ConsolidarRelatorio(List<RelatorioNovoConferencias> conferencias, List<RelatorioNaoConferencia> outros, bool consolidarFuncionario)
+        private List<ItemRelatorio> ConsolidarRelatorio(List<RelatorioNovoConferencias> conferencias, List<RelatorioNaoConferencia> outros)
         {
             List<ItemRelatorio> lista = new List<ItemRelatorio>();
-            Manifestos auxiliar = new Manifestos();
-
-            if (consolidarFuncionario)
+           
+            foreach (var tarefa in conferencias)
             {
-                foreach (var tarefa in conferencias)
+                var x = lista.Where(id => id.idTarefa == tarefa.idTarefa && !(id.nomesFunc.Contains(tarefa.nomeFunc))).FirstOrDefault();
+                if (x == null)
+                    lista.Add(new ItemRelatorio(tarefa));
+                else
                 {
-                    var x = lista.Where(id => id.idTarefa == tarefa.idTarefa).Where(id => !(id.nomesFunc.Contains(tarefa.nomeFunc))).FirstOrDefault();
-                    if (x == null)
-                        lista.Add(new ItemRelatorio(tarefa));
-                    else
-                    {
-                        int index = lista.IndexOf(x);
-                        lista[index].nomesFunc = lista[index].nomesFunc + "/" + tarefa.nomeFunc;
-                    }
-                }
-
-                foreach (var tarefa in outros)
-                {
-                    var x = lista.Where(id => id.idTarefa == tarefa.idTarefa).FirstOrDefault();
-                    if (x == null)
-                    {
-                        auxiliar = GetManifestoPorNumero(tarefa.documentoTarefa);
-                        lista.Add(new ItemRelatorio(tarefa)
-                        {
-                            fornecedor = GetFornecedorManifesto(tarefa.documentoTarefa),
-                            ctesNoManifesto = auxiliar.quantCtesManifesto
-                        });
-                    }
-                    else
-                    {
-                        int index = lista.IndexOf(x);
-                        lista[index].nomesFunc = lista[index].nomesFunc + "/" + tarefa.nomeFunc;
-                    }
+                    int index = lista.IndexOf(x);
+                    lista[index].nomesFunc = lista[index].nomesFunc + "/" + tarefa.nomeFunc;
                 }
             }
-            else
+
+            foreach (var tarefa in outros)
             {
-                foreach (var tarefa in conferencias)
+                var x = lista.Where(id => id.idTarefa == tarefa.idTarefa).FirstOrDefault();
+                if (x == null)
                 {
-                    lista.Add(new ItemRelatorio(tarefa));
-                }
-                foreach (var tarefa in outros)
-                {
-                    auxiliar = GetManifestoPorNumero(tarefa.documentoTarefa);
                     lista.Add(new ItemRelatorio(tarefa)
                     {
                         fornecedor = GetFornecedorManifesto(tarefa.documentoTarefa),
-                        ctesNoManifesto = auxiliar.quantCtesManifesto
+                        ctesNoManifesto = GetManifestoPorNumero(tarefa.documentoTarefa).quantCtesManifesto
                     });
+                }
+                else
+                {
+                    int index = lista.IndexOf(x);
+                    lista[index].nomesFunc = lista[index].nomesFunc + "/" + tarefa.nomeFunc;
                 }
             }
             return lista;
         }
 
+        #endregion
+
+
+        public string GetPastaNFs()
+        {
+            return PastasXml.Default.PastaNFs;
+        }
+
+        public string GetPastaPreManifestos()
+        {
+            return PastasXml.Default.PastaPreManifestos;
+        }
+
+        public string GetPastaManifestos()
+        {
+            return PastasXml.Default.PastaManifestos;
+        }
+
+        public void SetPastasNF(string caminho)
+        {
+            PastasXml.Default.PastaNFs = caminho;
+            PastasXml.Default.Save();
+        }
+
+        public void SetPastasManifesto(string caminho)
+        {
+            PastasXml.Default.PastaManifestos = caminho;
+            PastasXml.Default.Save();
+        }
+
+        public void SetPastasPreManifesto(string caminho)
+        {
+            PastasXml.Default.PastaPreManifestos = caminho;
+            PastasXml.Default.Save();
+        }
+
+        /*  TELA DE DIVERGENCIAS ANTIGAS
+         *  public bool CadastrarDivergencia(List<TarefaModelo> listaDivergencia)
+            {
+                try
+                {
+                    foreach (TarefaModelo tar in listaDivergencia)
+                    {
+                        using (var BancoDeDados = new produsisBDEntities())
+                        {
+                            Tarefas tarefaAtual = BancoDeDados.Tarefas.Single(t => t.idTarefa == tar.idTarefa);
+                            tarefaAtual.divergenciaTarefa = tar.divergenciaTarefa;
+                            BancoDeDados.SaveChanges();
+                        }
+                    }
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+
+            public List<TarefaModelo> GetTarefasDivergencia(int tipo, int documento)
+            {
+                List<TarefaModelo> listaModelo = new List<TarefaModelo>();
+                List<Tarefas> lista = new List<Tarefas>();
+
+                try
+                {
+                    using (var BancoDeDados = new produsisBDEntities())
+                    {
+                        if (tipo == 2)
+                        {
+                            try
+                            {
+                                var listaCtes = GetNovoCtePorNum(documento);
+                                //Se o tipo desejado for Conferência, retorna todas as tarefas com ctes relacionados com o manifesto do cte informado
+                                foreach (var item in listaCtes)
+                                {
+                                    int manif = BancoDeDados.Cte_Manifesto.Where(c => c.CteNovo == item.idCte).Select(m => m.Manifesto).FirstOrDefault();
+                                    var ctes = BancoDeDados.Cte_Manifesto.Where(m => m.Manifesto == manif).Select(c => c.CteNovo).ToList(); //lista dos ids
+                                    foreach (int cte in ctes)
+                                    {
+                                        lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == cte).FirstOrDefault());
+                                    }
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                            }
+                        }
+                        else
+                        { //Se for outro tipo, retorna só aquele tipo e manifesto
+                            lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == documento && c.tipoTarefa == tipo.ToString()).FirstOrDefault());
+                        }
+                        listaModelo = TarefaModeloParse(lista);
+                    }
+                }
+                catch (Exception e)
+                {
+                    var whatHapened = e;
+                }
+                return listaModelo;
+            }
+      */
 
     }
 }

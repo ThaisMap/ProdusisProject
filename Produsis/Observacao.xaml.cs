@@ -14,7 +14,7 @@ namespace GUI
     public partial class Observacao : UserControl
     {
         private AcessoBD abd = new AcessoBD();
-        private FuncionarioBLL f = new FuncionarioBLL();
+        private Logica bll = new Logica();
 
         public Observacao(double actualHeight, double actualWidth)
         {
@@ -33,7 +33,7 @@ namespace GUI
             DateTime data = (DateTime)dataObs.SelectedDate;
             string texto = SelectTime.Text + " - " + TextoObs.Text;
 
-            if (f.cadastraObservacao(nome, data, texto))
+            if (bll.CadastraObservacao(nome, data, texto))
             {
                 MessageBox.Show("Observação cadastrada");
             }

@@ -9,7 +9,7 @@ namespace ProdusisBD
         public int documentoTarefa { get; set; }
         public string tipoTarefa { get; set; }
         public DateTime inicioTarefa { get; set; }
-        public Nullable<DateTime> fimTarefa { get; set; }
+        public DateTime? fimTarefa { get; set; }
         public string divergenciaTarefa { get; set; }
         public string nomesFunc { get; set; }
         public int volumes { get; set; }
@@ -33,8 +33,8 @@ namespace ProdusisBD
             inicioTarefa = r.inicioTarefa;
             fimTarefa = r.fimTarefa;
             nomesFunc = r.nomeFunc;
-            volumes = r.volumesNF;
-            sku = r.skuNF;
+            volumes = (int)r.Volumes;
+            sku = (int)r.SKU;
             fornecedor = r.fornecedorNF;
             divergenciaTarefa = r.divergenciaTarefa;
             divergenciaTarefa = divergencia();
@@ -129,7 +129,6 @@ namespace ProdusisBD
         {
             try
             {
-
                 if (divergenciaTarefa != "Nenhuma" && divergenciaTarefa != "-;0;-;0;-;0")
                 {
                     pontos = 0;
@@ -140,6 +139,7 @@ namespace ProdusisBD
                     {
                         pontos = sku * 7 + volumes * 0.4;
                     }
+
                     else if (tipoTarefa.Contains("Descarga") || tipoTarefa.Contains("Carregamento"))
                     {
                         if (quantPaletizado > totalPaletes)

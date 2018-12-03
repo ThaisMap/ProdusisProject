@@ -28,8 +28,8 @@ namespace ProdusisBD
         public int PorteiroEntrada { get; set; }
         public Nullable<int> PorteiroSaida { get; set; }
     
-        public virtual Veiculos Veiculos { get; set; }
         public virtual Funcionarios Funcionarios { get; set; }
         public virtual Funcionarios Funcionarios1 { get; set; }
+        public virtual Veiculos Veiculos { get; set; }
     }
 }

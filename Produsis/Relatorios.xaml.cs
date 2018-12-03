@@ -52,8 +52,8 @@ namespace GUI
         {
             Cursor _cursorAnterior = Mouse.OverrideCursor;
             Mouse.OverrideCursor = Cursors.Wait;
-            TarefasBLL t = new TarefasBLL();
-            source = t.Filtrar(montarObjeto());
+            AcessoBD abd = new AcessoBD();
+            source = abd.GetTarefasFiltradas(montarObjeto());
             dgTarefas.ItemsSource = source;
             Mouse.OverrideCursor = _cursorAnterior;
         }
@@ -99,8 +99,8 @@ namespace GUI
 
                 if (dialogo.ShowDialog() == true)
                 {
-                    TarefasBLL t = new TarefasBLL();
-                    t.ExportarExcel(source, dialogo.FileName);
+                    ExcelBLL exporta = new ExcelBLL();
+                    exporta.ExportarExcel(source, dialogo.FileName);
                 }
             }
         }

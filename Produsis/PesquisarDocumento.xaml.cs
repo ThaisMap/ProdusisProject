@@ -30,7 +30,7 @@ namespace Produsis
             if (TipoDeDocumento.SelectedIndex > -1 && NumeroDocumento.Text != "")
             {
                 AcessoBD abd = new AcessoBD();
-                DocumentosBLL d = new DocumentosBLL();
+                Logica d = new Logica();
 
                 string[] rotulosCte = { "Número", "Volumes", "SKU's", "Fornecedor", "Notas Fiscais", "Manifesto" };
                 string[] rotulosManifesto = { "Número", "Volumes", "CT-es", "CT-es importados", "CT-es conferidos" };
@@ -44,7 +44,7 @@ namespace Produsis
                 // CT-e
                 if (TipoDeDocumento.SelectedIndex == 0)
                 {
-                    if (d.cteCadastrado(numDoc))
+                    if (d.NumeroCteExiste(numDoc))
                     {
                         var ctes = abd.GetNovoCtePorNum(numDoc);
                         aux = new dadosPesquisa()

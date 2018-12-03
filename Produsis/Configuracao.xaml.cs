@@ -1,4 +1,4 @@
-﻿using BLL;
+﻿using DAL;
 using System.Windows;
 using System.Windows.Controls;
 using WPFFolderBrowser;
@@ -10,14 +10,14 @@ namespace GUI
     /// </summary>
     public partial class Configuracao : UserControl
     {
-        private DocumentosBLL d = new DocumentosBLL();
+        private AcessoBD abd = new AcessoBD();
 
         public Configuracao()
         {
             InitializeComponent();
-            CaminhoPastaNFs.Text = d.getPastaNFs();
-            CaminhoPastaMan.Text = d.getPastaManifestos();
-            CaminhoPastaPreMan.Text = d.getPastaPreManifestos();
+            CaminhoPastaNFs.Text = abd.GetPastaNFs();
+            CaminhoPastaMan.Text = abd.GetPastaManifestos();
+            CaminhoPastaPreMan.Text = abd.GetPastaPreManifestos();
         }
 
         private void AlteraNF_Click(object sender, RoutedEventArgs e)
@@ -38,9 +38,9 @@ namespace GUI
 
         private void Salvar_Click(object sender, RoutedEventArgs e)
         {
-            d.setPastasNF(CaminhoPastaNFs.Text);
-            d.setPastasManifesto(CaminhoPastaMan.Text);
-            d.setPastasPreManifesto(CaminhoPastaPreMan.Text);
+            abd.SetPastasNF(CaminhoPastaNFs.Text);
+            abd.SetPastasManifesto(CaminhoPastaMan.Text);
+            abd.SetPastasPreManifesto(CaminhoPastaPreMan.Text);
         }
 
         private void AlteraPreMan_Click(object sender, RoutedEventArgs e)

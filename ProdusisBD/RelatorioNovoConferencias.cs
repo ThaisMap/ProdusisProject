@@ -19,11 +19,11 @@ namespace ProdusisBD
         public string tipoTarefa { get; set; }
         public System.DateTime inicioTarefa { get; set; }
         public Nullable<System.DateTime> fimTarefa { get; set; }
-        public string divergenciaTarefa { get; set; }
         public string nomeFunc { get; set; }
-        public int volumesNF { get; set; }
-        public int skuNF { get; set; }
+        public Nullable<int> Volumes { get; set; }
+        public Nullable<int> SKU { get; set; }
         public string fornecedorNF { get; set; }
         public int documentoTarefa { get; set; }
+        public string divergenciaTarefa { get; set; }
     }
 }

@@ -17,8 +17,8 @@ namespace ProdusisBD
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tarefas()
         {
-            this.Func_Tarefa = new HashSet<Func_Tarefa>();
             this.Divergencias = new HashSet<Divergencias>();
+            this.Func_Tarefa = new HashSet<Func_Tarefa>();
         }
     
         public int idTarefa { get; set; }
@@ -32,8 +32,8 @@ namespace ProdusisBD
         public string tempoGasto { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Func_Tarefa> Func_Tarefa { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Divergencias> Divergencias { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Func_Tarefa> Func_Tarefa { get; set; }
     }
 }

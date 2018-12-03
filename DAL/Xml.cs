@@ -295,7 +295,7 @@ namespace DAL
         private static void InserirNotaFiscal(NotasFiscais nfLida)
         {
             AcessoBD dbd = new AcessoBD();
-            if (dbd.NfExiste(nfLida.numeroNF))
+            if (!dbd.NfExiste(nfLida.numeroNF))
                 dbd.CadastrarNF(nfLida);
 
             else

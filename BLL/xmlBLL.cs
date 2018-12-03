@@ -14,7 +14,7 @@ namespace BLL
         /// <summary>
         /// Processa arquivos nas pastas de nf e manifesto
         /// </summary>
-        public void triagemArquivos()
+        public void TriagemArquivos()
         {
             try
             {
@@ -33,7 +33,7 @@ namespace BLL
                     {
                         if (f.EndsWith("msg") || f.EndsWith("MSG"))
                         {
-                            xml.ExtrairAnexosDeEmail(moverArquivo(f), Outlook);
+                            xml.ExtrairAnexosDeEmail(MoverArquivo(f), Outlook);
                         }
                     }
                     Outlook.Quit();
@@ -47,13 +47,13 @@ namespace BLL
                     if (f.EndsWith("xml") || f.EndsWith("XML"))
                     {
                         xml.LerXmlNotaFiscal(f);
-                        moverArquivo(f);
+                        MoverArquivo(f);
                     }
                     else
                     if (f.EndsWith("txt") || f.EndsWith("TXT"))
                     {
                         xml.LerNotfisNotaFiscal(f);
-                        moverArquivo(f);
+                        MoverArquivo(f);
                     }
                     else
                         File.Delete(f);
@@ -65,7 +65,7 @@ namespace BLL
                     if (f.EndsWith("xml") || f.EndsWith("XML"))
                     {                        
                         xml.LerManifesto(f);
-                        moverArquivo(f);
+                        MoverArquivo(f);
                     }
                     else
                         File.Delete(f);
@@ -76,7 +76,7 @@ namespace BLL
                     if (f.EndsWith("xml") || f.EndsWith("XML"))
                     {
                         xml.LerPreManifesto(f);
-                        moverArquivo(f);
+                        MoverArquivo(f);
                     }
                     else
                         File.Delete(f);
@@ -91,12 +91,14 @@ namespace BLL
         /// <summary>
         /// Move o arquivo da pasta padrão para a pasta old respectiva
         /// </summary>
-        private string moverArquivo(string nomeArquivo)
+        private string MoverArquivo(string nomeArquivo)
         {
             Directory.CreateDirectory(PastasXml.Default.PastaNFs + "\\old");
             Directory.CreateDirectory(PastasXml.Default.PastaManifestos + "\\old");
             Directory.CreateDirectory(PastasXml.Default.PastaPreManifestos + "\\old");
             string novaPasta;
+
+
             if (nomeArquivo.Contains(PastasXml.Default.PastaManifestos))
                 novaPasta = nomeArquivo.Replace(PastasXml.Default.PastaManifestos, PastasXml.Default.PastaManifestos + "\\old");
             else
@@ -105,11 +107,13 @@ namespace BLL
             else
                 novaPasta = nomeArquivo.Replace(PastasXml.Default.PastaNFs, PastasXml.Default.PastaNFs + "\\old");
             try { File.Move(nomeArquivo, novaPasta); }
+
             catch
             {
                 File.Delete(novaPasta);
                 File.Move(nomeArquivo, novaPasta);
             }
+
             return novaPasta;
         }
     }

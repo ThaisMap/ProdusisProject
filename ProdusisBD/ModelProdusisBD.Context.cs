@@ -27,8 +27,10 @@ namespace ProdusisBD
     
         public virtual DbSet<AcessosPortaria> AcessosPortaria { get; set; }
         public virtual DbSet<CapacidadeMotoristas> CapacidadeMotoristas { get; set; }
+        public virtual DbSet<Carretas> Carretas { get; set; }
         public virtual DbSet<Cte> Cte { get; set; }
         public virtual DbSet<Cte_Manifesto> Cte_Manifesto { get; set; }
+        public virtual DbSet<Divergencias> Divergencias { get; set; }
         public virtual DbSet<Func_Tarefa> Func_Tarefa { get; set; }
         public virtual DbSet<Funcionarios> Funcionarios { get; set; }
         public virtual DbSet<Manifestos> Manifestos { get; set; }
@@ -38,7 +40,5 @@ namespace ProdusisBD
         public virtual DbSet<Veiculos> Veiculos { get; set; }
         public virtual DbSet<RelatorioNaoConferencia> RelatorioNaoConferencia { get; set; }
         public virtual DbSet<RelatorioNovoConferencias> RelatorioNovoConferencias { get; set; }
-        public virtual DbSet<Carretas> Carretas { get; set; }
-        public virtual DbSet<Divergencias> Divergencias { get; set; }
     }
 }

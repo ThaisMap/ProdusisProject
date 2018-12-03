@@ -47,10 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DocumentosBLL.cs" />
-    <Compile Include="FuncionarioBLL.cs" />
+    <Compile Include="Logica.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TarefasBLL.cs" />
+    <Compile Include="ExcelBLL.cs" />
     <Compile Include="xmlBLL.cs" />
   </ItemGroup>
   <ItemGroup>

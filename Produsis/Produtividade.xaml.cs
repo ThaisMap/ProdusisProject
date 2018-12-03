@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DAL;
 using ProdusisBD;
 using System;
 using System.Collections.Generic;
@@ -37,9 +38,9 @@ namespace GUI
                         TipoTarefa = (cbTipoTarefa.SelectedIndex + 1).ToString()
                     };
 
-                    TarefasBLL t = new TarefasBLL();
+                    AcessoBD abd = new AcessoBD();
 
-                    Ranking = t.GetRanking(filtros);
+                    Ranking = abd.RankingFuncionarios(abd.GetRanking(filtros));
 
                     dgRanking.ItemsSource = Ranking;
                     Mouse.OverrideCursor = _cursorAnterior;

@@ -26,8 +26,8 @@ namespace GUI
 
         public List<ItemDivergencia> source { get; set; }
         public List<TarefaModelo> tarefas = new List<TarefaModelo>();
-        TarefasBLL t = new TarefasBLL();
-        AcessoBD abd = new AcessoBD();
+     
+       // AcessoBD abd = new AcessoBD();
 
         private void testarCaractere(object sender, TextCompositionEventArgs e)
         {
@@ -41,7 +41,7 @@ namespace GUI
             {
                 if (cbTipoTarefa.SelectedIndex > -1 && Documento.Text != "")
                 {
-                    tarefas = t.FiltrarDivergencias((cbTipoTarefa.SelectedIndex + 1), int.Parse(Documento.Text));
+                    //tarefas = abd.GetTarefasDivergencia((cbTipoTarefa.SelectedIndex + 1), int.Parse(Documento.Text));
                     source = new List<ItemDivergencia>();
                     foreach (TarefaModelo item in tarefas)
                     {
@@ -65,7 +65,7 @@ namespace GUI
                     tarefas[i].divergenciaTarefa = source[i].getDivergencia();
                 }
 
-                abd.CadastrarDivergencia(tarefas);
+               // abd.CadastrarDivergencia(tarefas);
                 MessageBox.Show("As alterações foram salvas.", "Divergências - Produsis");
             }
         }

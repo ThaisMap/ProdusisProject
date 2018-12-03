@@ -18,12 +18,9 @@ namespace GUI
     {
         private AcessoBD abd = new AcessoBD();
 
-        private DocumentosBLL d = new DocumentosBLL();
-        private FuncionarioBLL f = new FuncionarioBLL();
         private List<Veiculos> ListaMotoristas;
         private List<FuncionariosTag> FuncionarioSelecionado = new List<FuncionariosTag>();
         private List<Funcionarios> ListaFunc;
-        private TarefasBLL t = new TarefasBLL();
         private int[] pallets = { 0, 0 };
 
         public Carregamento(double actualHeight, double actualWidth)
@@ -62,7 +59,7 @@ namespace GUI
 
             if (pallets[1] > 0)
             {
-                if (t.FinalizarTarefa(item.idTarefa, pallets[0], pallets[1]))
+                if (abd.FinalizarTarefa(item.idTarefa, pallets[0], pallets[1]))
                     MessageBox.Show("Carregamento finalizado após " + item.tempoGasto, "Carregamento finalizado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
                     MessageBox.Show("Houve um erro e o carregamento não pode ser finalizado.", "Carregamento não finalizado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -125,10 +122,12 @@ namespace GUI
 
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
+            Logica bll = new Logica();
+        
             if (checarCampos())
-                if (abd.VerificaDocumentoTarefa(int.Parse(Documento.Text.Replace("_", "")), "4"))
+                if (!abd.VerificaDocumentoTarefa(int.Parse(Documento.Text.Replace("_", "")), "4"))
                 {
-                    if (t.InserirTarefa(montarTarefa(), funcionarios()))
+                    if (bll.InserirTarefa(montarTarefa(), funcionarios()))
                     {
                         dgTarefas.ItemsSource = abd.GetTarefasPendentes("4");
                         MessageBox.Show("Carregamento iniciado para o " + abd.GetDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Carregamento iniciado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -175,7 +174,7 @@ namespace GUI
         private static void lerXmls()
         {
             xmlBLL x = new xmlBLL();
-            x.triagemArquivos();
+            x.TriagemArquivos();
         }
 
         private Tarefas montarTarefa()

@@ -63,7 +63,7 @@ namespace GUI
         private static void ImportarArquivos()
         {
             xmlBLL x = new xmlBLL();
-            x.triagemArquivos();
+            x.TriagemArquivos();
         }
     }
 }

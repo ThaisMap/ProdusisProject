@@ -6,57 +6,8 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace BLL
 {
-    public class TarefasBLL
-    {
-        private DocumentosBLL d = new DocumentosBLL();
-        private AcessoBD abd = new AcessoBD();
-
-        public bool InserirTarefa(Tarefas novaTarefa, string[] funcionarios)
-        {
-            if (novaTarefa.tipoTarefa != "2" && !abd.ManifestoExiste(novaTarefa.documentoTarefa))
-            {
-                return false;
-            }
-
-            int[] idsFuncionarios = new int[funcionarios.Length];
-
-            novaTarefa.divergenciaTarefa = "-;0;-;0;-;0";
-            for (int i = 0; i < funcionarios.Length; i++)
-            {
-                idsFuncionarios[i] = abd.GetFuncPorNome(funcionarios[i]).idFunc;
-            }
-            return abd.CadastrarTarefa(novaTarefa, idsFuncionarios);
-        }
-               
-     
-        public bool FinalizarTarefa(int idTarefa, int quantPalet, int totalPalet)
-        {
-            return abd.FinalizarTarefa(idTarefa, quantPalet, totalPalet);
-        }
-       
-        public List<TarefaModelo> FiltrarDivergencias(int Tipo, int Manifesto)
-        {
-            return abd.GetTarefasDivergencia(Tipo, Manifesto);
-        }
-
-        public List<ItemRelatorio> Filtrar(Filtro f)
-        {
-            return abd.GetTarefasFiltradas(f, true);
-        }
-
-        public List<ItemRanking> FiltraRanking(Filtro f)
-        {
-            return abd.GetRanking(f);
-        }
-       
-        public List<ItemRanking> GetRanking(Filtro f)
-        {
-            var rank = abd.RankingFuncionarios(abd.GetRanking(f));
-           
-            return rank;
-        }
-
-       
+    public class ExcelBLL
+    {                     
         public void ExportarExcelProdut(List<ItemRanking> Tarefas, string nomeArquivo)
         {
             try
@@ -112,6 +63,7 @@ namespace BLL
             var worksheet = (Excel.Worksheet)worksheets[1];
             object misValue = System.Reflection.Missing.Value;
             string[,] array = new string[Tarefas.Count + 1, 15];
+            AcessoBD abd = new AcessoBD();
 
             try
             {

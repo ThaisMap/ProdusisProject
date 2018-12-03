@@ -17,10 +17,10 @@ namespace ProdusisBD
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Funcionarios()
         {
-            this.Func_Tarefa = new HashSet<Func_Tarefa>();
-            this.Observacoes = new HashSet<Observacoes>();
             this.AcessosPortaria = new HashSet<AcessosPortaria>();
             this.AcessosPortaria1 = new HashSet<AcessosPortaria>();
+            this.Func_Tarefa = new HashSet<Func_Tarefa>();
+            this.Observacoes = new HashSet<Observacoes>();
         }
     
         public int idFunc { get; set; }
@@ -33,12 +33,12 @@ namespace ProdusisBD
         public Nullable<int> equipeFunc { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Func_Tarefa> Func_Tarefa { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Observacoes> Observacoes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcessosPortaria> AcessosPortaria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcessosPortaria> AcessosPortaria1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Func_Tarefa> Func_Tarefa { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Observacoes> Observacoes { get; set; }
     }
 }
