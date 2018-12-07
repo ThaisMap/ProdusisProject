@@ -47,13 +47,13 @@ namespace GUI
             return retorno;
         }
 
-        private void testarCaractere(object sender, TextCompositionEventArgs e)
+        private void TestarCaractere(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        private void btnOk_Click(object sender, RoutedEventArgs e)
+        private void BtnOk_Click(object sender, RoutedEventArgs e)
         {
             double p = 101;
             if (txtQtde.Text != "" && txtTotal.Text != "0" && txtTotal.Text != "")
@@ -62,12 +62,12 @@ namespace GUI
             if (txtQtde.Text == "")
                 txtQtde.Focus();
             else
-            if (txtTotal.Text == "")
+            if (txtTotal.Text == "" || txtTotal.Text == "0")
                 txtTotal.Focus();
             else
             {
-                if (p > 100)
-                    MessageBox.Show("A quantidade paletizada deve ser menor ou igual à capacidade de paletes do veículo.", "Erro - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (p > 1)
+                    MessageBox.Show("A quantidade paletizada deve ser menor ou igual ao total.", "Erro - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
                 {
                     DialogResult = true;
@@ -76,12 +76,12 @@ namespace GUI
             }
         }
 
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
-        private void calcularPorcentagem(object sender, TextChangedEventArgs e)
+        private void CalcularPorcentagem(object sender, TextChangedEventArgs e)
         {
             txtQtde.Text = txtQtde.Text.Replace(" ", string.Empty);
             if (txtQtde.Text != "" && txtQtde.Text != " " && txtTotal.Text != "0" && txtTotal.Text != "")

@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Threading;
 
 namespace GUI
 {
@@ -25,11 +26,11 @@ namespace GUI
         public Descarga()
         {
             InitializeComponent();
+            Importar();
             ListaFunc = abd.GetFuncionariosLivres("1");
             CBFuncionario.ItemsSource = ListaFunc;
             CBFuncionario.DisplayMemberPath = "nomeFunc";
-            dgTarefas.ItemsSource = abd.GetTarefasPendentes("1");
-            lerXmls();
+            RecarregarPendentes();
         }
 
         public static string CriaChipTag(string Nome)
@@ -40,8 +41,19 @@ namespace GUI
 
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
+            RecarregarPendentes();
+            Importar();
+        }
+
+        private void Importar()
+        {
+            Thread thread = new Thread(LerXmls);
+            thread.Start();
+        }
+
+        private void RecarregarPendentes()
+        {
             dgTarefas.ItemsSource = abd.GetTarefasPendentes("1");
-            lerXmls();
         }
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
@@ -49,14 +61,15 @@ namespace GUI
             pallets = paletes.Perguntar("28");
             if (pallets[1] > 0)
             {
-                Tarefas item = (Tarefas)dgTarefas.SelectedItem;
+                TarefaModelo item = (TarefaModelo)dgTarefas.SelectedItem;
+                item.AtualizaTempoGasto();
                 if (abd.FinalizarTarefa(item.idTarefa, pallets[0], pallets[1]))
                     MessageBox.Show("Descarga finalizada após " + item.tempoGasto, "Descarga finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
                     MessageBox.Show("Houve um erro e a descarga não pode ser finalizada.", "Descarga não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 ListaFunc = abd.GetFuncionariosLivres("1");
                 CBFuncionario.ItemsSource = ListaFunc;
-                AtualizarDg_Click(sender, e);
+                RecarregarPendentes();
             }
             else
                 MessageBox.Show("Houve um erro e a descarga não pode ser finalizada.", "Descarga não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -79,7 +92,7 @@ namespace GUI
             }
         }
 
-        private bool checarCampos()
+        private bool ChecarCampos()
         {
             if (Documento.Text.Replace("_", "") == "" || ListaDeFuncionarios.Items.Count == 0)
             {
@@ -102,7 +115,7 @@ namespace GUI
             }
         }
 
-        private string[] funcionarios()
+        private string[] Funcionarios()
         {
             List<string> nomes = new List<string>();
             foreach (FuncionariosTag tag in ListaDeFuncionarios.Items)
@@ -116,12 +129,12 @@ namespace GUI
         {
             Logica bll = new Logica();
 
-            if (checarCampos())
+            if (ChecarCampos())
                 if (!abd.VerificaDocumentoTarefa(int.Parse(Documento.Text.Replace("_", "")), "1"))
                 {
-                    if (bll.InserirTarefa(montarTarefa(), funcionarios()))
+                    if (bll.InserirTarefa(MontarTarefa(), Funcionarios()))
                     {
-                        dgTarefas.ItemsSource = abd.GetTarefasPendentes("1");
+                        RecarregarPendentes();
                         MessageBox.Show("Descarga iniciada para o " + abd.GetDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Descarga iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                         Documento.Text = "";
                         CBFuncionario.SelectedIndex = -1;
@@ -163,13 +176,13 @@ namespace GUI
             }
         }
 
-        private static void lerXmls()
+        private static void LerXmls()
         {
             xmlBLL x = new xmlBLL();
             x.TriagemArquivos();
         }
 
-        private Tarefas montarTarefa()
+        private Tarefas MontarTarefa()
         {
             Tarefas novaTarefa = new Tarefas()
             {
@@ -181,7 +194,7 @@ namespace GUI
             return novaTarefa;
         }
 
-        private void testarCaractere(object sender, TextCompositionEventArgs e)
+        private void TestarCaractere(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);

@@ -1,6 +1,7 @@
 ﻿using System;
+using ProdusisBD;
 
-namespace ProdusisBD
+namespace DAL
 {
     public class TarefaModelo : Tarefas
     {
@@ -11,7 +12,7 @@ namespace ProdusisBD
             idTarefa = tarefa.idTarefa;
             documentoTarefa = tarefa.documentoTarefa;
             tipoTarefa = tipoExtenso(tarefa.tipoTarefa);
-            preencheDatas();
+            PreencheDatas();
             AtualizaTempoGasto();
             divergenciaTarefa = tarefa.divergenciaTarefa;
             totalPaletes = tarefa.totalPaletes;
@@ -52,8 +53,9 @@ namespace ProdusisBD
         public string fornecedor { get; set; }
         public string cliente { get; set; }
         public double pontos { get; set; }
+        public string tempoGasto { get; set; }
 
-        public void valores(int sku, int volume)
+        public void IncluirValores(int sku, int volume)
         {
             skus = sku;
             volumes = volume;
@@ -62,32 +64,10 @@ namespace ProdusisBD
         /// <summary>
         /// Retorna uma string referente às divergencias registradas
         /// </summary>
-        public string divergencia()
+        public string Divergencia()
         {
-            string[] d = divergenciaTarefa.Split(';');
-            string retorno = "";
-            if (d[0] != "-")
-            {
-                retorno = "Falta código(s): " + d[0] + " qtde(s): " + d[1];
-            }
-            if (d[2] != "-")
-            {
-                if (retorno == "")
-                    retorno = "Sobra código(s): " + d[2] + " qtde(s): " + d[3];
-                else
-                    retorno += " - Sobra código(s): " + d[2] + " qtde(s): " + d[3];
-            }
-            if (d[4] != "-")
-            {
-                if (retorno == "")
-                    retorno = "Avaria código(s): " + d[4] + " qtde(s): " + d[5];
-                else
-                    retorno += " - Avaria código(s): " + d[4] + " qtde(s): " + d[5];
-            }
-            if (retorno == "")
-                return "Nenhuma";
-
-            return retorno;
+            AcessoBD abd = new AcessoBD();
+            return abd.GetDadosDivergencia(idTarefa); 
         }
 
         public void AtualizaTempoGasto()
@@ -104,7 +84,7 @@ namespace ProdusisBD
             tempoGasto = (tempo.Days * 24 + tempo.Hours).ToString("00") + ":" + tempo.Minutes.ToString("00") + ":" + tempo.Seconds.ToString("00");
         }
 
-        public void preencheDatas()
+        public void PreencheDatas()
         {
             dataInicio = inicioTarefa.Date.ToString("dd\\/MM\\/yyyy");
             horaInicio = inicioTarefa.ToString("HH\\:mm\\:ss");

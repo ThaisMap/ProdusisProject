@@ -1,7 +1,8 @@
 ﻿using System;
+using ProdusisBD;
 using System.Linq;
 
-namespace ProdusisBD
+namespace DAL
 {
     public class ItemRelatorio
     {
@@ -29,7 +30,7 @@ namespace ProdusisBD
         {
             idTarefa = r.idTarefa;
             documentoTarefa = r.numeroCte;
-            tipoTarefa = tipoExtenso(r.tipoTarefa);
+            tipoTarefa = TipoExtenso(r.tipoTarefa);
             inicioTarefa = r.inicioTarefa;
             fimTarefa = r.fimTarefa;
             nomesFunc = r.nomeFunc;
@@ -37,9 +38,9 @@ namespace ProdusisBD
             sku = (int)r.SKU;
             fornecedor = r.fornecedorNF;
             divergenciaTarefa = r.divergenciaTarefa;
-            divergenciaTarefa = divergencia();
-            preencheDatas();
-            atualizaTempoGasto();
+            divergenciaTarefa = Divergencia();
+            PreencheDatas();
+            AtualizaTempoGasto();
             ctesNoManifesto = 0;
         }
 
@@ -47,7 +48,7 @@ namespace ProdusisBD
         {
             idTarefa = r.idTarefa;
             documentoTarefa = r.documentoTarefa;
-            tipoTarefa = tipoExtenso(r.tipoTarefa);
+            tipoTarefa = TipoExtenso(r.tipoTarefa);
             inicioTarefa = r.inicioTarefa;
             fimTarefa = r.fimTarefa;
             nomesFunc = r.nomeFunc;
@@ -57,9 +58,9 @@ namespace ProdusisBD
             quantPaletizado = r.quantPaletizado;
             totalPaletes = r.totalPaletes;
             divergenciaTarefa = r.divergenciaTarefa;
-            divergenciaTarefa = divergencia();
-            preencheDatas();
-            atualizaTempoGasto();
+            divergenciaTarefa = Divergencia();
+            PreencheDatas();
+            AtualizaTempoGasto();
             ctesNoManifesto = 1;
         }
 
@@ -68,7 +69,7 @@ namespace ProdusisBD
             pontos = 0;
         }
 
-        public void atualizaTempoGasto()
+        public void AtualizaTempoGasto()
         {
             TimeSpan tempo;
             if (fimTarefa == null)
@@ -82,7 +83,7 @@ namespace ProdusisBD
             tempoGasto = (tempo.Days * 24 + tempo.Hours).ToString("00") + ":" + tempo.Minutes.ToString("00") + ":" + tempo.Seconds.ToString("00");
         }
 
-        public void preencheDatas()
+        public void PreencheDatas()
         {
             dataInicio = inicioTarefa.Date.ToString("dd\\/MM\\/yyyy");
             horaInicio = inicioTarefa.ToString("HH\\:mm\\:ss");
@@ -94,42 +95,17 @@ namespace ProdusisBD
             }
         }
 
-        public string divergencia()
+        public string Divergencia()
         {
-            string[] d = divergenciaTarefa.Split(';');
-            string retorno = "";
-            if (d[0] != "-")
-            {
-                retorno = "Falta código(s): " + d[0] + " qtde(s): " + d[1];
-            }
-            if (d[2] != "-")
-            {
-                if (retorno == "")
-                    retorno = "Sobra código(s): " + d[2] + " qtde(s): " + d[3];
-                else
-                    retorno += " - Sobra código(s): " + d[2] + " qtde(s): " + d[3];
-            }
-            if (d[4] != "-")
-            {
-                if (retorno == "")
-                    retorno = "Avaria código(s): " + d[4] + " qtde(s): " + d[5];
-                else
-                    retorno += " - Avaria código(s): " + d[4] + " qtde(s): " + d[5];
-            }
-            if (retorno == "")
-                return "Nenhuma";
-
-            return retorno;
+            AcessoBD abd = new AcessoBD();
+            return abd.GetDadosDivergencia(idTarefa);                    
         }
 
-        /// <summary>
-        /// Calcula pontuação para ranking.
-        /// </summary>
-        public void atualizaPontuação()
+        public void AtualizaPontuação()
         {
             try
             {
-                if (divergenciaTarefa != "Nenhuma" && divergenciaTarefa != "-;0;-;0;-;0")
+                if (divergenciaTarefa != "Nenhuma")
                 {
                     pontos = 0;
                 }
@@ -155,18 +131,17 @@ namespace ProdusisBD
 
                     if (nomesFunc.Contains("/"))
                     {
-                        int div = nomesFunc.Count() - nomesFunc.Replace("/", string.Empty).Count() + 1;
+                        int div = nomesFunc.Count (x => x == '/') + 1;
                         pontos = pontos / div;
                     }
                 }
             }
-            catch (Exception erro)
+            catch 
             {
-                // pq da null?
             }
         }
 
-        private string tipoExtenso(string tipo)
+        private string TipoExtenso(string tipo)
         {
             switch (tipo)
             {

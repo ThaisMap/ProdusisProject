@@ -39,7 +39,7 @@ namespace GUI
         private void IndicarDoca_Click(object sender, RoutedEventArgs e)
         {
             AcessosPortaria acesso = dgAcessos.SelectedItem as AcessosPortaria;
-            AddDoca.registrarDoca(acesso.idAcesso, acesso.PlacaAcesso);
+            AddDoca.RegistrarDoca(acesso.idAcesso, acesso.PlacaAcesso);
             BtnPesquisa_Click(sender, e);
         }
 

@@ -35,8 +35,8 @@
                 Width="40"
                 Margin="15,5"
                 HorizontalAlignment="Center"
-                PreviewTextInput="testarCaractere"
-                TextChanged="calcularPorcentagem" />
+                PreviewTextInput="TestarCaractere"
+                TextChanged="CalcularPorcentagem" />
 
             <TextBlock
                 Margin="5"
@@ -49,8 +49,8 @@
                 Width="40"
                 Margin="15,5"
                 HorizontalAlignment="Center"
-                PreviewTextInput="testarCaractere"
-                TextChanged="calcularPorcentagem" />
+                PreviewTextInput="TestarCaractere"
+                TextChanged="CalcularPorcentagem" />
 
             <StackPanel
                 Margin="5"
@@ -72,13 +72,13 @@
                 <Button
                     Name="btnOk"
                     Margin="5"
-                    Click="btnOk_Click"
+                    Click="BtnOk_Click"
                     Content="_Ok"
                     IsDefault="True" />
                 <Button
                     Name="btnCancel"
                     Margin="5"
-                    Click="btnCancel_Click"
+                    Click="BtnCancel_Click"
                     Content="_Cancel"
                     IsCancel="True" />
             </StackPanel>

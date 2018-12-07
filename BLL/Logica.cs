@@ -53,7 +53,7 @@ namespace BLL
 
             int[] idsFuncionarios = new int[funcionarios.Length];
 
-            novaTarefa.divergenciaTarefa = "-;0;-;0;-;0";
+            novaTarefa.divergenciaTarefa = "Tabela";
             for (int i = 0; i < funcionarios.Length; i++)
             {
                 idsFuncionarios[i] = abd.GetFuncPorNome(funcionarios[i]).idFunc;

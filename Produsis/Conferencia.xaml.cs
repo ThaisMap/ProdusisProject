@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Threading;
 
 namespace GUI
 {
@@ -25,13 +26,14 @@ namespace GUI
         public Conferencia(double actualHeight, double actualWidth)
         {
             InitializeComponent();
+            Importar();
             ListaFunc = abd.GetConferentesLivres("2");
             CBFuncionario.ItemsSource = ListaFunc;
-            dgTarefas.ItemsSource = abd.GetTarefasPendentes("2");
             Height = actualHeight - 60;
             Width = actualWidth - 60;
             svTarefa.Height = actualHeight - 340;
-            LerXmls();
+            RecarregarPendentes();
+
         }
 
         public static string CriaChipTag(string Nome)
@@ -42,8 +44,19 @@ namespace GUI
 
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
+            RecarregarPendentes();
+            Importar();
+        }
+
+        private void Importar()
+        {
+            Thread thread = new Thread(LerXmls);
+            thread.Start();
+        }
+
+        private void RecarregarPendentes()
+        {
             dgTarefas.ItemsSource = abd.GetTarefasPendentes("2");
-            LerXmls();
         }
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
@@ -78,9 +91,8 @@ namespace GUI
                 }
                 Documento.Focus();
             }
-
             this.TabIndex = 1;
-            AtualizarDg_Click(sender, e);
+            RecarregarPendentes();
         }
          
         private void CBFuncionario_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -91,7 +103,7 @@ namespace GUI
 
         private bool ChecarCampos()
         {
-            if (Documento.Text.Replace("_", "") == "" || ListaDeFuncionarios.Items.Count == 0)
+            if (Documento.Text == "" || ListaDeFuncionarios.Items.Count == 0)
             {
                 return false;
             }
@@ -111,7 +123,7 @@ namespace GUI
             }
         }
 
-        private string[] funcionarios()
+        private string[] Funcionarios()
         {
             List<string> nomes = new List<string>();
             foreach (FuncionariosTag tag in ListaDeFuncionarios.Items)
@@ -123,16 +135,16 @@ namespace GUI
 
         private void Iniciar_Click(object sender, RoutedEventArgs e)
         {
-            checagemDeCte = bll.IdCteDisponivelMaisRecente(int.Parse(Documento.Text.Replace("_", "")));
+            checagemDeCte = bll.IdCteDisponivelMaisRecente(int.Parse(Documento.Text));
             if (ChecarCampos())
                 if (checagemDeCte > -1)
                 {
                     if (checagemDeCte > 0)
                     {
-                        if (bll.InserirTarefa(MontarTarefa(), funcionarios()))
+                        if (bll.InserirTarefa(MontarTarefa(), Funcionarios()))
                         {
-                            dgTarefas.ItemsSource = abd.GetTarefasPendentes("2");
-                            MessageBox.Show("Conferência iniciada para o " + abd.GetDadosCte(int.Parse(Documento.Text.Replace("_", ""))), "Conferência iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                            RecarregarPendentes();
+                            MessageBox.Show("Conferência iniciada para o " + abd.GetDadosCte(int.Parse(Documento.Text)), "Conferência iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                             Documento.Text = "";
                             CBFuncionario.SelectedIndex = -1;
                             ListaDeFuncionarios.Items.Clear();
@@ -140,7 +152,7 @@ namespace GUI
                     }
                     else
                     {
-                        MessageBox.Show("Já existe conferencia pare este Cte.", "Conferência não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Já existe conferência pare este Cte.", "Conferência não iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else
@@ -172,10 +184,12 @@ namespace GUI
 
         private Tarefas MontarTarefa()
         {
-            Tarefas novaTarefa = new Tarefas();
-            novaTarefa.documentoTarefa = checagemDeCte;
-            novaTarefa.inicioTarefa = DateTime.Now;
-            novaTarefa.tipoTarefa = "2";
+            Tarefas novaTarefa = new Tarefas
+            {
+                documentoTarefa = checagemDeCte,
+                inicioTarefa = DateTime.Now,
+                tipoTarefa = "2"
+            };
             return novaTarefa;
         }
 

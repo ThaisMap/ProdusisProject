@@ -15,7 +15,7 @@ namespace GUI
             InitializeComponent();
         }
 
-        public static void registrarDoca(int id, string placa)
+        public static void RegistrarDoca(int id, string placa)
         {
             AddDoca doca = new AddDoca();
             doca.idAcesso = id;

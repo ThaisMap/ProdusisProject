@@ -21,7 +21,7 @@ namespace GUI
         }
 
         private Carretas MontarObjeto ()
-        {
+        { 
             Carretas carro = new Carretas()
             {
                 PlacaCarreta = txtPlaca2.Text,
@@ -38,7 +38,7 @@ namespace GUI
             abd.CadastrarCarretas(atual);
         }
 
-        private void btAddPlaca_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void AddPlaca_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             abd.CadastrarCarretas(MontarObjeto());
         }

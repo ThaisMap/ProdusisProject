@@ -136,8 +136,8 @@
       <DependentUpon>Configuracao.xaml</DependentUpon>
     </Compile>
     <Compile Include="Cores.cs" />
-    <Compile Include="Divergencia.xaml.cs">
-      <DependentUpon>Divergencia.xaml</DependentUpon>
+    <Compile Include="DetalheManifesto.xaml.cs">
+      <DependentUpon>DetalheManifesto.xaml</DependentUpon>
     </Compile>
     <Compile Include="DivergenciasNovo.xaml.cs">
       <DependentUpon>DivergenciasNovo.xaml</DependentUpon>
@@ -163,9 +163,6 @@
     </Compile>
     <Compile Include="Descarga.xaml.cs">
       <DependentUpon>Descarga.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="EdicaoFuncionarios.xaml.cs">
-      <DependentUpon>EdicaoFuncionarios.xaml</DependentUpon>
     </Compile>
     <Compile Include="FuncionariosTag.cs" />
     <Compile Include="PesquisarDocumento.xaml.cs">
@@ -252,15 +249,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Divergencia.xaml">
+    <Page Include="DetalheManifesto.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DivergenciasNovo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="EdicaoFuncionarios.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

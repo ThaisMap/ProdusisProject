@@ -82,9 +82,8 @@ namespace BLL
                         File.Delete(f);
                 }
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
-                var erro = ex;
             }
         }       
 

@@ -12,7 +12,6 @@ namespace GUI
     public partial class AddFuncionario : Window
     {
         private AcessoBD abd = new AcessoBD();
-        private List<Funcionarios> ListaFunc;
         private int idDescarga;
 
         public AddFuncionario(int idTarefa)
@@ -21,8 +20,7 @@ namespace GUI
             idDescarga = idTarefa;
             CBFuncionario.DisplayMemberPath = "nomeFunc";
             CBFuncionario.SelectedValuePath = "idFunc";
-            ListaFunc = abd.GetFuncionariosLivres("1");
-            CBFuncionario.ItemsSource = ListaFunc;
+            CBFuncionario.ItemsSource = abd.GetFuncionariosLivres("1"); 
         }
 
         private void BtnIncluir_Click(object sender, RoutedEventArgs e)

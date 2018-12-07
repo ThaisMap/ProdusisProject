@@ -62,7 +62,7 @@
                                     Width="300"
                                     materialDesign:HintAssist.Hint="Manifesto"
                                     materialDesign:HintAssist.IsFloating="True"
-                                    PreviewTextInput="testarCaractere"
+                                    PreviewTextInput="TestarCaractere"
                                     Style="{StaticResource MaterialDesignTextBox}" />
                             </StackPanel>
                             <StackPanel

@@ -4,7 +4,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:GUI"
              mc:Ignorable="d"
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch"
@@ -17,20 +16,35 @@
              TextElement.Foreground="{DynamicResource MaterialDesignBody}">
     <Grid>
         <DockPanel>
-            <TextBlock DockPanel.Dock="Top" Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}"><Run Text="Cadastro de Carretas" /></TextBlock>
+            <TextBlock DockPanel.Dock="Top" 
+                       Margin="40,0,0,0" 
+                       Style="{StaticResource MaterialDesignHeadlineTextBlock}" 
+                       Text="Cadastro de Carretas"/>
             <Separator DockPanel.Dock="Top" />
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBox Name="txtPlaca2" Width="150" Margin="0 0 20 0"
+            <StackPanel DockPanel.Dock="Top" 
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Center">
+                <TextBox Name="txtPlaca2" 
+                         Width="150"
+                         Margin="0 0 20 0"
                          materialDesign:HintAssist.Hint="Placa"
                          materialDesign:HintAssist.IsFloating="True" />
-                <Button Name="btAddPlaca" Content="Salvar" Width="auto" Click="btAddPlaca_Click"/>
+                <Button Name="btAddPlaca"
+                        Content="Salvar"
+                        Width="auto" 
+                        Click="AddPlaca_Click"/>
             </StackPanel>
             <DataGrid Name="dgLista" AutoGenerateColumns="False"
-                      HorizontalAlignment="Center" ColumnWidth="*" Margin="5"
-                      IsReadOnly="True"  ScrollViewer.CanContentScroll="True"
+                      HorizontalAlignment="Center"
+                      ColumnWidth="*" 
+                      Margin="5 0 0 20"
+                      IsReadOnly="True" 
+                      ScrollViewer.CanContentScroll="True"
                       materialDesign:DataGridAssist.CellPadding="3">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Width="auto" Header="Placa" Binding="{Binding PlacaCarreta}" />
+                    <DataGridTextColumn Width="auto" 
+                                        Header="Placa" 
+                                        Binding="{Binding PlacaCarreta}" />
                     <DataGridTemplateColumn Width="Auto" Header="Ativo">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

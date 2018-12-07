@@ -47,7 +47,7 @@ namespace DAL
                 XmlDocument manifesto = new XmlDocument();
                 manifesto.Load(nomeArquivo);
 
-                AcessoBD docBD = new AcessoBD();
+                AcessoBD abd = new AcessoBD();
                 var result = manifesto.GetElementsByTagName("Value");
                 Manifestos lido = new Manifestos
                 {
@@ -57,7 +57,7 @@ namespace DAL
                     quantCtesManifesto = (int)double.Parse(result[result.Count - 4].InnerText.Replace('.', ','))
                 };
 
-                docBD.CadastrarManifesto(lido);
+                abd.CadastrarManifesto(lido);
 
                 int cte;
                 string fornecedor;
@@ -65,8 +65,9 @@ namespace DAL
                 for (int i = 0; i < result.Count - 4; i = i + 10)
                 {
                     cte = int.Parse(result[i].InnerText);
-                    CriarCte(cte, result[i + 1].InnerText);     //  alterado para novo cte
 
+                    abd.CadastrarCte(new Cte(cte, result[i + 1].InnerText));
+ 
                     CriarCteManifesto(cte, lido.numeroManifesto);
                     fornecedor = result[i + 2].InnerText;
                     AlterarNfs(result[i + 1].InnerText, cte);
@@ -93,7 +94,7 @@ namespace DAL
 
                 var ValueResult = manifesto.GetElementsByTagName("Value");
                 var TextResult = manifesto.GetElementsByTagName("TextValue");
-                AcessoBD docBD = new AcessoBD();
+                AcessoBD abd = new AcessoBD();
 
                 var ctesNoXml = new List<string>();
                 for (int i = 5; i < ValueResult.Count - 4; i = i + 6)
@@ -108,7 +109,7 @@ namespace DAL
                     quantCtesManifesto = quantCtes
                 };
 
-                docBD.CadastrarManifesto(lido);
+                abd.CadastrarManifesto(lido);
 
                 int cte;
                 int indexNF = 0;
@@ -131,7 +132,7 @@ namespace DAL
                 }
                 foreach (var item in ctesNoPreManifesto)
                 {
-                    CriarCte(item.numeroCte, item.notasCte);    //  alterado para novo cte
+                    abd.CadastrarCte(new Cte(item.numeroCte, item.notasCte));
                     AlterarNfs(item.notasCte, item.numeroCte);  //  alterado para novo cte
                     CriarCteManifesto(item.numeroCte, lido.numeroManifesto);
                 }
@@ -316,12 +317,6 @@ namespace DAL
                 if (dbd.NfExiste(nf))                
                     dbd.InserirCteNaNf(nf, cte);                 
             }
-        }
-
-        private void CriarCte(int cte, string notas)
-        {
-            AcessoBD dbd = new AcessoBD();
-            dbd.CadastrarCte(new Cte(cte, notas));
         }
 
         private void CriarCteManifesto(int cte, int manifesto) // alterado para novo cte

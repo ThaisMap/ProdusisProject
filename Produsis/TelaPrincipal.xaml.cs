@@ -94,12 +94,7 @@ namespace GUI
         private void BtnCadFunc_Click(object sender, RoutedEventArgs e)
         {
             Navegador.Navigate(new CadastroFuncionarios());
-        }
-
-        private void BtnEditFunc_Click(object sender, RoutedEventArgs e)
-        {
-            Navegador.Navigate(new EdicaoFuncionarios());
-        }
+        }       
 
         private void BtnObserv_Click(object sender, RoutedEventArgs e)
         {
@@ -119,7 +114,7 @@ namespace GUI
         private void BtnDivergenciaN_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();
-            Navegador.Navigate(new Divergencias(ActualHeight, ActualWidth));
+            Navegador.Navigate(new DivergenciasNovo(ActualHeight, ActualWidth));
             BtnDivergenciaN.Opacity = 0.5;
         }
 

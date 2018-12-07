@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="GUI.Divergencias"
+    x:Class="GUI.DivergenciasNovo"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -19,7 +19,7 @@
     mc:Ignorable="d">
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
-        <Grid Margin="0,10,0,10" HorizontalAlignment="Center">
+        <Grid Margin="0 10" HorizontalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
@@ -62,7 +62,7 @@
                         Width="100"
                         Margin="10,10"
                         VerticalAlignment="Bottom"
-                        Click="btnConsultar_Click"
+                        Click="Consultar_Click"
                         Content="Consultar" />
                 </StackPanel>
 
@@ -109,7 +109,7 @@
                         Grid.Column="2"
                         Width="100"
                         Margin="10,5"
-                        Click="btnIncluir_Click"
+                        Click="Incluir_Click"
                         VerticalAlignment="Center"
                         Content="Incluir" />
                 </StackPanel>
@@ -120,8 +120,8 @@
                     CanUserAddRows="False"
                     HorizontalAlignment="Center"
                     AutoGenerateColumns="False"
-                    PreviewKeyDown="dgOcorrencias_PreviewKeyDown"
-                    BeginningEdit="dgOcorrencias_BeginningEdit"
+                    PreviewKeyDown="DgOcorrencias_PreviewKeyDown"
+                    BeginningEdit="DgOcorrencias_BeginningEdit"
                     CellEditEnding="Registrar_Alteracao"
                     VerticalScrollBarVisibility="Auto">
                     

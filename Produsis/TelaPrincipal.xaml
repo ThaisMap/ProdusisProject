@@ -32,11 +32,11 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid Width="auto" VerticalAlignment="Top">
+    <DockPanel>
 
-        <StackPanel Orientation="Vertical">
             <!--  Botoes  -->
-            <Menu HorizontalAlignment="Center"  VerticalContentAlignment="Center" VerticalAlignment="Top" Width="auto" Margin="0,0">
+            <Menu DockPanel.Dock="Top"
+                HorizontalAlignment="Center"  VerticalContentAlignment="Center" VerticalAlignment="Top" Width="auto" Margin="0,0">
                 <MenuItem Name="BtnAdministrativo" Header="Administrativo" Click="BtnAdministrativo_Click">
                     <MenuItem Name="BtnPesquisaDocs" Header="Ver Documentos" Click="BtnPesquisaDocs_Click" />
                     <MenuItem Name="BtnRelatorios" Header="Relatórios" Click="BtnRelatorios_Click" />
@@ -49,8 +49,7 @@
                     </MenuItem>
 
                     <MenuItem Name="BtnFuncionarios" Header="Funcionários">
-                        <MenuItem Name="BtnCadFunc" Header="Cadastrar" Click="BtnCadFunc_Click" />
-                        <MenuItem Name="BtnEditFunc" Header="Editar" Click="BtnEditFunc_Click" />
+                        <MenuItem Name="BtnCadFunc" Header="Cadastro" Click="BtnCadFunc_Click" />
                         <MenuItem Name="BtnObserv" Header="Observações" Click="BtnObserv_Click" />
                         <MenuItem Name="BtnEquipe" Header="Equipes" Click="BtnEquipe_Click" />
                     </MenuItem>
@@ -68,13 +67,12 @@
                 <MenuItem Name="BtnDivergenciaN" Header="Divergências" Click="BtnDivergenciaN_Click" />
             </Menu>
 
-            <Frame
-                Name="Navegador"
+            <Frame Name="Navegador"
+                   DockPanel.Dock="Top"
                 Margin="20,10"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 VerticalContentAlignment="Top"
                 NavigationUIVisibility="Hidden" />
-        </StackPanel>
-    </Grid>
+    </DockPanel>
 </Window>

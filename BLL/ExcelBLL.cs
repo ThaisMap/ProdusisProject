@@ -55,12 +55,14 @@ namespace BLL
 
         public void ExportarExcel(List<ItemRelatorio> Tarefas, string nomeArquivo)
         {
-            var excel = new Excel.Application();
-            excel.DisplayAlerts = false;
-            var workbooks = excel.Workbooks;
-            var workbook = workbooks.Add(Type.Missing);
-            var worksheets = workbook.Sheets;
-            var worksheet = (Excel.Worksheet)worksheets[1];
+            var excel = new Excel.Application
+            {
+                DisplayAlerts = false
+            };
+
+            var workbook = excel.Workbooks.Add(Type.Missing);
+            var worksheet = (Excel.Worksheet)workbook.Sheets[1];
+
             object misValue = System.Reflection.Missing.Value;
             string[,] array = new string[Tarefas.Count + 1, 15];
             AcessoBD abd = new AcessoBD();
@@ -85,15 +87,14 @@ namespace BLL
 
                 for (int linha = 0; linha < Tarefas.Count; linha++)
                 {
-                    if (Tarefas[linha].horaFim != null)
-                    {
-                        Tarefas[linha].atualizaPontuação();
-                        abd.InserirPontuacao(Tarefas[linha].idTarefa, (float)Tarefas[linha].pontos);
-                    }
+                    //if (Tarefas[linha].horaFim != null)
+                    //{
+                    //    abd.AlterarPontuacao(Tarefas[linha].idTarefa);
+                    //}
 
                     array[linha + 1, 0] = Tarefas[linha].documentoTarefa.ToString("00");
                     array[linha + 1, 1] = Tarefas[linha].tipoTarefa;
-                    array[linha + 1, 2] = Tarefas[linha].inicioTarefa.Date.ToString("MM/dd/yyyy");
+                    array[linha + 1, 2] = Tarefas[linha].inicioTarefa.Date.ToString("dd\\/MM\\/yyyy");
                     array[linha + 1, 3] = Tarefas[linha].horaInicio;
                     array[linha + 1, 4] = Tarefas[linha].horaFim;
                     array[linha + 1, 5] = Tarefas[linha].nomesFunc;
@@ -150,9 +151,8 @@ Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, mi
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
                 obj = null;
             }
-            catch (Exception ex)
+            catch
             {
-                var erro = ex;
             }
             finally
             {

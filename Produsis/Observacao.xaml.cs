@@ -31,7 +31,10 @@ namespace GUI
         {
             string nome = Nome.SelectedItem.ToString(); // aqui pode ser selected item pq o itemsource é uma lista de strings
             DateTime data = (DateTime)dataObs.SelectedDate;
-            string texto = SelectTime.Text + " - " + TextoObs.Text;
+            string texto = "";
+            if (SelectTime.SelectedTime != null)
+                texto = SelectTime.Text + " - ";
+            texto += TextoObs.Text;
 
             if (bll.CadastraObservacao(nome, data, texto))
             {
@@ -47,7 +50,7 @@ namespace GUI
             dgObs.ItemsSource = abd.GetObservacoes(dataInicio.SelectedDate, dataFim.SelectedDate);           
         }
 
-        private void dgObs_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void DgObs_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (Key.Delete == e.Key && dgObs.SelectedItems.Count > 0)
             {

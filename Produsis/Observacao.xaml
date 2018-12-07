@@ -3,10 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:GUI"
              mc:Ignorable="d"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch"
              d:DesignHeight="450"
@@ -18,26 +16,26 @@
              TextElement.Foreground="{DynamicResource MaterialDesignBody}">
     <DockPanel Name="Dock" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <TextBlock DockPanel.Dock="Top" Margin="40,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}" Text="Observações de horário"/>
-            <Separator DockPanel.Dock="Top"/>
+        <Separator DockPanel.Dock="Top"/>
         <StackPanel  DockPanel.Dock="Top" Orientation="Horizontal"  HorizontalAlignment="Center">
 
             <DatePicker DockPanel.Dock="Top" x:Name="dataObs"
-                    Width="120"
-                    Margin="10,0"
-                    VerticalAlignment="Bottom"
-                    materialDesign:HintAssist.Hint="Data"
-                    HorizontalAlignment="Left"
-                    Language="pt-br"/>
-            
+                        Width="120"
+                        Margin="10,0"
+                        VerticalAlignment="Bottom"
+                        materialDesign:HintAssist.Hint="Data"
+                        HorizontalAlignment="Left"
+                        Language="pt-br"/>
+
             <ComboBox Name="Nome"
-                          DockPanel.Dock="Top"
-                             Width="400" Height="40"
-                             Margin="10,0"
-                             materialDesign:HintAssist.Hint="Nome"
-                             materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Center" IsEditable="False" />
+                      DockPanel.Dock="Top"
+                      Width="400" Height="40"
+                      Margin="10,0"
+                      materialDesign:HintAssist.Hint="Nome"
+                      materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Center" IsEditable="False" />
         </StackPanel>
         <StackPanel  DockPanel.Dock="Top" Margin="0 10"  Orientation="Horizontal"  HorizontalAlignment="Center">
-           
+
             <materialDesign:TimePicker Name="SelectTime" 
                                        Width="120" Margin="10 0" 
                                        Is24Hours="True" VerticalAlignment="Bottom"
@@ -45,50 +43,50 @@
                                        materialDesign:HintAssist.Hint="Tempo Gasto"/>
 
             <TextBox Name="TextoObs" Width="310" Margin= "10, 0"
-                              materialDesign:HintAssist.Hint="Observação"
-                              materialDesign:HintAssist.IsFloating="True" />
+                     materialDesign:HintAssist.Hint="Observação"
+                     materialDesign:HintAssist.IsFloating="True" />
 
             <Button Name="Salvar"
-                        Click="Salvar_Click"
-                             Grid.Column="2" Grid.Row="1"
-                            Width="auto"   Margin="10,0"
-                            Content="Salvar"
-                             Height="30"
-                        VerticalAlignment="Center" />
+                    Click="Salvar_Click"
+                    Grid.Column="2" Grid.Row="1"
+                    Width="auto"   Margin="10,0"
+                    Content="Salvar"
+                    Height="30"
+                    VerticalAlignment="Center" />
         </StackPanel>
 
-        <StackPanel  DockPanel.Dock="Top" Margin="0 20 0 5" Orientation="Horizontal"  HorizontalAlignment="Center">            
+        <StackPanel  DockPanel.Dock="Top" Margin="0 20 0 5" Orientation="Horizontal"  HorizontalAlignment="Center">
             <DatePicker x:Name="dataInicio"
                         Width="120" VerticalAlignment="Bottom"
                         materialDesign:HintAssist.Hint="Data Inicial"
                         HorizontalAlignment="Left"
-                    Language="pt-br"/>
-          
+                        Language="pt-br"/>
+
             <DatePicker x:Name="dataFim"
                         Width="120" Margin=" 40,0"
                         VerticalAlignment="Bottom"
                         materialDesign:HintAssist.Hint="Data Final"
                         HorizontalAlignment="Left"
                         Language="pt-br" />
-          
+
             <Button Name="Buscar"
-                        Width="auto" Height="30"
-                        Content="Buscar"
-                        Click="Buscar_Click"
-                        VerticalAlignment="Top" />
+                    Width="auto" Height="30"
+                    Content="Buscar"
+                    Click="Buscar_Click"
+                    VerticalAlignment="Top" />
         </StackPanel>
-    
+
         <DataGrid DockPanel.Dock="Top" x:Name="dgObs"
                   AutoGenerateColumns="False" IsReadOnly="True"
-                  PreviewKeyDown="dgObs_PreviewKeyDown"
+                  PreviewKeyDown="DgObs_PreviewKeyDown"
                   HorizontalAlignment="Center" VerticalAlignment="Top"
                   CanUserAddRows="False"
                   VerticalScrollBarVisibility="Auto">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding DataObs, StringFormat=dd/MM/yyyy}" Header="Data" />
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding DataObs, StringFormat=dd/MM/yyyy}" Header="Data" />
                 <DataGridTextColumn Binding="{Binding NomeFunc}" Header="Funcionário" />
                 <DataGridTextColumn Binding="{Binding TextoObs}" Header="Observação" />
             </DataGrid.Columns>
-            </DataGrid>
+        </DataGrid>
     </DockPanel>
 </UserControl>

@@ -22,18 +22,35 @@ namespace GUI
 
         private void AlteraNF_Click(object sender, RoutedEventArgs e)
         {
-            var dialogo = new WPFFolderBrowserDialog("Pasta de Notas Fiscais");
-            dialogo.InitialDirectory = CaminhoPastaNFs.Text;
+            var dialogo = new WPFFolderBrowserDialog("Pasta de Notas Fiscais")
+            {
+                InitialDirectory = CaminhoPastaNFs.Text
+            };
+
             if (dialogo.ShowDialog().Value)
                 CaminhoPastaNFs.Text = dialogo.FileName;
         }
 
         private void AlteraMan_Click(object sender, RoutedEventArgs e)
         {
-            var dialogo = new WPFFolderBrowserDialog("Pasta de Manifestos");
-            dialogo.InitialDirectory = CaminhoPastaMan.Text;
+            var dialogo = new WPFFolderBrowserDialog("Pasta de Manifestos")
+            {
+                InitialDirectory = CaminhoPastaMan.Text
+            };
+
             if (dialogo.ShowDialog().Value)
                 CaminhoPastaMan.Text = dialogo.FileName;
+        }
+
+        private void AlteraPreMan_Click(object sender, RoutedEventArgs e)
+        {
+            var dialogo = new WPFFolderBrowserDialog("Pasta de Pré-Manifestos")
+            {
+                InitialDirectory = CaminhoPastaPreMan.Text
+            };
+
+            if (dialogo.ShowDialog().Value)
+                CaminhoPastaPreMan.Text = dialogo.FileName;
         }
 
         private void Salvar_Click(object sender, RoutedEventArgs e)
@@ -41,14 +58,6 @@ namespace GUI
             abd.SetPastasNF(CaminhoPastaNFs.Text);
             abd.SetPastasManifesto(CaminhoPastaMan.Text);
             abd.SetPastasPreManifesto(CaminhoPastaPreMan.Text);
-        }
-
-        private void AlteraPreMan_Click(object sender, RoutedEventArgs e)
-        {
-            var dialogo = new WPFFolderBrowserDialog("Pasta de Pré-Manifestos");
-            dialogo.InitialDirectory = CaminhoPastaPreMan.Text;
-            if (dialogo.ShowDialog().Value)
-                CaminhoPastaPreMan.Text = dialogo.FileName;
         }
     }
 }

@@ -32,7 +32,7 @@ namespace GUI
             Height = actualHeight - 60;
             Width = actualWidth - 60;
             dgTarefas.Height = actualHeight - 250;
-            lerXmls();
+            LerXmls();
         }
 
         public static string CriaChipTag(string Nome)
@@ -44,7 +44,7 @@ namespace GUI
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
             dgTarefas.ItemsSource = abd.GetTarefasPendentes("5"); // 5 = Empilhadeira
-            lerXmls();
+            LerXmls();
         }
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
@@ -52,10 +52,10 @@ namespace GUI
             pallets = paletes.Perguntar("0");
             if (pallets[1] > 0)
             {
-                Tarefas item = (Tarefas)dgTarefas.SelectedItem;
+                TarefaModelo item = (TarefaModelo)dgTarefas.SelectedItem;
                 // lançar apenas quantidade de paletes na separação
                 if (abd.FinalizarTarefa(item.idTarefa, pallets[0], pallets[0]))
-                    MessageBox.Show("Movimentação de paletes finalizada após " + item.tempoGasto, "Movimentação finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Movimentação de empilhadeira finalizada", "Movimentação finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
                     MessageBox.Show("Houve um erro e a movimentação de paletes não pode ser finalizada.", "Movimentação não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 ListaFunc = abd.GetFuncionariosLivres("5"); // 5 = Empilhadeira
@@ -80,7 +80,7 @@ namespace GUI
             }
         }
 
-        private bool checarCampos()
+        private bool ChecarCampos()
         {
             if (Documento.Text.Replace("_", "") == "" || ListaDeFuncionarios.Items.Count == 0)
             {
@@ -103,7 +103,7 @@ namespace GUI
             }
         }
 
-        private string[] funcionarios()
+        private string[] Funcionarios()
         {
             List<string> nomes = new List<string>();
             foreach (FuncionariosTag tag in ListaDeFuncionarios.Items)
@@ -117,10 +117,10 @@ namespace GUI
         {
             Logica bll = new Logica();
 
-            if (checarCampos())
+            if (ChecarCampos())
                 if (!abd.VerificaDocumentoTarefa(int.Parse(Documento.Text.Replace("_", "")), "5"))
                 {
-                    if (bll.InserirTarefa(montarTarefa(), funcionarios()))
+                    if (bll.InserirTarefa(MontarTarefa(), Funcionarios()))
                     {
                         MessageBox.Show("Movimentação de paletes iniciada. ", "Movimentação iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                         dgTarefas.ItemsSource = abd.GetTarefasPendentes("5");
@@ -164,22 +164,24 @@ namespace GUI
             }
         }
 
-        private static void lerXmls()
+        private static void LerXmls()
         {
             xmlBLL x = new xmlBLL();
             x.TriagemArquivos();
         }
 
-        private Tarefas montarTarefa()
+        private Tarefas MontarTarefa()
         {
-            Tarefas novaTarefa = new Tarefas();
-            novaTarefa.documentoTarefa = int.Parse(Documento.Text.Replace("_", ""));
-            novaTarefa.inicioTarefa = DateTime.Now;
-            novaTarefa.tipoTarefa = "5";
+            Tarefas novaTarefa = new Tarefas
+            {
+                documentoTarefa = int.Parse(Documento.Text.Replace("_", "")),
+                inicioTarefa = DateTime.Now,
+                tipoTarefa = "5"
+            };
             return novaTarefa;
         }
 
-        private void testarCaractere(object sender, TextCompositionEventArgs e)
+        private void TestarCaractere(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);

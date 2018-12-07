@@ -35,7 +35,7 @@ namespace DAL
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -55,7 +55,7 @@ namespace DAL
                     BancoDeDados.SaveChanges();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }
@@ -83,7 +83,6 @@ namespace DAL
                     else
                     {
                         BancoDeDados.Manifestos.Add(novoManifesto);
-
                         BancoDeDados.SaveChanges();
                     }
                 }
@@ -104,7 +103,7 @@ namespace DAL
                     BancoDeDados.SaveChanges();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }
@@ -140,7 +139,7 @@ namespace DAL
                 }
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -161,7 +160,7 @@ namespace DAL
                     return true;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -197,7 +196,7 @@ namespace DAL
                 }
                 return foiCadastrado;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -221,7 +220,7 @@ namespace DAL
                     BancoDeDados.SaveChanges();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -238,7 +237,7 @@ namespace DAL
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -318,13 +317,12 @@ namespace DAL
                         BancoDeDados.SaveChanges();
                     }
                 }
+                AlterarPontuacao(novaDivergencia.TarefaDivergencia);
             }
             catch
             {
             }
         }
-
-      
 
         #endregion Tarefas
 
@@ -343,7 +341,7 @@ namespace DAL
                     Observacoes apagar = BancoDeDados.Observacoes.Where(i => i.idObs == idObservacao).FirstOrDefault();
                     BancoDeDados.Observacoes.Remove(apagar);
                     BancoDeDados.SaveChanges();
-                }
+                }                
             }
             catch
             {
@@ -354,14 +352,17 @@ namespace DAL
         {
             try
             {
+                int idTarefa = 0;
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     var div = BancoDeDados.Divergencias.Where(x => x.idDivergencia == id).FirstOrDefault();
+                    idTarefa = div.TarefaDivergencia;
                     BancoDeDados.Divergencias.Remove(div);
                     BancoDeDados.SaveChanges();
                 }
+                AlterarPontuacao(idTarefa);
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
         }
@@ -496,9 +497,10 @@ namespace DAL
         public string GetDadosCte(int numDoc)
         {
             string dados;
+            var cte = GetNovoCtePorNum(numDoc);
             try
             {
-                dados = "Cte n º " + numDoc + " - " + GetVolumesCte(numDoc) + " volumes - " + GetSkuCte(numDoc) + " SKU's";
+                dados = "Cte n º " + numDoc + " - " + GetFornecedorCte(cte.Max(x=>x.idCte));
             }
             catch
             {
@@ -535,7 +537,7 @@ namespace DAL
                     return nota.fornecedorNF;
                 }
             }
-            catch (Exception erro)
+            catch (Exception)
             {
                 return "Fornecedor não encontrado";
             }
@@ -565,7 +567,7 @@ namespace DAL
                         return result[0];
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return "Fornecedor não encontrado";
             }
@@ -607,32 +609,26 @@ namespace DAL
 
         public int GetSkuCte(int idCte)
         {
-            int sku = 0;
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    List<int> ListaNFs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNovoNF == idCte select NotasFiscais.skuNF).ToList();
-                    sku = ListaNFs.Sum();
+                    return BancoDeDados.NotasFiscais.Where(x => x.CteNovoNF == idCte).Select(x => x.skuNF).Sum();
                 }
             }
             catch
             {
                 return -1;
             }
-            return sku;
         }
 
-        public int GetVolumesCte(int numeroCte)
+        public int GetVolumesCte(int idCte)
         {
-            int volumes = 0;
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    List<int> ListaNFs = (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.CteNovoNF == numeroCte select NotasFiscais.volumesNF).ToList();
-                    volumes = ListaNFs.Sum();
-                    return volumes;
+                    return BancoDeDados.NotasFiscais.Where(x => x.CteNovoNF == idCte).Select(x => x.volumesNF).Sum();
                 }
             }
             catch
@@ -663,7 +659,7 @@ namespace DAL
                     return lista.ToList();
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return new List<Observacoes>();
             }
@@ -779,7 +775,7 @@ namespace DAL
                     return lista;
                 }
             }
-            catch (Exception erro)
+            catch (Exception)
             {
                 return new List<Carretas>();
             }
@@ -795,7 +791,7 @@ namespace DAL
                     return lista;
                 }
             }
-            catch (Exception erro)
+            catch (Exception)
             {
                 return new List<Veiculos>();
             }
@@ -924,7 +920,7 @@ namespace DAL
                     return BancoDeDados.Divergencias.Where(d => d.TarefaDivergencia == tarefa.idTarefa).ToList();
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return new List<Divergencias>();
             }
@@ -939,7 +935,7 @@ namespace DAL
                 {
                     if (tipo != 2)
                     {
-                        tarefa = BancoDeDados.Tarefas.Where(t => t.documentoTarefa == documento).FirstOrDefault();
+                        tarefa = BancoDeDados.Tarefas.Where(t => t.documentoTarefa == documento && t.tipoTarefa == tipo.ToString()).FirstOrDefault();
                     }
                     else
                     {
@@ -954,6 +950,44 @@ namespace DAL
             {
                 return new TarefaModelo(tarefa);
             }
+        }
+
+        public string GetDadosDivergencia(int idTarefa)
+        {
+            if (TemDivergencia(idTarefa))
+            {
+                try
+                {
+                    List<Divergencias> lista = new List<Divergencias>();
+                    string dados = "";
+                    using (var BancoDeDados = new produsisBDEntities())
+                    {
+                        lista = BancoDeDados.Divergencias.Where(x => x.TarefaDivergencia == idTarefa).ToList();
+                    }
+                    foreach (var item in lista)
+                    {
+                        if (item.TipoDivergencia == "1")
+                            dados += "Falta código: " + item.TextoDivergencia + " qtde: " + item.QtdeDivergencia + " - ";
+                        if (item.TipoDivergencia == "2")
+                            dados += "Sobra código: " + item.TextoDivergencia + " qtde: " + item.QtdeDivergencia + " - ";
+                        if (item.TipoDivergencia == "3")
+                            dados += "Avaria código: " + item.TextoDivergencia + " qtde: " + item.QtdeDivergencia + " - ";
+                        if (item.TipoDivergencia == "4")
+                            dados += item.TextoDivergencia + " qtde: " + item.QtdeDivergencia + " - ";
+                    }
+                    if (dados.Length > 3)
+                    {
+                        dados = dados.Remove(dados.Length - 3);
+                    }
+                    return dados;
+                }
+                catch
+                {
+                    return "Erro na consulta";
+                }
+            }
+            else
+                return "Nenhuma";
         }
 
         public int? GetPaletesSeparacao(int Premanifesto)
@@ -1017,13 +1051,7 @@ namespace DAL
                     int qtde = 0;
                     foreach (var item in listaItems)
                     {
-                        if (TemDivergencia(item.idTarefa))
-                            InserirPontuacao(item.idTarefa, 0);
-                        else
-                        {
-                            item.atualizaPontuação();
-                            InserirPontuacao(item.idTarefa, (float)item.pontos);
-                        }
+                        AlterarPontuacao(item.idTarefa);                        
                     }
 
                     foreach (var item in resultado)
@@ -1034,7 +1062,7 @@ namespace DAL
                 }
                 return listaFinal;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return listaFinal;
             }
@@ -1126,7 +1154,7 @@ namespace DAL
                     lista.OrderBy(o => o.idTarefa);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
             return lista;
@@ -1223,7 +1251,7 @@ namespace DAL
                 return true;
             }
         }
-
+            
         #endregion Documentos
 
         #region Pessoas
@@ -1262,7 +1290,7 @@ namespace DAL
                             select Funcionarios.tipoFunc).Any();              
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -1353,15 +1381,24 @@ namespace DAL
         {
             try
             {
+                int? oldCte = 0;
+                int? newCte = 0;
+                
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                     NotasFiscais nfAtual = BancoDeDados.NotasFiscais.FirstOrDefault(nf => nf.numeroNF == numNF);
                     var ctes = GetNovoCtePorNum(numeroCte);
+                    oldCte = nfAtual.CteNovoNF;
                     nfAtual.CteNovoNF = ctes.Where(x => x.notasCte.Contains(numNF)).Select(x => x.idCte).LastOrDefault();
+                    newCte = nfAtual.CteNovoNF;
                     BancoDeDados.SaveChanges();
                 }
+                if (oldCte != null)
+                    AlterarPontuacaoDocumento((int)oldCte);
+
+                AlterarPontuacaoDocumento((int)newCte);                
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }
@@ -1376,7 +1413,7 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    Funcionarios funcAtual = BancoDeDados.Funcionarios.Single(f => f.idFunc == novoFunc.idFunc);
+                    Funcionarios funcAtual = BancoDeDados.Funcionarios.Single(f => f.matriculaFunc == novoFunc.matriculaFunc);
                     funcAtual.nomeFunc = novoFunc.nomeFunc;
                     funcAtual.matriculaFunc = novoFunc.matriculaFunc;
                     funcAtual.tipoFunc = novoFunc.tipoFunc;
@@ -1386,7 +1423,7 @@ namespace DAL
                 }
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -1426,7 +1463,7 @@ namespace DAL
                     BancoDeDados.SaveChanges();
                 }
             }
-            catch (Exception erro)
+            catch (Exception)
             {
             }
         }
@@ -1442,7 +1479,7 @@ namespace DAL
                     BancoDeDados.SaveChanges();
                 }
             }
-            catch (Exception erro)
+            catch (Exception)
             {
             }
         }
@@ -1461,34 +1498,65 @@ namespace DAL
                     tarefaAtual.fimTarefa = DateTime.Now;
                     tarefaAtual.quantPaletizado = quantPalet;
                     tarefaAtual.totalPaletes = totalPalet;
-                    if (tarefaAtual.divergenciaTarefa.Length > 120)
-                        tarefaAtual.divergenciaTarefa = tarefaAtual.divergenciaTarefa.Remove(100);
                     BancoDeDados.SaveChanges();
 
                     foreach (Func_Tarefa f in tarefaAtual.Func_Tarefa)
                     {
+                        AlterarPontuacao(f.Tarefa);
                         AlterarOcupacaoFuncionario(f.Funcionario, false);
                     }
                 }
                 return true;
             }
-            catch (Exception erro)
+            catch (Exception)
             {
                 return false;
             }
         }
 
-        public void InserirPontuacao(int idTarefa, float pontos)
+        public void AlterarPontuacao(int idTarefa)
         {
+            double pontos = 0;
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    List<Func_Tarefa> funcTarefas = BancoDeDados.Func_Tarefa.Where(i => i.Tarefa == idTarefa).ToList();
+                   var funcTarefas = BancoDeDados.Func_Tarefa.Where(i => i.Tarefa == idTarefa);
+                    TarefaModelo dados;
+
                     foreach (var item in funcTarefas)
                     {
-                        item.Pontuacao = pontos;
+                        if (TemDivergencia(item.Tarefa))
+                            item.Pontuacao = 0;
+                        else
+                        {
+                            dados = TarefaModeloParse(item.Tarefas);
+                            if (item.Tarefas.tipoTarefa == "2")
+                            {
+                                if (dados.skus == 0)
+                                    dados.skus = 1;
+                                pontos = dados.skus * 7 + dados.volumes * 0.4;
+                            }
+                            else if (item.Tarefas.tipoTarefa == "1" || item.Tarefas.tipoTarefa == "4")
+                            {
+                                double porcentagemPaletizado = (double)dados.quantPaletizado / (double)dados.totalPaletes;
+                                pontos = dados.volumes * porcentagemPaletizado;
+                                pontos += dados.volumes * (1 - porcentagemPaletizado) * 3;
+                            }
+                            else
+                            {
+                                pontos = (float)dados.totalPaletes;
+                            }
+                            if(dados.nomesFuncionarios.Contains('/'))
+                            {
+                                int div = dados.nomesFuncionarios.Count(x => x == '/') + 1;
+                                pontos = pontos / div;
+                            }
+                        }
+
+                        item.Pontuacao = (float)pontos;
                     }
+
                     BancoDeDados.SaveChanges();
                 }
             }
@@ -1496,12 +1564,27 @@ namespace DAL
             {
             }
         }
-        
+
+        private void AlterarPontuacaoDocumento(int numDocumento)
+        {
+            List<int> listaTarefas = new List<int>();
+            using (var BancoDeDados = new produsisBDEntities())
+            {
+                listaTarefas = BancoDeDados.Tarefas.Where(x => x.documentoTarefa == numDocumento).Select(x=>x.idTarefa).ToList();
+            }
+            foreach (var item in listaTarefas)
+            {
+                AlterarPontuacao(item);
+            }
+        }
+
         #endregion Tarefas
 
         #endregion Alteracoes
+        
+        //-----------------------------------------------------------------------
 
-        #region NotDatabase
+        #region Not Database
 
         private List<TarefaModelo> TarefaModeloParse(List<Tarefas> tarefas)
         {
@@ -1525,14 +1608,14 @@ namespace DAL
             if (tarefas.tipoTarefa == "2")
             {
                 aux.documentoTarefa = GetCtePorID(aux.documentoTarefa).numeroCte;
-                aux.valores(GetSkuCte(tarefas.documentoTarefa), GetVolumesCte(tarefas.documentoTarefa));
+                aux.IncluirValores(GetSkuCte(tarefas.documentoTarefa), GetVolumesCte(tarefas.documentoTarefa));
                 aux.fornecedor = GetFornecedorCte(tarefas.documentoTarefa);
                 aux.cliente = GetListaManifestosCte(tarefas.documentoTarefa);
             }
             else
             {
                 m = GetManifestoPorNumero(tarefas.documentoTarefa);
-                aux.valores(0, m.VolumesManifesto);
+                aux.IncluirValores(0, m.VolumesManifesto);
             }
             aux.nomesFuncionarios = GetNomesFuncTarefa(tarefas.idTarefa);
 
@@ -1612,6 +1695,9 @@ namespace DAL
 
         #endregion
 
+        //-----------------------------------------------------------------------
+        
+        #region Propriedades Pastas Padrao
 
         public string GetPastaNFs()
         {
@@ -1645,72 +1731,9 @@ namespace DAL
             PastasXml.Default.PastaPreManifestos = caminho;
             PastasXml.Default.Save();
         }
-
-        /*  TELA DE DIVERGENCIAS ANTIGAS
-         *  public bool CadastrarDivergencia(List<TarefaModelo> listaDivergencia)
-            {
-                try
-                {
-                    foreach (TarefaModelo tar in listaDivergencia)
-                    {
-                        using (var BancoDeDados = new produsisBDEntities())
-                        {
-                            Tarefas tarefaAtual = BancoDeDados.Tarefas.Single(t => t.idTarefa == tar.idTarefa);
-                            tarefaAtual.divergenciaTarefa = tar.divergenciaTarefa;
-                            BancoDeDados.SaveChanges();
-                        }
-                    }
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-
-            public List<TarefaModelo> GetTarefasDivergencia(int tipo, int documento)
-            {
-                List<TarefaModelo> listaModelo = new List<TarefaModelo>();
-                List<Tarefas> lista = new List<Tarefas>();
-
-                try
-                {
-                    using (var BancoDeDados = new produsisBDEntities())
-                    {
-                        if (tipo == 2)
-                        {
-                            try
-                            {
-                                var listaCtes = GetNovoCtePorNum(documento);
-                                //Se o tipo desejado for Conferência, retorna todas as tarefas com ctes relacionados com o manifesto do cte informado
-                                foreach (var item in listaCtes)
-                                {
-                                    int manif = BancoDeDados.Cte_Manifesto.Where(c => c.CteNovo == item.idCte).Select(m => m.Manifesto).FirstOrDefault();
-                                    var ctes = BancoDeDados.Cte_Manifesto.Where(m => m.Manifesto == manif).Select(c => c.CteNovo).ToList(); //lista dos ids
-                                    foreach (int cte in ctes)
-                                    {
-                                        lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == cte).FirstOrDefault());
-                                    }
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                            }
-                        }
-                        else
-                        { //Se for outro tipo, retorna só aquele tipo e manifesto
-                            lista.Add(BancoDeDados.Tarefas.Where(c => c.documentoTarefa == documento && c.tipoTarefa == tipo.ToString()).FirstOrDefault());
-                        }
-                        listaModelo = TarefaModeloParse(lista);
-                    }
-                }
-                catch (Exception e)
-                {
-                    var whatHapened = e;
-                }
-                return listaModelo;
-            }
-      */
+     
+        #endregion  Propriedades Pastas Padrao
+          
 
     }
 }

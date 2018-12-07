@@ -52,12 +52,12 @@ namespace GUI
             pallets = paletes.Perguntar("0");
             if (pallets[1] > 0)
             {
-                Tarefas item = (Tarefas)dgTarefas.SelectedItem;
+                TarefaModelo item = (TarefaModelo)dgTarefas.SelectedItem;
                 // lançar apenas quantidade de paletes na separação
                 if (abd.FinalizarTarefa(item.idTarefa, pallets[0], pallets[0]))
-                    MessageBox.Show("Separação para carregamento finalizada após " + item.tempoGasto, "Separação finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Movimentação de paletes finalizada", "Movimentação finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
-                    MessageBox.Show("Houve um erro e a separação para carregamento não pode ser finalizada.", "Separação não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Houve um erro e a movimentação de paletes não pode ser finalizada.", "Movimentação não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 ListaFunc = abd.GetFuncionariosLivres("3");
                 CBFuncionario.ItemsSource = ListaFunc;
                 AtualizarDg_Click(sender, e);

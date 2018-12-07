@@ -21,7 +21,7 @@ namespace GUI
         {
             if (VerificaCampos())
             {
-         AcessoBD abd = new AcessoBD();
+                AcessoBD abd = new AcessoBD();
 
                 if (abd.UsuarioExiste(TxbLogin.Text))
                 {

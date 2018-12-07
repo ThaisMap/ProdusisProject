@@ -14,9 +14,9 @@ namespace GUI
     /// <summary>
     /// Interação lógica para Divergencias.xam
     /// </summary>
-    public partial class Divergencias : UserControl
+    public partial class DivergenciasNovo : UserControl
     {
-        List<ProdusisBD.Divergencias> lista = new List<ProdusisBD.Divergencias>();
+        List<Divergencias> lista = new List<Divergencias>();
         int idTarefa = 0;
         bool isEditing = false;
 
@@ -24,7 +24,7 @@ namespace GUI
         List<string> itensCombo = new List<string>();
 
 
-        public Divergencias(double actualHeight, double actualWidth)
+        public DivergenciasNovo(double actualHeight, double actualWidth)
         {
             InitializeComponent();
             Height = actualHeight - 100;
@@ -63,7 +63,7 @@ namespace GUI
             dgOcorrencias.ItemsSource = lista;
         }
 
-        private void btnConsultar_Click(object sender, RoutedEventArgs e)
+        private void Consultar_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -87,17 +87,17 @@ namespace GUI
                 }
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }
 
-        private void btnIncluir_Click(object sender, RoutedEventArgs e)
+        private void Incluir_Click(object sender, RoutedEventArgs e)
         {
             if (ChecarCampos())
             {
-                abd.CadastrarNovaDivergencia(montarObjeto());
-                btnConsultar_Click(sender, e);
+                abd.CadastrarNovaDivergencia(MontarObjeto());
+                Consultar_Click(sender, e);
             }
         }
 
@@ -117,7 +117,7 @@ namespace GUI
             return retorno;
         }
 
-        private ProdusisBD.Divergencias montarObjeto()
+        private Divergencias MontarObjeto()
         {
             ProdusisBD.Divergencias div = new ProdusisBD.Divergencias()
             {
@@ -129,7 +129,7 @@ namespace GUI
             return div;
         }
 
-        private void dgOcorrencias_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        private void DgOcorrencias_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
         {
             isEditing = true;
         }
@@ -196,7 +196,7 @@ namespace GUI
             }
         }
 
-        private void dgOcorrencias_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void DgOcorrencias_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (Key.Delete == e.Key && dgOcorrencias.SelectedItems.Count > 0 && !isEditing)
             {
@@ -204,7 +204,7 @@ namespace GUI
                 {
                     var linha = dgOcorrencias.SelectedItem as ProdusisBD.Divergencias;
                     abd.ApagarNovaDivergencia(linha.idDivergencia);
-                    btnConsultar_Click(sender, e);
+                    Consultar_Click(sender, e);
 
                 }
             }

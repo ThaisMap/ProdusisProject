@@ -17,19 +17,22 @@ namespace GUI
         public bool isEditing { get; set; }
         private List<Veiculos> motoristas;
         private AcessoBD abd = new AcessoBD();
-     
+        
+        string[] tiposVeiculo = { "VAN", "HR", "VUC", "3/4", "TOCO", "TRUCK", "CAVALO", "CONJUNTO", "CARRO", "PREST SERVIÇO" };
+
         public CadastroMotorista(double Altura, double largura)
         {
             InitializeComponent();
+            cbTipo.ItemsSource = tiposVeiculo;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            loadData();
+            LoadData();
         }
 
         // ATUALIZADO
-        private List<Veiculos> loadData()
+        private List<Veiculos> LoadData()
         {
             motoristas = abd.GetVeiculos();
             cbNome.ItemsSource = motoristas.OrderBy(x => x.MotoristaVeiculo);
@@ -45,19 +48,19 @@ namespace GUI
                 if (abd.CadastrarVeiculo(MontarObjeto()))
                 {
                     MessageBox.Show("Veículo cadastrado");
-                    limpar();
-                    loadData();
+                    Limpar();
+                    LoadData();
                 }
                 else
                 {
                     MessageBox.Show("Veículo editado");
-                    limpar();
-                    loadData();
+                    Limpar();
+                    LoadData();
                 }
             }
         }
 
-        private void limpar()
+        private void Limpar()
         {
             Ativo.IsChecked = true;
             txtCapacidade.Text = "0";
@@ -86,14 +89,14 @@ namespace GUI
         }
 
         // ATUALIZADO
-        private void testarCaractere(object sender, TextCompositionEventArgs e)
+        private void TestarCaractere(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
         // ATUALIZADO
-        private bool validarPlacas(string placa)
+        private bool ValidarPlacas(string placa)
         {
             Regex regex = new Regex(@"^[a-zA-Z]{3}\d{4}$");
 
@@ -118,7 +121,7 @@ namespace GUI
                 txtCapacidade.Focus();
                 return false;
             }
-            if (txtPlaca.Text == "" || !validarPlacas(txtPlaca.Text))
+            if (txtPlaca.Text == "" || !ValidarPlacas(txtPlaca.Text))
             {
                 txtPlaca.Focus();
                 return false;
@@ -133,7 +136,7 @@ namespace GUI
                 cbTipo.Focus();
                 return false;
             }
-            if (txtPlaca2.Text != "" && !validarPlacas(txtPlaca2.Text))
+            if (txtPlaca2.Text != "" && !ValidarPlacas(txtPlaca2.Text))
             {
                 txtPlaca2.Focus();
                 return false;
@@ -143,7 +146,7 @@ namespace GUI
         }
 
         // ATUALIZADO
-        private void btnEditar_Click(object sender, RoutedEventArgs e)
+        private void BtnEditar_Click(object sender, RoutedEventArgs e)
         {
             if (cbNome.SelectedIndex > -1)
             {
