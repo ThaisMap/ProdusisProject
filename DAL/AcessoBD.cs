@@ -1029,35 +1029,18 @@ namespace DAL
         public List<ItemRanking> GetRanking(Filtro f)
         {
             List<ItemRanking> listaFinal = new List<ItemRanking>();
-            try
+            try 
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    var listaConf = BancoDeDados.RelatorioNovoConferencias.Where(i => i.tipoTarefa == f.TipoTarefa)
-                        .Where(i => i.inicioTarefa >= f.dataInicio)
-                        .Where(i => i.inicioTarefa <= f.dataFim)
-                        .ToList();
-                    var listaNotConf = BancoDeDados.RelatorioNaoConferencia.Where(i => i.tipoTarefa == f.TipoTarefa)
-                        .Where(i => i.inicioTarefa >= f.dataInicio)
-                        .Where(i => i.inicioTarefa <= f.dataFim)
-                        .Where(i => i.fimTarefa != null)
-                        .ToList();
+                    var listaPontuacoes = BancoDeDados.Ranking.Where(i => i.tipoTarefa == f.TipoTarefa && i.inicioTarefa >= f.dataInicio && i.inicioTarefa <= f.dataFim);
+                    var listaNomes = listaPontuacoes.Select(s => s.nomeFunc).Distinct();
 
-                    var listaItems = ConsolidarRelatorio(listaConf, listaNotConf);
-                    var listaTarefas = listaItems.Select(i => i.idTarefa);
-                    var resultado = BancoDeDados.Func_Tarefa.Where(t => listaTarefas.Contains(t.Tarefa)).ToList();
-
-                    string nome;
-                    int qtde = 0;
-                    foreach (var item in listaItems)
+                    foreach (var item in listaNomes)
                     {
-                        AlterarPontuacao(item.idTarefa);                        
-                    }
-
-                    foreach (var item in resultado)
-                    {
-                        nome = BancoDeDados.Funcionarios.Where(func => func.idFunc == item.Funcionario).Select(func => func.nomeFunc).FirstOrDefault();
-                        listaFinal.Add(new ItemRanking((double)item.Pontuacao, nome, qtde));
+                        var listaAtual = listaPontuacoes.Where(x => x.nomeFunc == item);
+                        listaFinal.Add(new ItemRanking((double)listaAtual.Sum(x => x.Pontuacao), item, listaAtual.Count(), listaAtual.Where(x=>x.Pontuacao == 0).Count()
+                            ));
                     }
                 }
                 return listaFinal;
@@ -1502,8 +1485,8 @@ namespace DAL
 
                     foreach (Func_Tarefa f in tarefaAtual.Func_Tarefa)
                     {
-                        AlterarPontuacao(f.Tarefa);
                         AlterarOcupacaoFuncionario(f.Funcionario, false);
+                        AlterarPontuacao(f.Tarefa);
                     }
                 }
                 return true;
@@ -1522,7 +1505,7 @@ namespace DAL
                 using (var BancoDeDados = new produsisBDEntities())
                 {
                    var funcTarefas = BancoDeDados.Func_Tarefa.Where(i => i.Tarefa == idTarefa);
-                    TarefaModelo dados;
+                    TarefaPontuacao dados;
 
                     foreach (var item in funcTarefas)
                     {
@@ -1530,7 +1513,7 @@ namespace DAL
                             item.Pontuacao = 0;
                         else
                         {
-                            dados = TarefaModeloParse(item.Tarefas);
+                            dados = TarefaRankingParse(item.Tarefas);
                             if (item.Tarefas.tipoTarefa == "2")
                             {
                                 if (dados.skus == 0)
@@ -1539,6 +1522,7 @@ namespace DAL
                             }
                             else if (item.Tarefas.tipoTarefa == "1" || item.Tarefas.tipoTarefa == "4")
                             {
+                                
                                 double porcentagemPaletizado = (double)dados.quantPaletizado / (double)dados.totalPaletes;
                                 pontos = dados.volumes * porcentagemPaletizado;
                                 pontos += dados.volumes * (1 - porcentagemPaletizado) * 3;
@@ -1599,11 +1583,30 @@ namespace DAL
             return modelos;
         }
 
+        private TarefaPontuacao TarefaRankingParse(Tarefas tarefas)
+        {
+            TarefaPontuacao aux = new TarefaPontuacao(tarefas);
+            
+            if (tarefas.tipoTarefa == "2")
+            {
+                aux.skus = GetSkuCte(tarefas.documentoTarefa);
+                aux.volumes = GetVolumesCte(tarefas.documentoTarefa);
+            }
+            else
+            {
+                aux.volumes = GetManifestoPorNumero(tarefas.documentoTarefa).VolumesManifesto;
+            }
+
+            aux.nomesFuncionarios = GetNomesFuncTarefa(tarefas.idTarefa);
+
+            return aux;
+
+        }
+
         private TarefaModelo TarefaModeloParse(Tarefas tarefas)
         {
-            TarefaModelo aux;
-            Manifestos m;
-            aux = new TarefaModelo(tarefas);
+            TarefaModelo aux = new TarefaModelo(tarefas);
+            
 
             if (tarefas.tipoTarefa == "2")
             {
@@ -1614,47 +1617,13 @@ namespace DAL
             }
             else
             {
+                Manifestos m;
                 m = GetManifestoPorNumero(tarefas.documentoTarefa);
                 aux.IncluirValores(0, m.VolumesManifesto);
             }
             aux.nomesFuncionarios = GetNomesFuncTarefa(tarefas.idTarefa);
 
             return aux;
-        }
-
-        public List<ItemRanking> RankingFuncionarios(List<ItemRanking> tarefasPeriodo)
-        {
-            var lista = from t in tarefasPeriodo
-                        group t by new
-                        {
-                            t.NomesFuncionarios
-                        } into g
-                        select new
-                        {
-                            Sum = g.Sum(p => p.Pontuacao),
-                            g.Key.NomesFuncionarios,
-                        };
-
-            List<ItemRanking> Rank = new List<ItemRanking>();
-            int cont = 0;
-            int erros = 0;
-
-            foreach (var item in lista)
-            {
-                erros = tarefasPeriodo.Where(x => x.NomesFuncionarios == item.NomesFuncionarios && x.Pontuacao == 0).Count();
-                cont = tarefasPeriodo.Where(x => x.NomesFuncionarios == item.NomesFuncionarios).Count();
-                Rank.Add(new ItemRanking()
-                {
-                    Pontuacao = Math.Round(item.Sum, 2),
-                    NomesFuncionarios = item.NomesFuncionarios,
-                    QuantidadeTarefas = cont,
-                    Erros = erros
-                });
-            }
-
-            Rank = Rank.OrderByDescending(i => i.Pontuacao).ToList();
-
-            return Rank;
         }
 
         private List<ItemRelatorio> ConsolidarRelatorio(List<RelatorioNovoConferencias> conferencias, List<RelatorioNaoConferencia> outros)
@@ -1733,7 +1702,7 @@ namespace DAL
         }
      
         #endregion  Propriedades Pastas Padrao
-          
 
+ 
     }
 }

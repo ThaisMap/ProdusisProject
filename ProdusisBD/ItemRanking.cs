@@ -16,6 +16,14 @@ namespace ProdusisBD
             QuantidadeTarefas = quant;
         }
 
+        public ItemRanking(double media, string nomes, int quant, int erros)
+        {
+            Pontuacao = Math.Round(media, 2);
+            NomesFuncionarios = nomes;
+            QuantidadeTarefas = quant;
+            Erros = erros;
+        }
+
         public ItemRanking()
         {
                 

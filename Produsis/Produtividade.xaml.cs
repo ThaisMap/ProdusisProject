@@ -39,14 +39,12 @@ namespace GUI
                     };
 
                     AcessoBD abd = new AcessoBD();
-
-                    Ranking = abd.RankingFuncionarios(abd.GetRanking(filtros));
-
+                    Ranking = abd.GetRanking(filtros);
+              
                     dgRanking.ItemsSource = Ranking;
                     Mouse.OverrideCursor = _cursorAnterior;
-                }
+   }
             }
-        }
-
+        }      
     }
 }

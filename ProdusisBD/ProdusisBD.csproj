@@ -54,9 +54,6 @@
     <Compile Include="AcessosPortaria.cs">
       <DependentUpon>ModelProdusisBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="CapacidadeMotoristas.cs">
-      <DependentUpon>ModelProdusisBD.tt</DependentUpon>
-    </Compile>
     <Compile Include="Carretas.cs">
       <DependentUpon>ModelProdusisBD.tt</DependentUpon>
     </Compile>
@@ -99,6 +96,9 @@
       <DependentUpon>ModelProdusisBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Observacoes.cs">
+      <DependentUpon>ModelProdusisBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ranking.cs">
       <DependentUpon>ModelProdusisBD.tt</DependentUpon>
     </Compile>
     <Compile Include="RelatorioNaoConferencia.cs">

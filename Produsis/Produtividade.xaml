@@ -41,7 +41,6 @@
                 Margin="40,0"
                 Style="{StaticResource MaterialDesignHeadlineTextBlock}"
                 Text="Indicador de produtividade"/>
-
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="0"

@@ -67,6 +67,7 @@
       <DependentUpon>Perfumaria.settings</DependentUpon>
     </Compile>
     <Compile Include="TarefaModelo.cs" />
+    <Compile Include="TarefaPontuacao.cs" />
     <Compile Include="Xml.cs" />
   </ItemGroup>
   <ItemGroup>

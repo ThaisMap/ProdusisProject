@@ -5,21 +5,20 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="9dfa6cbfdb7f4a2f84faf47fd500384b" Name="Diagram1">
-        <EntityTypeShape EntityType="produsisBDModel.AcessosPortaria" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="produsisBDModel.CapacidadeMotoristas" Width="1.5" PointX="5.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="produsisBDModel.Carretas" Width="1.5" PointX="7.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="produsisBDModel.AcessosPortaria" Width="1.5" PointX="0.5" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="produsisBDModel.Carretas" Width="1.5" PointX="1" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="produsisBDModel.Cte" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="produsisBDModel.Cte_Manifesto" Width="1.5" PointX="11" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="produsisBDModel.Divergencias" Width="1.5" PointX="6" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="produsisBDModel.Divergencias" Width="1.5" PointX="3.25" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="produsisBDModel.Func_Tarefa" Width="1.5" PointX="6" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="produsisBDModel.Funcionarios" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="produsisBDModel.Funcionarios" Width="1.5" PointX="2.875" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="produsisBDModel.Manifestos" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="produsisBDModel.NotasFiscais" Width="1.5" PointX="11" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="produsisBDModel.Observacoes" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
-        <EntityTypeShape EntityType="produsisBDModel.Tarefas" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="produsisBDModel.Observacoes" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="produsisBDModel.Tarefas" Width="1.5" PointX="6.125" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="produsisBDModel.Veiculos" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="produsisBDModel.RelatorioNaoConferencia" Width="1.5" PointX="9.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="produsisBDModel.RelatorioNovoConferencias" Width="1.5" PointX="5.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="produsisBDModel.RelatorioNaoConferencia" Width="1.5" PointX="8" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="produsisBDModel.RelatorioNovoConferencias" Width="1.5" PointX="6.125" PointY="10.125" IsExpanded="true" />
         <AssociationConnector Association="produsisBDModel.FK_PorteiroEntrada_AcessosPortaria" ManuallyRouted="false" />
         <AssociationConnector Association="produsisBDModel.FK_PorteiroSaida_AcessosPortaria" ManuallyRouted="false" />
         <AssociationConnector Association="produsisBDModel.FK_Veiculos_AcessosPortaria" ManuallyRouted="false" />
@@ -30,6 +29,7 @@
         <AssociationConnector Association="produsisBDModel.FK_Func_Tarefa_Funcionarios" ManuallyRouted="false" />
         <AssociationConnector Association="produsisBDModel.FK_Func_Tarefa_Tarefas" ManuallyRouted="false" />
         <AssociationConnector Association="produsisBDModel.FK_Observacoes_Funcionarios" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="produsisBDModel.Ranking" Width="1.5" PointX="9.75" PointY="10.125" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

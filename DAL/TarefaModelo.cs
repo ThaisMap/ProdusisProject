@@ -12,8 +12,9 @@ namespace DAL
             idTarefa = tarefa.idTarefa;
             documentoTarefa = tarefa.documentoTarefa;
             tipoTarefa = tipoExtenso(tarefa.tipoTarefa);
-            PreencheDatas();
+            PreencheDatas(); 
             AtualizaTempoGasto();
+            quantPaletizado = tarefa.quantPaletizado;
             divergenciaTarefa = tarefa.divergenciaTarefa;
             totalPaletes = tarefa.totalPaletes;
         }

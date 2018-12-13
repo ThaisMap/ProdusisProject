@@ -12,10 +12,12 @@ namespace ProdusisBD
     using System;
     using System.Collections.Generic;
     
-    public partial class CapacidadeMotoristas
+    public partial class Ranking
     {
-        public int Id { get; set; }
-        public string Motorista { get; set; }
-        public int Capacidade { get; set; }
+        public int idTarefa { get; set; }
+        public System.DateTime inicioTarefa { get; set; }
+        public Nullable<float> Pontuacao { get; set; }
+        public string nomeFunc { get; set; }
+        public string tipoTarefa { get; set; }
     }
 }

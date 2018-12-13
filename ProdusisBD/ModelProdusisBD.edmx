@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="produsisBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="produsisBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AcessosPortaria">
           <Key>
             <PropertyRef Name="idAcesso" />
@@ -22,14 +22,6 @@
           <Property Name="DocaAcesso" Type="int" />
           <Property Name="PorteiroEntrada" Type="int" Nullable="false" />
           <Property Name="PorteiroSaida" Type="int" />
-        </EntityType>
-        <EntityType Name="CapacidadeMotoristas">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Motorista" Type="nvarchar" MaxLength="40" Nullable="false" />
-          <Property Name="Capacidade" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Carretas">
           <Key>
@@ -139,6 +131,21 @@
           <Property Name="TipoVeiculo" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="CapacidadePaletes" Type="int" Nullable="false" />
           <Property Name="AtivoVeiculo" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'produsisBD.dbo.Ranking' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Ranking">
+          <Key>
+            <PropertyRef Name="idTarefa" />
+            <PropertyRef Name="inicioTarefa" />
+            <PropertyRef Name="nomeFunc" />
+            <PropertyRef Name="tipoTarefa" />
+          </Key>
+          <Property Name="idTarefa" Type="int" Nullable="false" />
+          <Property Name="inicioTarefa" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Pontuacao" Type="real" />
+          <Property Name="nomeFunc" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="tipoTarefa" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'produsisBD.dbo.RelatorioNaoConferencia' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -314,7 +321,6 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
         </Association>
         <EntityContainer Name="produsisBDModelStoreContainer">
           <EntitySet Name="AcessosPortaria" EntityType="Self.AcessosPortaria" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CapacidadeMotoristas" EntityType="Self.CapacidadeMotoristas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carretas" EntityType="Self.Carretas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cte" EntityType="Self.Cte" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cte_Manifesto" EntityType="Self.Cte_Manifesto" Schema="dbo" store:Type="Tables" />
@@ -326,6 +332,15 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
           <EntitySet Name="Observacoes" EntityType="Self.Observacoes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tarefas" EntityType="Self.Tarefas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Veiculos" EntityType="Self.Veiculos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ranking" EntityType="Self.Ranking" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Ranking].[idTarefa] AS [idTarefa], 
+    [Ranking].[inicioTarefa] AS [inicioTarefa], 
+    [Ranking].[Pontuacao] AS [Pontuacao], 
+    [Ranking].[nomeFunc] AS [nomeFunc], 
+    [Ranking].[tipoTarefa] AS [tipoTarefa]
+    FROM [dbo].[Ranking] AS [Ranking]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="RelatorioNaoConferencia" EntityType="Self.RelatorioNaoConferencia" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [RelatorioNaoConferencia].[idTarefa] AS [idTarefa], 
@@ -398,8 +413,7 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
             <End Role="AcessosPortaria" EntitySet="AcessosPortaria" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="produsisBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -423,14 +437,6 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
           <NavigationProperty Name="Funcionarios" Relationship="Self.FK_PorteiroEntrada_AcessosPortaria" FromRole="AcessosPortaria" ToRole="Funcionarios" />
           <NavigationProperty Name="Funcionarios1" Relationship="Self.FK_PorteiroSaida_AcessosPortaria" FromRole="AcessosPortaria" ToRole="Funcionarios" />
           <NavigationProperty Name="Veiculos" Relationship="Self.FK_Veiculos_AcessosPortaria" FromRole="AcessosPortaria" ToRole="Veiculos" />
-        </EntityType>
-        <EntityType Name="CapacidadeMotoristas">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Motorista" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Capacidade" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Carretas">
           <Key>
@@ -728,7 +734,6 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
         </Association>
         <EntityContainer Name="produsisBDEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AcessosPortaria" EntityType="Self.AcessosPortaria" />
-          <EntitySet Name="CapacidadeMotoristas" EntityType="Self.CapacidadeMotoristas" />
           <EntitySet Name="Carretas" EntityType="Self.Carretas" />
           <EntitySet Name="Cte" EntityType="Self.Cte" />
           <EntitySet Name="Cte_Manifesto" EntityType="Self.Cte_Manifesto" />
@@ -782,7 +787,21 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
             <End Role="Funcionarios" EntitySet="Funcionarios" />
             <End Role="Observacoes" EntitySet="Observacoes" />
           </AssociationSet>
+          <EntitySet Name="Ranking" EntityType="produsisBDModel.Ranking" />
         </EntityContainer>
+        <EntityType Name="Ranking">
+          <Key>
+            <PropertyRef Name="idTarefa" />
+            <PropertyRef Name="inicioTarefa" />
+            <PropertyRef Name="nomeFunc" />
+            <PropertyRef Name="tipoTarefa" />
+          </Key>
+          <Property Name="idTarefa" Type="Int32" Nullable="false" />
+          <Property Name="inicioTarefa" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Pontuacao" Type="Single" />
+          <Property Name="nomeFunc" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="tipoTarefa" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -805,15 +824,6 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
                 <ScalarProperty Name="DocaAcesso" ColumnName="DocaAcesso" />
                 <ScalarProperty Name="PorteiroEntrada" ColumnName="PorteiroEntrada" />
                 <ScalarProperty Name="PorteiroSaida" ColumnName="PorteiroSaida" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CapacidadeMotoristas">
-            <EntityTypeMapping TypeName="produsisBDModel.CapacidadeMotoristas">
-              <MappingFragment StoreEntitySet="CapacidadeMotoristas">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Motorista" ColumnName="Motorista" />
-                <ScalarProperty Name="Capacidade" ColumnName="Capacidade" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -969,6 +979,17 @@ warning 6002: The table/view 'produsisBD.dbo.RelatorioNovoConferencias' does not
                 <ScalarProperty Name="fornecedorNF" ColumnName="fornecedorNF" />
                 <ScalarProperty Name="documentoTarefa" ColumnName="documentoTarefa" />
                 <ScalarProperty Name="divergenciaTarefa" ColumnName="divergenciaTarefa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ranking">
+            <EntityTypeMapping TypeName="produsisBDModel.Ranking">
+              <MappingFragment StoreEntitySet="Ranking">
+                <ScalarProperty Name="tipoTarefa" ColumnName="tipoTarefa" />
+                <ScalarProperty Name="nomeFunc" ColumnName="nomeFunc" />
+                <ScalarProperty Name="Pontuacao" ColumnName="Pontuacao" />
+                <ScalarProperty Name="inicioTarefa" ColumnName="inicioTarefa" />
+                <ScalarProperty Name="idTarefa" ColumnName="idTarefa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
