@@ -16,18 +16,15 @@ namespace GUI
     /// </summary>
     public partial class Relatorios : UserControl
     {
-        public Relatorios(double Altura, double largura)
+        public Relatorios()
         {
             InitializeComponent();
-            Height = Altura - 50;
-            Width = largura - 50;
-            dgTarefas.Height = Altura - 180;
             dataFinal.SelectedDate = DateTime.Today;
         }
 
         public List<ItemRelatorio> source;
 
-        public Filtro montarObjeto()
+        public Filtro MontarObjeto()
         {
             if (dataFinal.SelectedDate == null)
             {
@@ -48,12 +45,12 @@ namespace GUI
             return filtros;
         }
 
-        private void btnConsultar_Click(object sender, RoutedEventArgs e)
+        private void BtnConsultar_Click(object sender, RoutedEventArgs e)
         {
             Cursor _cursorAnterior = Mouse.OverrideCursor;
             Mouse.OverrideCursor = Cursors.Wait;
             AcessoBD abd = new AcessoBD();
-            source = abd.GetTarefasFiltradas(montarObjeto());
+            source = abd.GetTarefasFiltradas(MontarObjeto());
             dgTarefas.ItemsSource = source;
             Mouse.OverrideCursor = _cursorAnterior;
         }
@@ -83,7 +80,6 @@ namespace GUI
             dataInicio.SelectedDate = null;
             dataFinal.SelectedDate = DateTime.Today;
             cbFuncionario.ItemsSource = abd.GetListaNomesFunc();
-            dgTarefas.Height = ActualHeight - 270;
         }
 
         private void btnExportar_Click(object sender, RoutedEventArgs e)

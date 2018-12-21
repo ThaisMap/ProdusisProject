@@ -17,127 +17,63 @@
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
-    <StackPanel Orientation="Vertical">
-        <Grid
-            Name="cabecalho"
-            Height="120"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="70" />
-                <ColumnDefinition Width="180" />
-                <ColumnDefinition Width="70" />
-                <ColumnDefinition Width="180" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="35" />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-
-            <TextBlock
-                Grid.ColumnSpan="4"
-                Margin="40,0"
-                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                Text="Indicador de produtividade"/>
-            <TextBlock
-                Grid.Row="1"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                Height="18"
-                Margin="5,15"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                Text="Tipo de tarefa: " />
-            <ComboBox
-                x:Name="cbTipoTarefa"
-                Grid.Row="1"
-                Grid.Column="2"
-                Grid.ColumnSpan="2"
-                Width="200"
-                Height="28"
-                Margin="10,10,10,10"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center">
-                <ComboBoxItem
-                    Width="200"
-                    HorizontalAlignment="Left"
-                    Content="Descarga" />
-                <ComboBoxItem
-                    Width="200"
-                    HorizontalAlignment="Left"
-                    Content="Conferência" />
-                <ComboBoxItem
-                    Width="200"
-                    HorizontalAlignment="Left"
-                    Content="Movimentação de paletes" />
-                <ComboBoxItem
-                    Width="200"
-                    HorizontalAlignment="Left"
-                    Content="Carregamento" />
-                <ComboBoxItem
-                    Width="200"
-                    HorizontalAlignment="Left"
-                    Content="Empilhadeira" />
-            </ComboBox>
-
-            <TextBlock
-                Grid.Row="2"
-                Width="41"
-                Height="20"
-                Margin="5,0"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center">
-                Início:
-            </TextBlock>
-            <DatePicker
-                x:Name="dataInicio"
-                Grid.Row="2"
-                Grid.Column="1"
-                Width="150"
-                Height="28"
-                Margin="5,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Language="pt-br" />
-            <TextBlock
-                Grid.Row="2"
-                Grid.Column="2"
-                Width="29"
-                Height="20"
-                Margin="5,0"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center">
-                Fim:
-            </TextBlock>
-            <DatePicker
-                x:Name="dataFim"
-                Grid.Row="2"
-                Grid.Column="3"
-                Width="150"
-                Height="28"
-                Margin="5,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Language="pt-br" />
+    <DockPanel>
+        <TextBlock
+            DockPanel.Dock="Top"
+            Margin="40,0"
+            Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+            Text="Indicador de produtividade"/>
+        <Separator DockPanel.Dock="Top"/>
+        <ComboBox x:Name="cbTipoTarefa"
+                  DockPanel.Dock="Top"
+                  Width="250"
+                  Margin="10"                
+                  materialDesign:HintAssist.Hint="Tipo de tarefa"
+                  materialDesign:HintAssist.IsFloating="True"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+            <ComboBoxItem Content="Descarga" />
+            <ComboBoxItem Content="Conferência" />
+            <ComboBoxItem Content="Movimentação de paletes" />
+            <ComboBoxItem Content="Carregamento" />
+            <ComboBoxItem Content="Empilhadeira" />
+        </ComboBox>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Top">
+            <DatePicker x:Name="dataInicio"
+                        Width="150"
+                        Margin="10 5" 
+                        materialDesign:HintAssist.Hint="Inicio"
+                        materialDesign:HintAssist.IsFloating="True"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Language="pt-br" />
+           
+            <DatePicker x:Name="dataFim"
+                        Width="150"
+                        Margin="25 5"                        
+                        materialDesign:HintAssist.Hint="Fim"
+                        materialDesign:HintAssist.IsFloating="True"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Language="pt-br" />
+      
             <Button x:Name="btGerar"
-                Grid.Row="2"
-                Grid.Column="4"
-                Width="75"
-                Margin="5,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Click="GeraRelatorioTabela"
-                Content="Gerar" />
-        </Grid>
+                    Width="75"
+                    Margin="10 10"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Click="GeraRelatorioTabela"
+                    Content="Gerar" />
+        </StackPanel>
+        
         <DataGrid x:Name="dgRanking"
-            Height="220" 
-            IsReadOnly="True" 
-            HorizontalAlignment="Center"
-            materialDesign:DataGridAssist.CellPadding="4 2"
-            AutoGenerateColumns="False"           
-            VerticalScrollBarVisibility="Auto" Width="auto">
+                  DockPanel.Dock="Top"
+                  Margin="0 0 0 15"
+                  IsReadOnly="True" 
+                  HorizontalAlignment="Center"
+                  materialDesign:DataGridAssist.CellPadding="4 2"
+                  AutoGenerateColumns="False"  
+                  VerticalScrollBarVisibility="Auto" Width="auto">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding NomesFuncionarios}" Header="Funcionário" />
                 <DataGridTextColumn Binding="{Binding Pontuacao}" Header="Pontuação no período" />
@@ -145,5 +81,5 @@
                 <DataGridTextColumn Binding="{Binding Erros}" Header="Erros" />
             </DataGrid.Columns>
         </DataGrid>
-    </StackPanel>
+    </DockPanel>
 </UserControl>

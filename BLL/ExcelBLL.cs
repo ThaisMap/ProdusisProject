@@ -65,7 +65,6 @@ namespace BLL
 
             object misValue = System.Reflection.Missing.Value;
             string[,] array = new string[Tarefas.Count + 1, 15];
-            AcessoBD abd = new AcessoBD();
 
             try
             {
@@ -87,11 +86,6 @@ namespace BLL
 
                 for (int linha = 0; linha < Tarefas.Count; linha++)
                 {
-                    //if (Tarefas[linha].horaFim != null)
-                    //{
-                    //    abd.AlterarPontuacao(Tarefas[linha].idTarefa);
-                    //}
-
                     array[linha + 1, 0] = Tarefas[linha].documentoTarefa.ToString("00");
                     array[linha + 1, 1] = Tarefas[linha].tipoTarefa;
                     array[linha + 1, 2] = Tarefas[linha].inicioTarefa.Date.ToString("dd\\/MM\\/yyyy");
@@ -109,39 +103,26 @@ namespace BLL
                     array[linha + 1, 14] = Tarefas[linha].ctesNoManifesto.ToString();
                 }
 
-                var startCell = (Excel.Range)worksheet.Cells[1, 1];
-                var endCell = (Excel.Range)worksheet.Cells[Tarefas.Count + 1, 15];
-                var writeRange = worksheet.Range[startCell, endCell];
 
-                writeRange.Value2 = array;
-
-                workbook.SaveAs(nomeArquivo, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue,
-Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
-                workbook.Close(true, misValue, misValue);
-                excel.Quit();
-
-                LiberarObjetos(worksheet);
-                LiberarObjetos(workbook);
-                LiberarObjetos(excel);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                var erro = ex;
-                var startCell = (Excel.Range)worksheet.Cells[1, 1];
-                var endCell = (Excel.Range)worksheet.Cells[Tarefas.Count + 1, 15];
-                var writeRange = worksheet.Range[startCell, endCell];
 
-                writeRange.Value2 = array;
-
-                workbook.SaveAs(nomeArquivo, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue,
-Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
-                workbook.Close(true, misValue, misValue);
-                excel.Quit();
-
-                LiberarObjetos(worksheet);
-                LiberarObjetos(workbook);
-                LiberarObjetos(excel);
             }
+            var startCell = (Excel.Range)worksheet.Cells[1, 1];
+            var endCell = (Excel.Range)worksheet.Cells[Tarefas.Count + 1, 15];
+            var writeRange = worksheet.Range[startCell, endCell];
+
+            writeRange.Value2 = array;
+
+            workbook.SaveAs(nomeArquivo, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue,
+Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+            workbook.Close(true, misValue, misValue);
+            excel.Quit();
+
+            LiberarObjetos(worksheet);
+            LiberarObjetos(workbook);
+            LiberarObjetos(excel);
         }
 
         private void LiberarObjetos(object obj)

@@ -14,21 +14,17 @@
              TextElement.FontWeight="Regular"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              mc:Ignorable="d">
-    <Grid Margin="0,10,0,0"
-          HorizontalAlignment="Stretch"
-          VerticalAlignment="Stretch">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True">
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True">
-
-            <StackPanel>
-                <TextBlock Margin="40,0,0,0" 
-                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                           Text="Cadastro de Funcionários"/>
-                <Separator />
-                <StackPanel Orientation="Horizontal" 
+        <StackPanel>
+            <TextBlock  Text="Cadastro de Funcionários"
+                        Margin="40,0,0,0" 
+                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+            <Separator />
+            <StackPanel Orientation="Horizontal" 
                             HorizontalAlignment="Center"
                             Margin="0 10">
-                    <ComboBox
+                <ComboBox
                         Name="CbCadastrados"
                         Margin="0 0 20 0"
                         Width="250"
@@ -36,83 +32,81 @@
                         materialDesign:HintAssist.IsFloating="True"
                         IsEditable="True"
                         SelectionChanged="Nome_SelectionChanged" />
-                    <Button Name="BtnEditar" 
+                <Button Name="BtnEditar" 
                             Content="Editar"
                             Width="80"
                             Click="BtnEditar_Click"/>
-                </StackPanel>
-                <TextBox Name="Nome"
+            </StackPanel>
+            <TextBox Name="Nome"
                          Width="350"
                          MaxLength="45"
                          Margin="0 10 0 5"
                          materialDesign:HintAssist.Hint="Nome"
-                         materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Center">
-                </TextBox>
-         
-                <TextBox Name="Matricula"
+                         materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Center"/>
+
+            <TextBox Name="Matricula"
                          Width="350"
                          MaxLength="4"
                          Margin="5"
                          materialDesign:HintAssist.Hint="Nº de matrícula"
                          materialDesign:HintAssist.IsFloating="True"
                          Style="{StaticResource MaterialDesignTextBox}" PreviewTextInput="TestarCaractere" />
-            
-                <PasswordBox Name="Senha"
+
+            <PasswordBox Name="Senha"
                              Width="350"
                              MaxLength="10"
                              Margin="5"
                              materialDesign:HintAssist.Hint="Senha"
                              materialDesign:HintAssist.IsFloating="True"/>
 
-                <PasswordBox Name="Senha2"
+            <PasswordBox Name="Senha2"
                              Width="350"
                              MaxLength="10"
                              Margin="5"
                              materialDesign:HintAssist.Hint="Confirmar senha"
                              materialDesign:HintAssist.IsFloating="True"/>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <CheckBox Name="CkAdmin" Checked="CkAdmin_Checked" Margin="10">Administrativo</CheckBox>
-                    <CheckBox Name="CkPortaria" Margin="10 10 150 10">Portaria</CheckBox>
-                </StackPanel>
-         
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                    <CheckBox Name="CkConfere" Margin="5,10">Confere</CheckBox>
-                    <CheckBox Name="CkDescarrega" Margin="5,0">Descarrega</CheckBox>
-                    <CheckBox Name="CkSepara" Margin="5,0">Separa</CheckBox>
-                    <CheckBox Name="CkCarrega" Margin="5,0">Carrega</CheckBox>
-                    <CheckBox Name="CkEmpilha" Margin="5,0">Empilhadeira</CheckBox>
-                </StackPanel>
-                
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="10">
-                    <TextBlock Margin="5"
+            <StackPanel Width="350" Orientation="Horizontal" HorizontalAlignment="Center">
+                <CheckBox Name="CkAdmin" Checked="CkAdmin_Checked" Margin="0 10 10 10" HorizontalAlignment="Left">Administrativo</CheckBox>
+                <CheckBox Name="CkPortaria" Margin="10">Portaria</CheckBox>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <CheckBox Name="CkConfere" Margin="5,10">Confere</CheckBox>
+                <CheckBox Name="CkDescarrega" Margin="5,0">Descarrega</CheckBox>
+                <CheckBox Name="CkSepara" Margin="5,0">Separa</CheckBox>
+                <CheckBox Name="CkCarrega" Margin="5,0">Carrega</CheckBox>
+                <CheckBox Name="CkEmpilha" Margin="5,0">Empilhadeira</CheckBox>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="10">
+                <TextBlock Margin="5"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                Text="Ativo: "/>
-                    
-                    <ToggleButton Name="Ativo"
+
+                <ToggleButton Name="Ativo"
                                   Width="auto"
                                   Margin="10 0 255 0"
                                   HorizontalAlignment="Left" IsChecked="True"
                                   VerticalAlignment="Center" />
-                </StackPanel>
-                
-                <StackPanel HorizontalAlignment="center" Orientation="Horizontal" Margin="0 0 50 0">
-                    <Button Name="Limpar"
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="center" Orientation="Horizontal" Margin="0 0 50 0">
+                <Button Name="Limpar"
                             Width="80"
                             Margin="10,5"
                             Content="Limpar"
                             Style="{StaticResource MaterialDesignFlatButton}" 
                             Click="Limpar_Click" />
-                    
-                    <Button Name="Salvar"
+
+                <Button Name="Salvar"
                             Width="80"
                             Margin="10,5"
                             Content="Salvar"
                             Style="{StaticResource MaterialDesignFlatButton}" 
                             Click="Salvar_Click" />
-                </StackPanel>
             </StackPanel>
-        </ScrollViewer>
-    </Grid>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

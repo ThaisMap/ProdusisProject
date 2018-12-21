@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="GUI.Carregamento"
+    x:Class="GUI.Movimentacao"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -16,7 +16,7 @@
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
     <DockPanel HorizontalAlignment="Stretch">
-        <TextBlock DockPanel.Dock="Top" Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Carregamento</TextBlock>
+        <TextBlock  DockPanel.Dock="Top" Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Movimentação de paletes</TextBlock>
         <Separator DockPanel.Dock="Top" />
         <Grid Name="FormSuperior" DockPanel.Dock="Top" Margin="10,5">
             <Grid.ColumnDefinitions>
@@ -42,18 +42,40 @@
                 <TextBox
                     Name="Documento"
                     Grid.Row="1"
+                    Margin="10,0"
                     Grid.Column="1"
                     Width="300"
-                    Margin="10,0"
                     materialDesign:HintAssist.Hint="Manifesto"
                     materialDesign:HintAssist.IsFloating="True"
-                    PreviewTextInput="testarCaractere"
+                    PreviewTextInput="TestarCaractere"
                     Style="{StaticResource MaterialDesignTextBox}" />
+            </StackPanel>
+            <StackPanel
+                Grid.Row="0"
+                Grid.RowSpan="3"
+                Grid.Column="1"
+                Margin="10,0,0,0"
+                CanVerticallyScroll="True">
+                <ListBox
+                    Name="ListaDeFuncionarios"
+                    Height="120"
+                    materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                    DataContext="Funcionarios">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <materialDesign:Chip
+                                Content="{Binding Nome}"
+                                DeleteClick="ChipEx_DeleteClick"
+                                Icon="{Binding Tag}"
+                                IsDeletable="True" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </StackPanel>
             <StackPanel
                 Grid.Row="1"
                 Grid.Column="0"
-                Margin="5,0"
+                Margin="5,0,5,0"
                 Orientation="Horizontal">
                 <materialDesign:PackIcon
                     Width="22"
@@ -75,53 +97,16 @@
                     Content="Incluir"
                     Style="{StaticResource MaterialDesignFlatButton}" />
             </StackPanel>
-            <StackPanel
-                Grid.Row="2"
+            <Button
+                Name="Iniciar"
+                Grid.Row="3"
                 Grid.Column="0"
-                Margin="5,0"
-                Orientation="Horizontal">
-                <materialDesign:PackIcon
-                    Width="22"
-                    Height="auto"
-                    VerticalAlignment="Center"
-                    Foreground="{Binding BorderBrush, ElementName=CBFuncionario}"
-                    Kind="Truck" />
-                <ComboBox
-                    x:Name="CBmotorista"
-                    Width="240"
-                    Margin="10,0"
-                    materialDesign:HintAssist.Hint="Motorista"
-                    materialDesign:HintAssist.IsFloating="True"
-                    IsEditable="True"
-                    SelectionChanged="CBFuncionario_SelectionChanged" />
-                <Button
-                    Name="Iniciar"               
-                    Width="71"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Click="Iniciar_Click"
-                    Content="_Iniciar">
-                </Button>
-            </StackPanel>
-            <ListBox
-                Name="ListaDeFuncionarios"
-                Height="120"
-                Grid.Row="0"
-                Grid.RowSpan="3"
-                Grid.Column="1"
-                Margin="10,0"
-                materialDesign:ShadowAssist.ShadowDepth="Depth2"
-                DataContext="Funcionarios">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <materialDesign:Chip
-                            Content="{Binding Nome}"
-                            DeleteClick="ChipEx_DeleteClick"
-                            Icon="{Binding Tag}"
-                            IsDeletable="True" />
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                Width="71"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Click="Iniciar_Click">
+                Iniciar
+            </Button>
         </Grid>
         <Separator DockPanel.Dock="Top" />
         <Button x:Name="AtualizarDg"
@@ -141,7 +126,7 @@
                   IsReadOnly="True"
                   materialDesign:DataGridAssist.ColumnHeaderPadding="4"
                   materialDesign:DataGridAssist.CellPadding="2"                            
-                  ScrollViewer.CanContentScroll="True">          
+                  ScrollViewer.CanContentScroll="True">
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Width="Auto"

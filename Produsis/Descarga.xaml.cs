@@ -26,10 +26,11 @@ namespace GUI
         public Descarga()
         {
             InitializeComponent();
-            Importar();
             ListaFunc = abd.GetFuncionariosLivres("1");
             CBFuncionario.ItemsSource = ListaFunc;
             CBFuncionario.DisplayMemberPath = "nomeFunc";
+           
+            Importar();
             RecarregarPendentes();
         }
 

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -22,17 +23,14 @@ namespace GUI
         private List<Funcionarios> ListaFunc;
         private int[] pallets = { 0, 0 };
 
-        public Empilhadeira(double actualHeight, double actualWidth)
+        public Empilhadeira()
         {
             InitializeComponent();
             ListaFunc = abd.GetFuncionariosLivres("5"); // 5 = Empilhadeira
             CBFuncionario.ItemsSource = ListaFunc;
             CBFuncionario.DisplayMemberPath = "nomeFunc";
-            dgTarefas.ItemsSource = abd.GetTarefasPendentes("5"); // 5 = Empilhadeira
-            Height = actualHeight - 60;
-            Width = actualWidth - 60;
-            dgTarefas.Height = actualHeight - 250;
-            LerXmls();
+            Importar();
+            RecarregarPendentes();
         }
 
         public static string CriaChipTag(string Nome)
@@ -40,13 +38,22 @@ namespace GUI
             string[] PrimeirosNomes = Nome.Split(' ');
             return PrimeirosNomes[0].Substring(0, 1).ToUpper() + PrimeirosNomes[1].Substring(0, 1).ToUpper();
         }
-
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
-            dgTarefas.ItemsSource = abd.GetTarefasPendentes("5"); // 5 = Empilhadeira
-            LerXmls();
+            RecarregarPendentes();
+            Importar();
         }
 
+        private void Importar()
+        {
+            Thread thread = new Thread(LerXmls);
+            thread.Start();
+        }
+
+        private void RecarregarPendentes()
+        {
+            dgTarefas.ItemsSource = abd.GetTarefasPendentes("5");
+        }
         private void Finalizar_Click(object sender, RoutedEventArgs e)
         {
             pallets = paletes.Perguntar("0");

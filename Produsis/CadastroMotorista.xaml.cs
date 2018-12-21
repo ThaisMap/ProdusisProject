@@ -18,9 +18,9 @@ namespace GUI
         private List<Veiculos> motoristas;
         private AcessoBD abd = new AcessoBD();
         
-        string[] tiposVeiculo = { "VAN", "HR", "VUC", "3/4", "TOCO", "TRUCK", "CAVALO", "CONJUNTO", "CARRO", "PREST SERVIÇO" };
+        string[] tiposVeiculo = { "VAN", "HR", "VUC", "3/4", "TOCO", "TRUCK", "CAVALO", "CONJUNTO", "CARRO", "PREST SERVIÇO", "BITRUCK" };
 
-        public CadastroMotorista(double Altura, double largura)
+        public CadastroMotorista()
         {
             InitializeComponent();
             cbTipo.ItemsSource = tiposVeiculo;

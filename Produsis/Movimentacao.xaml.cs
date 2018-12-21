@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,7 +15,7 @@ namespace GUI
     /// <summary>
     /// Interaction logic for Separacao2.xaml
     /// </summary>
-    public partial class Separacao2 : UserControl
+    public partial class Movimentacao : UserControl
     {
         private AcessoBD abd = new AcessoBD();
 
@@ -22,17 +23,14 @@ namespace GUI
         private List<Funcionarios> ListaFunc;
         private int[] pallets = { 0, 0 };
 
-        public Separacao2(double actualHeight, double actualWidth)
+        public Movimentacao()
         {
             InitializeComponent();
             ListaFunc = abd.GetFuncionariosLivres("3");
             CBFuncionario.ItemsSource = ListaFunc;
             CBFuncionario.DisplayMemberPath = "nomeFunc";
-            dgTarefas.ItemsSource = abd.GetTarefasPendentes("3");
-            Height = actualHeight - 60;
-            Width = actualWidth - 60;
-            dgTarefas.Height = actualHeight - 250;
-            lerXmls();
+            Importar();
+            RecarregarPendentes();
         }
 
         public static string CriaChipTag(string Nome)
@@ -43,8 +41,19 @@ namespace GUI
 
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
+            RecarregarPendentes();
+            Importar();
+        }
+
+        private void Importar()
+        {
+            Thread thread = new Thread(LerXmls);
+            thread.Start();
+        }
+
+        private void RecarregarPendentes()
+        {
             dgTarefas.ItemsSource = abd.GetTarefasPendentes("3");
-            lerXmls();
         }
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
@@ -60,7 +69,7 @@ namespace GUI
                     MessageBox.Show("Houve um erro e a movimentação de paletes não pode ser finalizada.", "Movimentação não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 ListaFunc = abd.GetFuncionariosLivres("3");
                 CBFuncionario.ItemsSource = ListaFunc;
-                AtualizarDg_Click(sender, e);
+                RecarregarPendentes();
             }
             Documento.Focus();
         }
@@ -81,7 +90,7 @@ namespace GUI
             }
         }
 
-        private bool checarCampos()
+        private bool ChecarCampos()
         {
             if (Documento.Text.Replace("_", "") == "" || ListaDeFuncionarios.Items.Count == 0)
             {
@@ -104,7 +113,7 @@ namespace GUI
             }
         }
 
-        private string[] funcionarios()
+        private string[] Funcionarios()
         {
             List<string> nomes = new List<string>();
             foreach (FuncionariosTag tag in ListaDeFuncionarios.Items)
@@ -118,13 +127,13 @@ namespace GUI
         {
             Logica bll = new Logica();
 
-            if (checarCampos())
+            if (ChecarCampos())
                 if (!abd.VerificaDocumentoTarefa(int.Parse(Documento.Text.Replace("_", "")), "3"))
                 {
-                    if (bll.InserirTarefa(montarTarefa(), funcionarios()))
+                    if (bll.InserirTarefa(montarTarefa(), Funcionarios()))
                     {
                         MessageBox.Show("Separação iniciada para carregar o " + abd.GetDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Separação iniciada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-                        dgTarefas.ItemsSource = abd.GetTarefasPendentes("3");
+                        RecarregarPendentes();
                         Documento.Text = "";
                         CBFuncionario.SelectedIndex = -1;
                         ListaDeFuncionarios.Items.Clear();
@@ -165,7 +174,7 @@ namespace GUI
             }
         }
 
-        private static void lerXmls()
+        private static void LerXmls()
         {
             xmlBLL x = new xmlBLL();
             x.TriagemArquivos();
@@ -180,7 +189,7 @@ namespace GUI
             return novaTarefa;
         }
 
-        private void testarCaractere(object sender, TextCompositionEventArgs e)
+        private void TestarCaractere(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);

@@ -16,12 +16,9 @@ namespace GUI
         private AcessoBD abd = new AcessoBD();
         private Logica bll = new Logica();
 
-        public Observacao(double actualHeight, double actualWidth)
+        public Observacao()
         {
             InitializeComponent();
-            Height = actualHeight - 60;
-            Width = actualWidth - 60;
-            Dock.Height = Height - 80;
             Nome.ItemsSource = abd.GetListaNomesFunc();
             dataObs.SelectedDate = DateTime.Today;
             dataFim.SelectedDate = DateTime.Today;

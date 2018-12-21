@@ -16,9 +16,13 @@
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Grid Height="300" HorizontalAlignment="Center">
+    <StackPanel>
+    <TextBlock Text="Definição de tema"
+                   Margin="20,10,0,0"
+                   HorizontalAlignment="Left"
+                   Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+    <Separator />
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="auto" />
@@ -29,8 +33,6 @@
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="1*" />
-
-                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <TextBlock
                     Grid.Row="0"
@@ -43,9 +45,8 @@
                     Name="cbxTema"
                     Grid.Row="0"
                     Grid.Column="1"
-                    Grid.ColumnSpan="2"
                     Width="240"
-                    Margin="5,0,75,14"
+                    Margin="5 10"
                     VerticalAlignment="Center"
                     materialDesign:HintAssist.Hint="Tema Global"
                     SelectionChanged="cbxTema_SelectionChanged" />
@@ -61,7 +62,7 @@
                     Grid.Row="1"
                     Grid.Column="1"
                     Width="240"
-                    Margin="5"
+                    Margin="5 10"
                     VerticalAlignment="Center"
                     materialDesign:HintAssist.Hint="Cor"
                     SelectionChanged="cbxCor_SelectionChanged" />
@@ -77,7 +78,7 @@
                     Grid.Row="2"
                     Grid.Column="1"
                     Width="240"
-                    Margin="5"
+                    Margin="5 10"
                     VerticalAlignment="Center"
                     materialDesign:HintAssist.Hint="Destaque"
                     SelectionChanged="cbxDestaque_SelectionChanged" />
@@ -89,6 +90,5 @@
                     Click="Salva_Click"
                     Content="Salvar" />
             </Grid>
-        </StackPanel>
-    </Grid>
+    </StackPanel>
 </UserControl>

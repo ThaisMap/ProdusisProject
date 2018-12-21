@@ -3,12 +3,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:GUI"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-    HorizontalAlignment="Left"
-    VerticalAlignment="Top"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch"
     d:DesignHeight="400"
     d:DesignWidth="800"
     Background="{DynamicResource MaterialDesignPaper}"
@@ -17,132 +15,102 @@
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-
-        <Grid Margin="0 10" HorizontalAlignment="Center">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <StackPanel
-                Name="Total"
-                Grid.Column="0"
-                Margin="0"
-                Orientation="Vertical">
-                <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Divergências</TextBlock>
-                <Separator />
-                <StackPanel Name="Pesquisa" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <ComboBox
-                        x:Name="cbTipoTarefa"
-                        Width="150"
-                        Margin="10,10"
-                        HorizontalAlignment="Left"
-                        materialDesign:HintAssist.Hint="Tipo de Tarefa"
-                        materialDesign:HintAssist.IsFloating="True"
-                        IsEditable="True"
-                        SelectedIndex="1">
-                        <ComboBoxItem HorizontalAlignment="Left" Content="Descarga" />
-                        <ComboBoxItem HorizontalAlignment="Left" Content="Conferência" />
-                        <ComboBoxItem HorizontalAlignment="Left" Content="Movimentação" />
-                        <ComboBoxItem HorizontalAlignment="Left" Content="Carregamento" />
-                        <ComboBoxItem HorizontalAlignment="Left" Content="Empilhadeira" />
-                    </ComboBox>
-                    <TextBox
-                        Name="Documento"
-                        Width="150"
-                        Margin="10,10"
-                        materialDesign:HintAssist.Hint="Documento"
-                        materialDesign:HintAssist.IsFloating="True"
-                        Style="{StaticResource MaterialDesignTextBox}" />
-                    <Button
-                        x:Name="btnConsultar"
-                        Grid.Column="2"
-                        Width="100"
-                        Margin="10,10"
-                        VerticalAlignment="Bottom"
-                        Click="Consultar_Click"
-                        Content="Consultar" />
-                </StackPanel>
-
-                <TextBlock 
-                    Name="txtFuncionario"
-                    Margin="0,10,0,0"
-                    HorizontalAlignment="Center"
-                    FontSize="14"/>
-                <StackPanel
-                    Name="informacoes"
-                    HorizontalAlignment="Center"
-                    Orientation="Horizontal" Height="auto" Margin="41,0">
-                    <ComboBox
-                        x:Name="cbTipoDivergencia"
-                        Width="100"
-                        Margin="10,10"
-                        HorizontalAlignment="Left"
-                        materialDesign:HintAssist.Hint="Ocorrência"
-                        materialDesign:HintAssist.IsFloating="True"
-                        IsEditable="True"
-                        SelectedIndex="0" VerticalAlignment="Top">
-                        <ComboBoxItem HorizontalAlignment="Left" Content="Falta" />
-                        <ComboBoxItem HorizontalAlignment="Left" Content="Sobra" />
-                        <ComboBoxItem HorizontalAlignment="Left" Content="Avaria" />
-                        <ComboBoxItem HorizontalAlignment="Left" Content="Outro" />
-                    </ComboBox>
-                    <TextBox
-                        Name="Codigo"
-                        Width="140"
-                        Margin="10,10"
-                        materialDesign:HintAssist.Hint="Código"
-                        materialDesign:HintAssist.IsFloating="True"
-                        Style="{StaticResource MaterialDesignTextBox}" />
-                    <TextBox
-                        Name="Quantidade"
-                        Width="110"
-                        Margin="10,10"
-                        materialDesign:HintAssist.Hint="Quantidade"
-                        materialDesign:HintAssist.IsFloating="True"
-                        PreviewTextInput="TestarCaractere"
-                        Style="{StaticResource MaterialDesignTextBox}" />
-                    <Button
-                        x:Name="btnIncluir"
-                        Grid.Column="2"
-                        Width="100"
-                        Margin="10,5"
-                        Click="Incluir_Click"
-                        VerticalAlignment="Center"
-                        Content="Incluir" />
-                </StackPanel>
-                <DataGrid
-                    Name="dgOcorrencias"
-                    Width="auto" Height="165"
-                    IsReadOnly="false"
-                    CanUserAddRows="False"
-                    HorizontalAlignment="Center"
-                    AutoGenerateColumns="False"
-                    PreviewKeyDown="DgOcorrencias_PreviewKeyDown"
-                    BeginningEdit="DgOcorrencias_BeginningEdit"
-                    CellEditEnding="Registrar_Alteracao"
-                    VerticalScrollBarVisibility="Auto">
-                    
-                    <DataGrid.Columns>
-                        <DataGridComboBoxColumn 
-                            x:Name="ColunaTipo" Header="Tipo"
-                            
-                            SelectedValueBinding="{Binding TipoDivergencia}"  
-                            DisplayMemberPath="{Binding itensCombo}" >
-                            <DataGridComboBoxColumn.EditingElementStyle>
-                                <Style TargetType="{x:Type ComboBox}">
-                                    <EventSetter Event="SelectionChanged" Handler="SomeSelectionChanged" />
-                                </Style>
-                            </DataGridComboBoxColumn.EditingElementStyle>
-                        </DataGridComboBoxColumn>
-                        <DataGridTextColumn Binding="{Binding TextoDivergencia}" Header="Código" />
-                        <DataGridTextColumn Binding="{Binding QtdeDivergencia}" Header="Quantidade" />
-                    </DataGrid.Columns>
-                    
-                </DataGrid>
-            </StackPanel>
-        </Grid>
-    </Grid>
+    <DockPanel>
+        <TextBlock DockPanel.Dock="Top" Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Divergências</TextBlock>
+        <Separator DockPanel.Dock="Top" />
+        <StackPanel Name="Pesquisa"
+                    DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+            <ComboBox x:Name="cbTipoTarefa"
+                      Width="150"
+                      Margin="10,10"
+                      HorizontalAlignment="Left"
+                      materialDesign:HintAssist.Hint="Tipo de Tarefa"
+                      materialDesign:HintAssist.IsFloating="True"
+                      IsEditable="True"
+                      SelectedIndex="1">
+                <ComboBoxItem Content="Descarga" />
+                <ComboBoxItem Content="Conferência" />
+                <ComboBoxItem Content="Movimentação" />
+                <ComboBoxItem Content="Carregamento" />
+                <ComboBoxItem Content="Empilhadeira" />
+            </ComboBox>
+            <TextBox Name="Documento"
+                     Width="150"
+                     Margin="10,10"
+                     materialDesign:HintAssist.Hint="Documento"
+                     materialDesign:HintAssist.IsFloating="True"
+                     Style="{StaticResource MaterialDesignTextBox}" />
+            <Button x:Name="btnConsultar"
+                    Width="100"
+                    Margin="10,10"
+                    VerticalAlignment="Bottom"
+                    Click="Consultar_Click"
+                    Content="Consultar" />
+        </StackPanel>
+        <TextBlock Name="txtFuncionario"
+                   DockPanel.Dock="Top" Margin="0,10,0,0"
+                   HorizontalAlignment="Center"
+                   Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+        <StackPanel Name="informacoes"
+                    DockPanel.Dock="Top" HorizontalAlignment="Center"
+                    Orientation="Horizontal" Height="auto" >
+            <ComboBox x:Name="cbTipoDivergencia"
+                      DockPanel.Dock="Top" Width="150"
+                      Margin="10,10"
+                      HorizontalAlignment="Left"
+                      materialDesign:HintAssist.Hint="Ocorrência"
+                      materialDesign:HintAssist.IsFloating="True"
+                      IsEditable="True"
+                      SelectedIndex="0" VerticalAlignment="Top">
+                <ComboBoxItem HorizontalAlignment="Left" Content="Falta" />
+                <ComboBoxItem HorizontalAlignment="Left" Content="Sobra" />
+                <ComboBoxItem HorizontalAlignment="Left" Content="Avaria" />
+                <ComboBoxItem HorizontalAlignment="Left" Content="Outro" />
+            </ComboBox>
+            <TextBox Name="Codigo"
+                     Width="200"
+                     Margin="10,10"
+                     materialDesign:HintAssist.Hint="Código"
+                     materialDesign:HintAssist.IsFloating="True"
+                     Style="{StaticResource MaterialDesignTextBox}" />
+            <TextBox Name="Quantidade"
+                     Width="100"
+                     Margin="10,10"
+                     materialDesign:HintAssist.Hint="Quantidade"
+                     materialDesign:HintAssist.IsFloating="True"
+                     PreviewTextInput="TestarCaractere"
+                     Style="{StaticResource MaterialDesignTextBox}" />
+            <Button x:Name="btnIncluir"
+                    Width="100"
+                    Margin="10,5"
+                    Click="Incluir_Click"
+                    VerticalAlignment="Center"
+                    Content="Incluir" />
+        </StackPanel>
+        <DataGrid Name="dgOcorrencias"
+                  DockPanel.Dock="Top"
+                  Width="auto" Margin="0 0 0 20"
+                  IsReadOnly="false"
+                  CanUserAddRows="False"
+                  HorizontalAlignment="Center"
+                  AutoGenerateColumns="False"
+                  PreviewKeyDown="DgOcorrencias_PreviewKeyDown"
+                  BeginningEdit="DgOcorrencias_BeginningEdit"
+                  CellEditEnding="Registrar_Alteracao"
+                  VerticalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
+                <DataGridComboBoxColumn x:Name="ColunaTipo" Header="Tipo"                            
+                                        SelectedValueBinding="{Binding TipoDivergencia}"  
+                                        DisplayMemberPath="{Binding itensCombo}" >
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <EventSetter Event="SelectionChanged" Handler="SomeSelectionChanged" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+                <DataGridTextColumn Header="Código" Binding="{Binding TextoDivergencia}" />
+                <DataGridTextColumn Header="Quantidade" Binding="{Binding QtdeDivergencia}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
 </UserControl>

@@ -1,5 +1,4 @@
-﻿using Produsis;
-using System.Windows;
+﻿using System.Windows;
 
 namespace GUI
 {
@@ -12,6 +11,12 @@ namespace GUI
         {
             InitializeComponent();
             BtnConferencia.Opacity = 0.5;
+            MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+           Navegador.Navigate(new Conferencia());
         }
 
         public void ResetarOpacidade()
@@ -42,38 +47,31 @@ namespace GUI
         {
             ResetarOpacidade();
             BtnCarregamento.Opacity = 0.5;
-            Navegador.Navigate(new Carregamento(ActualHeight, ActualWidth));
+            Navegador.Navigate(new Carregamento());
         }
 
         private void BtnSeparacaoCarga_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();
             BtnSeparacaoCarga.Opacity = 0.5;
-            Navegador.Navigate(new Separacao2(ActualHeight, ActualWidth));
+            Navegador.Navigate(new Movimentacao());
         }
 
         private void BtnConferencia_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();
             BtnConferencia.Opacity = 0.5;
-            Navegador.Navigate(new Conferencia(ActualHeight, ActualWidth));
+            Navegador.Navigate(new Conferencia());
         }       
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            Navegador.Height = ActualHeight - 60;
-            Navegador.Width = ActualWidth - 60;
-            Navegador.Navigate(new Conferencia(ActualHeight, ActualWidth));
-        }
-
+        
         private void BtnPesquisaDocs_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new PesquisarDocumento(ActualHeight, ActualWidth));
+            Navegador.Navigate(new PesquisarDocumento());
         }
 
         private void BtnRelatorios_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new Relatorios(ActualHeight, ActualWidth));
+            Navegador.Navigate(new Relatorios());
         }
 
         private void BtnPastas_Click(object sender, RoutedEventArgs e)
@@ -83,12 +81,12 @@ namespace GUI
 
         private void BtnProdutividade_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new Produtividade(ActualHeight, ActualWidth));
+            Navegador.Navigate(new Produtividade());
         }
 
         private void BtnTemas_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new MudarTema(ActualHeight, ActualWidth));
+            Navegador.Navigate(new MudarTema());
         }
 
         private void BtnCadFunc_Click(object sender, RoutedEventArgs e)
@@ -98,7 +96,7 @@ namespace GUI
 
         private void BtnObserv_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new Observacao(ActualHeight, ActualWidth));
+            Navegador.Navigate(new Observacao());
         }
 
         private void BtnEquipe_Click(object sender, RoutedEventArgs e)
@@ -108,26 +106,26 @@ namespace GUI
 
         private void BtnMotorista_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new CadastroMotorista(ActualHeight, ActualWidth));
+            Navegador.Navigate(new CadastroMotorista());
         }
 
         private void BtnDivergenciaN_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();
-            Navegador.Navigate(new DivergenciasNovo(ActualHeight, ActualWidth));
+            Navegador.Navigate(new DivergenciasNovo());
             BtnDivergenciaN.Opacity = 0.5;
         }
 
         private void BtnEmpilhadeira_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();
-            Navegador.Navigate(new Empilhadeira(ActualHeight, ActualWidth));
+            Navegador.Navigate(new Empilhadeira());
             BtnEmpilhadeira.Opacity = 0.5;
         }
 
         private void BtnPortaria_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new RelatorioPortaria(ActualHeight, ActualWidth));
+            Navegador.Navigate(new RelatorioPortaria());
         }
 
         private void BtnCarretas_Click(object sender, RoutedEventArgs e)

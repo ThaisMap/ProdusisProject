@@ -14,49 +14,49 @@
              TextElement.FontSize="14"
              TextElement.FontWeight="Regular"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}">
-    <Grid>
-        <DockPanel>
-            <TextBlock DockPanel.Dock="Top" 
-                       Margin="40,0,0,0" 
-                       Style="{StaticResource MaterialDesignHeadlineTextBlock}" 
-                       Text="Cadastro de Carretas"/>
-            <Separator DockPanel.Dock="Top" />
-            <StackPanel DockPanel.Dock="Top" 
-                        Orientation="Horizontal" 
-                        HorizontalAlignment="Center">
-                <TextBox Name="txtPlaca2" 
-                         Width="150"
-                         Margin="0 0 20 0"
-                         materialDesign:HintAssist.Hint="Placa"
-                         materialDesign:HintAssist.IsFloating="True" />
-                <Button Name="btAddPlaca"
-                        Content="Salvar"
-                        Width="auto" 
-                        Click="AddPlaca_Click"/>
-            </StackPanel>
-            <DataGrid Name="dgLista" AutoGenerateColumns="False"
-                      HorizontalAlignment="Center"
-                      ColumnWidth="*" 
-                      Margin="5 0 0 20"
-                      IsReadOnly="True" 
-                      ScrollViewer.CanContentScroll="True"
-                      materialDesign:DataGridAssist.CellPadding="3">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Width="auto" 
-                                        Header="Placa" 
-                                        Binding="{Binding PlacaCarreta}" />
-                    <DataGridTemplateColumn Width="Auto" Header="Ativo">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <ToggleButton 
-                                    Click="ToggleButton_Click"
-                                    Style="{StaticResource MaterialDesignSwitchToggleButton}"
-                                    IsChecked="{Binding Ativo}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-        </DockPanel>
-    </Grid>
+    <DockPanel>
+        <TextBlock Text="Cadastro de Carretas"
+                   DockPanel.Dock="Top" 
+                   Margin="40,0,0,0" 
+                   Style="{StaticResource MaterialDesignHeadlineTextBlock}" />
+        <Separator DockPanel.Dock="Top" />
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal"  HorizontalAlignment="Center">
+            <TextBox Name="txtPlaca2" 
+                     Width="150"
+                     Margin="0 0 20 0"
+                     materialDesign:HintAssist.Hint="Placa"
+                     materialDesign:HintAssist.IsFloating="True" />
+            <Button Name="btAddPlaca"
+                    Content="Salvar"
+                    Width="auto" 
+                    Click="AddPlaca_Click"/>
+        </StackPanel>
+        
+        <DataGrid Name="dgLista"
+                  DockPanel.Dock="Top"
+                  AutoGenerateColumns="False"
+                  HorizontalAlignment="Center"
+                  ColumnWidth="*" 
+                  Margin="0 5 0 20"
+                  IsReadOnly="True" 
+                  ScrollViewer.CanContentScroll="True"
+                  materialDesign:DataGridAssist.CellPadding="3">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="auto" 
+                                    Header="Placa" 
+                                    Binding="{Binding PlacaCarreta}" />
+                <DataGridTemplateColumn Width="Auto" Header="Ativo">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ToggleButton 
+                                Click="ToggleButton_Click"
+                                Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                IsChecked="{Binding Ativo}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+   
 </UserControl>

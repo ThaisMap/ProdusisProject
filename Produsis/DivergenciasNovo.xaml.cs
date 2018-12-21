@@ -24,17 +24,14 @@ namespace GUI
         List<string> itensCombo = new List<string>();
 
 
-        public DivergenciasNovo(double actualHeight, double actualWidth)
+        public DivergenciasNovo()
         {
             InitializeComponent();
-            Height = actualHeight - 100;
-            Width = actualWidth - 60;
             itensCombo.Add("Falta");
             itensCombo.Add("Sobra");
             itensCombo.Add("Avaria");
             itensCombo.Add("Outro");
             ColunaTipo.ItemsSource = itensCombo;
-            dgOcorrencias.Height = Height - 300;
         }
 
         private void TestarCaractere(object sender, TextCompositionEventArgs e)

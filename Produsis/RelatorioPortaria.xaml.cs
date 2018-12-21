@@ -15,12 +15,9 @@ namespace GUI
     {
         private AcessoBD abd = new AcessoBD();
 
-        public RelatorioPortaria(double Altura, double largura)
+        public RelatorioPortaria()
         {
             InitializeComponent();
-            Height = Altura - 50;
-            Width = largura - 50;
-            dgAcessos.Height = Altura - 180;
         }
 
         private List<AcessosPortaria> source;

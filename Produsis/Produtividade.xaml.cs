@@ -17,10 +17,9 @@ namespace GUI
     {
         public List<ItemRanking> Ranking { get; set; }
 
-        public Produtividade(double Altura, double largura)
+        public Produtividade()
         {
             InitializeComponent();
-            dgRanking.Height = Altura - 250;
         }
 
         private void GeraRelatorioTabela(object sender, RoutedEventArgs e)
@@ -40,11 +39,11 @@ namespace GUI
 
                     AcessoBD abd = new AcessoBD();
                     Ranking = abd.GetRanking(filtros);
-              
+
                     dgRanking.ItemsSource = Ranking;
                     Mouse.OverrideCursor = _cursorAnterior;
-   }
+                }
             }
-        }      
+        }
     }
 }

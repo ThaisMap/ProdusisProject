@@ -14,12 +14,11 @@
              TextElement.FontSize="14"
              TextElement.FontWeight="Regular"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}">
-    <DockPanel Name="Dock" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <TextBlock DockPanel.Dock="Top" Margin="40,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}" Text="Observações de horário"/>
+    <DockPanel>
+        <TextBlock Text="Observações de horário" DockPanel.Dock="Top" Margin="40,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
         <Separator DockPanel.Dock="Top"/>
         <StackPanel  DockPanel.Dock="Top" Orientation="Horizontal"  HorizontalAlignment="Center">
-
-            <DatePicker DockPanel.Dock="Top" x:Name="dataObs"
+            <DatePicker x:Name="dataObs"
                         Width="120"
                         Margin="10,0"
                         VerticalAlignment="Bottom"
@@ -28,7 +27,6 @@
                         Language="pt-br"/>
 
             <ComboBox Name="Nome"
-                      DockPanel.Dock="Top"
                       Width="400" Height="40"
                       Margin="10,0"
                       materialDesign:HintAssist.Hint="Nome"
@@ -42,7 +40,8 @@
                                        materialDesign:HintAssist.IsFloating="True"
                                        materialDesign:HintAssist.Hint="Tempo Gasto"/>
 
-            <TextBox Name="TextoObs" Width="310" Margin= "10, 0"
+            <TextBox Name="TextoObs" 
+                     Width="310" Margin= "10, 0"
                      materialDesign:HintAssist.Hint="Observação"
                      materialDesign:HintAssist.IsFloating="True" />
 
@@ -76,12 +75,15 @@
                     VerticalAlignment="Top" />
         </StackPanel>
 
-        <DataGrid DockPanel.Dock="Top" x:Name="dgObs"
-                  AutoGenerateColumns="False" IsReadOnly="True"
-                  PreviewKeyDown="DgObs_PreviewKeyDown"
-                  HorizontalAlignment="Center" VerticalAlignment="Top"
-                  CanUserAddRows="False"
-                  VerticalScrollBarVisibility="Auto">
+        <DataGrid x:Name="dgObs"
+                  DockPanel.Dock="Top"
+                  Margin="0 0 0 15"
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False" CanUserAddRows="False"
+                  VerticalAlignment="Top" HorizontalAlignment="Center" 
+                  materialDesign:DataGridAssist.CellPadding="4 2"
+                  VerticalScrollBarVisibility="Auto"
+                  PreviewKeyDown="DgObs_PreviewKeyDown">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding DataObs, StringFormat=dd/MM/yyyy}" Header="Data" />
                 <DataGridTextColumn Binding="{Binding NomeFunc}" Header="Funcionário" />

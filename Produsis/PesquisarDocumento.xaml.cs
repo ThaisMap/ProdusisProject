@@ -7,20 +7,19 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Produsis
+namespace GUI
 {
     /// <summary>
     /// Interaction logic for PesquisarDocumento.xaml
     /// </summary>
     public partial class PesquisarDocumento : UserControl
     {
-        public PesquisarDocumento(double Altura, double largura)
+        public PesquisarDocumento()
         {
             InitializeComponent();
-            ListaDados.Height = Altura - 250;
         }
 
-        private void limpar()
+        private void Limpar()
         {
             ListaDados.ItemsSource = new List<dadosPesquisa>();
         }
@@ -33,7 +32,7 @@ namespace Produsis
                 Logica d = new Logica();
 
                 string[] rotulosCte = { "Número", "Volumes", "SKU's", "Fornecedor", "Notas Fiscais", "Manifesto" };
-                string[] rotulosManifesto = { "Número", "Volumes", "CT-es", "CT-es importados", "CT-es conferidos" };
+                string[] rotulosManifesto = { "Número", "Volumes", "CT-es", "CT-es importados", "CT-es conferidos", " " };
                 string[] rotulosNF = { "Número", "Volumes", "SKU's", "CT-e", "Fornecedor", "Cliente" };
 
                 int numDoc = int.Parse(NumeroDocumento.Text);
@@ -47,16 +46,12 @@ namespace Produsis
                     if (d.NumeroCteExiste(numDoc))
                     {
                         var ctes = abd.GetNovoCtePorNum(numDoc);
-                        aux = new dadosPesquisa()
+
+                        for (int i = 0; i < 6; i++)
                         {
-                            numero = rotulosCte[0],
-                            volumes = rotulosCte[1],
-                            dado3 = rotulosCte[2],
-                            dado4 = rotulosCte[3],
-                            dado5 = rotulosCte[4],
-                            dado6 = rotulosCte[5]
-                        };
-                        listaDados.Add(aux);
+                            ListaDados.Columns[i].Header = rotulosCte[i];
+                        }
+
                         foreach (var item in ctes)
                         {
                             aux = new dadosPesquisa()
@@ -72,7 +67,7 @@ namespace Produsis
                         }
                         ListaDados.ItemsSource = listaDados;
                     }
-                    else limpar();
+                    else Limpar();
                 }
 
                 // MANIFESTO
@@ -82,16 +77,10 @@ namespace Produsis
 
                     if (documento != null)
                     {
-                        aux = new dadosPesquisa()
+                        for (int i = 0; i < 6; i++)
                         {
-                            numero = rotulosManifesto[0],
-                            volumes = rotulosManifesto[1],
-                            dado3 = rotulosManifesto[2],
-                            dado4 = rotulosManifesto[3],
-                            dado5 = rotulosManifesto[4],
-                            dado6 = " "
-                        };
-                        listaDados.Add(aux);
+                            ListaDados.Columns[i].Header = rotulosManifesto[i];
+                        }
 
                         aux = new dadosPesquisa()
                         {
@@ -106,7 +95,7 @@ namespace Produsis
 
                         ListaDados.ItemsSource = listaDados;
                     }
-                    else limpar();
+                    else Limpar();
                 }
 
                 // NOTA FISCAL
@@ -115,16 +104,11 @@ namespace Produsis
                     var documentos = abd.GetNFPorNumero(NumeroDocumento.Text);
                     if (documentos.Count > 0)
                     {
-                        aux = new dadosPesquisa()
+                        for (int i = 0; i < 6; i++)
                         {
-                            numero = rotulosNF[0],
-                            volumes = rotulosNF[1],
-                            dado3 = rotulosNF[2],
-                            dado4 = rotulosNF[3],
-                            dado5 = rotulosNF[4],
-                            dado6 = rotulosNF[5]
-                        };
-                        listaDados.Add(aux);
+                            ListaDados.Columns[i].Header = rotulosNF[i];
+                        }
+
                         foreach (var documento in documentos)
                         {
                             string numCTE = "Não vinculado";
@@ -143,12 +127,12 @@ namespace Produsis
                         }
                         ListaDados.ItemsSource = listaDados;
                     }
-                    else limpar();
+                    else Limpar();
                 }
             }
         }
 
-        private void testarCaractere(object sender, TextCompositionEventArgs e)
+        private void TestarCaractere(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);

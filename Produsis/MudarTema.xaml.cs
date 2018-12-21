@@ -14,15 +14,13 @@ namespace GUI
         private List<Cores> CoresDeTema = new List<Cores>();
         private List<Cores> CoresDestaques = new List<Cores>();
 
-        public MudarTema(double actualHeight, double actualWidth)
+        public MudarTema()
         {
             InitializeComponent();
             GerarListas();
             cbxTema.ItemsSource = TemasGlobais;
             cbxCor.ItemsSource = CoresDeTema;
             cbxDestaque.ItemsSource = CoresDestaques;
-            Height = actualHeight - 100;
-            Width = actualWidth - 60;
             cbxTema.DisplayMemberPath = "CorNome";
             cbxCor.DisplayMemberPath = "CorNome";
             cbxDestaque.DisplayMemberPath = "CorNome";

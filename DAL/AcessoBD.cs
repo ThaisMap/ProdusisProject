@@ -1043,7 +1043,7 @@ namespace DAL
                             ));
                     }
                 }
-                return listaFinal;
+                return listaFinal.OrderByDescending(x=>x.Pontuacao).ToList();
             }
             catch (Exception)
             {

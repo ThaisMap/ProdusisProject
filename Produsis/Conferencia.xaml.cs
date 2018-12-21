@@ -23,17 +23,13 @@ namespace GUI
         private List<string> ListaFunc;
         private int checagemDeCte = -1;
 
-        public Conferencia(double actualHeight, double actualWidth)
+        public Conferencia()
         {
             InitializeComponent();
             Importar();
             ListaFunc = abd.GetConferentesLivres("2");
             CBFuncionario.ItemsSource = ListaFunc;
-            Height = actualHeight - 60;
-            Width = actualWidth - 60;
-            svTarefa.Height = actualHeight - 340;
             RecarregarPendentes();
-
         }
 
         public static string CriaChipTag(string Nome)

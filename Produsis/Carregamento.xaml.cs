@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -23,9 +24,10 @@ namespace GUI
         private List<Funcionarios> ListaFunc;
         private int[] pallets = { 0, 0 };
 
-        public Carregamento(double actualHeight, double actualWidth)
+        public Carregamento()
         {
             InitializeComponent();
+
             ListaFunc = abd.GetFuncionariosLivres("4");
             CBFuncionario.ItemsSource = ListaFunc;
             CBFuncionario.DisplayMemberPath = "nomeFunc";
@@ -34,10 +36,9 @@ namespace GUI
             CBmotorista.ItemsSource = ListaMotoristas;
             CBmotorista.DisplayMemberPath = "MotoristaVeiculo";
             CBmotorista.SelectedValuePath = "CapacidadePaletes";
-            dgTarefas.ItemsSource = abd.GetTarefasPendentes("4");
-            Height = actualHeight - 150;
-            Width = actualWidth - 60;
-            lerXmls();
+
+            RecarregarPendentes();
+            Importar();
         }
 
         public static string CriaChipTag(string Nome)
@@ -48,9 +49,21 @@ namespace GUI
 
         private void AtualizarDg_Click(object sender, RoutedEventArgs e)
         {
-            dgTarefas.ItemsSource = abd.GetTarefasPendentes("4");
-            lerXmls();
+            RecarregarPendentes();
+            Importar();
         }
+
+        private void Importar()
+        {
+            Thread thread = new Thread(LerXmls);
+            thread.Start();
+        }
+
+        private void RecarregarPendentes()
+        {
+            dgTarefas.ItemsSource = abd.GetTarefasPendentes("4");
+        }
+
 
         private void Finalizar_Click(object sender, RoutedEventArgs e)
         {
@@ -65,7 +78,7 @@ namespace GUI
                     MessageBox.Show("Houve um erro e o carregamento não pode ser finalizado.", "Carregamento não finalizado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                 ListaFunc = abd.GetFuncionariosLivres("4");
                 CBFuncionario.ItemsSource = ListaFunc;
-                AtualizarDg_Click(sender, e);
+                RecarregarPendentes();
             }
             Documento.Focus();
         }
@@ -87,7 +100,7 @@ namespace GUI
             }
         }
 
-        private bool checarCampos()
+        private bool ChecarCampos()
         {
             if (Documento.Text.Replace("_", "") == "" || ListaDeFuncionarios.Items.Count == 0)
             {
@@ -110,7 +123,7 @@ namespace GUI
             }
         }
 
-        private string[] funcionarios()
+        private string[] Funcionarios()
         {
             List<string> nomes = new List<string>();
             foreach (FuncionariosTag tag in ListaDeFuncionarios.Items)
@@ -124,12 +137,12 @@ namespace GUI
         {
             Logica bll = new Logica();
         
-            if (checarCampos())
+            if (ChecarCampos())
                 if (!abd.VerificaDocumentoTarefa(int.Parse(Documento.Text.Replace("_", "")), "4"))
                 {
-                    if (bll.InserirTarefa(montarTarefa(), funcionarios()))
+                    if (bll.InserirTarefa(montarTarefa(), Funcionarios()))
                     {
-                        dgTarefas.ItemsSource = abd.GetTarefasPendentes("4");
+                        RecarregarPendentes();
                         MessageBox.Show("Carregamento iniciado para o " + abd.GetDadosManifesto(int.Parse(Documento.Text.Replace("_", ""))), "Carregamento iniciado - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
                         Documento.Text = "";
                         CBFuncionario.SelectedIndex = -1;
@@ -171,7 +184,7 @@ namespace GUI
             }
         }
 
-        private static void lerXmls()
+        private static void LerXmls()
         {
             xmlBLL x = new xmlBLL();
             x.TriagemArquivos();

@@ -284,9 +284,9 @@ namespace DAL
                     }
                 }              
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
-                throw ex;
+
             }
         }
 
@@ -301,7 +301,6 @@ namespace DAL
 
             else
                 dbd.AlterarNF(nfLida);
-
         }
 
         /// <summary>
@@ -327,5 +326,7 @@ namespace DAL
             if (!dbd.CteManifestoExiste(new Cte_Manifesto(manifesto, ctes.Max(x => x.idCte))))
                 dbd.CadastrarCteManifesto(new Cte_Manifesto(manifesto, ctes.Max(x => x.idCte)));
         }
+
+ 
     }
 }

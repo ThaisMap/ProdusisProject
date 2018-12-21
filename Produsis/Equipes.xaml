@@ -14,11 +14,11 @@
              TextElement.FontWeight="Regular"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              mc:Ignorable="d" Loaded="UserControl_Loaded">
-    <Grid>
-        <StackPanel>
-            <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}"><Run Text="Cadastro de Equipes" /></TextBlock>
-            <Separator />
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+        <DockPanel>
+        <TextBlock Text="Cadastro de Equipes" 
+                   DockPanel.Dock="Top" Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}" />
+        <Separator DockPanel.Dock="Top" />
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
                 <materialDesign:PackIcon
                     Width="24"
                     Height="24"
@@ -40,8 +40,8 @@
                     Click="Incluir"
                     Style="{StaticResource MaterialDesignFlatButton}" />
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <DataGrid Name="dgEquipe" Height="auto" AutoGenerateColumns="False"
+        <StackPanel DockPanel.Dock="Top" Margin="0 0 0 20" Orientation="Horizontal" HorizontalAlignment="Center">
+                <DataGrid Name="dgEquipe" AutoGenerateColumns="False"
                           IsReadOnly="True" VerticalContentAlignment="Center"
                           ItemsSource="{Binding}">
                     <DataGrid.Columns>
@@ -68,6 +68,5 @@
                             Click="BtnDesfazer_Click" Content="Desfazer equipe" />
                 </StackPanel>
             </StackPanel>
-        </StackPanel>
-    </Grid>
+        </DockPanel>
 </UserControl>

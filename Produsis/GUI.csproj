@@ -174,8 +174,8 @@
     <Compile Include="Relatorios.xaml.cs">
       <DependentUpon>Relatorios.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Separacao2.xaml.cs">
-      <DependentUpon>Separacao2.xaml</DependentUpon>
+    <Compile Include="Movimentacao.xaml.cs">
+      <DependentUpon>Movimentacao.xaml</DependentUpon>
     </Compile>
     <Compile Include="TelaPrincipal.xaml.cs">
       <DependentUpon>TelaPrincipal.xaml</DependentUpon>
@@ -297,7 +297,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Separacao2.xaml">
+    <Page Include="Movimentacao.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
