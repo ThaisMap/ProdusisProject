@@ -426,7 +426,7 @@ namespace DAL
             return lista;
         }
 
-        public int CtesImportadosNoManifesto(int numManifesto)
+        public List<int> CtesImportadosNoManifesto(int numManifesto)
         {
             try
             {
@@ -436,18 +436,18 @@ namespace DAL
                                     from importados in BancoDeDados.NotasFiscais
                                     where manifestados.Manifesto == numManifesto
                                     where manifestados.CteNovo == importados.CteNovoNF
-                                    select manifestados;
+                                    select manifestados.CteNovo;
                     novosCtes = novosCtes.Distinct();
-                    return novosCtes.Count();
+                    return novosCtes.ToList();
                 }
             }
             catch
             {
-                return -1;
+                return new List<int>();
             }
         }
 
-        public int CtesConferidosNoManifesto(int numManifesto)
+        public List<int> CtesConferidosNoManifesto(int numManifesto)
         {
             try
             {
@@ -458,13 +458,28 @@ namespace DAL
                                     where manifestados.Manifesto == numManifesto
                                     where manifestados.CteNovo == conferidos.documentoTarefa
                                     where conferidos.fimTarefa != null
-                                    select manifestados;
-                    return novosCtes.Count();
+                                    select manifestados.CteNovo;
+                    return novosCtes.ToList();
                 }
             }
             catch
             {
-                return -1;
+                return new List<int>();
+            }
+        }
+
+        public List<Cte> CtesNoManifesto(int numManifesto)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    return (from Cte_Manifesto in BancoDeDados.Cte_Manifesto where Cte_Manifesto.Manifesto == numManifesto select Cte_Manifesto.Cte).ToList();
+                }                
+            }
+            catch (Exception)
+            {
+                return new List<Cte>();
             }
         }
 

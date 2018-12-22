@@ -132,5 +132,10 @@ namespace GUI
         {
             Navegador.Navigate(new CadastroCarretas());
         }
+
+        private void BtnDetalheManif_Click(object sender, RoutedEventArgs e)
+        {
+            Navegador.Navigate(new DetalheManifesto());
+        }
     }
 }

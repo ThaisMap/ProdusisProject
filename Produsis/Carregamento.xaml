@@ -103,16 +103,22 @@
                     Content="_Iniciar">
                 </Button>
             </StackPanel>
-            <ListBox
+            <ListView
                 Name="ListaDeFuncionarios"
-                Height="120"
                 Grid.Row="0"
                 Grid.RowSpan="3"
                 Grid.Column="1"
-                Margin="10,0"
-                materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                Height="120"
+                Margin="10 0"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 DataContext="Funcionarios">
-                <ListBox.ItemTemplate>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+                <ListView.ItemTemplate>
                     <DataTemplate>
                         <materialDesign:Chip
                             Content="{Binding Nome}"
@@ -120,8 +126,9 @@
                             Icon="{Binding Tag}"
                             IsDeletable="True" />
                     </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                </ListView.ItemTemplate>
+            </ListView>
+
         </Grid>
         <Separator DockPanel.Dock="Top" />
         <Button x:Name="AtualizarDg"

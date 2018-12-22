@@ -16,35 +16,31 @@ namespace GUI
     /// </summary>
     public partial class DetalheManifesto : UserControl
     {
-        public DetalheManifesto(double actualHeight, double actualWidth)
+        public DetalheManifesto()
         {
             InitializeComponent();
-            Height = actualHeight - 100;
-            Width = actualWidth - 60;
-            dgDivergencias.Height = actualHeight - 270;
         }
 
         public List<TarefaModelo> tarefas = new List<TarefaModelo>();
-     
-       // AcessoBD abd = new AcessoBD();
 
-        private void testarCaractere(object sender, TextCompositionEventArgs e)
+        private void TestarCaractere(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        private void btnConsultar_Click(object sender, RoutedEventArgs e)
+        private void BtnConsultar_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (Manifesto.Text != "")
             {
-              //PREENCHER DATAGRID COM INFORMACOES SOBRE OS CTES DO MANIFESTO
-              // QUAIS FORAM IMPORTADOS, QUAIS FORAM CONFERIDOS
-            }
-            catch 
-            {
+                Logica bll = new Logica();
 
+                List<DetalhesManifesto> detalhes = bll.GetDetalheManifestos(int.Parse(Manifesto.Text.ToString()));
+
+                dgDivergencias.ItemsSource = detalhes;                
             }
+
+            Manifesto.Focus();
         }
     }
 }

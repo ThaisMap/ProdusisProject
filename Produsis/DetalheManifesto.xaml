@@ -1,14 +1,12 @@
 ﻿<UserControl
     x:Class="GUI.DetalheManifesto"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:GUI"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-    HorizontalAlignment="Left"
-    VerticalAlignment="Top"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch"
     d:DesignHeight="400"
     d:DesignWidth="800"
     Background="{DynamicResource MaterialDesignPaper}"
@@ -17,60 +15,41 @@
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
-
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <Grid Margin="0,10,0,10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="104" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.RowSpan="2" Grid.Column="0">
-                    <TextBlock Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Detalhamento de Manifesto</TextBlock>
-                    <Separator />
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon
-                            Width="22"
-                            Height="22"
-                            Margin="20,0,0,20"
-                            VerticalAlignment="Bottom"
-                            Foreground="{Binding ElementName=Manifesto, Path=BorderBrush}"
-                            Kind="FileDocument" />
-                        <TextBox
-                            Name="Manifesto"
-                            Width="200"
-                            Margin="5, 15"
-                            materialDesign:HintAssist.Hint="Manifesto"
-                            materialDesign:HintAssist.IsFloating="True"
-                            PreviewTextInput="testarCaractere"
-                            Style="{StaticResource MaterialDesignTextBox}" />
-                        <Button
-                            x:Name="btnConsultar"
-                            Width="100"
-                            Margin="15,0"
-                            VerticalAlignment="Center"
-                            Click="btnConsultar_Click"
-                            Content="Consultar" />
-                    </StackPanel>
-
-                    <DataGrid
-                        Name="dgDivergencias"
-                        Margin="10,0,0,10"
-                        HorizontalAlignment="Left"
-                        AutoGenerateColumns="False"
-                        ColumnWidth="auto"
-                        IsReadOnly="True">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding cte}" Header="Documento" />
-                            <DataGridTextColumn Binding="{Binding fornecedor}" Header="Fornecedor" />
-                            <DataGridTextColumn Binding="{Binding nomesFuncionarios}" Header="Conferente(s)" />                          
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </StackPanel>
-            </Grid>
-        </ScrollViewer>
-    </Grid>
+    <DockPanel>
+        <TextBlock Text="Detalhamento de Manifesto" DockPanel.Dock="Top" Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+        <Separator DockPanel.Dock="Top"/>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+            <materialDesign:PackIcon Kind="FileDocument"
+                                     Width="22" Height="22"
+                                     Margin="20,0,0,20"
+                                     VerticalAlignment="Bottom"
+                                     Foreground="{Binding ElementName=Manifesto, Path=BorderBrush}" />
+            <TextBox Name="Manifesto"
+                     Width="200" Margin="5, 15"
+                     materialDesign:HintAssist.Hint="Manifesto"
+                     materialDesign:HintAssist.IsFloating="True"
+                     PreviewTextInput="TestarCaractere"
+                     Style="{StaticResource MaterialDesignTextBox}" />
+            <Button x:Name="btnConsultar"
+                    Width="100" Margin="15,0"
+                    VerticalAlignment="Center"
+                    Click="BtnConsultar_Click"
+                    IsDefault="True"
+                    Content="Consultar"/>
+        </StackPanel>
+        <DataGrid Name="dgDivergencias"            
+                  DockPanel.Dock="Top"
+                  Margin="0 0 0 15"
+                  IsReadOnly="True" 
+                  HorizontalAlignment="Center"
+                  materialDesign:DataGridAssist.CellPadding="4 2"
+                  AutoGenerateColumns="False"  
+                  VerticalScrollBarVisibility="Auto" Width="auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="CT-e" Binding="{Binding cte}" />
+                <DataGridTextColumn Header="Importado" Binding="{Binding importado}"/>
+                <DataGridTextColumn Header="Conferido" Binding="{Binding conferido}"/>                          
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
 </UserControl>

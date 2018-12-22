@@ -31,14 +31,19 @@ namespace GUI
                 AcessoBD abd = new AcessoBD();
                 Logica d = new Logica();
 
-                string[] rotulosCte = { "Número", "Volumes", "SKU's", "Fornecedor", "Notas Fiscais", "Manifesto" };
-                string[] rotulosManifesto = { "Número", "Volumes", "CT-es", "CT-es importados", "CT-es conferidos", " " };
-                string[] rotulosNF = { "Número", "Volumes", "SKU's", "CT-e", "Fornecedor", "Cliente" };
+                string[,] rotulos = { { "Número", "Volumes", "SKU's", "Fornecedor", "Notas Fiscais", "Manifesto" },
+                    { "Número", "Volumes", "CT-es", "CT-es importados", "CT-es conferidos", " " },
+                    { "Número", "Volumes", "SKU's", "CT-e", "Fornecedor", "Cliente" }};
 
                 int numDoc = int.Parse(NumeroDocumento.Text);
                 List<dadosPesquisa> listaDados = new List<dadosPesquisa>();
                 dadosPesquisa aux;
                 listaDados.Clear();
+
+                for (int i = 0; i < 6; i++)
+                {
+                    ListaDados.Columns[i].Header = rotulos[TipoDeDocumento.SelectedIndex, i];
+                }
 
                 // CT-e
                 if (TipoDeDocumento.SelectedIndex == 0)
@@ -46,12 +51,7 @@ namespace GUI
                     if (d.NumeroCteExiste(numDoc))
                     {
                         var ctes = abd.GetNovoCtePorNum(numDoc);
-
-                        for (int i = 0; i < 6; i++)
-                        {
-                            ListaDados.Columns[i].Header = rotulosCte[i];
-                        }
-
+                      
                         foreach (var item in ctes)
                         {
                             aux = new dadosPesquisa()
@@ -77,18 +77,14 @@ namespace GUI
 
                     if (documento != null)
                     {
-                        for (int i = 0; i < 6; i++)
-                        {
-                            ListaDados.Columns[i].Header = rotulosManifesto[i];
-                        }
-
+                
                         aux = new dadosPesquisa()
                         {
                             numero = documento.numeroManifesto.ToString(),
                             volumes = documento.VolumesManifesto.ToString(),
                             dado3 = documento.quantCtesManifesto.ToString(),
-                            dado4 = abd.CtesImportadosNoManifesto(numDoc).ToString(),
-                            dado5 = abd.CtesConferidosNoManifesto(numDoc).ToString(),
+                            dado4 = abd.CtesImportadosNoManifesto(numDoc).Count.ToString(),
+                            dado5 = abd.CtesConferidosNoManifesto(numDoc).Count.ToString(),
                             dado6 = " "
                         };
                         listaDados.Add(aux);
@@ -104,11 +100,7 @@ namespace GUI
                     var documentos = abd.GetNFPorNumero(NumeroDocumento.Text);
                     if (documentos.Count > 0)
                     {
-                        for (int i = 0; i < 6; i++)
-                        {
-                            ListaDados.Columns[i].Header = rotulosNF[i];
-                        }
-
+                   
                         foreach (var documento in documentos)
                         {
                             string numCTE = "Não vinculado";

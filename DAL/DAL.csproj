@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AcessoBD.cs" />
+    <Compile Include="DetalhesManifesto.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ItemRelatorio.cs" />
     <Compile Include="Properties\PastasXml.Designer.cs">

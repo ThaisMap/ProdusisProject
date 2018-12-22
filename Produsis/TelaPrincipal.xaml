@@ -35,8 +35,9 @@
     <DockPanel>
             <Menu DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="auto" Margin="0,0">
                 <MenuItem Name="BtnAdministrativo" Header="Administrativo" Click="BtnAdministrativo_Click">
-                    <MenuItem Name="BtnPesquisaDocs" Header="Ver Documentos" Click="BtnPesquisaDocs_Click" />
-                    <MenuItem Name="BtnRelatorios" Header="Relatórios" Click="BtnRelatorios_Click" />
+                <MenuItem Name="BtnPesquisaDocs" Header="Ver Documentos" Click="BtnPesquisaDocs_Click" />
+                <MenuItem Name="BtnDetalheManif" Header="Detalhe Manifesto" Click="BtnDetalheManif_Click" />
+                <MenuItem Name="BtnRelatorios" Header="Relatórios" Click="BtnRelatorios_Click" />
                     <MenuItem Name="BtnProdutividade" Header="Produtividade" Click="BtnProdutividade_Click" />
 
                     <MenuItem Name="BtnVeiculos" Header="Veículos">

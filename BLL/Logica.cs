@@ -60,5 +60,26 @@ namespace BLL
             }
             return abd.CadastrarTarefa(novaTarefa, idsFuncionarios);
         }
+
+        public List<DetalhesManifesto> GetDetalheManifestos(int numManifesto)
+        {
+            List<DetalhesManifesto> detalhes = new List<DetalhesManifesto>();
+            var ctes = abd.CtesNoManifesto(numManifesto);
+            var importados = abd.CtesImportadosNoManifesto(numManifesto);
+            var conferidos = abd.CtesConferidosNoManifesto(numManifesto);
+
+            foreach (var item in ctes)
+            {
+                DetalhesManifesto aux = new DetalhesManifesto();
+                aux.cte = item.numeroCte;
+                aux.importado = importados.Contains(item.idCte) ? "Sim" : "Pendente";
+                aux.conferido = conferidos.Contains(item.idCte) ? "Sim" : "Não";
+
+                detalhes.Add(aux);
+
+            }
+
+            return detalhes;
+        }
     }
 }
