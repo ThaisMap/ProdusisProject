@@ -14,6 +14,7 @@ namespace DAL
         public int volumes { get; set; }
         public int? quantPaletizado { get; private set; }
         public int? totalPaletes { get; private set; }
+        
 
         public TarefaPontuacao(Tarefas t)
         {

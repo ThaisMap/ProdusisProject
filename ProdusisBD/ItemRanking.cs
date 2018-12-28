@@ -5,21 +5,16 @@ namespace ProdusisBD
     public class ItemRanking
     {
         public double Pontuacao { get; set; }
-        public string NomesFuncionarios { get; set; }
+        public string NomeFuncionario { get; set; }
         public int QuantidadeTarefas { get; set; }
         public int Erros { get; set; }
+        public string TipoTarefa { get; set; }
+        public string Matricula { get; set; }
 
-        public ItemRanking(double media, string nomes, int quant)
+        public ItemRanking(double pontos, string nome, int quant, int erros)
         {
-            Pontuacao = Math.Round(media, 2);
-            NomesFuncionarios = nomes;
-            QuantidadeTarefas = quant;
-        }
-
-        public ItemRanking(double media, string nomes, int quant, int erros)
-        {
-            Pontuacao = Math.Round(media, 2);
-            NomesFuncionarios = nomes;
+            Pontuacao = Math.Round(pontos, 2);
+            NomeFuncionario = nome;
             QuantidadeTarefas = quant;
             Erros = erros;
         }

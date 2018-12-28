@@ -170,7 +170,7 @@
                 Width="100"
                 Margin="5"
                 VerticalAlignment="Top" HorizontalAlignment="Right"
-                Click="BtnConsultar_Click"
+                Click="BtnConsultar_Click" IsDefault="True"
                 Content="Consultar" />
         </Grid>
         <Separator DockPanel.Dock="Top"/>

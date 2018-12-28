@@ -19,21 +19,30 @@ namespace BLL
 
                 xlApp = new Excel.Application();
                 xlWorkBook = xlApp.Workbooks.Add(misValue);
+                //Chapa	Funcionário	Pontuação	Média	Erros	Serviço
+
 
                 xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-                xlWorkSheet.Cells[1, 1] = "Nome";
-                xlWorkSheet.Cells[1, 2] = "Pontuação";
-                xlWorkSheet.Cells[1, 3] = "Quantidade";
-                xlWorkSheet.Cells[1, 4] = "Erros";
+                xlWorkSheet.Cells[1, 1] = "Chapa";
+                xlWorkSheet.Cells[1, 2] = "Funcionário";
+                xlWorkSheet.Cells[1, 3] = "Pontuação Total";
+                xlWorkSheet.Cells[1, 4] = "Horas trabalhadas";
+                xlWorkSheet.Cells[1, 5] = "Pontuação média";
+                xlWorkSheet.Cells[1, 6] = "Meta";
+                xlWorkSheet.Cells[1, 7] = "Erros";
+                xlWorkSheet.Cells[1, 8] = "Serviço";
+                xlWorkSheet.Cells[1, 9] = "Quantidade";
 
                 int linha = 2;
 
                 foreach (ItemRanking i in Tarefas)
                 {
-                    xlWorkSheet.Cells[linha, 1] = i.NomesFuncionarios;
-                    xlWorkSheet.Cells[linha, 2] = i.Pontuacao;
-                    xlWorkSheet.Cells[linha, 3] = i.QuantidadeTarefas;
-                    xlWorkSheet.Cells[linha, 4] = i.Erros;
+                    xlWorkSheet.Cells[linha, 1] = i.Matricula;
+                    xlWorkSheet.Cells[linha, 2] = i.NomeFuncionario;
+                    xlWorkSheet.Cells[linha, 3] = i.Pontuacao;
+                    xlWorkSheet.Cells[linha, 7] = i.Erros;
+                    xlWorkSheet.Cells[linha, 8] = i.TipoTarefa;
+                    xlWorkSheet.Cells[linha, 9] = i.QuantidadeTarefas;
 
                     linha++;
                 }

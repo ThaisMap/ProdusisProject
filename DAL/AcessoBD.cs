@@ -1054,8 +1054,14 @@ namespace DAL
                     foreach (var item in listaNomes)
                     {
                         var listaAtual = listaPontuacoes.Where(x => x.nomeFunc == item);
-                        listaFinal.Add(new ItemRanking((double)listaAtual.Sum(x => x.Pontuacao), item, listaAtual.Count(), listaAtual.Where(x=>x.Pontuacao == 0).Count()
-                            ));
+                        listaFinal.Add(new ItemRanking()
+                        {
+                            Pontuacao = (double)listaAtual.Sum(x => x.Pontuacao),
+                            NomeFuncionario = item,
+                            QuantidadeTarefas = listaAtual.Count(),
+                            Erros =  listaAtual.Where(x => x.Pontuacao == 0).Count(),
+                            TipoTarefa = f.TipoTarefa
+                        });                       
                     }
                 }
                 return listaFinal.OrderByDescending(x=>x.Pontuacao).ToList();
@@ -1064,8 +1070,8 @@ namespace DAL
             {
                 return listaFinal;
             }
-        }
-        
+        }        
+
         public List<ItemRelatorio> GetTarefasFiltradas(Filtro f)
         {
             List<ItemRelatorio> lista = new List<ItemRelatorio>();

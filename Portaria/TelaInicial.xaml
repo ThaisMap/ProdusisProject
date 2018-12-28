@@ -3,30 +3,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Portaria"
         mc:Ignorable="d"
-   TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-          Background="{DynamicResource MaterialDesignPaper}"
-    FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-    Icon="icone_2_produsis.ico"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        Icon="icone_2_produsis.ico"
         WindowState="Maximized"
         Loaded="Window_Loaded"
+        MinHeight="600" MinWidth="600"
         Title="Portaria - Expresso Rodominas" Height="450" Width="800">
-    <StackPanel>
-        <DockPanel>
-            <TextBlock Name="txtUsuario" DockPanel.Dock="Right" Text="usuario logado" />
-
-            <Menu DockPanel.Dock="Left" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="auto" Margin="20,0">
-                <MenuItem Name="BtnEntrada" Header="Entrada" Click="BtnEntrada_Click" Margin="5 0" />
-                <MenuItem Name="BtnPendentes" Header="Saída" Click="BtnPendentes_Click" Margin="5 0" />
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="auto">
+            <MenuItem Name="BtnEntrada" Header="Entrada" Click="BtnEntrada_Click" Margin="5 0" />
+            <MenuItem Name="BtnPendentes" Header="Saída" Click="BtnPendentes_Click" Margin="5 0" />
         </Menu>
-        </DockPanel>
-        <Frame
-                Name="Navegador"
-                Margin="20,10"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                VerticalContentAlignment="Top"
-                NavigationUIVisibility="Hidden" />
-    </StackPanel>
+        <TextBlock Name="txtUsuario"  Text="usuario logado" 
+                   DockPanel.Dock="Top" 
+                   Margin="0 0 0 10" HorizontalAlignment="Right"/>
+      
+        <ContentControl Name="Conteudo"
+                        DockPanel.Dock="Bottom"
+                        Margin="10 0 10 10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        VerticalContentAlignment="Top" />
+    </DockPanel>
 </Window>

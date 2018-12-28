@@ -16,7 +16,7 @@ namespace GUI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-           Navegador.Navigate(new Conferencia());
+           Conteudo.Content = new Conferencia();
         }
 
         public void ResetarOpacidade()
@@ -34,7 +34,7 @@ namespace GUI
         {
             ResetarOpacidade();
             BtnDescarga.Opacity = 0.5;
-            Navegador.Navigate(new Descarga());
+            Conteudo.Content = new Descarga();
         }
 
         private void BtnAdministrativo_Click(object sender, RoutedEventArgs e)
@@ -47,95 +47,95 @@ namespace GUI
         {
             ResetarOpacidade();
             BtnCarregamento.Opacity = 0.5;
-            Navegador.Navigate(new Carregamento());
+            Conteudo.Content = new Carregamento();
         }
 
         private void BtnSeparacaoCarga_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();
             BtnSeparacaoCarga.Opacity = 0.5;
-            Navegador.Navigate(new Movimentacao());
+            Conteudo.Content = new Movimentacao();
         }
 
         private void BtnConferencia_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();
             BtnConferencia.Opacity = 0.5;
-            Navegador.Navigate(new Conferencia());
+            Conteudo.Content = new Conferencia();
         }       
         
         private void BtnPesquisaDocs_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new PesquisarDocumento());
+            Conteudo.Content = new PesquisarDocumento();
         }
 
         private void BtnRelatorios_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new Relatorios());
+            Conteudo.Content = new Relatorios();
         }
 
         private void BtnPastas_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new Configuracao());
+            Conteudo.Content = new Configuracao();
         }
 
         private void BtnProdutividade_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new Produtividade());
+            Conteudo.Content = new Produtividade();
         }
 
         private void BtnTemas_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new MudarTema());
+            Conteudo.Content = new MudarTema();
         }
 
         private void BtnCadFunc_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new CadastroFuncionarios());
+            Conteudo.Content = new CadastroFuncionarios();
         }       
 
         private void BtnObserv_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new Observacao());
+            Conteudo.Content = new Observacao();
         }
 
         private void BtnEquipe_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new Equipes());
+            Conteudo.Content = new Equipes();
         }
 
         private void BtnMotorista_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new CadastroMotorista());
+            Conteudo.Content = new CadastroMotorista();
         }
 
         private void BtnDivergenciaN_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();
-            Navegador.Navigate(new DivergenciasNovo());
+            Conteudo.Content = new DivergenciasNovo();
             BtnDivergenciaN.Opacity = 0.5;
         }
 
         private void BtnEmpilhadeira_Click(object sender, RoutedEventArgs e)
         {
             ResetarOpacidade();
-            Navegador.Navigate(new Empilhadeira());
+            Conteudo.Content = new Empilhadeira();
             BtnEmpilhadeira.Opacity = 0.5;
         }
 
         private void BtnPortaria_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new RelatorioPortaria());
+            Conteudo.Content = new RelatorioPortaria();
         }
 
         private void BtnCarretas_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new CadastroCarretas());
+            Conteudo.Content = new CadastroCarretas();
         }
 
         private void BtnDetalheManif_Click(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new DetalheManifesto());
+            Conteudo.Content = new DetalheManifesto();
         }
     }
 }

@@ -150,24 +150,12 @@
                   materialDesign:DataGridAssist.CellPadding="2"                            
                   ScrollViewer.CanContentScroll="True">          
             <DataGrid.Columns>
-                <DataGridTextColumn
-                    Width="Auto"
-                    Binding="{Binding documentoTarefa}"
-                    Header="Manifesto" />
-                <DataGridTextColumn Binding="{Binding nomesFuncionarios}" Header="Funcionários" />
-                <DataGridTextColumn
-                    Width="Auto"
-                    Binding="{Binding horaInicio}"
-                    Header="Hora Início" />
-                <DataGridTextColumn
-                    Width="Auto"
-                    Binding="{Binding volumes}"
-                    Header="Volumes" />
-                <DataGridTextColumn
-                    Width="Auto"
-                    Binding="{Binding tempoGasto}"
-                    Header="Tempo Gasto" />
-                <DataGridTemplateColumn Width="Auto" Header="Finalizar Tarefa">
+                <DataGridTextColumn Header="Manifesto"      Width="*" Binding="{Binding documentoTarefa}"/>
+                <DataGridTextColumn Header="Funcionários"   Width="5*" Binding="{Binding nomesFuncionarios}" />
+                <DataGridTextColumn Header="Hora Início"    Width="*" Binding="{Binding horaInicio}"/>
+                <DataGridTextColumn Header="Volumes"        Width="*" Binding="{Binding volumes}"/>
+                <DataGridTextColumn Header="Tempo Gasto"    Width="*" Binding="{Binding tempoGasto}"/>
+                <DataGridTemplateColumn Header="Finalizar Tarefa" Width="auto" MinWidth="95">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Width="Auto" Height="25" Click="Finalizar_Click">Finalizar</Button>

@@ -58,14 +58,23 @@
                         Language="pt-br" />
       
             <Button x:Name="btGerar"
-                    Width="75"
+                    Width="auto"
                     Margin="10 10"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Click="GeraRelatorioTabela"
                     Content="Gerar" />
         </StackPanel>
-        
+
+        <Button x:Name="btExportar"
+                    Width="auto"
+                DockPanel.Dock="Right"
+                    Margin="10 10"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Click="btExportar_Click"
+                    Content="Exportar" />
+
         <DataGrid x:Name="dgRanking"
                   DockPanel.Dock="Top"
                   Margin="0 0 0 15"
@@ -75,7 +84,7 @@
                   AutoGenerateColumns="False"  
                   VerticalScrollBarVisibility="Auto" Width="auto">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding NomesFuncionarios}" Header="Funcionário" />
+                <DataGridTextColumn Binding="{Binding NomeFuncionario}" Header="Funcionário" />
                 <DataGridTextColumn Binding="{Binding Pontuacao}" Header="Pontuação no período" />
                 <DataGridTextColumn Binding="{Binding QuantidadeTarefas}" Header="Quantidade" />
                 <DataGridTextColumn Binding="{Binding Erros}" Header="Erros" />

@@ -18,19 +18,19 @@ namespace Portaria
         {
             BtnEntrada.Opacity = 0.5;
             BtnPendentes.Opacity = 1;
-            Navegador.Navigate(new Entrada(ActualHeight, ActualWidth));
+            Conteudo.Content = new Entrada();
         }
 
         private void BtnPendentes_Click(object sender, RoutedEventArgs e)
         {
             BtnEntrada.Opacity = 1;
             BtnPendentes.Opacity = 0.5;
-            Navegador.Navigate(new Pendentes(ActualHeight, ActualWidth));
+            Conteudo.Content = new Pendentes();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Navegador.Navigate(new Entrada(ActualHeight, ActualWidth));
+            Conteudo.Content = new Entrada();
         }
     }
 }

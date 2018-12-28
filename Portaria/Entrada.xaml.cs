@@ -19,11 +19,9 @@ namespace Portaria
         public List<Carretas> carretas { get; set; }
         private AcessoBD abd = new AcessoBD();
 
-        public Entrada(double WindowHeight, double WindowsWidth)
+        public Entrada()
         {
             InitializeComponent();
-            Height = WindowHeight - 60;
-            Width = WindowsWidth - 60;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

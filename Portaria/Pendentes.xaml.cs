@@ -12,11 +12,9 @@ namespace Portaria
     public partial class Pendentes : UserControl
     {
 
-        public Pendentes(double WindowHeight, double WindowsWidth)
+        public Pendentes()
         {
             InitializeComponent();
-            Height = WindowHeight - 60;
-            Width = WindowsWidth - 60;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

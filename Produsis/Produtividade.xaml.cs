@@ -1,5 +1,6 @@
 ﻿using BLL;
 using DAL;
+using Microsoft.Win32;
 using ProdusisBD;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,30 @@ namespace GUI
                     dgRanking.ItemsSource = Ranking;
                     Mouse.OverrideCursor = _cursorAnterior;
                 }
+            }
+        }
+
+        private void btExportar_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dialogo = new SaveFileDialog()
+            {
+                DefaultExt = "xls",
+                Title = "Salvar relatório - Produsis",
+                AddExtension = true
+            };
+
+            if (dialogo.ShowDialog() == true)
+            {
+                Logica bll = new Logica();
+                Filtro filtros = new Filtro()
+                {
+                    dataInicio = dataInicio.SelectedDate,
+                    dataFim = dataFim.SelectedDate.Value.AddDays(1).AddSeconds(-1)
+                };
+
+                bll.ExportarProdutividade(filtros, dialogo.FileName);
+
+                MessageBox.Show("Arquivo gerado");
             }
         }
     }

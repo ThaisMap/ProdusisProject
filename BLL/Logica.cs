@@ -1,6 +1,7 @@
 ﻿using DAL;
 using ProdusisBD;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BLL
 {
@@ -80,6 +81,75 @@ namespace BLL
             }
 
             return detalhes;
+        }
+
+        public void ExportarProdutividade(Filtro f, string nomeArquivo)
+        {
+            var funcs = abd.GetFuncionariosAtivos();
+            List<ItemRanking> listaFinal = new List<ItemRanking>();
+            for (int i = 1; i < 6; i++)
+            {
+                f.TipoTarefa = i.ToString();
+                listaFinal.AddRange(abd.GetRanking(f));
+            }
+
+            listaFinal = MesclarCargaDescarga(listaFinal);
+
+            foreach (var item in listaFinal)
+            {
+                item.Matricula = funcs.Where(x => x.nomeFunc == item.NomeFuncionario).Select(x => x.matriculaFunc).FirstOrDefault();
+                item.TipoTarefa = TipoExtenso(item.TipoTarefa);
+            }
+            ExcelBLL exporta = new ExcelBLL();
+            exporta.ExportarExcelProdut(listaFinal, nomeArquivo);
+        }
+
+        public List<ItemRanking> MesclarCargaDescarga(List<ItemRanking> lista)
+        {
+            var LISTACARGA = lista.Where(x => x.TipoTarefa == "4").ToList();
+            var listaDescarga = lista.Where(x => x.TipoTarefa == "1").ToList();
+
+            lista.RemoveAll(x => x.TipoTarefa == "1");
+            lista.RemoveAll(x => x.TipoTarefa == "4");
+
+            foreach (var item in listaDescarga)
+            {
+                if (LISTACARGA.Where(x => x.NomeFuncionario == item.NomeFuncionario).Any())
+                {
+                    LISTACARGA.Where(x => x.NomeFuncionario == item.NomeFuncionario).First().Pontuacao += item.Pontuacao;
+                    LISTACARGA.Where(x => x.NomeFuncionario == item.NomeFuncionario).First().QuantidadeTarefas += item.QuantidadeTarefas;
+                    LISTACARGA.Where(x => x.NomeFuncionario == item.NomeFuncionario).First().Erros += item.Erros;
+                }
+                else
+                    LISTACARGA.Add(item);
+            }
+            lista.AddRange(LISTACARGA);
+
+            return lista;
+        }
+
+
+
+        private string TipoExtenso(string tipo)
+        {
+            switch (tipo)
+            {
+                case "1":
+                case "4":
+                    return "Carregamento e Descarga";
+
+                case "2":
+                    return "Conferência";
+
+                case "3":
+                    return "Movim. de Paletes";
+                    
+                case "5":
+                    return "Empilhadeira";
+
+                default:
+                    return "Não identificado";
+            }
         }
     }
 }

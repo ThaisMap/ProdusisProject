@@ -133,11 +133,8 @@
                       VerticalScrollBarVisibility="Auto"                      
                       ScrollViewer.CanContentScroll="True">
             <DataGrid.Columns>
-                    <DataGridTextColumn
-                        Width="Auto"
-                        Binding="{Binding documentoTarefa}"
-                        Header="Manifesto" />
-                    <DataGridTemplateColumn Width="Auto">
+                <DataGridTextColumn Header="Manifesto"      Width="*" Binding="{Binding documentoTarefa}"/>
+                <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Click="AdicionarFuncionario" Style="{StaticResource MaterialDesignFlatButton}" Height="25" CommandParameter="{Binding Path=IdTarefa}">
@@ -146,30 +143,18 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                
-                    <DataGridTextColumn
-                        Binding="{Binding nomesFuncionarios}" 
-                        Header="Funcionários" />
-                    <DataGridTextColumn
-                        Width="Auto"
-                        Binding="{Binding horaInicio}"
-                        Header="Hora Início" />
-                    <DataGridTextColumn
-                        Width="Auto"
-                        Binding="{Binding volumes}"
-                        Header="Volumes" />
-                    <DataGridTextColumn
-                        Width="Auto"
-                        Binding="{Binding tempoGasto}"
-                        Header="Tempo Gasto" />
-                    <DataGridTemplateColumn Width="Auto" Header="Finalizar Tarefa">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Width="Auto" Height="25" Click="Finalizar_Click">Finalizar</Button>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
+                <DataGridTextColumn Header="Funcionários"   Width="5*" Binding="{Binding nomesFuncionarios}" />
+                <DataGridTextColumn Header="Hora Início"    Width="*" Binding="{Binding horaInicio}"/>
+                <DataGridTextColumn Header="Volumes"        Width="*" Binding="{Binding volumes}"/>
+                <DataGridTextColumn Header="Tempo Gasto"    Width="*" Binding="{Binding tempoGasto}"/>
+                <DataGridTemplateColumn Header="Finalizar Tarefa" Width="auto" MinWidth="95">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Width="Auto" Height="25" Click="Finalizar_Click">Finalizar</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
             </DataGrid>
     </DockPanel>
 </UserControl>

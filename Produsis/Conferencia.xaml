@@ -5,7 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    MinHeight="500"
     HorizontalAlignment="Left"
     VerticalAlignment="Top"
     d:DesignHeight="400"
@@ -18,7 +17,7 @@
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
     <DockPanel HorizontalAlignment="Stretch">
-        <TextBlock DockPanel.Dock="Top" Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Conferência</TextBlock>
+        <TextBlock Text="Conferência"  DockPanel.Dock="Top" Margin="40,0,0,0" Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
         <Separator DockPanel.Dock="Top" IsTabStop="False" />
         <Grid DockPanel.Dock="Top" Name="formSuperior"
               Height="120"
@@ -135,41 +134,22 @@
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch"
                       AutoGenerateColumns="False"
-                      ColumnWidth="*" Margin="20 0 20 20"
+                      ColumnWidth="*" Margin="10 0 10 10"
                       IsReadOnly="True"
                       materialDesign:DataGridAssist.ColumnHeaderPadding="4"
                       materialDesign:DataGridAssist.CellPadding="2"  
                       VerticalScrollBarVisibility="Auto"                      
                       ScrollViewer.CanContentScroll="True">                                      
                 <DataGrid.Columns>
-                    <DataGridTextColumn
-                        Width="auto"
-                        Binding="{Binding cliente}"
-                        Header="Manifesto" />
-                    <DataGridTextColumn
-                        Width="auto"
-                        Binding="{Binding documentoTarefa}"
-                        Header="CT-e" />
-                    <DataGridTextColumn
-                        Binding="{Binding nomesFuncionarios}"
-                        Header="Funcionários" />
-                    <DataGridTextColumn
-                        Width="Auto"
-                        Binding="{Binding horaInicio}"
-                        Header="Hora Início" />
-                    <DataGridTextColumn
-                        Width="Auto"
-                        Binding="{Binding skus}"
-                        Header="SKU's" />
-                    <DataGridTextColumn
-                        Width="Auto"
-                        Binding="{Binding volumes}"
-                        Header="Volumes" />
-                    <DataGridTextColumn
-                        Width="Auto"
-                        Binding="{Binding tempoGasto}"
-                        Header="Tempo Gasto" />
-                    <DataGridTemplateColumn Width="Auto" Header="Finalizar Tarefa">
+                <DataGridTextColumn Header="Manifesto"      Width="*" Binding="{Binding cliente}"/>
+                <DataGridTextColumn Header="CT-e"           Width="*" Binding="{Binding documentoTarefa}"/>
+                <DataGridTextColumn Header="Funcionários"   Width="2*" Binding="{Binding nomesFuncionarios}"/>
+                <DataGridTextColumn Header="Fornecedor"     Width="3*" Binding="{Binding fornecedor}"/>
+                <DataGridTextColumn Header="Hora Início"    Width="*" Binding="{Binding horaInicio}"/>
+                <DataGridTextColumn Header="SKU's"          Width="*" Binding="{Binding skus}"/>
+                <DataGridTextColumn Header="Volumes"        Width="*" Binding="{Binding volumes}"/>
+                <DataGridTextColumn Header="Tempo Gasto"    Width="*" Binding="{Binding tempoGasto}"/>
+                <DataGridTemplateColumn Header="Finalizar Tarefa" Width="Auto" MinWidth="95">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Width="Auto" Height="25" Click="Finalizar_Click">Finalizar</Button>
