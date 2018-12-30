@@ -14,7 +14,7 @@ namespace GUI
 {
     /// <summary>
     /// Interaction logic for Carregamento.xaml
-    /// </summary>
+    /// </summary> 
     public partial class Carregamento : UserControl
     {
         private AcessoBD abd = new AcessoBD();

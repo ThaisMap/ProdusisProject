@@ -1240,14 +1240,13 @@ namespace DAL
         /// Verifica se a nota fiscal indicada esta cadastrada no banco de dados
         /// </summary>
         /// <returns>True se a NF for encontrada, False se nao for, True se houver erro</returns>
-        public bool NfExiste(string numNf)
+        public bool NfExiste(string numNf, string fornecedor)
         {
             try
             {
                 using (var BancoDeDados = new produsisBDEntities())
-                {
-                   
-                      return (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.numeroNF == numNf select NotasFiscais.idNF).Any();                  
+                {                    
+                    return (from NotasFiscais in BancoDeDados.NotasFiscais where NotasFiscais.numeroNF == numNf where NotasFiscais.fornecedorNF.Split(' ')[0] == fornecedor.Split(' ')[0] select NotasFiscais.idNF).Any();                  
                 }
             }
             catch
@@ -1369,15 +1368,30 @@ namespace DAL
             {
                 using (var BancoDeDados = new produsisBDEntities())
                 {
-                    var nota = BancoDeDados.NotasFiscais.Where(x => x.numeroNF == novaNf.numeroNF && x.fornecedorNF == novaNf.fornecedorNF).FirstOrDefault();
+                    var nota = BancoDeDados.NotasFiscais.Where(x => x.numeroNF == novaNf.numeroNF &&  x.fornecedorNF.Split(' ')[0] == novaNf.fornecedorNF.Split(' ')[0]).FirstOrDefault();
                     nota.skuNF = novaNf.skuNF;
                     nota.volumesNF = novaNf.volumesNF;
                     BancoDeDados.SaveChanges();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                var olho = ex;
+            }
+        }
+
+        public void AlterarSKUNF(int idCte, string numNF, int sku)
+        {
+            try
+            {
+                using (var BancoDeDados = new produsisBDEntities())
+                {
+                    var nota = BancoDeDados.NotasFiscais.Where(x => x.numeroNF == numNF && x.CteNovoNF == idCte).FirstOrDefault();
+                    nota.skuNF = sku;
+                    BancoDeDados.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
             }
         }
 

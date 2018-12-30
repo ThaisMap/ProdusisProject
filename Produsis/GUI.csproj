@@ -177,6 +177,9 @@
     <Compile Include="Movimentacao.xaml.cs">
       <DependentUpon>Movimentacao.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SKUs.xaml.cs">
+      <DependentUpon>SKUs.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TelaPrincipal.xaml.cs">
       <DependentUpon>TelaPrincipal.xaml</DependentUpon>
     </Compile>
@@ -298,6 +301,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Movimentacao.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SKUs.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

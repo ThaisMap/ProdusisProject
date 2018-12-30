@@ -20,7 +20,19 @@ namespace BLL
             {
                 Xml xml = new Xml();
                 List<string> arquivosPastaNF = new List<string>();
-
+                
+                //Percorre pasta de manifestos, importa os dados do xml e apaga o restante
+                foreach (string f in Directory.GetFiles(PastasXml.Default.PastaManifestos))
+                {
+                    if (f.EndsWith("xml") || f.EndsWith("XML"))
+                    {                        
+                        xml.LerManifesto(f);
+                        MoverArquivo(f);
+                    }
+                    //else
+                       // File.Delete(f);
+                }
+          
                 var listaDeArquivos = Directory.GetFiles(PastasXml.Default.PastaNFs);
                 bool temMSG = listaDeArquivos.Where(f => f.EndsWith("msg") || f.EndsWith("MSG")).Any();
                 
@@ -58,18 +70,7 @@ namespace BLL
                     else
                         File.Delete(f);
                 }
-
-                //Percorre pasta de manifestos, importa os dados do xml e apaga o restante
-                foreach (string f in Directory.GetFiles(PastasXml.Default.PastaManifestos))
-                {
-                    if (f.EndsWith("xml") || f.EndsWith("XML"))
-                    {                        
-                        xml.LerManifesto(f);
-                        MoverArquivo(f);
-                    }
-                    else
-                        File.Delete(f);
-                }
+     
                 //Percorre pasta de manifestos, importa os dados do xml e apaga o restante
                 foreach (string f in Directory.GetFiles(PastasXml.Default.PastaPreManifestos))
                 {
@@ -81,6 +82,9 @@ namespace BLL
                     else
                         File.Delete(f);
                 }
+
+
+               
             }
             catch (System.Exception)
             {

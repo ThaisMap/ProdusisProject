@@ -10,6 +10,7 @@ namespace DAL
 {
     public class Xml
     {
+        static AcessoBD abd = new AcessoBD();
         /// <summary>
         /// Abre o email e salva todos os anexos na pasta de notas fiscais
         /// </summary>
@@ -48,19 +49,19 @@ namespace DAL
                 manifesto.Load(nomeArquivo);
 
                 AcessoBD abd = new AcessoBD();
-                var result = manifesto.GetElementsByTagName("Value");
+                var result = manifesto.GetElementsByTagName("Value"); 
                 Manifestos lido = new Manifestos
                 {
                     numeroManifesto = int.Parse(nomeArquivo.Replace(PastasXml.Default.PastaManifestos + "\\", "").Replace(".xml", "")),
-                    VolumesManifesto = (int)double.Parse(result[result.Count - 2].InnerText.Replace('.', ',')),
-                    pesoManifesto = double.Parse(result[result.Count - 3].InnerText.Replace('.', ',')),
+                    VolumesManifesto =   (int)double.Parse(result[result.Count - 2].InnerText.Replace('.', ',')),
+                    pesoManifesto =           double.Parse(result[result.Count - 3].InnerText.Replace('.', ',')),
                     quantCtesManifesto = (int)double.Parse(result[result.Count - 4].InnerText.Replace('.', ','))
                 };
 
                 abd.CadastrarManifesto(lido);
 
-                int cte;
-                string fornecedor;
+                int cte; 
+                NotasFiscais nfLida = new NotasFiscais();
 
                 for (int i = 0; i < result.Count - 4; i = i + 10)
                 {
@@ -69,15 +70,37 @@ namespace DAL
                     abd.CadastrarCte(new Cte(cte, result[i + 1].InnerText));
  
                     CriarCteManifesto(cte, lido.numeroManifesto);
-                    fornecedor = result[i + 2].InnerText;
-                    AlterarNfs(result[i + 1].InnerText, cte);
+
+                    nfLida.fornecedorNF = result[i + 2].InnerText;
+                    nfLida.clienteNF = result[i + 7].InnerText;
+                    nfLida.CteNovoNF = abd.GetNovoCtePorNum(int.Parse(result[i].InnerText)).Max(x => x.idCte);
+                    nfLida.skuNF = 0;
+
+                    if (!result[i + 1].InnerText.Contains("\\"))
+                    {
+                        nfLida.numeroNF= result[i + 1].InnerText;
+                        nfLida.volumesNF = (int)double.Parse(result[i + 8].InnerText.Replace('.', ','));
+                        InserirNotaFiscal(nfLida);
+                    }
+                    else
+                    {
+                        var nfs = result[i + 1].InnerText.Split('\\');
+                        nfLida.volumesNF = (int)System.Math.Ceiling(double.Parse(result[i + 8].InnerText.Replace('.', ',')) / nfs.Count()); //volume total pode variar por causa desse truncamento
+
+                        foreach (var item in nfs)
+                        {
+                            nfLida.numeroNF = item;
+                            InserirNotaFiscal(nfLida);
+                        }
+                    }
+
+                   // AlterarNfs(result[i + 1].InnerText, cte);
                 }
 
                 return true;
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
-                var olho = ex;
                 return false;
             }
         }
@@ -133,7 +156,7 @@ namespace DAL
                 foreach (var item in ctesNoPreManifesto)
                 {
                     abd.CadastrarCte(new Cte(item.numeroCte, item.notasCte));
-                    AlterarNfs(item.notasCte, item.numeroCte);  //  alterado para novo cte
+                    AlterarNfs(item.notasCte, item.numeroCte, fornecedor);  //  alterado para novo cte
                     CriarCteManifesto(item.numeroCte, lido.numeroManifesto);
                 }
 
@@ -145,6 +168,7 @@ namespace DAL
             }
         }
 
+        
         /// <summary>
         /// Importa os dados de xml de notas fiscais na pasta padrão
         /// </summary>
@@ -190,19 +214,18 @@ namespace DAL
                     }
                 }
 
-                var cliente = nf.GetElementsByTagName("xNome")[1].InnerText;
-                if (cliente.Length > 49)
-                    cliente = cliente.Remove(49);
-                nfLida.clienteNF = cliente;
+                //var cliente = nf.GetElementsByTagName("xNome")[1].InnerText;
+                //if (cliente.Length > 49)
+                //    cliente = cliente.Remove(49);
+                //nfLida.clienteNF = cliente;
 
                 if (nfLida.skuNF > nfLida.volumesNF)
                 { nfLida.skuNF = 1; }
 
                 InserirNotaFiscal(nfLida);
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
-                var erro = ex;
             }
         }
 
@@ -232,20 +255,20 @@ namespace DAL
                         if (nf.StartsWith("312"))
                         {
                             nfLida.skuNF = 0;
-                            conteudoNf = nf.Split(' ').ToList();
-                            conteudoNf.RemoveAll(l => l == "");
+                            //conteudoNf = nf.Split(' ').ToList();
+                            //conteudoNf.RemoveAll(l => l == "");
 
-                            nfLida.clienteNF = conteudoNf[0].Substring(3);
+                            //nfLida.clienteNF = conteudoNf[0].Substring(3);
 
-                            for (int i = 1; i < conteudoNf.Count; i++)
-                            {
-                                if (conteudoNf[i].Length >= 21)
-                                    break;
-                                else
-                                    nfLida.clienteNF += " " + conteudoNf[i];
-                            }
-                            if (nfLida.clienteNF.Length > 49)
-                                nfLida.clienteNF = nfLida.clienteNF.Remove(49);
+                            //for (int i = 1; i < conteudoNf.Count; i++)
+                            //{
+                            //    if (conteudoNf[i].Length >= 21)
+                            //        break;
+                            //    else
+                            //        nfLida.clienteNF += " " + conteudoNf[i];
+                            //}
+                            //if (nfLida.clienteNF.Length > 49)
+                            //    nfLida.clienteNF = nfLida.clienteNF.Remove(49);
                         }
 
                         //Volumes e número da NF
@@ -295,36 +318,34 @@ namespace DAL
         /// </summary>
         private static void InserirNotaFiscal(NotasFiscais nfLida)
         {
-            AcessoBD dbd = new AcessoBD();
-            if (!dbd.NfExiste(nfLida.numeroNF))
-                dbd.CadastrarNF(nfLida);
+            if (!abd.NfExiste(nfLida.numeroNF, nfLida.fornecedorNF))
+                abd.CadastrarNF(nfLida);
 
-            else
-                dbd.AlterarNF(nfLida);
+            else if(nfLida.skuNF>0)
+                abd.AlterarNF(nfLida);
         }
 
         /// <summary>
         /// Dispara a alteração das nfs de um manifesto para incluir o cte
         /// </summary>
         /// <param name="nfs">string contendo as notas fiscais separadas por uma '\'</param>
-        private void AlterarNfs(string nfs, int cte)
+        private void AlterarNfs(string nfs, int cte, string fornecedor)
         {
             AcessoBD dbd = new AcessoBD();
             var listNfs = nfs.Split('\\');
             foreach (string nf in listNfs)
             {
-                if (dbd.NfExiste(nf))                
-                    dbd.InserirCteNaNf(nf, cte);                 
+                if (dbd.NfExiste(nf, fornecedor))
+                    dbd.InserirCteNaNf(nf, cte);
             }
         }
 
         private void CriarCteManifesto(int cte, int manifesto) // alterado para novo cte
         {
-            AcessoBD dbd = new AcessoBD();
-            var ctes = dbd.GetNovoCtePorNum(cte);
+            var ctes = abd.GetNovoCtePorNum(cte);
 
-            if (!dbd.CteManifestoExiste(new Cte_Manifesto(manifesto, ctes.Max(x => x.idCte))))
-                dbd.CadastrarCteManifesto(new Cte_Manifesto(manifesto, ctes.Max(x => x.idCte)));
+            if (!abd.CteManifestoExiste(new Cte_Manifesto(manifesto, ctes.Max(x => x.idCte))))
+                abd.CadastrarCteManifesto(new Cte_Manifesto(manifesto, ctes.Max(x => x.idCte)));
         }
 
  

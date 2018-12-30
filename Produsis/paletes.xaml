@@ -79,7 +79,7 @@
                     Name="btnCancel"
                     Margin="5"
                     Click="BtnCancel_Click"
-                    Content="_Cancel"
+                    Content="_Cancelar"
                     IsCancel="True" />
             </StackPanel>
         </StackPanel>

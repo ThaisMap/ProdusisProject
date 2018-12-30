@@ -62,6 +62,17 @@ namespace BLL
             return abd.CadastrarTarefa(novaTarefa, idsFuncionarios);
         }
 
+        public void AlterarSkuNFs(int idCte, int sku)
+        {
+            var ctes = abd.GetCtePorID(idCte);
+            var notas = ctes.notasCte.Split('\\');
+            sku = sku / notas.Count();
+            foreach (var item in notas)
+            {
+                abd.AlterarSKUNF(idCte, item, sku);
+            }
+        }
+
         public List<DetalhesManifesto> GetDetalheManifestos(int numManifesto)
         {
             List<DetalhesManifesto> detalhes = new List<DetalhesManifesto>();
@@ -127,9 +138,7 @@ namespace BLL
 
             return lista;
         }
-
-
-
+        
         private string TipoExtenso(string tipo)
         {
             switch (tipo)

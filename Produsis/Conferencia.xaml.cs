@@ -59,35 +59,70 @@ namespace GUI
         {
             TarefaModelo item = (TarefaModelo)dgTarefas.SelectedItem;
             item.AtualizaTempoGasto();
-            if (MessageBox.Show("Confirma finalização da conferência de " + item.nomesFuncionarios + " após " + item.tempoGasto + "? ", "Produsis", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            if (item.skus > 0)
             {
-                if (!abd.FinalizarTarefa(item.idTarefa, 0, 0))
+                if (MessageBox.Show("Confirma finalização da conferência de " + item.nomesFuncionarios + " após " + item.tempoGasto + "? ", "Produsis", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                 {
-                    MessageBox.Show("Houve um erro e a conferência não pode ser finalizada.", "Conferência não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                else
-                {
-                    ListaFunc = abd.GetConferentesLivres("2");
-                    CBFuncionario.ItemsSource = ListaFunc;
-
-                    if (ListaFunc.Contains(item.nomesFuncionarios))
+                    if (!abd.FinalizarTarefa(item.idTarefa, 0, 0))
                     {
-                        CBFuncionario.SelectedValue = item.nomesFuncionarios;
+                        MessageBox.Show("Houve um erro e a conferência não pode ser finalizada.", "Conferência não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        ListaFunc = abd.GetConferentesLivres("2");
+                        CBFuncionario.ItemsSource = ListaFunc;
 
-                        MessageBoxResult novaTarefa = MessageBox.Show("Deseja Abrir uma nova tarefa para o funcionário?", "Nova Tarefa", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                        if (novaTarefa.ToString().ToUpper() == "YES")
+                        if (ListaFunc.Contains(item.nomesFuncionarios))
                         {
-                            FuncionarioSelecionado = new FuncionariosTag(CBFuncionario.SelectedItem.ToString(), CriaChipTag(CBFuncionario.SelectedItem.ToString()));
-                            if (!ListaDeFuncionarios.Items.Contains(FuncionarioSelecionado) && CBFuncionario.SelectedIndex > -1)
+                            CBFuncionario.SelectedValue = item.nomesFuncionarios;
+
+                            MessageBoxResult novaTarefa = MessageBox.Show("Deseja Abrir uma nova tarefa para o funcionário?", "Nova Tarefa", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                            if (novaTarefa.ToString().ToUpper() == "YES")
                             {
-                                ListaDeFuncionarios.Items.Add(FuncionarioSelecionado);
+                                FuncionarioSelecionado = new FuncionariosTag(CBFuncionario.SelectedItem.ToString(), CriaChipTag(CBFuncionario.SelectedItem.ToString()));
+                                if (!ListaDeFuncionarios.Items.Contains(FuncionarioSelecionado) && CBFuncionario.SelectedIndex > -1)
+                                {
+                                    ListaDeFuncionarios.Items.Add(FuncionarioSelecionado);
+                                }
                             }
                         }
                     }
                 }
-                Documento.Focus();
             }
-            this.TabIndex = 1;
+            else
+            {
+                item.skus = SKUs.Perguntar(item.volumes);
+                if(item.skus > 0)
+                {
+                    if (!abd.FinalizarTarefa(item.idTarefa, 0, 0))
+                    {
+                        MessageBox.Show("Houve um erro e a conferência não pode ser finalizada.", "Conferência não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        ListaFunc = abd.GetConferentesLivres("2");
+                        CBFuncionario.ItemsSource = ListaFunc;
+
+                        if (ListaFunc.Contains(item.nomesFuncionarios))
+                        {
+                            CBFuncionario.SelectedValue = item.nomesFuncionarios;
+
+                            MessageBoxResult novaTarefa = MessageBox.Show("Deseja Abrir uma nova tarefa para o funcionário?", "Nova Tarefa", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                            if (novaTarefa.ToString().ToUpper() == "YES")
+                            {
+                                FuncionarioSelecionado = new FuncionariosTag(CBFuncionario.SelectedItem.ToString(), CriaChipTag(CBFuncionario.SelectedItem.ToString()));
+                                if (!ListaDeFuncionarios.Items.Contains(FuncionarioSelecionado) && CBFuncionario.SelectedIndex > -1)
+                                {
+                                    ListaDeFuncionarios.Items.Add(FuncionarioSelecionado);
+                                }
+                            }
+                        }
+                    }
+                }
+                else { MessageBox.Show("Houve um erro e a conferência não pode ser finalizada.", "Conferência não finalizada - Produsis", MessageBoxButton.OK, MessageBoxImage.Information); }
+            }
+
+            Documento.Focus();
             RecarregarPendentes();
         }
          
